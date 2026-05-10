@@ -1,0 +1,584 @@
+<!doctype html>
+
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&amp;family=Plus+Jakarta+Sans:wght@200..800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-container": "#686554",
+              error: "#ba1a1a",
+              "tertiary-fixed-dim": "#58d5fe",
+              "surface-container-high": "#f3e6da",
+              "primary-fixed-dim": "#ffb95a",
+              "surface-container-lowest": "#ffffff",
+              "on-error": "#ffffff",
+              "surface-tint": "#845400",
+              secondary: "#625f4e",
+              "on-tertiary": "#ffffff",
+              "primary-container": "#ffb347",
+              "tertiary-container": "#52d0f9",
+              outline: "#847463",
+              "on-surface-variant": "#524535",
+              "on-secondary-fixed": "#1e1c0f",
+              "on-primary-container": "#704700",
+              "surface-dim": "#e5d8cc",
+              "inverse-surface": "#372f27",
+              "on-tertiary-fixed-variant": "#004d61",
+              "on-background": "#211a13",
+              "on-primary": "#ffffff",
+              "surface-bright": "#fff8f4",
+              "inverse-primary": "#ffb95a",
+              "outline-variant": "#d6c3b0",
+              "secondary-container": "#e8e3cd",
+              "on-primary-fixed-variant": "#643f00",
+              tertiary: "#006780",
+              "error-container": "#ffdad6",
+              "surface-variant": "#eee0d4",
+              "secondary-fixed": "#e8e3cd",
+              "on-error-container": "#93000a",
+              primary: "#845400",
+              "on-surface": "#211a13",
+              "on-primary-fixed": "#2a1800",
+              "primary-fixed": "#ffddb6",
+              surface: "#fff8f4",
+              "tertiary-fixed": "#b8eaff",
+              "surface-container-low": "#fff1e5",
+              background: "#fff8f4",
+              "inverse-on-surface": "#fceee2",
+              "surface-container-highest": "#eee0d4",
+              "secondary-fixed-dim": "#ccc7b2",
+              "on-tertiary-container": "#00576d",
+              "on-secondary": "#ffffff",
+              "on-secondary-fixed-variant": "#4a4737",
+              "on-tertiary-fixed": "#001f28",
+              "surface-container": "#f9ecdf",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              lg: "24px",
+              xs: "4px",
+              xl: "40px",
+              "margin-mobile": "16px",
+              "container-max": "1200px",
+              unit: "4px",
+              gutter: "24px",
+              sm: "8px",
+              md: "16px",
+            },
+            fontFamily: {
+              "label-md": ["Plus Jakarta Sans"],
+              "headline-lg": ["Quicksand"],
+              "headline-md": ["Quicksand"],
+              "body-md": ["Plus Jakarta Sans"],
+              "headline-lg-mobile": ["Quicksand"],
+              "body-lg": ["Plus Jakarta Sans"],
+              "label-sm": ["Plus Jakarta Sans"],
+              "headline-xl": ["Quicksand"],
+            },
+            fontSize: {
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.01em",
+                  fontWeight: "600",
+                },
+              ],
+              "headline-lg": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "700" },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "headline-lg-mobile": [
+                "28px",
+                { lineHeight: "36px", fontWeight: "700" },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "700" }],
+              "headline-xl": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        background-color: #fff8f4;
+        color: #211a13;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .soft-shadow {
+        box-shadow: 0 10px 30px -10px rgba(132, 84, 0, 0.08);
+      }
+      .table-row-hover:hover {
+        background-color: #f9ecdf;
+      }
+    </style>
+  </head>
+  <body class="font-body-md text-body-md">
+    <!-- SideNavBar (Authority: Admin Context) -->
+    <aside
+      class="flex flex-col h-screen fixed left-0 top-0 border-r border-outline-variant bg-surface-container-low dark:bg-surface-container-lowest w-64 shadow-md z-50"
+    >
+      <div class="px-6 py-8">
+        <h1 class="font-headline-sm text-headline-sm text-primary">
+          Admin Panel
+        </h1>
+        <p class="font-body-sm text-label-sm text-on-surface-variant">
+          Xám Pet Shop Management
+        </p>
+      </div>
+      <nav class="flex-1 space-y-1 mt-4">
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined">dashboard</span>
+          <span class="font-label-md text-label-md">Dashboard</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined">shopping_bag</span>
+          <span class="font-label-md text-label-md">Orders</span>
+        </a>
+        <!-- Active State: Products -->
+        <a
+          class="bg-primary-container text-on-primary-container rounded-xl mx-2 px-4 py-3 flex items-center gap-3 shadow-sm"
+          href="#"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >inventory_2</span
+          >
+          <span class="font-label-md text-label-md">Products</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined">group</span>
+          <span class="font-label-md text-label-md">Users</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined">assessment</span>
+          <span class="font-label-md text-label-md">Reports</span>
+        </a>
+      </nav>
+      <div class="p-4 border-t border-outline-variant">
+        <button
+          class="w-full text-on-surface-variant hover:bg-surface-container-high rounded-xl px-4 py-3 flex items-center gap-3 transition-colors"
+        >
+          <span class="material-symbols-outlined">logout</span>
+          <span class="font-label-md text-label-md">Logout</span>
+        </button>
+      </div>
+    </aside>
+    <!-- Main Content Canvas -->
+    <main class="ml-64 p-xl min-h-screen">
+      <!-- Header Actions Section -->
+      <header
+        class="flex flex-col md:flex-row justify-between items-start md:items-center mb-xl gap-md"
+      >
+        <div>
+          <h2 class="font-headline-lg text-headline-lg text-on-surface">
+            Quản Lý Sản Phẩm
+          </h2>
+          <p class="text-on-surface-variant">
+            Xem, thêm mới và điều chỉnh kho hàng của bạn.
+          </p>
+        </div>
+        <button
+          class="bg-primary-container text-on-primary-container font-label-md text-label-md px-lg py-3 rounded-full flex items-center gap-2 hover:scale-105 transition-transform shadow-md active:scale-95"
+        >
+          <span class="material-symbols-outlined">add</span>
+          Thêm Sản Phẩm
+        </button>
+      </header>
+      <!-- Filters and Search -->
+      <div
+        class="bg-white rounded-[24px] p-md mb-lg border border-outline-variant soft-shadow flex flex-wrap items-center gap-md"
+      >
+        <div class="flex-1 min-w-[300px] relative">
+          <span
+            class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline"
+            >search</span
+          >
+          <input
+            class="w-full bg-surface-container-low border-none rounded-full py-3 pl-12 pr-4 focus:ring-2 focus:ring-primary-container font-body-md text-body-md"
+            placeholder="Tìm kiếm sản phẩm theo tên..."
+            type="text"
+          />
+        </div>
+        <select
+          class="bg-surface-container-low border-none rounded-full py-3 px-lg focus:ring-2 focus:ring-primary-container font-label-md text-label-md text-on-surface-variant"
+        >
+          <option>Tất cả danh mục</option>
+          <option>Hạt</option>
+          <option>Pate</option>
+          <option>Snack</option>
+          <option>Phụ kiện</option>
+        </select>
+        <button
+          class="p-3 bg-surface-container-low rounded-full text-on-surface-variant hover:bg-secondary-container transition-colors"
+        >
+          <span class="material-symbols-outlined">filter_list</span>
+        </button>
+      </div>
+      <!-- Products Table -->
+      <div
+        class="bg-white rounded-[24px] border border-outline-variant soft-shadow overflow-hidden"
+      >
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-surface-container-low">
+              <tr>
+                <th
+                  class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                >
+                  Hình ảnh
+                </th>
+                <th
+                  class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                >
+                  Tên Sản Phẩm
+                </th>
+                <th
+                  class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                >
+                  Danh mục
+                </th>
+                <th
+                  class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                >
+                  Giá Bán
+                </th>
+                <th
+                  class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                >
+                  Tồn kho
+                </th>
+                <th
+                  class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right"
+                >
+                  Thao tác
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant">
+              <!-- Product Item 1 -->
+              <tr class="table-row-hover transition-colors">
+                <td class="px-lg py-md">
+                  <div
+                    class="w-16 h-16 rounded-xl overflow-hidden bg-surface-container-highest border border-outline-variant"
+                  >
+                    <img
+                      class="w-full h-full object-cover"
+                      data-alt="A high-quality studio photograph of a premium cat food bag set against a soft, cream-colored background. The lighting is bright and airy, emphasizing the clean packaging design. The overall aesthetic is minimalist and modern, aligning with a luxury pet care brand's visual identity using warm earth tones."
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwG7MpV1imKUrW6p79emXaaNNZd7G8Hw8v9XMZbKqvz3qh8QO7A9Mrvlc8BmiTBQt25tC1-rwXY7OA-Kmsu58GpG3jaK1Jxtm24Vto_5X6cK-mH_Taa5mY_XUkPQVM3pHoWIWs55cPhUqlAYWAUSDpkYsh_XO2Dw_GTQvhM1bXR_XWku0KNIYzzZ__QcErr2_ltLUneB-CDPeieCHIjItb9Pm3k2uNiWBQHWfhgaQ47KrfL6v2mjVgS8AKXLC3EOwPdt20lc2C5Oc"
+                    />
+                  </div>
+                </td>
+                <td class="px-lg py-md">
+                  <div class="flex flex-col">
+                    <span class="font-label-md text-label-md text-on-surface"
+                      >Hạt Royal Canin Mother &amp; Babycat</span
+                    >
+                    <span class="text-label-sm text-on-surface-variant"
+                      >ID: #PET-00124</span
+                    >
+                  </div>
+                </td>
+                <td class="px-lg py-md">
+                  <span
+                    class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-label-sm font-bold uppercase"
+                    >Hạt</span
+                  >
+                </td>
+                <td class="px-lg py-md">
+                  <span class="font-label-md text-label-md text-primary"
+                    >450.000đ</span
+                  >
+                </td>
+                <td class="px-lg py-md">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                    <span class="font-body-md text-body-md">48 túi</span>
+                  </div>
+                </td>
+                <td class="px-lg py-md text-right">
+                  <div class="flex justify-end gap-2">
+                    <button
+                      class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-primary-container/10 rounded-full"
+                    >
+                      <span class="material-symbols-outlined">edit</span>
+                    </button>
+                    <button
+                      class="p-2 text-on-surface-variant hover:text-error transition-colors hover:bg-error-container/20 rounded-full"
+                    >
+                      <span class="material-symbols-outlined">delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Product Item 2 -->
+              <tr class="table-row-hover transition-colors">
+                <td class="px-lg py-md">
+                  <div
+                    class="w-16 h-16 rounded-xl overflow-hidden bg-surface-container-highest border border-outline-variant"
+                  >
+                    <img
+                      class="w-full h-full object-cover"
+                      data-alt="A close-up shot of a small can of gourmet cat pate, featuring elegant labeling with cat illustrations. The product is placed on a light wooden surface with soft shadows cast by warm, afternoon sunlight. The scene feels cozy and domestic, reflecting a premium and caring pet lifestyle brand."
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBYl4J0-MrOS_yvnFrytLBTLrnpLPRC6u9-c-Kli-BfIrlmRxj-1Bxon4_3gU1NBr1DpxJiEOTCZF_vi2FWNz7D1Wc_azrK5ddzsr6437tkfvVTJFN7b4Rx0akZCkuTYHEiqCyGEzQK7Ot_jqLLv3rHZs5SO-ZFHfXeuLE77Y_VrcjNX2k8SnPTCLCAiPyr3tL80LAYG-hcfL_YJUaZaaiJcqBST2l1KRZyQ-ivvounLdoEd_5D8BUuTE5HRF66UzUPTkCD1pAHLQ"
+                    />
+                  </div>
+                </td>
+                <td class="px-lg py-md">
+                  <div class="flex flex-col">
+                    <span class="font-label-md text-label-md text-on-surface"
+                      >Pate Ciao Churu Gà &amp; Cá Ngừ</span
+                    >
+                    <span class="text-label-sm text-on-surface-variant"
+                      >ID: #PET-00215</span
+                    >
+                  </div>
+                </td>
+                <td class="px-lg py-md">
+                  <span
+                    class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-label-sm font-bold uppercase"
+                    >Pate</span
+                  >
+                </td>
+                <td class="px-lg py-md">
+                  <span class="font-label-md text-label-md text-primary"
+                    >35.000đ</span
+                  >
+                </td>
+                <td class="px-lg py-md">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-error"></span>
+                    <span class="font-body-md text-body-md text-error"
+                      >5 gói (Sắp hết)</span
+                    >
+                  </div>
+                </td>
+                <td class="px-lg py-md text-right">
+                  <div class="flex justify-end gap-2">
+                    <button
+                      class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-primary-container/10 rounded-full"
+                    >
+                      <span class="material-symbols-outlined">edit</span>
+                    </button>
+                    <button
+                      class="p-2 text-on-surface-variant hover:text-error transition-colors hover:bg-error-container/20 rounded-full"
+                    >
+                      <span class="material-symbols-outlined">delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- Product Item 3 -->
+              <tr class="table-row-hover transition-colors">
+                <td class="px-lg py-md">
+                  <div
+                    class="w-16 h-16 rounded-xl overflow-hidden bg-surface-container-highest border border-outline-variant"
+                  >
+                    <img
+                      class="w-full h-full object-cover"
+                      data-alt="A macro photograph of cat dental treats, shaped like small fish, displayed in a clear glass jar on a bright white kitchen counter. The lighting is crisp and clean, creating a healthy and professional medical aesthetic. Subtle orange accents in the background tie back to the brand's primary color palette."
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvkNnWWl6Gavb65fQVI__T9LW_lZwA7VwS0KitJtPknhiy9IcVk2d7_DUTDcDsaj0tft5pFAAORhXkUTSx6__A6auckOJA7wJPCL7M4ZzEeUMUqAC1EimsYJdtHluwBHG9KDkuKssZfV2_TrTe-FlpJzkzNNfkPpc3e4cW3yHByjBYIPreXMYNIb0cFXDdyz3ZaZTpmSkIN79KvyUoyYkaoPbVYmiJ4IXUe8IJZWaT0Radc9z-FHe2AyZVQ9JPLixWb0IcvVaP2W0"
+                    />
+                  </div>
+                </td>
+                <td class="px-lg py-md">
+                  <div class="flex flex-col">
+                    <span class="font-label-md text-label-md text-on-surface"
+                      >Snack Súp Thưởng Me-O</span
+                    >
+                    <span class="text-label-sm text-on-surface-variant"
+                      >ID: #PET-00389</span
+                    >
+                  </div>
+                </td>
+                <td class="px-lg py-md">
+                  <span
+                    class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-label-sm font-bold uppercase"
+                    >Snack</span
+                  >
+                </td>
+                <td class="px-lg py-md">
+                  <span class="font-label-md text-label-md text-primary"
+                    >120.000đ</span
+                  >
+                </td>
+                <td class="px-lg py-md">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                    <span class="font-body-md text-body-md">150 hộp</span>
+                  </div>
+                </td>
+                <td class="px-lg py-md text-right">
+                  <div class="flex justify-end gap-2">
+                    <button
+                      class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-primary-container/10 rounded-full"
+                    >
+                      <span class="material-symbols-outlined">edit</span>
+                    </button>
+                    <button
+                      class="p-2 text-on-surface-variant hover:text-error transition-colors hover:bg-error-container/20 rounded-full"
+                    >
+                      <span class="material-symbols-outlined">delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Pagination -->
+        <div
+          class="px-lg py-md bg-surface-container-low flex justify-between items-center"
+        >
+          <span class="text-label-sm text-on-surface-variant"
+            >Hiển thị 1-10 trên 156 sản phẩm</span
+          >
+          <div class="flex gap-2">
+            <button
+              class="p-2 rounded-full hover:bg-surface-container-high text-on-surface-variant disabled:opacity-30"
+              disabled=""
+            >
+              <span class="material-symbols-outlined">chevron_left</span>
+            </button>
+            <button
+              class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container font-label-md flex items-center justify-center"
+            >
+              1
+            </button>
+            <button
+              class="w-10 h-10 rounded-full hover:bg-surface-container-high text-on-surface-variant font-label-md flex items-center justify-center"
+            >
+              2
+            </button>
+            <button
+              class="w-10 h-10 rounded-full hover:bg-surface-container-high text-on-surface-variant font-label-md flex items-center justify-center"
+            >
+              3
+            </button>
+            <button
+              class="p-2 rounded-full hover:bg-surface-container-high text-on-surface-variant"
+            >
+              <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- Footer (Shared Component) -->
+    <footer
+      class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto bg-surface-container-highest dark:bg-surface-container mt-xl"
+    >
+      <div class="col-span-1 md:col-span-1">
+        <span class="font-headline-sm text-headline-sm text-on-surface"
+          >Xám Pet Shop</span
+        >
+        <p class="mt-md text-on-surface-variant text-label-sm">
+          Cửa hàng chăm sóc thú cưng cao cấp, mang lại sự ấm áp và tin cậy cho
+          người bạn bốn chân của bạn.
+        </p>
+      </div>
+      <div class="flex flex-col gap-sm">
+        <span class="font-label-md text-label-md text-primary">Liên hệ</span>
+        <span class="text-on-surface-variant text-label-sm"
+          >Address: Bắc Từ Liêm, Hà Nội</span
+        >
+        <span class="text-on-surface-variant text-label-sm"
+          >Phone: 038.339.2903</span
+        >
+        <span class="text-on-surface-variant text-label-sm"
+          >Email: nampham050723@gmail.com</span
+        >
+      </div>
+      <div class="flex flex-col gap-sm">
+        <span class="font-label-md text-label-md text-primary">Chính sách</span>
+        <a
+          class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+          href="#"
+          >Chính sách bảo mật</a
+        >
+        <a
+          class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+          href="#"
+          >Điều khoản dịch vụ</a
+        >
+        <a
+          class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+          href="#"
+          >Giao hàng &amp; Hoàn trả</a
+        >
+      </div>
+      <div class="flex flex-col gap-sm">
+        <span class="font-label-md text-label-md text-primary"
+          >Mạng xã hội</span
+        >
+        <a
+          class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
+          href="#"
+        >
+          <span class="material-symbols-outlined text-sm">public</span> Facebook
+        </a>
+        <a
+          class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
+          href="#"
+        >
+          <span class="material-symbols-outlined text-sm">camera_alt</span>
+          Instagram
+        </a>
+        <p class="mt-4 text-on-surface-variant text-[10px]">
+          © 2026 Xám Pet Shop. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

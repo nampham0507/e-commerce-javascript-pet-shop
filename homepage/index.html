@@ -1,0 +1,684 @@
+<!doctype html>
+
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#93000a",
+              "on-secondary-fixed-variant": "#4a4737",
+              "primary-fixed": "#ffddb6",
+              "secondary-container": "#e8e3cd",
+              "tertiary-fixed-dim": "#58d5fe",
+              "primary-fixed-dim": "#ffb95a",
+              error: "#ba1a1a",
+              "primary-container": "#ffb347",
+              outline: "#847463",
+              "on-secondary-fixed": "#1e1c0f",
+              "on-secondary-container": "#686554",
+              "secondary-fixed-dim": "#ccc7b2",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary": "#ffffff",
+              "on-tertiary-container": "#00576d",
+              "inverse-surface": "#372f27",
+              "on-background": "#211a13",
+              "tertiary-fixed": "#b8eaff",
+              "inverse-primary": "#ffb95a",
+              "on-tertiary-fixed": "#001f28",
+              "on-error": "#ffffff",
+              tertiary: "#006780",
+              "surface-container-highest": "#eee0d4",
+              "surface-tint": "#845400",
+              "on-tertiary-fixed-variant": "#004d61",
+              background: "#fff8f4",
+              primary: "#845400",
+              "secondary-fixed": "#e8e3cd",
+              "surface-container-high": "#f3e6da",
+              "on-tertiary": "#ffffff",
+              "inverse-on-surface": "#fceee2",
+              "surface-variant": "#eee0d4",
+              secondary: "#625f4e",
+              "surface-container-low": "#fff1e5",
+              "on-surface": "#211a13",
+              "tertiary-container": "#52d0f9",
+              "on-primary-fixed": "#2a1800",
+              "outline-variant": "#d6c3b0",
+              "on-surface-variant": "#524535",
+              "surface-container": "#f9ecdf",
+              "on-primary-fixed-variant": "#643f00",
+              surface: "#fff8f4",
+              "on-primary-container": "#704700",
+              "surface-dim": "#e5d8cc",
+              "surface-bright": "#fff8f4",
+              "error-container": "#ffdad6",
+              "on-primary": "#ffffff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              gutter: "24px",
+              md: "16px",
+              lg: "24px",
+              sm: "8px",
+              xl: "40px",
+              unit: "4px",
+              "margin-mobile": "16px",
+              xs: "4px",
+              "container-max": "1200px",
+            },
+            fontFamily: {
+              "headline-lg": ["Quicksand"],
+              "headline-md": ["Quicksand"],
+              "label-md": ["Plus Jakarta Sans"],
+              "body-lg": ["Plus Jakarta Sans"],
+              "headline-lg-mobile": ["Quicksand"],
+              "body-md": ["Plus Jakarta Sans"],
+              "label-sm": ["Plus Jakarta Sans"],
+              "headline-xl": ["Quicksand"],
+            },
+            fontSize: {
+              "headline-lg": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "700" },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.01em",
+                  fontWeight: "600",
+                },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "headline-lg-mobile": [
+                "28px",
+                { lineHeight: "36px", fontWeight: "700" },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "700" }],
+              "headline-xl": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      body {
+        background-color: #fff8f4;
+        color: #211a13;
+      }
+    </style>
+  </head>
+  <body class="font-body-md text-body-md">
+    <!-- TopNavBar -->
+    <header
+      class="fixed top-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-md shadow-sm"
+    >
+      <div
+        class="flex justify-between items-center px-lg py-md w-full max-w-container-max mx-auto"
+      >
+        <div class="font-headline-md text-headline-md font-bold text-primary">
+          Xám Pet Shop
+        </div>
+        <nav class="hidden md:flex items-center gap-xl">
+          <a
+            class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md"
+            href="#"
+            >Trang chủ</a
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary transition-transform duration-200 hover:scale-105 font-body-md text-body-md"
+            href="#"
+            >Sản phẩm</a
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary transition-transform duration-200 hover:scale-105 font-body-md text-body-md"
+            href="#"
+            >Danh mục</a
+          >
+        </nav>
+        <div class="flex items-center gap-md">
+          <button
+            class="material-symbols-outlined text-primary p-2 transition-transform duration-200 hover:scale-110 active:scale-95"
+            data-icon="shopping_cart"
+          >
+            shopping_cart
+          </button>
+          <div class="hidden sm:flex items-center gap-sm">
+            <button
+              class="text-on-surface-variant hover:text-primary font-label-md px-md py-sm"
+            >
+              Đăng nhập
+            </button>
+            <button
+              class="bg-primary-container text-on-primary-container px-lg py-sm rounded-full font-label-md hover:scale-105 transition-all active:scale-95"
+            >
+              Đăng ký
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="pt-[72px]">
+      <!-- Hero Banner -->
+      <section
+        class="relative w-full h-[500px] md:h-[600px] flex items-center overflow-hidden"
+      >
+        <div class="absolute inset-0 z-0">
+          <img
+            alt="Happy cat"
+            class="w-full h-full object-cover object-center"
+            data-alt="A high-key professional photograph of a beautiful, fluffy grey cat stretching comfortably in a sun-drenched, minimalist living room. The lighting is soft and warm, highlighting the cat's silky fur and gentle expression. The background is a clean, modern interior with soft grey and pastel orange accents, perfectly aligning with the soft minimalist brand aesthetic of a premium pet store."
+            src="../images/xam.png"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-transparent"
+          ></div>
+        </div>
+        <div class="relative z-10 w-full max-w-container-max mx-auto px-lg">
+          <div class="max-w-xl">
+            <h1 class="font-headline-xl text-headline-xl text-on-surface mb-md">
+              Thức ăn chất lượng cho boss nhà bạn
+            </h1>
+            <p class="font-body-lg text-body-lg text-on-surface-variant mb-xl">
+              Chăm sóc boss bằng những bữa ăn giàu dinh dưỡng từ Xám Pet Shop.
+            </p>
+            <button
+              class="bg-primary-container text-on-primary-container px-xl py-md rounded-full font-headline-md text-headline-md hover:scale-105 transition-all shadow-md active:scale-95"
+            >
+              Mua ngay
+            </button>
+          </div>
+        </div>
+      </section>
+      <!-- Categories Section -->
+      <section class="py-xl max-w-container-max mx-auto px-lg">
+        <div class="flex items-center justify-between mb-xl">
+          <h2 class="font-headline-lg text-headline-lg text-on-surface">
+            Danh mục nổi bật
+          </h2>
+          <div class="h-[2px] flex-grow mx-lg bg-outline-variant/30"></div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-lg">
+          <!-- Hạt -->
+          <div
+            class="group bg-white rounded-[24px] p-lg border border-outline-variant/20 shadow-sm hover:shadow-md transition-all text-center"
+          >
+            <div
+              class="w-24 h-24 mx-auto mb-md bg-surface-container-low rounded-full flex items-center justify-center p-4"
+            >
+              <img
+                alt="Dry Food"
+                class="w-full h-full object-contain"
+                data-alt="Close up of high-quality dry cat food pellets in a ceramic bowl, shot with professional high-key lighting. The pellets are rich in texture, appearing nutritious and premium. The background is a soft, blurred pastel grey, maintaining a clean and minimalist aesthetic suitable for a high-end pet product catalog."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqEESuCo-RmnGSk6VCM0A4bap9JjQwtLIeD3LDUW-NhrJUQmbKu83ehCbxd--QaI-xp3Lf5RoCYaanrOTe5iGZjCFcFPwVqnxBahpC1wD1ulqDDoZncjOuNP_j5YNEezhrRq0HUZTxF0DoNomNYdu7KK0ycmLR9niqOUI8-Vv6FnlhIaa4IZsJA1QmlcV8aIKqFGdpH4drTFRCnD2Lh-IyS6SlR-lK8bNW-yi_qFE_nWVEkbUXeLMb0sCmc9r_N-EOXpUUbh5kfkk"
+              />
+            </div>
+            <h3 class="font-headline-md text-headline-md text-on-surface mb-sm">
+              Hạt
+            </h3>
+            <button
+              class="text-primary font-label-md hover:underline transition-all"
+            >
+              Xem thêm
+            </button>
+          </div>
+          <!-- Pate -->
+          <div
+            class="group bg-white rounded-[24px] p-lg border border-outline-variant/20 shadow-sm hover:shadow-md transition-all text-center"
+          >
+            <div
+              class="w-24 h-24 mx-auto mb-md bg-surface-container-low rounded-full flex items-center justify-center p-4"
+            >
+              <img
+                alt="Wet Food"
+                class="w-full h-full object-contain"
+                data-alt="A premium can of wet cat food being served, showing moist and meaty textures. The lighting is soft and bright, emphasizing freshness and quality. The overall scene is captured in a minimalist style with a clean white and soft grey color palette to evoke a sense of professional cat care."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBbpDoskxV57SOX7_A7_RclqC7LjfY_eZes-G_qXNSZV2FWnhc7NcRXJq6XYT_Vhaek1kn-MfKHPB8jgaej4IbPuLOyHF4dY7NaUhQwXbeTPQjZN6EKOCoEKwK4BZgTJ3TXCCKQsWUhtFk6P4eCxBQdgb6UhrxpR35hwGRPp0Afd0Gu0gLM-uL7zCC3pCXW6O03eefCNiLkUArrS0kQeDTyOtDcKpavXHREn8eQfJTc4XuQ-lujZ9qshZXQRGzEMvxwsOidRArxCE"
+              />
+            </div>
+            <h3 class="font-headline-md text-headline-md text-on-surface mb-sm">
+              Pate
+            </h3>
+            <button
+              class="text-primary font-label-md hover:underline transition-all"
+            >
+              Xem thêm
+            </button>
+          </div>
+          <!-- Snack -->
+          <div
+            class="group bg-white rounded-[24px] p-lg border border-outline-variant/20 shadow-sm hover:shadow-md transition-all text-center"
+          >
+            <div
+              class="w-24 h-24 mx-auto mb-md bg-surface-container-low rounded-full flex items-center justify-center p-4"
+            >
+              <img
+                alt="Treats"
+                class="w-full h-full object-contain"
+                data-alt="Delicious and colorful cat treats displayed in a minimalist glass jar. The treats have interesting shapes and textures. The shot is bright and airy, with soft shadows and a gentle orange tint reflecting the brand's primary color, creating a warm and inviting visual for pet owners."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7_sM87T81uxy0iQFhjcxoe83OHSdWmN8x39r6iyF-z0OCDkwhs4hNnESZ7kpCfklYRmcy0OJVjiWkuy6sTXIvhB_ibTzgdJ2Xs9JMsXqdq-AdXy1RISG0PiiM2_3rxN2ausiVu9551CbNvRLeZv7L_qJPsiasvi9ddoLsScvj44SlU6rbD5JNRxyRBT8C48_xzaEwEJNc5v9nIpL-wI3WFH0otrUU2VKMocoWVt6b393gmhgAwtqwoMwl62Se4URr5A0x6k4OXmM"
+              />
+            </div>
+            <h3 class="font-headline-md text-headline-md text-on-surface mb-sm">
+              Snack
+            </h3>
+            <button
+              class="text-primary font-label-md hover:underline transition-all"
+            >
+              Xem thêm
+            </button>
+          </div>
+          <!-- Sữa -->
+          <div
+            class="group bg-white rounded-[24px] p-lg border border-outline-variant/20 shadow-sm hover:shadow-md transition-all text-center"
+          >
+            <div
+              class="w-24 h-24 mx-auto mb-md bg-surface-container-low rounded-full flex items-center justify-center p-4"
+            >
+              <img
+                alt="Milk"
+                class="w-full h-full object-contain"
+                data-alt="A small, elegant ceramic bowl filled with creamy white cat milk. The image is captured with high-key lighting, emphasizing purity and health. The setting is minimalist and modern, with a soft grey background that complements the brand's sophisticated and caring identity."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPvMLJXgj4k5st9t5lFZnxra_9H8Grkpprrl_ar_p95jXXK5HNMwL7wjef9WkJQ_htZXBKvc6poYQcSkiLajWqXUjNXwuFYgS7Iv58KUSslnZ8od5Eu9BHwVehfGlzcFGWRu2-aMLaPV5daNSmQunboUeOqqeSdEjTi3GEUF9E3JG4o8gZFVkEfwaHY0jfNYEVqqsPXZ3ySAD4TcS2lNNxh8ebygsZsSL6n-NaSIf4yk62DryJprGQ5XFTw0S7xIiWisL-ruvwqno"
+              />
+            </div>
+            <h3 class="font-headline-md text-headline-md text-on-surface mb-sm">
+              Sữa
+            </h3>
+            <button
+              class="text-primary font-label-md hover:underline transition-all"
+            >
+              Xem thêm
+            </button>
+          </div>
+          <!-- Phụ kiện -->
+          <div
+            class="group bg-white rounded-[24px] p-lg border border-outline-variant/20 shadow-sm hover:shadow-md transition-all text-center"
+          >
+            <div
+              class="w-24 h-24 mx-auto mb-md bg-surface-container-low rounded-full flex items-center justify-center p-4"
+            >
+              <img
+                alt="Accessories"
+                class="w-full h-full object-contain"
+                data-alt="A collection of minimalist and stylish cat accessories, including a pastel-colored collar and a small wooden toy. The lighting is diffused and soft, creating a cozy and modern domestic vibe. The color palette is restricted to soft greys, creams, and light orange accents to ensure brand consistency."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1qulHfNnMgniPDCQcQY1HGvURPzNXMFW1iU8toDHkTrxMj0tCWT_XAmZkfk2ODIUIYwTwJqW39zbGF0tdPdPlnMc-1htFSXEsOg68qQJ8rHPBl1JsIXoYKrJ2LZqWhqNjI6tUqfBDn_QxJhfLa68IYXMdxEwm_3DcMfuK6w09w5Cpn0v_lFByr-gxCT-VE2yeNI4B-GmdqCkZsRLRzhBnNGQrKUvfCcev5lvkVUgECGytQyWWxrS9mZjhEOuJtCq_7-v1pEiq-os"
+              />
+            </div>
+            <h3 class="font-headline-md text-headline-md text-on-surface mb-sm">
+              Phụ kiện
+            </h3>
+            <button
+              class="text-primary font-label-md hover:underline transition-all"
+            >
+              Xem thêm
+            </button>
+          </div>
+        </div>
+      </section>
+      <!-- Featured Products -->
+      <section class="py-xl bg-surface-container-low/50">
+        <div class="max-w-container-max mx-auto px-lg">
+          <div class="flex items-center justify-between mb-xl">
+            <h2 class="font-headline-lg text-headline-lg text-on-surface">
+              Sản phẩm nổi bật
+            </h2>
+            <button
+              class="flex items-center gap-sm text-primary font-label-md hover:translate-x-1 transition-transform"
+            >
+              Xem tất cả
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-lg">
+            <!-- Pate Whiskas -->
+            <div
+              class="bg-white rounded-[24px] border border-outline-variant/30 overflow-hidden shadow-sm hover:shadow-lg transition-all group flex flex-col"
+            >
+              <div
+                class="relative p-lg h-64 flex items-center justify-center bg-white"
+              >
+                <img
+                  alt="Pate Whiskas"
+                  class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                  data-alt="Professional studio product shot of a Pate Whiskas pouch. The product is presented clearly on a pristine white background with soft, natural shadows. The lighting is bright and even, highlighting the branding and packaging details in a high-end, commercial aesthetic that feels trustworthy and clean."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPw-J15iJyybUtFyuOdfHG_KZ8NTq6X5i2LZigDiGZmh6ehnF5wvQFrtVHJ-s3wR5R7a6rEzwaI_MuxmLh1L6oIh3e8xIsxe2KjIjQveaR5rRhti-jGIdYcqeXU8Fn4B4-yNcrkeo1GQugnR_sLGBP6r8Twrd1vf04gwErBrnlviM9ZvEjOOIyIwfb42GZKMkkXvB7imXAXZW6bXPxRLkZPEVvDI0-AUbq8ce-uPNLry4y7oDOSHka2KpARX6f7VM3cw8Hu-ZVQaM"
+                />
+                <div class="absolute top-md right-md">
+                  <span
+                    class="bg-tertiary-container/20 text-tertiary px-sm py-1 rounded-full font-label-sm"
+                    >Bán chạy</span
+                  >
+                </div>
+              </div>
+              <div class="p-lg flex flex-col flex-grow">
+                <div class="flex items-center gap-xs mb-sm">
+                  <span
+                    class="material-symbols-outlined text-primary text-[16px]"
+                    style="font-variation-settings: &quot;FILL&quot; 1"
+                    >star</span
+                  >
+                  <span class="font-label-sm text-on-surface">4.8</span>
+                </div>
+                <h4
+                  class="font-headline-md text-headline-md text-on-surface mb-xs"
+                >
+                  Pate Whiskas Vị Cá Ngừ
+                </h4>
+                <p
+                  class="font-body-md text-body-md text-on-surface-variant mb-md"
+                >
+                  Thơm ngon bỗ dưỡng cho mọi lứa tuổi.
+                </p>
+                <div class="mt-auto flex items-center justify-between">
+                  <span
+                    class="text-primary-container font-headline-md text-headline-md"
+                    >15.000đ</span
+                  >
+                  <button
+                    class="bg-primary text-on-primary p-3 rounded-full hover:scale-110 transition-transform shadow-md active:scale-95 flex items-center justify-center"
+                  >
+                    <span class="material-symbols-outlined"
+                      >add_shopping_cart</span
+                    >
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Hạt Me-O -->
+            <div
+              class="bg-white rounded-[24px] border border-outline-variant/30 overflow-hidden shadow-sm hover:shadow-lg transition-all group flex flex-col"
+            >
+              <div
+                class="relative p-lg h-64 flex items-center justify-center bg-white"
+              >
+                <img
+                  alt="Hạt Me-O"
+                  class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                  data-alt="Detailed product photography of Me-O dry cat food packaging. The bag is placed in a well-lit, minimalist environment. The shot captures the vibrant colors of the packaging against a soft neutral background, ensuring the product is the focal point. High-quality textures and soft ambient shadows contribute to a premium shopping experience."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKImwq_-4TUgomaJJoqWfiHQdKQNdf5H7tbhTpUJ6aFbG-Ni8dHV9ae9guq56OxThwDU67PWOdjkn8puMxPnznOySbWNI_FVm4Of9UQ7HclPpbsx4HkVpmNcvwS7Cu--JwoXY7PhThWYRC06mWzteQFXqgXz1A-KGEQX6gO8XHqxxdq_jo7H6Wba-o2f7GSLXduUKzbw2sNjjfIq3cpSsVhZNqjIOYs6Srv64Z29Y0ylRYPJpaooHfvikrUXa35DP7Y8eTsk5MpAk"
+                />
+              </div>
+              <div class="p-lg flex flex-col flex-grow">
+                <div class="flex items-center gap-xs mb-sm">
+                  <span
+                    class="material-symbols-outlined text-primary text-[16px]"
+                    style="font-variation-settings: &quot;FILL&quot; 1"
+                    >star</span
+                  >
+                  <span class="font-label-sm text-on-surface">4.5</span>
+                </div>
+                <h4
+                  class="font-headline-md text-headline-md text-on-surface mb-xs"
+                >
+                  Hạt Me-O Hải Sản
+                </h4>
+                <p
+                  class="font-body-md text-body-md text-on-surface-variant mb-md"
+                >
+                  Cung cấp Taurine cho đôi mắt sáng khỏe.
+                </p>
+                <div class="mt-auto flex items-center justify-between">
+                  <span
+                    class="text-primary-container font-headline-md text-headline-md"
+                    >45.000đ</span
+                  >
+                  <button
+                    class="bg-primary text-on-primary p-3 rounded-full hover:scale-110 transition-transform shadow-md active:scale-95 flex items-center justify-center"
+                  >
+                    <span class="material-symbols-outlined"
+                      >add_shopping_cart</span
+                    >
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Snack CIAO -->
+            <div
+              class="bg-white rounded-[24px] border border-outline-variant/30 overflow-hidden shadow-sm hover:shadow-lg transition-all group flex flex-col"
+            >
+              <div
+                class="relative p-lg h-64 flex items-center justify-center bg-white"
+              >
+                <img
+                  alt="Snack CIAO"
+                  class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                  data-alt="A clean, professional shot of CIAO cat treat tubes. The tubes are arranged neatly, showcasing the various flavors and colorful packaging. The lighting is soft and high-key, with a slight warm tint that aligns with the brand's friendly and accessible personality. The minimalist background keeps the focus on the enticing product."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOIrohtAWu5MkF7mc5F8PLSXJ7qf9lH8zustwnGdnrw6zwPhlkupm_xcu3fzv63cTJxFDrP8-4o07XE7EXWPUJvX1h1W5VCeOmKhkZ1Zv9ySebMGzjoGRH81aCfa8AHPJiIs_VFInM4oTxmXpDHYSIfCn2cKinBOBzzm-G_kHcDyLZKVO42aChXQ6XT06ujaeD4CLbVBVOXkLYK5IZB1cs8bGf30mCkoKjSJvJ6QMEyg-rFA94-zUnFp4togoCwzsmtSFeEeh5oSw"
+                />
+              </div>
+              <div class="p-lg flex flex-col flex-grow">
+                <div class="flex items-center gap-xs mb-sm">
+                  <span
+                    class="material-symbols-outlined text-primary text-[16px]"
+                    style="font-variation-settings: &quot;FILL&quot; 1"
+                    >star</span
+                  >
+                  <span class="font-label-sm text-on-surface">4.9</span>
+                </div>
+                <h4
+                  class="font-headline-md text-headline-md text-on-surface mb-xs"
+                >
+                  Snack CIAO Churu
+                </h4>
+                <p
+                  class="font-body-md text-body-md text-on-surface-variant mb-md"
+                >
+                  Dạng súp sệt cực kỳ hấp dẫn cho mèo.
+                </p>
+                <div class="mt-auto flex items-center justify-between">
+                  <span
+                    class="text-primary-container font-headline-md text-headline-md"
+                    >32.000đ</span
+                  >
+                  <button
+                    class="bg-primary text-on-primary p-3 rounded-full hover:scale-110 transition-transform shadow-md active:scale-95 flex items-center justify-center"
+                  >
+                    <span class="material-symbols-outlined"
+                      >add_shopping_cart</span
+                    >
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- Sữa Bio Milk -->
+            <div
+              class="bg-white rounded-[24px] border border-outline-variant/30 overflow-hidden shadow-sm hover:shadow-lg transition-all group flex flex-col"
+            >
+              <div
+                class="relative p-lg h-64 flex items-center justify-center bg-white"
+              >
+                <img
+                  alt="Sữa Bio Milk"
+                  class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                  data-alt="Commercial product photography of a Bio Milk container for cats. The container is placed on a clean, soft white surface under bright, diffused light. The background is a very light grey, emphasizing a clinical yet caring quality. The composition is simple and balanced, highlighting the product's nutritional information and clean design."
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtlg6GMG8MQILceowkKZtqpV1jjIYtMDAFsTIPkWtQKttY8SgLyK7plziPCEcygmcaZ3ctNNq_m-Aoc0lLRWDaiSe8Cj6hFLPgD8VFZ0yZqKzOBWWyQaZs3TBoTsCCv_YYfu6ctNBOrKYDdZ1qOCYP3BmriTN3d474w6bPntPJWUECE0OWFhjL8FV5xDKlaS4tve5DM9q663QAbUThryBFzSEZb5U3FUOEuXeVIqfY4Qaxu9BCPW1h-994eIvHN6AyDZR1r6PLoCA"
+                />
+                <div class="absolute top-md right-md">
+                  <span
+                    class="bg-secondary-container text-on-secondary-container px-sm py-1 rounded-full font-label-sm"
+                    >Mới</span
+                  >
+                </div>
+              </div>
+              <div class="p-lg flex flex-col flex-grow">
+                <div class="flex items-center gap-xs mb-sm">
+                  <span
+                    class="material-symbols-outlined text-primary text-[16px]"
+                    style="font-variation-settings: &quot;FILL&quot; 1"
+                    >star</span
+                  >
+                  <span class="font-label-sm text-on-surface">4.7</span>
+                </div>
+                <h4
+                  class="font-headline-md text-headline-md text-on-surface mb-xs"
+                >
+                  Sữa Bột Bio Milk 100g
+                </h4>
+                <p
+                  class="font-body-md text-body-md text-on-surface-variant mb-md"
+                >
+                  Thay thế sữa mẹ, dễ tiêu hóa cho mèo con.
+                </p>
+                <div class="mt-auto flex items-center justify-between">
+                  <span
+                    class="text-primary-container font-headline-md text-headline-md"
+                    >28.000đ</span
+                  >
+                  <button
+                    class="bg-primary text-on-primary p-3 rounded-full hover:scale-110 transition-transform shadow-md active:scale-95 flex items-center justify-center"
+                  >
+                    <span class="material-symbols-outlined"
+                      >add_shopping_cart</span
+                    >
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Newsletter / Community Section -->
+      <section class="py-xl max-w-container-max mx-auto px-lg">
+        <div
+          class="bg-primary-container rounded-[32px] p-xl flex flex-col md:flex-row items-center gap-xl"
+        >
+          <div class="flex-1 text-on-primary-container">
+            <h2 class="font-headline-lg text-headline-lg mb-md">
+              Gia nhập cộng đồng yêu mèo
+            </h2>
+            <p class="font-body-lg text-body-lg opacity-90">
+              Nhận thông báo về các chương trình khuyến mãi và mẹo chăm sóc mèo
+              hàng tuần.
+            </p>
+          </div>
+          <div class="flex-1 w-full flex flex-col sm:flex-row gap-md">
+            <input
+              class="flex-grow bg-white border-none rounded-full px-lg py-md focus:ring-2 focus:ring-primary outline-none font-body-md text-on-surface"
+              placeholder="Nhập email của bạn"
+              type="email"
+            />
+            <button
+              class="bg-primary text-on-primary px-xl py-md rounded-full font-label-md shadow-md hover:scale-105 transition-all active:scale-95"
+            >
+              Đăng ký ngay
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Footer -->
+    <footer
+      class="bg-surface-container-highest dark:bg-surface-container w-full py-xl px-lg"
+    >
+      <div
+        class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-lg"
+      >
+        <div class="flex flex-col gap-md">
+          <div
+            class="font-headline-sm text-headline-sm text-on-surface font-bold"
+          >
+            Xám Pet Shop
+          </div>
+          <p class="font-body-sm text-label-sm text-on-surface-variant">
+            Nơi cung cấp giải pháp dinh dưỡng toàn diện và cao cấp cho những chú
+            mèo của bạn.
+          </p>
+        </div>
+        <div class="flex flex-col gap-sm">
+          <h4 class="font-label-md text-primary mb-md">Liên hệ</h4>
+          <p class="font-body-sm text-label-sm text-on-surface-variant">
+            Address: Bắc Từ Liêm, Hà Nội
+          </p>
+          <p class="font-body-sm text-label-sm text-on-surface-variant">
+            Phone: 038.339.2903
+          </p>
+          <p class="font-body-sm text-label-sm text-on-surface-variant">
+            Email: nampham050723@gmail.com
+          </p>
+        </div>
+        <div class="flex flex-col gap-sm">
+          <h4 class="font-label-md text-primary mb-md">Khám phá</h4>
+          <a
+            class="font-body-sm text-label-sm text-on-surface-variant hover:text-primary transition-opacity"
+            href="#"
+            >Về chúng tôi</a
+          >
+          <a
+            class="font-body-sm text-label-sm text-on-surface-variant hover:text-primary transition-opacity"
+            href="#"
+            >Chính sách giao hàng</a
+          >
+          <a
+            class="font-body-sm text-label-sm text-on-surface-variant hover:text-primary transition-opacity"
+            href="#"
+            >Đổi trả sản phẩm</a
+          >
+        </div>
+        <div class="flex flex-col gap-sm">
+          <h4 class="font-label-md text-primary mb-md">Mạng xã hội</h4>
+          <div class="flex gap-md">
+            <a
+              class="text-on-surface-variant hover:text-primary transition-opacity"
+              href="#"
+              >Facebook</a
+            >
+            <a
+              class="text-on-surface-variant hover:text-primary transition-opacity"
+              href="#"
+              >Instagram</a
+            >
+          </div>
+        </div>
+      </div>
+      <div
+        class="max-w-container-max mx-auto mt-xl pt-lg border-t border-outline-variant/30 text-center"
+      >
+        <p class="font-body-sm text-label-sm text-on-surface-variant">
+          © 2026 Xám Pet Shop. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

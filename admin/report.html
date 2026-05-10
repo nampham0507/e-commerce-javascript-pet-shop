@@ -1,0 +1,695 @@
+<!doctype html>
+
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-container": "#686554",
+              error: "#ba1a1a",
+              "tertiary-fixed-dim": "#58d5fe",
+              "surface-container-high": "#f3e6da",
+              "primary-fixed-dim": "#ffb95a",
+              "surface-container-lowest": "#ffffff",
+              "on-error": "#ffffff",
+              "surface-tint": "#845400",
+              secondary: "#625f4e",
+              "on-tertiary": "#ffffff",
+              "primary-container": "#ffb347",
+              "tertiary-container": "#52d0f9",
+              outline: "#847463",
+              "on-surface-variant": "#524535",
+              "on-secondary-fixed": "#1e1c0f",
+              "on-primary-container": "#704700",
+              "surface-dim": "#e5d8cc",
+              "inverse-surface": "#372f27",
+              "on-tertiary-fixed-variant": "#004d61",
+              "on-background": "#211a13",
+              "on-primary": "#ffffff",
+              "surface-bright": "#fff8f4",
+              "inverse-primary": "#ffb95a",
+              "outline-variant": "#d6c3b0",
+              "secondary-container": "#e8e3cd",
+              "on-primary-fixed-variant": "#643f00",
+              tertiary: "#006780",
+              "error-container": "#ffdad6",
+              "surface-variant": "#eee0d4",
+              "secondary-fixed": "#e8e3cd",
+              "on-error-container": "#93000a",
+              primary: "#845400",
+              "on-surface": "#211a13",
+              "on-primary-fixed": "#2a1800",
+              "primary-fixed": "#ffddb6",
+              surface: "#fff8f4",
+              "tertiary-fixed": "#b8eaff",
+              "surface-container-low": "#fff1e5",
+              background: "#fff8f4",
+              "inverse-on-surface": "#fceee2",
+              "surface-container-highest": "#eee0d4",
+              "secondary-fixed-dim": "#ccc7b2",
+              "on-tertiary-container": "#00576d",
+              "on-secondary": "#ffffff",
+              "on-secondary-fixed-variant": "#4a4737",
+              "on-tertiary-fixed": "#001f28",
+              "surface-container": "#f9ecdf",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              lg: "24px",
+              xs: "4px",
+              xl: "40px",
+              "margin-mobile": "16px",
+              "container-max": "1200px",
+              unit: "4px",
+              gutter: "24px",
+              sm: "8px",
+              md: "16px",
+            },
+            fontFamily: {
+              "label-md": ["Plus Jakarta Sans"],
+              "headline-lg": ["Quicksand"],
+              "headline-md": ["Quicksand"],
+              "body-md": ["Plus Jakarta Sans"],
+              "headline-lg-mobile": ["Quicksand"],
+              "body-lg": ["Plus Jakarta Sans"],
+              "label-sm": ["Plus Jakarta Sans"],
+              "headline-xl": ["Quicksand"],
+            },
+            fontSize: {
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.01em",
+                  fontWeight: "600",
+                },
+              ],
+              "headline-lg": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "700" },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "headline-lg-mobile": [
+                "28px",
+                { lineHeight: "36px", fontWeight: "700" },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "700" }],
+              "headline-xl": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .chart-bar {
+        transition: height 0.3s ease;
+      }
+      .soft-shadow {
+        box-shadow: 0 4px 20px -2px rgba(132, 84, 0, 0.08);
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-surface font-body-md min-h-screen">
+    <!-- SideNavBar -->
+    <aside
+      class="flex flex-col h-screen fixed left-0 top-0 border-r border-outline-variant bg-surface-container-low dark:bg-surface-container-lowest w-64 shadow-md z-50"
+    >
+      <div class="p-lg">
+        <h1 class="font-headline-sm text-headline-sm text-primary">
+          Admin Panel
+        </h1>
+        <p class="font-label-sm text-label-sm text-on-surface-variant">
+          Xám Pet Shop Management
+        </p>
+      </div>
+      <nav class="flex-1 mt-md">
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined">dashboard</span>
+          <span class="font-label-md text-label-md">Dashboard</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined">shopping_bag</span>
+          <span class="font-label-md text-label-md">Orders</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined">inventory_2</span>
+          <span class="font-label-md text-label-md">Products</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined">group</span>
+          <span class="font-label-md text-label-md">Users</span>
+        </a>
+        <a
+          class="bg-primary-container text-on-primary-container rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-all translate-x-1"
+          href="#"
+        >
+          <span class="material-symbols-outlined">assessment</span>
+          <span class="font-label-md text-label-md">Reports</span>
+        </a>
+      </nav>
+      <div class="p-md border-t border-outline-variant">
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined">logout</span>
+          <span class="font-label-md text-label-md">Logout</span>
+        </a>
+      </div>
+    </aside>
+    <!-- Main Content -->
+    <main class="ml-64 p-xl">
+      <header class="flex justify-between items-end mb-xl">
+        <div>
+          <h2 class="font-headline-lg text-headline-lg text-on-surface">
+            Báo cáo &amp; Thống kê
+          </h2>
+          <p class="text-on-surface-variant">
+            Phân tích chi tiết hoạt động kinh doanh của Xám Pet Shop
+          </p>
+        </div>
+        <div class="flex gap-md">
+          <button
+            class="bg-white border-2 border-outline-variant px-lg py-sm rounded-full font-label-md text-on-surface-variant hover:border-primary transition-all flex items-center gap-2"
+          >
+            <span class="material-symbols-outlined">calendar_today</span>
+            Tháng này
+          </button>
+          <button
+            class="bg-primary text-white px-lg py-sm rounded-full font-label-md hover:scale-105 transition-transform flex items-center gap-2"
+          >
+            <span class="material-symbols-outlined">download</span>
+            Xuất báo cáo
+          </button>
+        </div>
+      </header>
+      <!-- Metrics Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl">
+        <!-- Revenue Card -->
+        <div
+          class="bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
+        >
+          <div class="flex justify-between items-start mb-md">
+            <div
+              class="w-12 h-12 bg-primary-container/20 rounded-xl flex items-center justify-center text-primary"
+            >
+              <span class="material-symbols-outlined text-3xl">payments</span>
+            </div>
+            <span
+              class="text-green-600 font-label-sm bg-green-100 px-sm py-xs rounded-full"
+              >+12.5%</span
+            >
+          </div>
+          <p class="text-on-surface-variant font-label-md">Doanh thu tháng</p>
+          <h3 class="text-headline-md font-headline-md text-primary mt-xs">
+            125.400.000₫
+          </h3>
+        </div>
+        <!-- Orders Card -->
+        <div
+          class="bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
+        >
+          <div class="flex justify-between items-start mb-md">
+            <div
+              class="w-12 h-12 bg-secondary-container/50 rounded-xl flex items-center justify-center text-secondary"
+            >
+              <span class="material-symbols-outlined text-3xl"
+                >shopping_cart</span
+              >
+            </div>
+            <span
+              class="text-green-600 font-label-sm bg-green-100 px-sm py-xs rounded-full"
+              >+8.2%</span
+            >
+          </div>
+          <p class="text-on-surface-variant font-label-md">Tổng đơn hàng</p>
+          <h3 class="text-headline-md font-headline-md text-on-surface mt-xs">
+            1,248 đơn
+          </h3>
+        </div>
+        <!-- Top Products Metric -->
+        <div
+          class="bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
+        >
+          <div class="flex justify-between items-start mb-md">
+            <div
+              class="w-12 h-12 bg-tertiary-container/20 rounded-xl flex items-center justify-center text-tertiary"
+            >
+              <span class="material-symbols-outlined text-3xl">pets</span>
+            </div>
+            <span
+              class="text-primary font-label-sm bg-primary-container/20 px-sm py-xs rounded-full"
+              >Hot</span
+            >
+          </div>
+          <p class="text-on-surface-variant font-label-md">
+            Sản phẩm bán chạy nhất
+          </p>
+          <h3 class="text-headline-md font-headline-md text-on-surface mt-xs">
+            Hạt Royal Canin
+          </h3>
+        </div>
+      </div>
+      <!-- Charts Section -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-lg mb-xl">
+        <!-- Revenue Bar Chart Placeholder -->
+        <div
+          class="lg:col-span-2 bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
+        >
+          <div class="flex justify-between items-center mb-xl">
+            <h4 class="font-headline-md text-on-surface">
+              Biểu đồ doanh thu hàng tuần
+            </h4>
+            <span class="text-on-surface-variant font-label-sm"
+              >Đơn vị: Triệu VNĐ</span
+            >
+          </div>
+          <div class="h-64 flex items-end justify-between gap-md px-md">
+            <div class="flex flex-col items-center gap-sm flex-1">
+              <div
+                class="w-full bg-outline-variant/30 rounded-t-lg h-[40%] hover:bg-primary-container transition-colors relative group"
+              >
+                <div
+                  class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  12M
+                </div>
+              </div>
+              <span class="text-label-sm text-on-surface-variant">Thứ 2</span>
+            </div>
+            <div class="flex flex-col items-center gap-sm flex-1">
+              <div
+                class="w-full bg-outline-variant/30 rounded-t-lg h-[65%] hover:bg-primary-container transition-colors relative group"
+              >
+                <div
+                  class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  18M
+                </div>
+              </div>
+              <span class="text-label-sm text-on-surface-variant">Thứ 3</span>
+            </div>
+            <div class="flex flex-col items-center gap-sm flex-1">
+              <div
+                class="w-full bg-primary rounded-t-lg h-[85%] hover:opacity-80 transition-opacity relative group"
+              >
+                <div
+                  class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  25M
+                </div>
+              </div>
+              <span class="text-label-sm text-on-surface-variant">Thứ 4</span>
+            </div>
+            <div class="flex flex-col items-center gap-sm flex-1">
+              <div
+                class="w-full bg-outline-variant/30 rounded-t-lg h-[55%] hover:bg-primary-container transition-colors relative group"
+              >
+                <div
+                  class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  15M
+                </div>
+              </div>
+              <span class="text-label-sm text-on-surface-variant">Thứ 5</span>
+            </div>
+            <div class="flex flex-col items-center gap-sm flex-1">
+              <div
+                class="w-full bg-outline-variant/30 rounded-t-lg h-[75%] hover:bg-primary-container transition-colors relative group"
+              >
+                <div
+                  class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  21M
+                </div>
+              </div>
+              <span class="text-label-sm text-on-surface-variant">Thứ 6</span>
+            </div>
+            <div class="flex flex-col items-center gap-sm flex-1">
+              <div
+                class="w-full bg-outline-variant/30 rounded-t-lg h-[95%] hover:bg-primary-container transition-colors relative group"
+              >
+                <div
+                  class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  28M
+                </div>
+              </div>
+              <span class="text-label-sm text-on-surface-variant">Thứ 7</span>
+            </div>
+            <div class="flex flex-col items-center gap-sm flex-1">
+              <div
+                class="w-full bg-outline-variant/30 rounded-t-lg h-[90%] hover:bg-primary-container transition-colors relative group"
+              >
+                <div
+                  class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  26M
+                </div>
+              </div>
+              <span class="text-label-sm text-on-surface-variant">CN</span>
+            </div>
+          </div>
+        </div>
+        <!-- Category Pie Chart Placeholder -->
+        <div
+          class="bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
+        >
+          <h4 class="font-headline-md text-on-surface mb-xl">
+            Cơ cấu danh mục
+          </h4>
+          <div class="relative w-48 h-48 mx-auto mb-lg">
+            <div
+              class="absolute inset-0 rounded-full border-[32px] border-primary"
+              style="
+                clip-path: polygon(
+                  50% 50%,
+                  50% 0,
+                  100% 0,
+                  100% 100%,
+                  0 100%,
+                  0 50%
+                );
+              "
+            ></div>
+            <div
+              class="absolute inset-0 rounded-full border-[32px] border-primary-container/40"
+              style="clip-path: polygon(50% 50%, 50% 0, 0 0, 0 50%)"
+            ></div>
+            <div
+              class="absolute inset-0 flex items-center justify-center flex-col"
+            >
+              <span class="text-headline-md font-bold text-primary">65%</span>
+              <span
+                class="text-[10px] text-on-surface-variant uppercase tracking-widest"
+                >Thức ăn</span
+              >
+            </div>
+          </div>
+          <div class="space-y-sm">
+            <div class="flex justify-between items-center text-label-sm">
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-primary"></div>
+                <span>Thức ăn</span>
+              </div>
+              <span class="font-bold">65%</span>
+            </div>
+            <div class="flex justify-between items-center text-label-sm">
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-primary-container/40"></div>
+                <span>Phụ kiện</span>
+              </div>
+              <span class="font-bold">25%</span>
+            </div>
+            <div class="flex justify-between items-center text-label-sm">
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-secondary"></div>
+                <span>Khác</span>
+              </div>
+              <span class="font-bold">10%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Asymmetric Layout: Top Products Table & Recent Activity -->
+      <div class="grid grid-cols-1 xl:grid-cols-5 gap-lg">
+        <!-- Top Selling Table -->
+        <div
+          class="xl:col-span-3 bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
+        >
+          <div class="flex justify-between items-center mb-lg">
+            <h4 class="font-headline-md text-on-surface">Sản phẩm bán chạy</h4>
+            <a class="text-primary font-label-md hover:underline" href="#"
+              >Xem tất cả</a
+            >
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead>
+                <tr
+                  class="border-b border-outline-variant text-on-surface-variant text-label-sm"
+                >
+                  <th class="pb-md font-bold uppercase tracking-wider">
+                    Sản phẩm
+                  </th>
+                  <th
+                    class="pb-md font-bold uppercase tracking-wider text-center"
+                  >
+                    Đã bán
+                  </th>
+                  <th
+                    class="pb-md font-bold uppercase tracking-wider text-right"
+                  >
+                    Doanh thu
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-outline-variant">
+                <tr>
+                  <td class="py-md flex items-center gap-md">
+                    <img
+                      class="w-12 h-12 rounded-xl object-cover bg-surface-container"
+                      data-alt="Premium high-protein dry cat food packaging with minimalist orange and white design, presented in high-key professional studio lighting for an e-commerce catalog. The background is a soft light grey, creating a clean minimalist aesthetic typical of high-end pet supplies. Sharp focus on texture and branding details."
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuDANTs9e5lr60oNEPD_dgvOMyxm9C6L_DhOfgfC9dqjQMy4oxlXg-M7c60uW_m_6atXiakOMIsT1GnpsUsBjumvcyJRSv0087z-s5JQvV3Y3WnnKVqcVqqFFw_qQjshLXotneA46dw8-pVM8LxHvEyMJlcStHeHxA4Bl5HvF1xOafdhntCXzLr-bwB_aFF-9tjZ7XG1BvEQnOAYCkpzwxOeHgAnn32Nw9XhQDFv0N2l9O0UGjz2HAF1mLvaTBslMrAPhf0SqDOvetk"
+                    />
+                    <div>
+                      <div class="font-label-md text-on-surface">
+                        Hạt Royal Canin 2kg
+                      </div>
+                      <div class="text-[12px] text-on-surface-variant">
+                        Danh mục: Thức ăn khô
+                      </div>
+                    </div>
+                  </td>
+                  <td class="py-md text-center font-body-md">452</td>
+                  <td class="py-md text-right font-bold text-primary">
+                    22.600.000₫
+                  </td>
+                </tr>
+                <tr>
+                  <td class="py-md flex items-center gap-md">
+                    <img
+                      class="w-12 h-12 rounded-xl object-cover bg-surface-container"
+                      data-alt="Elegant cream-colored modern cat tree with soft velvet cushions and sisal scratching posts, standing in a brightly lit contemporary living room with minimalist decor. The lighting is warm and natural, casting soft shadows that emphasize the cozy and premium quality of the pet furniture. Subtle neutral tones dominate the scene."
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3ttEO_WW8nhu7-AReNJQaVRQ3s71SOobciTTwqD_oHsBRwVkwziqsPqciejrK37sBePk0YziJhloLx1I2M356N_UHDR6lvCqfXGom9GnzhHNf7EevA7yw7FalJC7LvneNsLKrIuQ_frJjH-LAMpWj8ZoFn2kp9UXbkJyPThZOqIlXTjsYmofI6ZUaPRg0fapmyp-dgZcoFCCgH5E3N3jKkBi9s9TlfVshkXD-W--L8oMoJfwBtL5ivthtb8thtf3BMIBPNX9Uuoc"
+                    />
+                    <div>
+                      <div class="font-label-md text-on-surface">
+                        Trụ cào móng Velvet
+                      </div>
+                      <div class="text-[12px] text-on-surface-variant">
+                        Danh mục: Phụ kiện
+                      </div>
+                    </div>
+                  </td>
+                  <td class="py-md text-center font-body-md">128</td>
+                  <td class="py-md text-right font-bold text-primary">
+                    15.360.000₫
+                  </td>
+                </tr>
+                <tr>
+                  <td class="py-md flex items-center gap-md">
+                    <img
+                      class="w-12 h-12 rounded-xl object-cover bg-surface-container"
+                      data-alt="Artistic close-up of premium cat canned wet food with chunks of tuna and jelly, styled on a white ceramic plate with a sprig of parsley. The lighting is crisp and bright, highlighting the fresh texture of the food. The overall mood is high-end and gourmet, appealing to discerning pet owners seeking quality nutrition."
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuAY-oRbyDCWq-1WXmPmS-NwNLrxcb88SKfvzi-GAFyt-zMHmX08oYvt_qWarjpNPnEF0n0-bpkqmcX7GqdcBkIJ6NtdzQU2O1QCMvketwzwqd77isWf09ua4d6gL6lzVHcgyUcYpBHY8bCrd_w-Tr7Jxal_vF0y1-UfiGKtcO0C5tRB6cDDXOdbgJsNWsMVZC2efgIJ5Sa8WSBxubzQsty0bdy6VSdJQcrnVhora1AAg9306De67LwGL-frTEXMJ1Ali2fyMqCnRTM"
+                    />
+                    <div>
+                      <div class="font-label-md text-on-surface">
+                        Pate Ciao Cá Ngừ
+                      </div>
+                      <div class="text-[12px] text-on-surface-variant">
+                        Danh mục: Thức ăn ướt
+                      </div>
+                    </div>
+                  </td>
+                  <td class="py-md text-center font-body-md">890</td>
+                  <td class="py-md text-right font-bold text-primary">
+                    13.350.000₫
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Recent Activity List -->
+        <div
+          class="xl:col-span-2 bg-surface-container-low p-lg rounded-[24px] border border-outline-variant"
+        >
+          <h4 class="font-headline-md text-on-surface mb-lg">
+            Hoạt động gần đây
+          </h4>
+          <div class="space-y-md">
+            <div class="flex gap-md">
+              <div
+                class="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"
+              ></div>
+              <div>
+                <p class="text-body-md text-on-surface">
+                  <strong>Đơn hàng mới #1294</strong> vừa được xác nhận
+                </p>
+                <span class="text-[12px] text-on-surface-variant"
+                  >2 phút trước</span
+                >
+              </div>
+            </div>
+            <div class="flex gap-md">
+              <div
+                class="w-2 h-2 rounded-full bg-tertiary mt-2 flex-shrink-0"
+              ></div>
+              <div>
+                <p class="text-body-md text-on-surface">
+                  Kho hàng: <strong>Sữa tắm Mèo</strong> chỉ còn 5 sản phẩm
+                </p>
+                <span class="text-[12px] text-on-surface-variant"
+                  >45 phút trước</span
+                >
+              </div>
+            </div>
+            <div class="flex gap-md">
+              <div
+                class="w-2 h-2 rounded-full bg-green-500 mt-2 flex-shrink-0"
+              ></div>
+              <div>
+                <p class="text-body-md text-on-surface">
+                  Thanh toán thành công cho đơn <strong>#1289</strong>
+                </p>
+                <span class="text-[12px] text-on-surface-variant"
+                  >1 giờ trước</span
+                >
+              </div>
+            </div>
+            <div class="flex gap-md">
+              <div
+                class="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"
+              ></div>
+              <div>
+                <p class="text-body-md text-on-surface">
+                  <strong>Báo cáo tồn kho</strong> tháng 10 đã sẵn sàng
+                </p>
+                <span class="text-[12px] text-on-surface-variant"
+                  >3 giờ trước</span
+                >
+              </div>
+            </div>
+          </div>
+          <button
+            class="w-full mt-xl py-md text-primary font-label-md border-2 border-primary/20 rounded-xl hover:bg-primary-container/10 transition-colors"
+          >
+            Xem tất cả lịch sử
+          </button>
+        </div>
+      </div>
+    </main>
+    <!-- Footer -->
+    <footer
+      class="ml-64 bg-surface-container-highest dark:bg-surface-container w-auto py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg"
+    >
+      <div class="flex flex-col gap-sm">
+        <h5 class="font-headline-sm text-headline-sm text-on-surface">
+          Xám Pet Shop
+        </h5>
+        <p class="font-body-sm text-label-sm text-on-surface-variant">
+          Hệ thống quản lý nội bộ dành cho đối tác và nhân viên.
+        </p>
+      </div>
+      <div class="flex flex-col gap-xs">
+        <h6 class="font-label-md text-primary uppercase mb-sm">Liên hệ</h6>
+        <span class="font-body-sm text-label-sm text-on-surface-variant"
+          >Địa chỉ: Bắc Từ Liêm, Hà Nội</span
+        >
+        <span class="font-body-sm text-label-sm text-on-surface-variant"
+          >Phone: 038.339.2903</span
+        >
+        <span class="font-body-sm text-label-sm text-on-surface-variant"
+          >Email: nampham050723@gmail.com</span
+        >
+      </div>
+      <div class="flex flex-col gap-xs">
+        <h6 class="font-label-md text-primary uppercase mb-sm">Hệ thống</h6>
+        <a
+          class="font-body-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors"
+          href="#"
+          >Trang bán hàng</a
+        >
+        <a
+          class="font-body-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors"
+          href="#"
+          >Hỗ trợ kỹ thuật</a
+        >
+        <a
+          class="font-body-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors"
+          href="#"
+          >Điều khoản dịch vụ</a
+        >
+      </div>
+      <div class="flex flex-col justify-between">
+        <div class="flex gap-md">
+          <span class="material-symbols-outlined text-on-surface-variant"
+            >social_leaderboard</span
+          >
+          <span class="material-symbols-outlined text-on-surface-variant"
+            >language</span
+          >
+        </div>
+        <p class="font-body-sm text-label-sm text-on-surface-variant">
+          © 2026 Xám Pet Shop. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,628 @@
+<!doctype html>
+
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Quicksand:wght@600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-container": "#686554",
+              error: "#ba1a1a",
+              "tertiary-fixed-dim": "#58d5fe",
+              "surface-container-high": "#f3e6da",
+              "primary-fixed-dim": "#ffb95a",
+              "surface-container-lowest": "#ffffff",
+              "on-error": "#ffffff",
+              "surface-tint": "#845400",
+              secondary: "#625f4e",
+              "on-tertiary": "#ffffff",
+              "primary-container": "#ffb347",
+              "tertiary-container": "#52d0f9",
+              outline: "#847463",
+              "on-surface-variant": "#524535",
+              "on-secondary-fixed": "#1e1c0f",
+              "on-primary-container": "#704700",
+              "surface-dim": "#e5d8cc",
+              "inverse-surface": "#372f27",
+              "on-tertiary-fixed-variant": "#004d61",
+              "on-background": "#211a13",
+              "on-primary": "#ffffff",
+              "surface-bright": "#fff8f4",
+              "inverse-primary": "#ffb95a",
+              "outline-variant": "#d6c3b0",
+              "secondary-container": "#e8e3cd",
+              "on-primary-fixed-variant": "#643f00",
+              tertiary: "#006780",
+              "error-container": "#ffdad6",
+              "surface-variant": "#eee0d4",
+              "secondary-fixed": "#e8e3cd",
+              "on-error-container": "#93000a",
+              primary: "#845400",
+              "on-surface": "#211a13",
+              "on-primary-fixed": "#2a1800",
+              "primary-fixed": "#ffddb6",
+              surface: "#fff8f4",
+              "tertiary-fixed": "#b8eaff",
+              "surface-container-low": "#fff1e5",
+              background: "#fff8f4",
+              "inverse-on-surface": "#fceee2",
+              "surface-container-highest": "#eee0d4",
+              "secondary-fixed-dim": "#ccc7b2",
+              "on-tertiary-container": "#00576d",
+              "on-secondary": "#ffffff",
+              "on-secondary-fixed-variant": "#4a4737",
+              "on-tertiary-fixed": "#001f28",
+              "surface-container": "#f9ecdf",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              lg: "24px",
+              xs: "4px",
+              xl: "40px",
+              "margin-mobile": "16px",
+              "container-max": "1200px",
+              unit: "4px",
+              gutter: "24px",
+              sm: "8px",
+              md: "16px",
+            },
+            fontFamily: {
+              "label-md": ["Plus Jakarta Sans"],
+              "headline-lg": ["Quicksand"],
+              "headline-md": ["Quicksand"],
+              "body-md": ["Plus Jakarta Sans"],
+              "headline-lg-mobile": ["Quicksand"],
+              "body-lg": ["Plus Jakarta Sans"],
+              "label-sm": ["Plus Jakarta Sans"],
+              "headline-xl": ["Quicksand"],
+            },
+            fontSize: {
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.01em",
+                  fontWeight: "600",
+                },
+              ],
+              "headline-lg": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "700" },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "headline-lg-mobile": [
+                "28px",
+                { lineHeight: "36px", fontWeight: "700" },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "700" }],
+              "headline-xl": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .soft-shadow {
+        box-shadow: 0 10px 30px -10px rgba(132, 84, 0, 0.08);
+      }
+      .tinted-shadow {
+        box-shadow: 0 20px 40px -15px rgba(132, 84, 0, 0.12);
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+      }
+    </style>
+  </head>
+  <body class="bg-background font-body-md text-on-background min-h-screen">
+    <!-- SideNavBar (Authority: Shared Components JSON) -->
+    <aside
+      class="flex flex-col h-screen fixed left-0 top-0 border-r border-outline-variant bg-surface-container-low w-64 z-50"
+    >
+      <div class="px-lg py-xl">
+        <h1 class="font-headline-sm text-headline-sm text-primary">
+          Admin Panel
+        </h1>
+        <p class="text-label-sm text-on-surface-variant opacity-70">
+          Xám Pet Shop Management
+        </p>
+      </div>
+      <nav class="flex-grow space-y-2 py-md">
+        <!-- Active State: Dashboard -->
+        <a
+          class="bg-primary-container text-on-primary-container rounded-xl mx-2 px-4 py-3 flex items-center gap-3 shadow-sm transition-all duration-150 translate-x-1"
+          href="#"
+        >
+          <span class="material-symbols-outlined">dashboard</span>
+          <span class="font-label-md text-label-md">Dashboard</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined">shopping_bag</span>
+          <span class="font-label-md text-label-md">Orders</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined">inventory_2</span>
+          <span class="font-label-md text-label-md">Products</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined">group</span>
+          <span class="font-label-md text-label-md">Users</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined">assessment</span>
+          <span class="font-label-md text-label-md">Reports</span>
+        </a>
+      </nav>
+      <div class="pb-xl border-t border-outline-variant pt-md">
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="#"
+        >
+          <span class="material-symbols-outlined">logout</span>
+          <span class="font-label-md text-label-md">Logout</span>
+        </a>
+      </div>
+    </aside>
+    <!-- Main Content -->
+    <main class="ml-64 p-lg md:p-xl space-y-xl">
+      <!-- Header Section -->
+      <header class="flex justify-between items-center w-full">
+        <div>
+          <h2 class="font-headline-lg text-headline-lg text-primary">
+            Tổng Quan Quản Trị
+          </h2>
+          <p class="font-body-md text-on-surface-variant">
+            Chào mừng trở lại, quản trị viên Xám Pet Shop.
+          </p>
+        </div>
+        <div class="flex gap-md items-center">
+          <div
+            class="bg-white rounded-full px-md py-sm flex items-center gap-sm soft-shadow border border-outline-variant/30"
+          >
+            <span class="material-symbols-outlined text-primary"
+              >calendar_today</span
+            >
+            <span class="font-label-md text-label-md"
+              >Hôm nay: 24 Tháng 5, 2026</span
+            >
+          </div>
+          <div
+            class="h-12 w-12 rounded-full overflow-hidden border-2 border-primary-container"
+          >
+            <img
+              alt="Admin"
+              data-alt="A professional profile avatar of a male administrator with a friendly expression. The image is a clean vector illustration with a minimalist soft background that matches the cream and orange aesthetic of the Xám Pet Shop brand. High-key lighting creates a professional yet warm atmosphere."
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuABLbcEuesZLMNCYExWvIXKQZuB4lriHCyVyneuy1ppCaglg0YyXoWZuq6s7p-wjQp3_e_2kYdWouJ_ySl-03-tkckBfw9sajQjgCvcc3UIstvr5zgCECd2QrLI-COkbaxKFR4S6nGFJ4Av8nyILt5I--ABDUZYki9PrPznz0FzGwqq4ptmSNu8vu1oEVDWh9F2lmfmzFmFTPsKogrbDwc9-znJnUyHfhm0fccHSab3rzfJrS21w40iu2bm6e7kvu49diU-SaHS8Lk"
+            />
+          </div>
+        </div>
+      </header>
+      <!-- Stats Bento Grid -->
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg">
+        <!-- Total Orders -->
+        <div
+          class="bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow hover:scale-[1.02] transition-transform duration-300"
+        >
+          <div class="flex justify-between items-start mb-md">
+            <div class="p-sm bg-secondary-container rounded-xl">
+              <span
+                class="material-symbols-outlined text-on-secondary-container"
+                >shopping_cart</span
+              >
+            </div>
+            <span class="text-primary font-label-sm">+12% vs tháng trước</span>
+          </div>
+          <p class="font-label-md text-on-surface-variant opacity-70">
+            Tổng Đơn Hàng
+          </p>
+          <h3 class="font-headline-md text-headline-md mt-xs">1,248</h3>
+        </div>
+        <!-- Revenue -->
+        <div
+          class="bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow hover:scale-[1.02] transition-transform duration-300"
+        >
+          <div class="flex justify-between items-start mb-md">
+            <div class="p-sm bg-primary-container/20 rounded-xl">
+              <span class="material-symbols-outlined text-primary"
+                >payments</span
+              >
+            </div>
+            <span class="text-primary font-label-sm">+8.5% hôm nay</span>
+          </div>
+          <p class="font-label-md text-on-surface-variant opacity-70">
+            Doanh Thu (VND)
+          </p>
+          <h3 class="font-headline-md text-headline-md mt-xs">84,500,000</h3>
+        </div>
+        <!-- New Users -->
+        <div
+          class="bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow hover:scale-[1.02] transition-transform duration-300"
+        >
+          <div class="flex justify-between items-start mb-md">
+            <div class="p-sm bg-tertiary-container/20 rounded-xl">
+              <span class="material-symbols-outlined text-tertiary"
+                >person_add</span
+              >
+            </div>
+            <span class="text-tertiary font-label-sm">45 khách mới</span>
+          </div>
+          <p class="font-label-md text-on-surface-variant opacity-70">
+            Người Dùng Mới
+          </p>
+          <h3 class="font-headline-md text-headline-md mt-xs">216</h3>
+        </div>
+        <!-- Stock -->
+        <div
+          class="bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow hover:scale-[1.02] transition-transform duration-300"
+        >
+          <div class="flex justify-between items-start mb-md">
+            <div class="p-sm bg-surface-container-highest rounded-xl">
+              <span class="material-symbols-outlined text-on-surface"
+                >pets</span
+              >
+            </div>
+            <span class="text-error font-label-sm">12 sản phẩm sắp hết</span>
+          </div>
+          <p class="font-label-md text-on-surface-variant opacity-70">
+            Sản Phẩm Trong Kho
+          </p>
+          <h3 class="font-headline-md text-headline-md mt-xs">1,052</h3>
+        </div>
+      </section>
+      <!-- Main Dashboard Layout -->
+      <section class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
+        <!-- Revenue Statistics Chart Placeholder -->
+        <div
+          class="lg:col-span-2 bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow"
+        >
+          <div class="flex justify-between items-center mb-xl">
+            <h3 class="font-headline-md text-headline-md">
+              Thống Kê Doanh Thu
+            </h3>
+            <div class="flex gap-sm">
+              <button
+                class="px-4 py-2 rounded-full font-label-sm bg-primary-container text-on-primary-container"
+              >
+                Tháng
+              </button>
+              <button
+                class="px-4 py-2 rounded-full font-label-sm text-on-surface-variant hover:bg-surface-container"
+              >
+                Năm
+              </button>
+            </div>
+          </div>
+          <!-- Chart Visualization with CSS Shapes -->
+          <div
+            class="relative h-[300px] w-full flex items-end justify-between gap-md pb-lg group"
+          >
+            <!-- Grid Lines -->
+            <div
+              class="absolute inset-0 flex flex-col justify-between pointer-events-none"
+            >
+              <div class="border-b border-outline-variant/20 w-full h-0"></div>
+              <div class="border-b border-outline-variant/20 w-full h-0"></div>
+              <div class="border-b border-outline-variant/20 w-full h-0"></div>
+              <div class="border-b border-outline-variant/20 w-full h-0"></div>
+              <div
+                class="border-b-2 border-outline-variant/50 w-full h-0"
+              ></div>
+            </div>
+            <!-- Bars -->
+            <div
+              class="relative flex-1 bg-primary-container/20 hover:bg-primary-container transition-all duration-300 rounded-t-xl"
+              style="height: 45%"
+            ></div>
+            <div
+              class="relative flex-1 bg-primary-container/20 hover:bg-primary-container transition-all duration-300 rounded-t-xl"
+              style="height: 65%"
+            ></div>
+            <div
+              class="relative flex-1 bg-primary-container/20 hover:bg-primary-container transition-all duration-300 rounded-t-xl"
+              style="height: 85%"
+            ></div>
+            <div
+              class="relative flex-1 bg-primary-container/40 hover:bg-primary-container transition-all duration-300 rounded-t-xl"
+              style="height: 55%"
+            ></div>
+            <div
+              class="relative flex-1 bg-primary-container/20 hover:bg-primary-container transition-all duration-300 rounded-t-xl"
+              style="height: 95%"
+            ></div>
+            <div
+              class="relative flex-1 bg-primary-container/20 hover:bg-primary-container transition-all duration-300 rounded-t-xl"
+              style="height: 75%"
+            ></div>
+            <div
+              class="relative flex-1 bg-primary-container/60 hover:bg-primary-container transition-all duration-300 rounded-t-xl"
+              style="height: 80%"
+            ></div>
+          </div>
+          <div
+            class="flex justify-between mt-sm px-2 text-label-sm text-on-surface-variant opacity-60"
+          >
+            <span>Th2</span><span>Th3</span><span>Th4</span><span>Th5</span
+            ><span>Th6</span><span>Th7</span><span>CN</span>
+          </div>
+        </div>
+        <!-- Recent Activity Card -->
+        <div
+          class="bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow"
+        >
+          <h3 class="font-headline-md text-headline-md mb-xl">
+            Hoạt Động Gần Đây
+          </h3>
+          <div class="space-y-lg">
+            <!-- Activity Item 1 -->
+            <div class="flex gap-md">
+              <div class="relative flex flex-col items-center">
+                <div
+                  class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center z-10"
+                >
+                  <span
+                    class="material-symbols-outlined text-on-primary-container text-[18px]"
+                    >shopping_cart_checkout</span
+                  >
+                </div>
+                <div
+                  class="h-full w-0.5 bg-outline-variant/30 absolute top-8"
+                ></div>
+              </div>
+              <div>
+                <p class="font-label-md text-on-surface">Đơn hàng mới #1294</p>
+                <p class="text-label-sm text-on-surface-variant">
+                  Vừa mới xong • Thức ăn Mèo Anh
+                </p>
+              </div>
+            </div>
+            <!-- Activity Item 2 -->
+            <div class="flex gap-md">
+              <div class="relative flex flex-col items-center">
+                <div
+                  class="w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center z-10"
+                >
+                  <span
+                    class="material-symbols-outlined text-on-tertiary-container text-[18px]"
+                    >person</span
+                  >
+                </div>
+                <div
+                  class="h-full w-0.5 bg-outline-variant/30 absolute top-8"
+                ></div>
+              </div>
+              <div>
+                <p class="font-label-md text-on-surface">
+                  Người dùng mới đăng ký
+                </p>
+                <p class="text-label-sm text-on-surface-variant">
+                  2 phút trước • Minh Hoàng
+                </p>
+              </div>
+            </div>
+            <!-- Activity Item 3 -->
+            <div class="flex gap-md">
+              <div class="relative flex flex-col items-center">
+                <div
+                  class="w-8 h-8 rounded-full bg-error-container flex items-center justify-center z-10"
+                >
+                  <span
+                    class="material-symbols-outlined text-on-error-container text-[18px]"
+                    >priority_high</span
+                  >
+                </div>
+              </div>
+              <div>
+                <p class="font-label-md text-on-surface">
+                  Cảnh báo tồn kho thấp
+                </p>
+                <p class="text-label-sm text-on-surface-variant">
+                  15 phút trước • Cát vệ sinh Bentonite
+                </p>
+              </div>
+            </div>
+          </div>
+          <button
+            class="w-full mt-xl py-3 rounded-full border-2 border-outline-variant text-primary font-label-md hover:bg-surface-container transition-colors"
+          >
+            Xem Tất Cả
+          </button>
+        </div>
+      </section>
+      <!-- Product Table Section -->
+      <section
+        class="bg-white rounded-[24px] border border-outline-variant/20 soft-shadow overflow-hidden"
+      >
+        <div
+          class="p-lg flex justify-between items-center border-b border-outline-variant/10"
+        >
+          <h3 class="font-headline-md text-headline-md">Sản Phẩm Nổi Bật</h3>
+          <button
+            class="bg-primary text-white px-lg py-2 rounded-full font-label-md shadow-sm hover:scale-105 transition-transform"
+          >
+            + Thêm Sản Phẩm
+          </button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead
+              class="bg-surface-container-low text-on-surface-variant font-label-md"
+            >
+              <tr>
+                <th class="px-lg py-md">Sản Phẩm</th>
+                <th class="px-lg py-md">Danh Mục</th>
+                <th class="px-lg py-md">Giá</th>
+                <th class="px-lg py-md">Trạng Thái</th>
+                <th class="px-lg py-md text-right">Thao Tác</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-outline-variant/10 font-body-md">
+              <tr class="hover:bg-surface-bright transition-colors">
+                <td class="px-lg py-md flex items-center gap-md">
+                  <div
+                    class="w-10 h-10 bg-surface-container rounded-lg overflow-hidden"
+                  >
+                    <img
+                      alt="Pet Food"
+                      data-alt="A premium gold-bagged cat food product photography shot against a soft cream background. The packaging features elegant minimalist branding and high-key lighting, emphasizing the premium quality of the cat food. Soft shadows create depth in a clean, professional studio setting."
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0GLsJMANQIhaBczRrfXFN7DPiq4oaozjJF31pGHDdkrpLWeYMYlEpwIGT2zowzcKPxmG3KimmTgN5yX8bbKFKWlgBcPkvF2u8DWNlD7peVZoh49e_RfG30myIGPxjHjAE1OYLNwkXq5pB83nPsbJYnQGW80ypGlhHGh10i35OpqJ6e2tFvVysymownCgdxt4HbgNRV10JQRQiIRgkl9mNlQzCw5wvD-JSnko2xTqBKs0KwsxAspuRVDeVeirLhQed6sRUGT2_oxA"
+                    />
+                  </div>
+                  <span class="font-label-md"
+                    >Thức ăn Royal Canin Mother &amp; Baby</span
+                  >
+                </td>
+                <td class="px-lg py-md">Thực Phẩm</td>
+                <td class="px-lg py-md text-primary font-bold">540.000đ</td>
+                <td class="px-lg py-md">
+                  <span
+                    class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-label-sm"
+                    >Còn hàng</span
+                  >
+                </td>
+                <td class="px-lg py-md text-right">
+                  <button
+                    class="material-symbols-outlined text-outline hover:text-primary transition-colors"
+                  >
+                    edit
+                  </button>
+                  <button
+                    class="material-symbols-outlined text-outline hover:text-error transition-colors ml-2"
+                  >
+                    delete
+                  </button>
+                </td>
+              </tr>
+              <tr class="hover:bg-surface-bright transition-colors">
+                <td class="px-lg py-md flex items-center gap-md">
+                  <div
+                    class="w-10 h-10 bg-surface-container rounded-lg overflow-hidden"
+                  >
+                    <img
+                      alt="Cat Tree"
+                      data-alt="A modern, minimalist wooden cat tree with soft grey felt pads. The furniture piece is presented in a bright, airy domestic interior with warm natural lighting coming from a window. The aesthetic is clean and high-end, perfectly fitting a premium pet care brand."
+                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXM-EwKoOT2F6pOSRIMgfGk5yvV4QpvLuJoWT_9hNNWXl_UcfJgLHnJpRYXM92x7VzyWpWz-jdmnNh3a2Mdn-l_q_xuBe_naDKyCb8SuoVeLx9Qu2LWXeKRGpNfFV9fovHMrH4kBYwdWmJDgCzhX6gHvCIhQMdoI73obe7jo1qaIgYLq3auypr5mEy8mmRlLN0kBjeoWuZV13rTxC_IAgALnaHFRSgSNLgXLNIi8k3vBBmz4t5OwXZBacSJmpiNJ4A-5jDR0oQB7g"
+                    />
+                  </div>
+                  <span class="font-label-md">Trụ Cào Móng Cao Cấp</span>
+                </td>
+                <td class="px-lg py-md">Phụ Kiện</td>
+                <td class="px-lg py-md text-primary font-bold">1.250.000đ</td>
+                <td class="px-lg py-md">
+                  <span
+                    class="px-3 py-1 bg-error-container text-on-error-container rounded-full text-label-sm"
+                    >Sắp hết</span
+                  >
+                </td>
+                <td class="px-lg py-md text-right">
+                  <button
+                    class="material-symbols-outlined text-outline hover:text-primary transition-colors"
+                  >
+                    edit
+                  </button>
+                  <button
+                    class="material-symbols-outlined text-outline hover:text-error transition-colors ml-2"
+                  >
+                    delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+    <!-- Footer (Authority: Shared Components JSON) -->
+    <footer
+      class="ml-64 border-t border-outline-variant bg-surface-container-highest"
+    >
+      <div
+        class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto"
+      >
+        <div class="col-span-1 md:col-span-2">
+          <h4 class="font-headline-sm text-headline-sm text-on-surface mb-md">
+            Xám Pet Shop
+          </h4>
+          <p
+            class="font-body-sm text-label-sm text-on-surface-variant max-w-xs"
+          >
+            Hệ thống quản lý nội bộ dành cho nhân viên và quản trị viên. Mọi
+            hành vi truy cập trái phép đều bị nghiêm cấm.
+          </p>
+        </div>
+        <div>
+          <h5 class="font-label-md text-label-md text-primary mb-md">
+            Liên Hệ Hỗ Trợ
+          </h5>
+          <ul class="space-y-sm">
+            <li class="font-body-sm text-label-sm text-on-surface-variant">
+              Phone: 038.339.2903
+            </li>
+            <li class="font-body-sm text-label-sm text-on-surface-variant">
+              Email: tech@xampet.shop
+            </li>
+          </ul>
+        </div>
+        <div>
+          <p
+            class="font-body-sm text-label-sm text-on-surface-variant opacity-70"
+          >
+            © 2026 Xám Pet Shop. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

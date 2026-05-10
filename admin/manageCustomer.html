@@ -1,0 +1,595 @@
+<!doctype html>
+
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Quicksand:wght@600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-container": "#686554",
+              error: "#ba1a1a",
+              "tertiary-fixed-dim": "#58d5fe",
+              "surface-container-high": "#f3e6da",
+              "primary-fixed-dim": "#ffb95a",
+              "surface-container-lowest": "#ffffff",
+              "on-error": "#ffffff",
+              "surface-tint": "#845400",
+              secondary: "#625f4e",
+              "on-tertiary": "#ffffff",
+              "primary-container": "#ffb347",
+              "tertiary-container": "#52d0f9",
+              outline: "#847463",
+              "on-surface-variant": "#524535",
+              "on-secondary-fixed": "#1e1c0f",
+              "on-primary-container": "#704700",
+              "surface-dim": "#e5d8cc",
+              "inverse-surface": "#372f27",
+              "on-tertiary-fixed-variant": "#004d61",
+              "on-background": "#211a13",
+              "on-primary": "#ffffff",
+              "surface-bright": "#fff8f4",
+              "inverse-primary": "#ffb95a",
+              "outline-variant": "#d6c3b0",
+              "secondary-container": "#e8e3cd",
+              "on-primary-fixed-variant": "#643f00",
+              tertiary: "#006780",
+              "error-container": "#ffdad6",
+              "surface-variant": "#eee0d4",
+              "secondary-fixed": "#e8e3cd",
+              "on-error-container": "#93000a",
+              primary: "#845400",
+              "on-surface": "#211a13",
+              "on-primary-fixed": "#2a1800",
+              "primary-fixed": "#ffddb6",
+              surface: "#fff8f4",
+              "tertiary-fixed": "#b8eaff",
+              "surface-container-low": "#fff1e5",
+              background: "#fff8f4",
+              "inverse-on-surface": "#fceee2",
+              "surface-container-highest": "#eee0d4",
+              "secondary-fixed-dim": "#ccc7b2",
+              "on-tertiary-container": "#00576d",
+              "on-secondary": "#ffffff",
+              "on-secondary-fixed-variant": "#4a4737",
+              "on-tertiary-fixed": "#001f28",
+              "surface-container": "#f9ecdf",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              lg: "24px",
+              xs: "4px",
+              xl: "40px",
+              "margin-mobile": "16px",
+              "container-max": "1200px",
+              unit: "4px",
+              gutter: "24px",
+              sm: "8px",
+              md: "16px",
+            },
+            fontFamily: {
+              "label-md": ["Plus Jakarta Sans"],
+              "headline-lg": ["Quicksand"],
+              "headline-md": ["Quicksand"],
+              "body-md": ["Plus Jakarta Sans"],
+              "headline-lg-mobile": ["Quicksand"],
+              "body-lg": ["Plus Jakarta Sans"],
+              "label-sm": ["Plus Jakarta Sans"],
+              "headline-xl": ["Quicksand"],
+            },
+            fontSize: {
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.01em",
+                  fontWeight: "600",
+                },
+              ],
+              "headline-lg": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "700" },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "headline-lg-mobile": [
+                "28px",
+                { lineHeight: "36px", fontWeight: "700" },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "700" }],
+              "headline-xl": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .active-nav-item {
+        background-color: #ffb347;
+        color: #704700;
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-surface font-body-md">
+    <!-- SideNavBar (Admin Shell) -->
+    <aside
+      class="flex flex-col h-screen fixed left-0 top-0 border-r border-outline-variant bg-surface-container-low dark:bg-surface-container-lowest w-64 shadow-md z-50"
+    >
+      <div class="px-lg py-xl">
+        <h1 class="font-headline-sm text-headline-sm text-primary">
+          Admin Panel
+        </h1>
+        <p class="font-label-sm text-on-surface-variant opacity-70">
+          Xám Pet Shop Management
+        </p>
+      </div>
+      <nav class="flex-1 space-y-1">
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-surface-container-highest"
+          href="#"
+        >
+          <span class="material-symbols-outlined">dashboard</span>
+          <span class="font-label-md text-label-md">Dashboard</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-surface-container-highest"
+          href="#"
+        >
+          <span class="material-symbols-outlined">shopping_bag</span>
+          <span class="font-label-md text-label-md">Orders</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-surface-container-highest"
+          href="#"
+        >
+          <span class="material-symbols-outlined">inventory_2</span>
+          <span class="font-label-md text-label-md">Products</span>
+        </a>
+        <a
+          class="bg-primary-container text-on-primary-container rounded-xl mx-2 px-4 py-3 flex items-center gap-3 translate-x-1 duration-150"
+          href="#"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >group</span
+          >
+          <span class="font-label-md text-label-md">Users</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-surface-container-highest"
+          href="#"
+        >
+          <span class="material-symbols-outlined">assessment</span>
+          <span class="font-label-md text-label-md">Reports</span>
+        </a>
+      </nav>
+      <div class="p-lg border-t border-outline-variant">
+        <button
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl w-full px-4 py-3 flex items-center gap-3 transition-colors"
+        >
+          <span class="material-symbols-outlined">logout</span>
+          <span class="font-label-md text-label-md">Logout</span>
+        </button>
+      </div>
+    </aside>
+    <!-- Main Content Area -->
+    <main class="ml-64 min-h-screen">
+      <!-- Header / Top Bar Area -->
+      <header
+        class="bg-surface/80 backdrop-blur-md sticky top-0 z-40 flex justify-between items-center px-lg py-md w-full shadow-sm"
+      >
+        <h2 class="font-headline-md text-headline-md font-bold text-primary">
+          Quản lý người dùng
+        </h2>
+        <div class="flex items-center gap-md">
+          <div class="relative group">
+            <span
+              class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant"
+              >search</span
+            >
+            <input
+              class="bg-surface-container-low border-none rounded-full pl-10 pr-lg py-2 focus:ring-2 focus:ring-primary-container w-64 transition-all focus:w-80 font-body-md text-on-surface"
+              placeholder="Tìm kiếm người dùng..."
+              type="text"
+            />
+          </div>
+          <button
+            class="bg-primary text-on-primary px-lg py-2 rounded-full font-label-md hover:scale-105 transition-transform active:scale-95"
+          >
+            + Thêm mới
+          </button>
+        </div>
+      </header>
+      <!-- Content Canvas -->
+      <section class="p-xl max-w-container-max mx-auto">
+        <!-- Statistics Bento Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl">
+          <div
+            class="bg-white border border-outline-variant p-lg rounded-[24px] shadow-sm flex items-center gap-lg"
+          >
+            <div
+              class="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center text-primary"
+            >
+              <span class="material-symbols-outlined">group</span>
+            </div>
+            <div>
+              <p
+                class="font-label-sm text-on-surface-variant uppercase tracking-wider"
+              >
+                Tổng thành viên
+              </p>
+              <h3 class="font-headline-md text-headline-md">1,284</h3>
+            </div>
+          </div>
+          <div
+            class="bg-white border border-outline-variant p-lg rounded-[24px] shadow-sm flex items-center gap-lg"
+          >
+            <div
+              class="w-12 h-12 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary"
+            >
+              <span class="material-symbols-outlined">person_add</span>
+            </div>
+            <div>
+              <p
+                class="font-label-sm text-on-surface-variant uppercase tracking-wider"
+              >
+                Mới tháng này
+              </p>
+              <h3 class="font-headline-md text-headline-md">+142</h3>
+            </div>
+          </div>
+          <div
+            class="bg-white border border-outline-variant p-lg rounded-[24px] shadow-sm flex items-center gap-lg"
+          >
+            <div
+              class="w-12 h-12 rounded-full bg-error-container/20 flex items-center justify-center text-error"
+            >
+              <span class="material-symbols-outlined">verified_user</span>
+            </div>
+            <div>
+              <p
+                class="font-label-sm text-on-surface-variant uppercase tracking-wider"
+              >
+                Tài khoản Admin
+              </p>
+              <h3 class="font-headline-md text-headline-md">8</h3>
+            </div>
+          </div>
+        </div>
+        <!-- Main Table Container -->
+        <div
+          class="bg-white rounded-[24px] border border-outline-variant shadow-sm overflow-hidden"
+        >
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr
+                  class="bg-surface-container-low border-b border-outline-variant"
+                >
+                  <th class="px-lg py-md font-label-md text-on-surface-variant">
+                    Người dùng
+                  </th>
+                  <th class="px-lg py-md font-label-md text-on-surface-variant">
+                    Email
+                  </th>
+                  <th class="px-lg py-md font-label-md text-on-surface-variant">
+                    Số điện thoại
+                  </th>
+                  <th class="px-lg py-md font-label-md text-on-surface-variant">
+                    Vai trò
+                  </th>
+                  <th
+                    class="px-lg py-md font-label-md text-on-surface-variant text-right"
+                  >
+                    Hành động
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-outline-variant">
+                <!-- Row 1 -->
+                <tr
+                  class="hover:bg-surface-container-low/50 transition-colors group"
+                >
+                  <td class="px-lg py-md">
+                    <div class="flex items-center gap-md">
+                      <div
+                        class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold overflow-hidden"
+                      >
+                        <img
+                          class="w-full h-full object-cover"
+                          data-alt="A professional headshot of a smiling young Vietnamese man with a clean, modern aesthetic. The background is a soft, blurred domestic interior with high-key lighting, creating a welcoming and warm mood consistent with premium pet care services. The colors are natural and balanced with a slight warm tint."
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0yQ69jmcYTQ_xWEv3_OS_cY9gnx5CVdieTod5b06twaEU6G1k4IsRjasQrbd9_eGTvsnpUgyOfJ3ndLN5Ds-zBApZsHgbxiV0ou_VtIAg-XdFKH6Es7SbqLx8Ilqi2qc81w8QsWiMtVh3-DESaYsNuhNIfQNAYkhBh2aYh4DEaTiOXz_6CIi01avOw3Sr9gP4c1auZYL6fzVqD8U7Nye9JHCWh1wnua6cwG9ose_RsVYvwd3zIK1CwrTuC55W1zZSQMfyWk9ICRI"
+                        />
+                      </div>
+                      <div>
+                        <p class="font-label-md text-on-surface">
+                          Nguyễn Văn An
+                        </p>
+                        <span
+                          class="font-label-sm text-on-surface-variant opacity-70"
+                          >ID: #UX001</span
+                        >
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-lg py-md font-body-md text-on-surface-variant">
+                    an.nguyen@email.com
+                  </td>
+                  <td class="px-lg py-md font-body-md text-on-surface-variant">
+                    090 123 4567
+                  </td>
+                  <td class="px-lg py-md">
+                    <span
+                      class="inline-flex items-center px-3 py-1 rounded-full bg-primary-container/20 text-primary font-label-sm"
+                      >Admin</span
+                    >
+                  </td>
+                  <td class="px-lg py-md text-right">
+                    <button
+                      class="text-on-surface-variant hover:text-error transition-colors p-2"
+                    >
+                      <span class="material-symbols-outlined">delete</span>
+                    </button>
+                  </td>
+                </tr>
+                <!-- Row 2 -->
+                <tr
+                  class="hover:bg-surface-container-low/50 transition-colors group"
+                >
+                  <td class="px-lg py-md">
+                    <div class="flex items-center gap-md">
+                      <div
+                        class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold overflow-hidden"
+                      >
+                        <img
+                          class="w-full h-full object-cover"
+                          data-alt="A high-quality portrait of a cheerful Vietnamese woman with a friendly expression. The image is set in a bright, cozy interior featuring soft ambient lighting and a minimalist design. Her look is professional and approachable, aligning with the trustworthy and dependable persona of a luxury pet brand."
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCr7JBVX_nReJ1TWjJ8wCSH4vgrVdGBe_-e6Ktj-E2pc4AUPvGhVlUuYS8qCcggAW-aTkdJZO6rxN2_nc9GF5FcmOo9sMzixZyON9QQmgq-foVydJvmu6EB6K8mm5LAxkSl19G8r7JR0fuzEdkW5sjWYUn62zCDkm9eBPAPNX2Ffa5wfU4R6IGjSWREH6PMahja5-NQBX5Y2LfaLQrNo5ykonvgDnriKXwiIg5lQ9Sx7XWwfyDRclM4JYjXB-2FB-hJZWyQZxrcxtc"
+                        />
+                      </div>
+                      <div>
+                        <p class="font-label-md text-on-surface">Lê Thị Bình</p>
+                        <span
+                          class="font-label-sm text-on-surface-variant opacity-70"
+                          >ID: #UX002</span
+                        >
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-lg py-md font-body-md text-on-surface-variant">
+                    binh.le@gmail.com
+                  </td>
+                  <td class="px-lg py-md font-body-md text-on-surface-variant">
+                    091 987 6543
+                  </td>
+                  <td class="px-lg py-md">
+                    <span
+                      class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-container/50 text-on-secondary-container font-label-sm"
+                      >Customer</span
+                    >
+                  </td>
+                  <td class="px-lg py-md text-right">
+                    <button
+                      class="text-on-surface-variant hover:text-error transition-colors p-2"
+                    >
+                      <span class="material-symbols-outlined">delete</span>
+                    </button>
+                  </td>
+                </tr>
+                <!-- Row 3 -->
+                <tr
+                  class="hover:bg-surface-container-low/50 transition-colors group"
+                >
+                  <td class="px-lg py-md">
+                    <div class="flex items-center gap-md">
+                      <div
+                        class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold overflow-hidden"
+                      >
+                        <img
+                          class="w-full h-full object-cover"
+                          data-alt="A portrait of a middle-aged Vietnamese gentleman with a kind face, captured in high-key, soft lighting. The setting is clean and modern with pastel grey and light orange accents in the background. The mood is calm and competent, reflecting the high-quality standards of a premium boutique cat shop."
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsARGe7fCAF-Qsb_hKLa3XCpzxg9yMWtWvt0jVd14i07VjPECZ6_fhvC8c9HiAPVY9NLxCy8TNCDj-ZczY3mFCF02A6WIUZUzTeNBvVkQUXpxTSrxlzva6bzDhqJnHGM9sUZ2vwqy99jKiDq1Tsw6RuG_yY3UwYDkiMFVC3aTQer-lHjuxQVfp4QftjjV8p4ipHI1Zdp5Oc0twy1yZjx0bEHj19dX2dG2O17dwGEEwrbko-Y2WjySrdGLs1fXVux50hF6kAyhxLFs"
+                        />
+                      </div>
+                      <div>
+                        <p class="font-label-md text-on-surface">
+                          Trần Minh Chiến
+                        </p>
+                        <span
+                          class="font-label-sm text-on-surface-variant opacity-70"
+                          >ID: #UX003</span
+                        >
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-lg py-md font-body-md text-on-surface-variant">
+                    chien.tm@work.vn
+                  </td>
+                  <td class="px-lg py-md font-body-md text-on-surface-variant">
+                    098 765 4321
+                  </td>
+                  <td class="px-lg py-md">
+                    <span
+                      class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-container/50 text-on-secondary-container font-label-sm"
+                      >Customer</span
+                    >
+                  </td>
+                  <td class="px-lg py-md text-right">
+                    <button
+                      class="text-on-surface-variant hover:text-error transition-colors p-2"
+                    >
+                      <span class="material-symbols-outlined">delete</span>
+                    </button>
+                  </td>
+                </tr>
+                <!-- Row 4 -->
+                <tr
+                  class="hover:bg-surface-container-low/50 transition-colors group"
+                >
+                  <td class="px-lg py-md">
+                    <div class="flex items-center gap-md">
+                      <div
+                        class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold overflow-hidden"
+                      >
+                        <img
+                          class="w-full h-full object-cover"
+                          data-alt="A serene portrait of a young Vietnamese woman with soft focus, set against a minimalist white background. The lighting is diffused and gentle, creating a sense of calm and competence. The image maintains the soft minimalist aesthetic with a restrained color palette suitable for a luxury pet care dashboard."
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgHxYbAm6BWPVWogQ7EF2RW2rBVrWrGIlPDlfYzDQOldsGLTVvcRvF7ctM_I6Q2V7KgnL5IoN7b1UgD2SeuGxOYhWaMeYNhb7BB-7xV9EWFDlWl2X6FjxhMBsEd2VcWfGLKMF0nERc_zm-wlkYTGOM_EIqMP1RIKW5mrT2GjTcdGTDHWr0HNyDIr6UxeG3Ika7Bl2DTILhm4VsakGtWhamwLv3oRq4IBwWYu5npWdWewRgM07VddwAVVGbIwPnH_werK7wknJHPRc"
+                        />
+                      </div>
+                      <div>
+                        <p class="font-label-md text-on-surface">
+                          Phạm Hương Giang
+                        </p>
+                        <span
+                          class="font-label-sm text-on-surface-variant opacity-70"
+                          >ID: #UX004</span
+                        >
+                      </div>
+                    </div>
+                  </td>
+                  <td class="px-lg py-md font-body-md text-on-surface-variant">
+                    giangph@email.com
+                  </td>
+                  <td class="px-lg py-md font-body-md text-on-surface-variant">
+                    097 555 1212
+                  </td>
+                  <td class="px-lg py-md">
+                    <span
+                      class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-container/50 text-on-secondary-container font-label-sm"
+                      >Customer</span
+                    >
+                  </td>
+                  <td class="px-lg py-md text-right">
+                    <button
+                      class="text-on-surface-variant hover:text-error transition-colors p-2"
+                    >
+                      <span class="material-symbols-outlined">delete</span>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- Pagination Footer -->
+          <div
+            class="p-lg flex justify-between items-center bg-surface-container-lowest border-t border-outline-variant"
+          >
+            <p class="font-label-sm text-on-surface-variant">
+              Hiển thị 1 - 4 trong 1,284 người dùng
+            </p>
+            <div class="flex gap-sm">
+              <button
+                class="w-10 h-10 rounded-full flex items-center justify-center border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant"
+              >
+                <span class="material-symbols-outlined">chevron_left</span>
+              </button>
+              <button
+                class="w-10 h-10 rounded-full flex items-center justify-center bg-primary text-on-primary font-label-md"
+              >
+                1
+              </button>
+              <button
+                class="w-10 h-10 rounded-full flex items-center justify-center border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant font-label-md"
+              >
+                2
+              </button>
+              <button
+                class="w-10 h-10 rounded-full flex items-center justify-center border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant font-label-md"
+              >
+                3
+              </button>
+              <button
+                class="w-10 h-10 rounded-full flex items-center justify-center border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant"
+              >
+                <span class="material-symbols-outlined">chevron_right</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Footer -->
+      <footer
+        class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto bg-surface-container-highest dark:bg-surface-container mt-xl"
+      >
+        <div>
+          <h4 class="font-headline-sm text-headline-sm text-on-surface mb-md">
+            Xám Pet Shop
+          </h4>
+          <p class="font-body-sm text-label-sm text-on-surface-variant">
+            Chăm sóc thú cưng cao cấp với phong cách tối giản và hiện đại.
+          </p>
+        </div>
+        <div class="space-y-sm">
+          <p class="font-label-md text-primary">Liên hệ</p>
+          <p class="font-body-sm text-label-sm text-on-surface-variant">
+            Địa chỉ: 123 Cát Linh, Hà Nội
+          </p>
+          <p class="font-body-sm text-label-sm text-on-surface-variant">
+            Điện thoại: 038.339.2903
+          </p>
+        </div>
+        <div class="space-y-sm">
+          <p class="font-label-md text-primary">Hỗ trợ</p>
+          <p class="font-body-sm text-label-sm text-on-surface-variant">
+            Email: nampham050723@gmail.com
+          </p>
+          <p class="font-body-sm text-label-sm text-on-surface-variant">
+            Facebook: /xampetshop
+          </p>
+        </div>
+        <div class="flex flex-col justify-between">
+          <div class="flex gap-md">
+            <span class="material-symbols-outlined text-primary">pets</span>
+            <span class="material-symbols-outlined text-primary"
+              >shield_with_heart</span
+            >
+          </div>
+          <p class="font-body-sm text-label-sm text-on-surface-variant mt-md">
+            © 2026 Xám Pet Shop. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>

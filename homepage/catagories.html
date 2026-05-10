@@ -1,0 +1,490 @@
+<!doctype html>
+
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#93000a",
+              "on-secondary-fixed-variant": "#4a4737",
+              "primary-fixed": "#ffddb6",
+              "secondary-container": "#e8e3cd",
+              "tertiary-fixed-dim": "#58d5fe",
+              "primary-fixed-dim": "#ffb95a",
+              error: "#ba1a1a",
+              "primary-container": "#ffb347",
+              outline: "#847463",
+              "on-secondary-fixed": "#1e1c0f",
+              "on-secondary-container": "#686554",
+              "secondary-fixed-dim": "#ccc7b2",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary": "#ffffff",
+              "on-tertiary-container": "#00576d",
+              "inverse-surface": "#372f27",
+              "on-background": "#211a13",
+              "tertiary-fixed": "#b8eaff",
+              "inverse-primary": "#ffb95a",
+              "on-tertiary-fixed": "#001f28",
+              "on-error": "#ffffff",
+              tertiary: "#006780",
+              "surface-container-highest": "#eee0d4",
+              "surface-tint": "#845400",
+              "on-tertiary-fixed-variant": "#004d61",
+              background: "#fff8f4",
+              primary: "#845400",
+              "secondary-fixed": "#e8e3cd",
+              "surface-container-high": "#f3e6da",
+              "on-tertiary": "#ffffff",
+              "inverse-on-surface": "#fceee2",
+              "surface-variant": "#eee0d4",
+              secondary: "#625f4e",
+              "surface-container": "#f9ecdf",
+              "on-primary-fixed-variant": "#643f00",
+              surface: "#fff8f4",
+              "on-primary-container": "#704700",
+              "surface-dim": "#e5d8cc",
+              "surface-bright": "#fff8f4",
+              "error-container": "#ffdad6",
+              "on-primary": "#ffffff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              gutter: "24px",
+              md: "16px",
+              lg: "24px",
+              sm: "8px",
+              xl: "40px",
+              unit: "4px",
+              "margin-mobile": "16px",
+              xs: "4px",
+              "container-max": "1200px",
+            },
+            fontFamily: {
+              "headline-lg": ["Quicksand"],
+              "headline-md": ["Quicksand"],
+              "label-md": ["Plus Jakarta Sans"],
+              "body-lg": ["Plus Jakarta Sans"],
+              "headline-lg-mobile": ["Quicksand"],
+              "body-md": ["Plus Jakarta Sans"],
+              "label-sm": ["Plus Jakarta Sans"],
+              "headline-xl": ["Quicksand"],
+            },
+            fontSize: {
+              "headline-lg": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "700" },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.01em",
+                  fontWeight: "600",
+                },
+              ],
+              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+              "headline-lg-mobile": [
+                "28px",
+                { lineHeight: "36px", fontWeight: "700" },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "700" }],
+              "headline-xl": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .category-card:hover .category-image {
+        transform: scale(1.08);
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-background font-body-md">
+    <!-- Top Navigation Bar -->
+    <nav
+      class="bg-surface/80 backdrop-blur-md shadow-sm fixed top-0 w-full z-50 transition-all duration-200"
+    >
+      <div
+        class="flex justify-between items-center px-lg py-md w-full max-w-container-max mx-auto"
+      >
+        <div
+          class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim"
+        >
+          Xám Pet Shop
+        </div>
+        <div
+          class="hidden md:flex items-center gap-xl font-body-md text-body-md"
+        >
+          <a
+            class="text-on-surface-variant dark:text-outline hover:text-primary hover:scale-105 transition-transform duration-200"
+            href="#"
+            >Home</a
+          >
+          <a
+            class="text-on-surface-variant dark:text-outline hover:text-primary hover:scale-105 transition-transform duration-200"
+            href="#"
+            >Products</a
+          >
+          <a
+            class="text-primary font-bold border-b-2 border-primary pb-1 hover:scale-105 transition-transform duration-200"
+            href="#"
+            >Categories</a
+          >
+        </div>
+        <div class="flex items-center gap-md">
+          <div
+            class="relative group cursor-pointer p-sm rounded-full hover:bg-surface-container transition-colors"
+          >
+            <span class="material-symbols-outlined text-on-surface-variant"
+              >shopping_cart</span
+            >
+          </div>
+          <div class="hidden md:flex gap-sm">
+            <button
+              class="px-lg py-sm font-label-md text-on-surface-variant hover:text-primary transition-colors"
+            >
+              Login
+            </button>
+            <button
+              class="px-lg py-sm bg-primary-container text-on-primary-container font-label-md rounded-full shadow-sm hover:scale-105 active:scale-95 transition-all"
+            >
+              Register
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- Main Content Canvas -->
+    <main
+      class="pt-[100px] pb-xl w-full max-w-container-max mx-auto px-margin-mobile md:px-lg"
+    >
+      <!-- Header Section -->
+      <header class="mb-xl text-center md:text-left">
+        <h1 class="font-headline-xl text-headline-xl text-primary mb-sm">
+          Danh Mục Sản Phẩm
+        </h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+          Khám phá thế giới chăm sóc mèo chuyên nghiệp với các dòng sản phẩm cao
+          cấp, được chọn lọc kỹ lưỡng dành riêng cho người bạn bốn chân của bạn.
+        </p>
+      </header>
+      <!-- Categories Bento Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+        <!-- Category: Hạt mèo (Large Asymmetric) -->
+        <div
+          class="md:col-span-8 group category-card relative overflow-hidden rounded-[32px] bg-white shadow-sm border border-outline-variant h-[400px]"
+        >
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10"
+          ></div>
+          <img
+            class="category-image absolute inset-0 w-full h-full object-cover transition-transform duration-700"
+            data-alt="Premium dry cat food kibbles shown in high-key, soft lighting. A beautiful fluffy grey cat is partially visible in a cozy domestic setting with pastel grey and light orange tones. The atmosphere is serene, clean, and high-end, matching a soft minimalist luxury pet brand aesthetic."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7MvxW6edxaBTenuacppKslzN1ZzqVKYh7l14Tg-BgrjXSwDD1rC0Udgf2oc177CUXLqJBh0MZrhyMEIBICd2b0oICKz6xqGCJ8yMhnFVTyhWbQ0Xn1DoW1gQPf-IqWsclWH2nIXsTx_oH4xV-mKsLxv0-Ef-T_LWUAdRL46jyhIz6Bxz_T7FIM7F6tKgVEOi9_PEQCJWDbyPabPE_hQaVLmpz0n90YcKzHqyd1xOkCrUVHICzsfqS-5IdkEjBHdnDf5VWCorF8J0"
+          />
+          <div class="absolute bottom-0 left-0 p-xl z-20 w-full">
+            <span
+              class="inline-block px-md py-xs bg-tertiary-container text-on-tertiary-container rounded-full text-label-sm mb-md"
+              >Best Seller</span
+            >
+            <h2 class="font-headline-lg text-headline-lg text-white mb-xs">
+              Hạt Mèo Cao Cấp
+            </h2>
+            <p class="font-body-md text-white/90 mb-lg max-w-md">
+              Dinh dưỡng cân bằng giúp bộ lông mềm mượt và hệ tiêu hóa khỏe
+              mạnh.
+            </p>
+            <button
+              class="px-lg py-md bg-white text-primary font-bold rounded-full flex items-center gap-sm hover:scale-105 active:scale-95 transition-all"
+            >
+              Xem chi tiết
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+          </div>
+        </div>
+        <!-- Category: Pate mèo (Medium) -->
+        <div
+          class="md:col-span-4 group category-card relative overflow-hidden rounded-[32px] bg-white shadow-sm border border-outline-variant h-[400px]"
+        >
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"
+          ></div>
+          <img
+            class="category-image absolute inset-0 w-full h-full object-cover transition-transform duration-700"
+            data-alt="Close-up of premium wet cat food or pate in a minimalist ceramic bowl. The lighting is warm and natural, suggesting a cozy morning in a modern home. The background features soft grey textures and a hint of warm orange, aligning with a premium minimalist feline care brand."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvqgpVX2NhqJuMnABEhwRHdJGbVyTp1vMv5ZEJNbxr5s_SF0vpCBzE_57-f3JFt9HKjn3eYIJP18iKnpKFLYNY3wD7qEXLqMKlcLlHKOa_M6UhzMSEQBMCtvPc-TzpDeuY0lyx6FytYmCsPv13_xyKz69niWnmVG8muFx6UQwmcxshCt6CQOiQe_Mh5oQv1KpNUcDxxb5NdXqF5L0f4QLLvqOOGwb1HxHX1kjnUDM7OQAPzKOEN3c_tkoDpdItkfMEfYwjLoQsQhk"
+          />
+          <div class="absolute bottom-0 left-0 p-xl z-20">
+            <h2 class="font-headline-md text-headline-md text-white mb-xs">
+              Pate Mèo
+            </h2>
+            <p class="font-body-md text-white/90 mb-lg">
+              Đậm đà hương vị thịt thật, cung cấp độ ẩm cần thiết mỗi ngày.
+            </p>
+            <button
+              class="px-lg py-md bg-primary-container text-white font-bold rounded-full hover:scale-105 active:scale-95 transition-all"
+            >
+              Khám phá
+            </button>
+          </div>
+        </div>
+        <!-- Category: Snack mèo (Medium) -->
+        <div
+          class="md:col-span-4 group category-card relative overflow-hidden rounded-[32px] bg-white shadow-sm border border-outline-variant h-[350px]"
+        >
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"
+          ></div>
+          <img
+            class="category-image absolute inset-0 w-full h-full object-cover transition-transform duration-700"
+            data-alt="A playful kitten reaching for a treat, captured in soft high-key lighting. The environment is minimalist and airy, using a palette of creams and soft oranges. The focus is sharp on the kitten's joyful expression, conveying a sense of happiness and quality care."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp3v-idD14wfQ6fKtWKUNR7spQpDsjGksksAj4_bH19yrlA-g8_In9JmQ5cDizZhHVPs0papPdSVsy1lpYlZ_-wAIpaFgJh-GtBv6Rip3q_GaJk5M7TbAKZ7x2Mc1lxbc2fwoECgkkJrCOMhuVBTDOW-fosAOSOy05KWM_lFLKdDiKB6zQTR2WOt5KLptczLUTNowyhuQWu5uKC2vUL75TBVwhDMC73AzbwbGvUlbXeXM_qtAc3284gOtQssrojeE3E6VY-JZ9AXQ"
+          />
+          <div class="absolute bottom-0 left-0 p-xl z-20">
+            <h2 class="font-headline-md text-headline-md text-white mb-xs">
+              Snack Mèo
+            </h2>
+            <p class="font-body-md text-white/90 mb-lg">
+              Phần thưởng tuyệt vời cho những giây phút vui đùa.
+            </p>
+            <button
+              class="w-12 h-12 bg-white text-primary rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+            >
+              <span class="material-symbols-outlined">add</span>
+            </button>
+          </div>
+        </div>
+        <!-- Category: Sữa mèo (Medium) -->
+        <div
+          class="md:col-span-4 group category-card relative overflow-hidden rounded-[32px] bg-white shadow-sm border border-outline-variant h-[350px]"
+        >
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"
+          ></div>
+          <img
+            class="category-image absolute inset-0 w-full h-full object-cover transition-transform duration-700"
+            data-alt="A small white kitten drinking milk from a minimalist saucer. The scene is bathed in soft, diffused light, highlighting a clean and pure aesthetic. The color scheme is dominated by white and pastel grey with subtle orange accents, creating a calm and nurturing atmosphere for pet owners."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5NwgZCI4kOdgWvyU5J3yqW6Js1keAONUpMx9lB7CZSjXbC7pZpzW38iDW5vvaXqlF2LfHYFcXp_BsRfkUMp8vf-8NWCAOLgNgXFc9aSTKqsj6hU5dI_1em6Chw30osujjbyA85w7Rh4wEdad5nGiAWO6WwEk2p5KjfnuwuQ8SAGlw99o7KHDdG75hnv68ae7iyKeKT-vVN5INa5wZgRJ972bHHI4q_wHZMBrAgOzk8eoSIjToVpb7NsbZdtxAIY7uijVQJtJVy5g"
+          />
+          <div class="absolute bottom-0 left-0 p-xl z-20">
+            <h2 class="font-headline-md text-headline-md text-white mb-xs">
+              Sữa Mèo
+            </h2>
+            <p class="font-body-md text-white/90 mb-lg">
+              Công thức chuyên biệt dễ tiêu hóa cho mèo mọi lứa tuổi.
+            </p>
+            <button
+              class="px-lg py-md border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-primary transition-all"
+            >
+              Xem ngay
+            </button>
+          </div>
+        </div>
+        <!-- Category: Phụ kiện ăn uống (Medium) -->
+        <div
+          class="md:col-span-4 group category-card relative overflow-hidden rounded-[32px] bg-white shadow-sm border border-outline-variant h-[350px]"
+        >
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"
+          ></div>
+          <img
+            class="category-image absolute inset-0 w-full h-full object-cover transition-transform duration-700"
+            data-alt="A collection of minimalist ceramic cat bowls and wooden feeding stands. The setting is a bright, modern interior with soft lighting and clean lines. The products are arranged elegantly, showcasing a high-end lifestyle for cats with a focus on both aesthetics and functionality."
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuALhH6ES1D0a5sRrXmk-L7HV8_iMPhW310jpeT83fXFB9Vcf5FB_-hKQR_d2vu9TrczAtNXwW1mT7iQOb-soUziDbmAyHECE8L-iZEwdtfRpY8d3mcfWk5mobWkJ8--tZN8AYBqX56sqauxppdaXA2hnhQmVkmA2KfqpyatrE7ZWgl89x3owbXWCZ4VRwLoWVu3Je6asDX_Kfdy-1v-zryGn3cwZ-HK84FuzOxGbLdCZp6YBe-wcITPv1RvC2Sa5FyBSVvKq83JCOs"
+          />
+          <div class="absolute bottom-0 left-0 p-xl z-20">
+            <h2 class="font-headline-md text-headline-md text-white mb-xs">
+              Phụ Kiện Ăn Uống
+            </h2>
+            <p class="font-body-md text-white/90 mb-lg">
+              Nâng tầm bữa ăn với bát sứ cao cấp và máy lọc nước.
+            </p>
+            <button
+              class="px-lg py-md bg-white/20 backdrop-blur-md text-white font-bold rounded-full hover:bg-white hover:text-primary transition-all"
+            >
+              Bộ sưu tập
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Featured Section: Cozy Modern Atmosphere -->
+      <section
+        class="mt-xl py-xl bg-surface-container rounded-[40px] px-lg overflow-hidden relative"
+      >
+        <div class="grid md:grid-cols-2 gap-xl items-center relative z-10">
+          <div>
+            <span
+              class="text-primary font-bold tracking-widest text-label-sm uppercase mb-md block"
+              >Trải nghiệm mua sắm</span
+            >
+            <h2 class="font-headline-lg text-headline-lg mb-md">
+              Tại sao nên chọn Xám Pet Shop?
+            </h2>
+            <ul class="space-y-md">
+              <li class="flex gap-md items-start">
+                <div
+                  class="w-10 h-10 rounded-xl bg-primary-container/20 flex items-center justify-center flex-shrink-0"
+                >
+                  <span class="material-symbols-outlined text-primary"
+                    >verified</span
+                  >
+                </div>
+                <div>
+                  <p class="font-bold text-on-surface">100% Chính Hãng</p>
+                  <p class="text-on-surface-variant text-label-md">
+                    Sản phẩm nhập khẩu từ các thương hiệu hàng đầu thế giới.
+                  </p>
+                </div>
+              </li>
+              <li class="flex gap-md items-start">
+                <div
+                  class="w-10 h-10 rounded-xl bg-primary-container/20 flex items-center justify-center flex-shrink-0"
+                >
+                  <span class="material-symbols-outlined text-primary"
+                    >local_shipping</span
+                  >
+                </div>
+                <div>
+                  <p class="font-bold text-on-surface">Giao Hàng Siêu Tốc</p>
+                  <p class="text-on-surface-variant text-label-md">
+                    Nhận hàng ngay trong ngày cho khu vực nội thành.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="relative">
+            <div
+              class="aspect-square rounded-[32px] overflow-hidden shadow-lg transform rotate-3"
+            >
+              <img
+                class="w-full h-full object-cover"
+                data-alt="A beautiful ginger cat relaxing in a sunlit modern living room. The lighting is soft and golden, highlighting the warm textures of a cozy blanket and minimalist furniture. The overall mood is one of peace and premium comfort, reflecting the soft minimalist values of Xam Pet Shop."
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwjQQxw0ebHt9eoef9oVQ_xI8R3dCdyH0lso0-crMN_m3G5j3jC4RlgSpwFpglyZq-lj3KbekBU76944fjntVY1k0jpd7KO1YeaxoLEhQAFJe5-JvJODFN8TfdPeFcuFuHUpb65jK4nDVKMCQckR-xXbvADL8HtZFkSABtc_hxqzN2Tia2bQP7EVoEVXcFAhWfYt8SbT1xKSwkunhaIB0z-xjTCF7iAF6Sf4D0K2Zm2pWg0N0MEwqAOJgDU-t7Njnl8bVprnvHLWc"
+              />
+            </div>
+            <div
+              class="absolute -bottom-6 -left-6 bg-white p-lg rounded-2xl shadow-xl max-w-[200px] -rotate-3 border border-outline-variant"
+            >
+              <p class="font-headline-md text-primary mb-1">5000+</p>
+              <p class="text-label-sm text-on-surface-variant">
+                Khách hàng tin dùng mỗi tháng
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- Footer -->
+    <footer
+      class="bg-surface-container-highest dark:bg-surface-container w-full mt-xl"
+    >
+      <div
+        class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto"
+      >
+        <div class="col-span-1 md:col-span-1">
+          <div
+            class="font-headline-sm text-headline-sm text-on-surface font-bold mb-md"
+          >
+            Xám Pet Shop
+          </div>
+          <p class="font-body-sm text-label-sm text-on-surface-variant mb-md">
+            Điểm đến tin cậy cho cộng đồng yêu mèo. Chúng tôi cung cấp những gì
+            tốt nhất cho thú cưng của bạn.
+          </p>
+        </div>
+        <div class="flex flex-col gap-sm">
+          <p class="font-label-md text-primary uppercase">Contact</p>
+          <p
+            class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer text-label-sm"
+          >
+            Address: Bắc Từ Liêm, Hà Nội
+          </p>
+          <p
+            class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer text-label-sm"
+          >
+            Phone: 038.339.2903
+          </p>
+          <p
+            class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer text-label-sm"
+          >
+            Email: nampham050723@gmail.com
+          </p>
+        </div>
+        <div class="flex flex-col gap-sm">
+          <p class="font-label-md text-primary uppercase">Quick Links</p>
+          <a
+            class="text-on-surface-variant hover:text-primary transition-colors text-label-sm"
+            href="#"
+            >Trang chủ</a
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary transition-colors text-label-sm"
+            href="#"
+            >Sản phẩm</a
+          >
+          <a class="text-primary underline text-label-sm" href="#">Danh mục</a>
+        </div>
+        <div class="flex flex-col gap-sm">
+          <p class="font-label-md text-primary uppercase">Follow Us</p>
+          <a
+            class="text-on-surface-variant hover:text-primary transition-colors text-label-sm flex items-center gap-2"
+            href="#"
+          >
+            Facebook
+          </a>
+        </div>
+      </div>
+      <div
+        class="max-w-container-max mx-auto px-lg py-md border-t border-outline-variant text-center md:text-left"
+      >
+        <p class="text-label-sm text-on-surface-variant opacity-70">
+          © 2026 Xám Pet Shop. All rights reserved.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
