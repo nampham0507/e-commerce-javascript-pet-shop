@@ -176,7 +176,7 @@
             Chào mừng bạn quay trở lại
           </p>
         </div>
-        <form class="space-y-lg">
+        <form class="space-y-lg" id="loginForm">
           <!-- Email Input Group -->
           <div class="space-y-xs">
             <label
@@ -195,8 +195,10 @@
               <input
                 class="w-full pl-[48px] pr-md py-md bg-surface-container-low border-none rounded-xl font-body-md text-body-md focus:ring-2 focus:ring-primary-container focus:bg-surface-container-lowest transition-all duration-300"
                 id="email"
+                name="email"
                 placeholder="nampham050723@gmail.com"
                 type="email"
+                required
               />
             </div>
           </div>
@@ -218,8 +220,10 @@
               <input
                 class="w-full pl-[48px] pr-md py-md bg-surface-container-low border-none rounded-xl font-body-md text-body-md focus:ring-2 focus:ring-primary-container focus:bg-surface-container-lowest transition-all duration-300"
                 id="password"
+                name="password"
                 placeholder="••••••••"
                 type="password"
+                required
               />
             </div>
           </div>
@@ -250,10 +254,21 @@
               >Quên mật khẩu?</a
             >
           </div>
+          <!-- Error Message -->
+          <div
+            id="errorMessage"
+            class="hidden bg-error-container text-on-error-container p-md rounded-xl text-center font-body-md"
+          ></div>
+          <!-- Success Message -->
+          <div
+            id="successMessage"
+            class="hidden bg-primary-container text-on-primary-container p-md rounded-xl text-center font-body-md"
+          ></div>
           <!-- Submit Button -->
           <button
-            class="w-full py-md bg-primary-container text-on-primary-container font-headline-md text-headline-md rounded-full shadow-md hover:scale-[1.03] active:scale-95 transition-all duration-200 mt-md"
+            class="w-full py-md bg-primary-container text-on-primary-container font-headline-md text-headline-md rounded-full shadow-md hover:scale-[1.03] active:scale-95 transition-all duration-200 mt-md disabled:opacity-50"
             type="submit"
+            id="submitBtn"
           >
             Đăng nhập
           </button>
@@ -262,7 +277,9 @@
         <div class="mt-xl pt-lg border-t border-outline-variant/30 text-center">
           <p class="font-body-md text-body-md text-on-surface-variant">
             Chưa có tài khoản?
-            <a class="text-primary font-bold hover:underline" href="#"
+            <a
+              class="text-primary font-bold hover:underline"
+              href="/auth/register"
               >Đăng ký ngay</a
             >
           </p>
@@ -272,6 +289,39 @@
       <div
         class="mt-lg flex justify-center items-center gap-md opacity-40 grayscale hover:grayscale-0 transition-all duration-500"
       >
+        <script type="module">
+          import { loginUser } from "../js/auth.js";
+
+          const loginForm = document.getElementById("loginForm");
+          const errorDiv = document.getElementById("errorMessage");
+          const successDiv = document.getElementById("successMessage");
+          const submitBtn = document.getElementById("submitBtn");
+
+          loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            errorDiv.classList.add("hidden");
+            successDiv.classList.add("hidden");
+            submitBtn.disabled = true;
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            const result = await loginUser({ email, password });
+
+            if (result.success) {
+              successDiv.textContent =
+                "Đăng nhập thành công! Đang chuyển hướng...";
+              successDiv.classList.remove("hidden");
+              setTimeout(() => {
+                window.location.href = "/";
+              }, 1500);
+            } else {
+              errorDiv.textContent = result.message;
+              errorDiv.classList.remove("hidden");
+              submitBtn.disabled = false;
+            }
+          });
+        </script>
         <img
           alt=""
           class="w-12 h-12 rounded-full border-2 border-white shadow-sm"

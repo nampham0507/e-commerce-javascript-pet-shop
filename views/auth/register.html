@@ -189,7 +189,7 @@
             Tạo tài khoản để nhận ưu đãi đặc biệt cho thú cưng của bạn.
           </p>
         </div>
-        <form class="space-y-md">
+        <form class="space-y-md" id="registerForm">
           <!-- Full Name -->
           <div class="space-y-xs group">
             <label class="font-label-md text-on-surface-variant px-unit"
@@ -205,7 +205,9 @@
               <input
                 class="w-full bg-surface-container-low border-none py-4 pl-12 pr-4 focus:ring-2 focus:ring-primary-container focus:bg-surface-container-lowest transition-all rounded-xl placeholder:text-outline/60"
                 placeholder="Nguyễn Văn A"
+                name="fullName"
                 type="text"
+                required
               />
             </div>
           </div>
@@ -224,7 +226,9 @@
               <input
                 class="w-full bg-surface-container-low border-none py-4 pl-12 pr-4 focus:ring-2 focus:ring-primary-container focus:bg-surface-container-lowest transition-all rounded-xl placeholder:text-outline/60"
                 placeholder="email@example.com"
+                name="email"
                 type="email"
+                required
               />
             </div>
           </div>
@@ -263,7 +267,9 @@
                 <input
                   class="w-full bg-surface-container-low border-none py-4 pl-12 pr-4 focus:ring-2 focus:ring-primary-container focus:bg-surface-container-lowest transition-all rounded-xl placeholder:text-outline/60"
                   placeholder="••••••••"
+                  name="password"
                   type="password"
+                  required
                 />
               </div>
             </div>
@@ -282,7 +288,10 @@
                 <input
                   class="w-full bg-surface-container-low border-none py-4 pl-12 pr-4 focus:ring-2 focus:ring-primary-container focus:bg-surface-container-lowest transition-all rounded-xl placeholder:text-outline/60"
                   placeholder="••••••••"
+                  name="confirmPassword"
                   type="password"
+                  required
+                  id="confirmPassword"
                 />
               </div>
             </div>
@@ -305,10 +314,21 @@
               của Xám Pet Shop.
             </p>
           </div>
+          <!-- Error Message -->
+          <div
+            id="errorMessage"
+            class="hidden bg-error-container text-on-error-container p-md rounded-xl text-center font-body-md"
+          ></div>
+          <!-- Success Message -->
+          <div
+            id="successMessage"
+            class="hidden bg-primary-container text-on-primary-container p-md rounded-xl text-center font-body-md"
+          ></div>
           <!-- Action Button -->
           <button
-            class="w-full bg-primary-container text-on-primary-container font-headline-md py-4 rounded-full shadow-lg hover:scale-[1.02] active:scale-95 transition-all duration-200 mt-lg"
+            class="w-full bg-primary-container text-on-primary-container font-headline-md py-4 rounded-full shadow-lg hover:scale-[1.02] active:scale-95 transition-all duration-200 mt-lg disabled:opacity-50"
             type="submit"
+            id="submitBtn"
           >
             Đăng ký ngay
           </button>
@@ -316,12 +336,74 @@
           <div class="text-center pt-md">
             <p class="font-body-md text-on-surface-variant">
               Bạn đã có tài khoản?
-              <a class="text-primary font-bold hover:underline ml-1" href="#"
+              <a
+                class="text-primary font-bold hover:underline ml-1"
+                href="/auth/login"
                 >Đăng nhập</a
               >
             </p>
           </div>
         </form>
+        <script type="module">
+          import { registerUser } from "../js/auth.js";
+
+          const registerForm = document.getElementById("registerForm");
+          const errorDiv = document.getElementById("errorMessage");
+          const successDiv = document.getElementById("successMessage");
+          const submitBtn = document.getElementById("submitBtn");
+
+          console.log("Register form initialized:", registerForm);
+
+          registerForm.addEventListener("submit", async (e) => {
+            console.log("Form submitted");
+            e.preventDefault();
+            errorDiv.classList.add("hidden");
+            successDiv.classList.add("hidden");
+            submitBtn.disabled = true;
+
+            const fullName = document.querySelector(
+              'input[name="fullName"]',
+            ).value;
+            const email = document.querySelector('input[name="email"]').value;
+            const password = document.querySelector(
+              'input[name="password"]',
+            ).value;
+            const confirmPassword = document.querySelector(
+              'input[name="confirmPassword"]',
+            ).value;
+
+            console.log("Form values:", {
+              fullName,
+              email,
+              password,
+              confirmPassword,
+            });
+
+            if (password !== confirmPassword) {
+              errorDiv.textContent = "Mật khẩu không trùng khớp!";
+              errorDiv.classList.remove("hidden");
+              submitBtn.disabled = false;
+              return;
+            }
+
+            console.log("Calling registerUser API...");
+            const result = await registerUser({ fullName, email, password });
+            console.log("API response:", result);
+
+            if (result.success) {
+              successDiv.textContent =
+                "Đăng ký thành công! Đang chuyển hướng...";
+              successDiv.classList.remove("hidden");
+              setTimeout(() => {
+                window.location.href = "/";
+              }, 1500);
+            } else {
+              errorDiv.textContent = result.message;
+              errorDiv.classList.remove("hidden");
+              submitBtn.disabled = false;
+            }
+          });
+        </script>
       </div>
       <!-- Visual Anchor Image (Side) - Hidden on Small Screens -->
       <div class="hidden xl:block ml-xl max-w-sm">

@@ -1,1 +1,6 @@
-images/*
+node_modules/
+.env
+views/images/
+package-lock.json
+package.json
+.DS_Store
