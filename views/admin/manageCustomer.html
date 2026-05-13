@@ -158,9 +158,24 @@
         <h1 class="font-headline-sm text-headline-sm text-primary">
           Admin Panel
         </h1>
-        <p class="font-label-sm text-on-surface-variant opacity-70">
+        <p class="text-label-sm text-on-surface-variant opacity-70">
           Xám Pet Shop Management
         </p>
+        <div
+          class="mt-md pt-md border-t border-outline-variant/30 flex items-center gap-sm"
+        >
+          <div
+            id="adminAvatarSidebar"
+            class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-label-sm flex-shrink-0"
+          >
+            A
+          </div>
+          <span
+            id="adminDisplayName"
+            class="text-label-sm text-on-surface font-semibold truncate max-w-[130px]"
+            >Admin</span
+          >
+        </div>
       </div>
       <nav class="flex-1 space-y-1">
         <a
@@ -205,7 +220,8 @@
       </nav>
       <div class="p-lg border-t border-outline-variant">
         <button
-          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl w-full px-4 py-3 flex items-center gap-3 transition-colors"
+          id="logoutBtn"
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl w-full px-4 py-3 flex items-center gap-3 transition-colors cursor-pointer"
         >
           <span class="material-symbols-outlined">logout</span>
           <span class="font-label-md text-label-md">Logout</span>
@@ -623,6 +639,43 @@
           // Hiển thị chi tiết khách hàng
         }
       };
+    </script>
+    <script type="module">
+      // === THÊM VÀO SCRIPT HIỆN CÓ CỦA MỖI TRANG ADMIN ===
+      import { logoutUser, getUserInfo, isAuthenticated } from "../js/auth.js";
+
+      // Kiểm tra auth
+      if (!isAuthenticated()) {
+        window.location.href = "/auth/login";
+      }
+
+      const userInfo = getUserInfo();
+      if (userInfo && userInfo.role !== "admin") {
+        window.location.href = "/";
+      }
+
+      // Hiện tên admin trên sidebar
+      if (userInfo) {
+        const nameEl = document.getElementById("adminDisplayName");
+        const avatarEl = document.getElementById("adminAvatarSidebar");
+        if (nameEl) nameEl.textContent = userInfo.fullName || userInfo.email;
+        if (avatarEl)
+          avatarEl.textContent = (userInfo.fullName || userInfo.email || "A")
+            .charAt(0)
+            .toUpperCase();
+      }
+
+      // Xử lý đăng xuất
+      const logoutBtn = document.getElementById("logoutBtn");
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", async (e) => {
+          e.preventDefault();
+          if (confirm("Bạn có chắc chắn muốn đăng xuất?")) {
+            await logoutUser();
+            window.location.href = "/auth/login";
+          }
+        });
+      }
     </script>
   </body>
 </html>

@@ -1,19 +1,14 @@
 <!doctype html>
-
 <html class="light" lang="vi">
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Quicksand:wght@600;700&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&family=Quicksand:wght@600;700&display=swap"
       rel="stylesheet"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -93,10 +88,7 @@
               "headline-lg": ["Quicksand"],
               "headline-md": ["Quicksand"],
               "body-md": ["Plus Jakarta Sans"],
-              "headline-lg-mobile": ["Quicksand"],
-              "body-lg": ["Plus Jakarta Sans"],
               "label-sm": ["Plus Jakarta Sans"],
-              "headline-xl": ["Quicksand"],
             },
             fontSize: {
               "label-md": [
@@ -116,20 +108,7 @@
                 { lineHeight: "32px", fontWeight: "600" },
               ],
               "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
-              "headline-lg-mobile": [
-                "28px",
-                { lineHeight: "36px", fontWeight: "700" },
-              ],
-              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
               "label-sm": ["12px", { lineHeight: "16px", fontWeight: "700" }],
-              "headline-xl": [
-                "48px",
-                {
-                  lineHeight: "56px",
-                  letterSpacing: "-0.02em",
-                  fontWeight: "700",
-                },
-              ],
             },
           },
         },
@@ -149,14 +128,10 @@
       .tinted-shadow {
         box-shadow: 0 20px 40px -15px rgba(132, 84, 0, 0.12);
       }
-      .glass-card {
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(8px);
-      }
     </style>
   </head>
   <body class="bg-background font-body-md text-on-background min-h-screen">
-    <!-- SideNavBar (Authority: Shared Components JSON) -->
+    <!-- SideNavBar -->
     <aside
       class="flex flex-col h-screen fixed left-0 top-0 border-r border-outline-variant bg-surface-container-low w-64 z-50"
     >
@@ -167,9 +142,24 @@
         <p class="text-label-sm text-on-surface-variant opacity-70">
           Xám Pet Shop Management
         </p>
+        <!-- Admin info -->
+        <div
+          class="mt-md pt-md border-t border-outline-variant/30 flex items-center gap-sm"
+        >
+          <div
+            id="adminAvatarSidebar"
+            class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-label-sm flex-shrink-0"
+          >
+            A
+          </div>
+          <span
+            id="adminDisplayName"
+            class="text-label-sm text-on-surface font-semibold truncate max-w-[130px]"
+            >Admin</span
+          >
+        </div>
       </div>
       <nav class="flex-grow space-y-2 py-md">
-        <!-- Active State: Dashboard -->
         <a
           class="bg-primary-container text-on-primary-container rounded-xl mx-2 px-4 py-3 flex items-center gap-3 shadow-sm transition-all duration-150 translate-x-1"
           href="/admin"
@@ -207,15 +197,16 @@
         </a>
       </nav>
       <div class="pb-xl border-t border-outline-variant pt-md">
-        <a
-          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors cursor-pointer"
+        <button
           id="logoutBtn"
+          class="text-on-surface-variant hover:bg-error-container/30 hover:text-error rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors cursor-pointer w-[calc(100%-16px)]"
         >
           <span class="material-symbols-outlined">logout</span>
           <span class="font-label-md text-label-md">Logout</span>
-        </a>
+        </button>
       </div>
     </aside>
+
     <!-- Main Content -->
     <main class="ml-64 p-lg md:p-xl space-y-xl">
       <!-- Header Section -->
@@ -225,7 +216,11 @@
             Tổng Quan Quản Trị
           </h2>
           <p class="font-body-md text-on-surface-variant">
-            Chào mừng trở lại, quản trị viên Xám Pet Shop.
+            Chào mừng trở lại,
+            <span
+              id="headerAdminName"
+              class="font-semibold text-primary"
+            ></span>
           </p>
         </div>
         <div class="flex gap-md items-center">
@@ -235,24 +230,21 @@
             <span class="material-symbols-outlined text-primary"
               >calendar_today</span
             >
-            <span class="font-label-md text-label-md"
-              >Hôm nay: 24 Tháng 5, 2026</span
+            <span class="font-label-md text-label-md" id="todayDate"
+              >Hôm nay</span
             >
           </div>
           <div
-            class="h-12 w-12 rounded-full overflow-hidden border-2 border-primary-container"
+            class="h-12 w-12 rounded-full overflow-hidden border-2 border-primary-container bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-lg"
+            id="headerAvatar"
           >
-            <img
-              alt="Admin"
-              data-alt="A professional profile avatar of a male administrator with a friendly expression. The image is a clean vector illustration with a minimalist soft background that matches the cream and orange aesthetic of the Xám Pet Shop brand. High-key lighting creates a professional yet warm atmosphere."
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuABLbcEuesZLMNCYExWvIXKQZuB4lriHCyVyneuy1ppCaglg0YyXoWZuq6s7p-wjQp3_e_2kYdWouJ_ySl-03-tkckBfw9sajQjgCvcc3UIstvr5zgCECd2QrLI-COkbaxKFR4S6nGFJ4Av8nyILt5I--ABDUZYki9PrPznz0FzGwqq4ptmSNu8vu1oEVDWh9F2lmfmzFmFTPsKogrbDwc9-znJnUyHfhm0fccHSab3rzfJrS21w40iu2bm6e7kvu49diU-SaHS8Lk"
-            />
+            A
           </div>
         </div>
       </header>
+
       <!-- Stats Bento Grid -->
       <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg">
-        <!-- Total Orders -->
         <div
           class="bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow hover:scale-[1.02] transition-transform duration-300"
         >
@@ -268,9 +260,10 @@
           <p class="font-label-md text-on-surface-variant opacity-70">
             Tổng Đơn Hàng
           </p>
-          <h3 class="font-headline-md text-headline-md mt-xs">1,248</h3>
+          <h3 class="font-headline-md text-headline-md mt-xs" id="statOrders">
+            —
+          </h3>
         </div>
-        <!-- Revenue -->
         <div
           class="bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow hover:scale-[1.02] transition-transform duration-300"
         >
@@ -285,9 +278,10 @@
           <p class="font-label-md text-on-surface-variant opacity-70">
             Doanh Thu (VND)
           </p>
-          <h3 class="font-headline-md text-headline-md mt-xs">84,500,000</h3>
+          <h3 class="font-headline-md text-headline-md mt-xs" id="statRevenue">
+            —
+          </h3>
         </div>
-        <!-- New Users -->
         <div
           class="bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow hover:scale-[1.02] transition-transform duration-300"
         >
@@ -297,14 +291,17 @@
                 >person_add</span
               >
             </div>
-            <span class="text-tertiary font-label-sm">45 khách mới</span>
+            <span class="text-tertiary font-label-sm" id="statNewCustomers"
+              >—</span
+            >
           </div>
           <p class="font-label-md text-on-surface-variant opacity-70">
             Người Dùng Mới
           </p>
-          <h3 class="font-headline-md text-headline-md mt-xs">216</h3>
+          <h3 class="font-headline-md text-headline-md mt-xs" id="statUsers">
+            —
+          </h3>
         </div>
-        <!-- Stock -->
         <div
           class="bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow hover:scale-[1.02] transition-transform duration-300"
         >
@@ -314,17 +311,20 @@
                 >pets</span
               >
             </div>
-            <span class="text-error font-label-sm">12 sản phẩm sắp hết</span>
+            <span class="text-error font-label-sm" id="statLowStock">—</span>
           </div>
           <p class="font-label-md text-on-surface-variant opacity-70">
             Sản Phẩm Trong Kho
           </p>
-          <h3 class="font-headline-md text-headline-md mt-xs">1,052</h3>
+          <h3 class="font-headline-md text-headline-md mt-xs" id="statProducts">
+            —
+          </h3>
         </div>
       </section>
+
       <!-- Main Dashboard Layout -->
       <section class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
-        <!-- Revenue Statistics Chart Placeholder -->
+        <!-- Revenue Chart -->
         <div
           class="lg:col-span-2 bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow"
         >
@@ -345,11 +345,9 @@
               </button>
             </div>
           </div>
-          <!-- Chart Visualization with CSS Shapes -->
           <div
             class="relative h-[300px] w-full flex items-end justify-between gap-md pb-lg group"
           >
-            <!-- Grid Lines -->
             <div
               class="absolute inset-0 flex flex-col justify-between pointer-events-none"
             >
@@ -361,7 +359,6 @@
                 class="border-b-2 border-outline-variant/50 w-full h-0"
               ></div>
             </div>
-            <!-- Bars -->
             <div
               class="relative flex-1 bg-primary-container/20 hover:bg-primary-container transition-all duration-300 rounded-t-xl"
               style="height: 45%"
@@ -398,7 +395,7 @@
             ><span>Th6</span><span>Th7</span><span>CN</span>
           </div>
         </div>
-        <!-- Recent Activity Card -->
+        <!-- Recent Activity -->
         <div
           class="bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow"
         >
@@ -406,7 +403,6 @@
             Hoạt Động Gần Đây
           </h3>
           <div class="space-y-lg">
-            <!-- Activity Item 1 -->
             <div class="flex gap-md">
               <div class="relative flex flex-col items-center">
                 <div
@@ -428,7 +424,6 @@
                 </p>
               </div>
             </div>
-            <!-- Activity Item 2 -->
             <div class="flex gap-md">
               <div class="relative flex flex-col items-center">
                 <div
@@ -452,7 +447,6 @@
                 </p>
               </div>
             </div>
-            <!-- Activity Item 3 -->
             <div class="flex gap-md">
               <div class="relative flex flex-col items-center">
                 <div
@@ -481,110 +475,9 @@
           </button>
         </div>
       </section>
-      <!-- Product Table Section -->
-      <section
-        class="bg-white rounded-[24px] border border-outline-variant/20 soft-shadow overflow-hidden"
-      >
-        <div
-          class="p-lg flex justify-between items-center border-b border-outline-variant/10"
-        >
-          <h3 class="font-headline-md text-headline-md">Sản Phẩm Nổi Bật</h3>
-          <button
-            class="bg-primary text-white px-lg py-2 rounded-full font-label-md shadow-sm hover:scale-105 transition-transform"
-          >
-            + Thêm Sản Phẩm
-          </button>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left">
-            <thead
-              class="bg-surface-container-low text-on-surface-variant font-label-md"
-            >
-              <tr>
-                <th class="px-lg py-md">Sản Phẩm</th>
-                <th class="px-lg py-md">Danh Mục</th>
-                <th class="px-lg py-md">Giá</th>
-                <th class="px-lg py-md">Trạng Thái</th>
-                <th class="px-lg py-md text-right">Thao Tác</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-outline-variant/10 font-body-md">
-              <tr class="hover:bg-surface-bright transition-colors">
-                <td class="px-lg py-md flex items-center gap-md">
-                  <div
-                    class="w-10 h-10 bg-surface-container rounded-lg overflow-hidden"
-                  >
-                    <img
-                      alt="Pet Food"
-                      data-alt="A premium gold-bagged cat food product photography shot against a soft cream background. The packaging features elegant minimalist branding and high-key lighting, emphasizing the premium quality of the cat food. Soft shadows create depth in a clean, professional studio setting."
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0GLsJMANQIhaBczRrfXFN7DPiq4oaozjJF31pGHDdkrpLWeYMYlEpwIGT2zowzcKPxmG3KimmTgN5yX8bbKFKWlgBcPkvF2u8DWNlD7peVZoh49e_RfG30myIGPxjHjAE1OYLNwkXq5pB83nPsbJYnQGW80ypGlhHGh10i35OpqJ6e2tFvVysymownCgdxt4HbgNRV10JQRQiIRgkl9mNlQzCw5wvD-JSnko2xTqBKs0KwsxAspuRVDeVeirLhQed6sRUGT2_oxA"
-                    />
-                  </div>
-                  <span class="font-label-md"
-                    >Thức ăn Royal Canin Mother &amp; Baby</span
-                  >
-                </td>
-                <td class="px-lg py-md">Thực Phẩm</td>
-                <td class="px-lg py-md text-primary font-bold">540.000đ</td>
-                <td class="px-lg py-md">
-                  <span
-                    class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-label-sm"
-                    >Còn hàng</span
-                  >
-                </td>
-                <td class="px-lg py-md text-right">
-                  <button
-                    class="material-symbols-outlined text-outline hover:text-primary transition-colors"
-                  >
-                    edit
-                  </button>
-                  <button
-                    class="material-symbols-outlined text-outline hover:text-error transition-colors ml-2"
-                  >
-                    delete
-                  </button>
-                </td>
-              </tr>
-              <tr class="hover:bg-surface-bright transition-colors">
-                <td class="px-lg py-md flex items-center gap-md">
-                  <div
-                    class="w-10 h-10 bg-surface-container rounded-lg overflow-hidden"
-                  >
-                    <img
-                      alt="Cat Tree"
-                      data-alt="A modern, minimalist wooden cat tree with soft grey felt pads. The furniture piece is presented in a bright, airy domestic interior with warm natural lighting coming from a window. The aesthetic is clean and high-end, perfectly fitting a premium pet care brand."
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXM-EwKoOT2F6pOSRIMgfGk5yvV4QpvLuJoWT_9hNNWXl_UcfJgLHnJpRYXM92x7VzyWpWz-jdmnNh3a2Mdn-l_q_xuBe_naDKyCb8SuoVeLx9Qu2LWXeKRGpNfFV9fovHMrH4kBYwdWmJDgCzhX6gHvCIhQMdoI73obe7jo1qaIgYLq3auypr5mEy8mmRlLN0kBjeoWuZV13rTxC_IAgALnaHFRSgSNLgXLNIi8k3vBBmz4t5OwXZBacSJmpiNJ4A-5jDR0oQB7g"
-                    />
-                  </div>
-                  <span class="font-label-md">Trụ Cào Móng Cao Cấp</span>
-                </td>
-                <td class="px-lg py-md">Phụ Kiện</td>
-                <td class="px-lg py-md text-primary font-bold">1.250.000đ</td>
-                <td class="px-lg py-md">
-                  <span
-                    class="px-3 py-1 bg-error-container text-on-error-container rounded-full text-label-sm"
-                    >Sắp hết</span
-                  >
-                </td>
-                <td class="px-lg py-md text-right">
-                  <button
-                    class="material-symbols-outlined text-outline hover:text-primary transition-colors"
-                  >
-                    edit
-                  </button>
-                  <button
-                    class="material-symbols-outlined text-outline hover:text-error transition-colors ml-2"
-                  >
-                    delete
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
     </main>
-    <!-- Footer (Authority: Shared Components JSON) -->
+
+    <!-- Footer -->
     <footer
       class="ml-64 border-t border-outline-variant bg-surface-container-highest"
     >
@@ -598,8 +491,7 @@
           <p
             class="font-body-sm text-label-sm text-on-surface-variant max-w-xs"
           >
-            Hệ thống quản lý nội bộ dành cho nhân viên và quản trị viên. Mọi
-            hành vi truy cập trái phép đều bị nghiêm cấm.
+            Hệ thống quản lý nội bộ dành cho nhân viên và quản trị viên.
           </p>
         </div>
         <div>
@@ -624,37 +516,68 @@
         </div>
       </div>
     </footer>
-    <script type="module">
-      import { getDashboardStats, logoutUser } from "../js/admin.js";
-      import { isAuthenticated, getUserInfo } from "../js/auth.js";
 
-      // Check authentication
+    <script type="module">
+      import { getDashboardStats } from "../js/admin.js";
+      import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
+
+      // === Auth Guard ===
       if (!isAuthenticated()) {
         window.location.href = "/auth/login";
       }
-
       const userInfo = getUserInfo();
       if (userInfo && userInfo.role !== "admin") {
         window.location.href = "/";
       }
 
-      // Load dashboard stats
+      // === Hiển thị thông tin admin ===
+      if (userInfo) {
+        const name = userInfo.fullName || userInfo.email || "Admin";
+        const initial = name.charAt(0).toUpperCase();
+
+        document.getElementById("adminDisplayName").textContent = name;
+        document.getElementById("adminAvatarSidebar").textContent = initial;
+        document.getElementById("headerAdminName").textContent = name;
+        document.getElementById("headerAvatar").textContent = initial;
+      }
+
+      // === Ngày hôm nay ===
+      const now = new Date();
+      document.getElementById("todayDate").textContent =
+        "Hôm nay: " +
+        now.toLocaleDateString("vi-VN", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        });
+
+      // === Đăng xuất ===
+      document
+        .getElementById("logoutBtn")
+        .addEventListener("click", async () => {
+          if (confirm("Bạn có chắc chắn muốn đăng xuất?")) {
+            await logoutUser();
+            window.location.href = "/auth/login";
+          }
+        });
+
+      // === Load Dashboard Stats ===
       async function loadDashboard() {
         const result = await getDashboardStats();
         if (result.success) {
-          console.log("Dashboard stats:", result.dashboard);
-          // Update dashboard UI với data từ API
+          const d = result.dashboard;
+          document.getElementById("statOrders").textContent =
+            d.orders?.total?.toLocaleString("vi-VN") || "—";
+          document.getElementById("statRevenue").textContent =
+            d.orders?.revenue?.toLocaleString("vi-VN") || "—";
+          document.getElementById("statUsers").textContent =
+            d.users?.customers?.toLocaleString("vi-VN") || "—";
+          document.getElementById("statProducts").textContent =
+            d.products?.total?.toLocaleString("vi-VN") || "—";
+          document.getElementById("statNewCustomers").textContent =
+            d.orders?.pending + " đơn chờ" || "—";
         }
       }
-
-      // Handle logout
-      document.getElementById("logoutBtn").addEventListener("click", () => {
-        if (confirm("Bạn có chắc chắn muốn đăng xuất?")) {
-          logoutUser();
-          window.location.href = "/auth/login";
-        }
-      });
-
       loadDashboard();
     </script>
   </body>
