@@ -767,5 +767,38 @@
         </div>
       </div>
     </footer>
+    <script type="module">
+      import {
+        getAdminOrders,
+        updateOrderStatus,
+        getOrderStats,
+      } from "../js/admin.js";
+      import { isAuthenticated, getUserInfo } from "../js/auth.js";
+
+      // Check auth
+      if (!isAuthenticated() || getUserInfo()?.role !== "admin") {
+        window.location.href = "/auth/login";
+      }
+
+      // Load orders
+      async function loadOrders() {
+        const result = await getAdminOrders({ page: 1, limit: 10 });
+        if (result.success) {
+          console.log("Orders:", result.orders);
+          // Cập nhật bảng đơn hàng
+        }
+      }
+
+      loadOrders();
+
+      // Update order status
+      window.updateOrder = async (orderId, status) => {
+        const result = await updateOrderStatus(orderId, status);
+        if (result.success) {
+          alert("Cập nhật trạng thái thành công");
+          loadOrders();
+        }
+      };
+    </script>
   </body>
 </html>

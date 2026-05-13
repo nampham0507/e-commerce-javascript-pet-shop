@@ -35,6 +35,7 @@ app.get("/api/test", (req, res) => {
 // Routes - API
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/products", require("./routes/productRoutes"));
+app.use("/api/admin", require("./routes/adminRoutes"));
 // app.use('/api/orders', require('./routes/orderRoutes'));
 // app.use('/api/customers', require('./routes/customerRoutes'));
 
@@ -47,15 +48,15 @@ app.get("/admin", (req, res) => {
   res.sendFile(__dirname + "/views/admin/index.html");
 });
 
-app.get("/admin/manage-customer", (req, res) => {
+app.get("/admin/manageCustomer", (req, res) => {
   res.sendFile(__dirname + "/views/admin/manageCustomer.html");
 });
 
-app.get("/admin/manage-product", (req, res) => {
+app.get("/admin/manageProduct", (req, res) => {
   res.sendFile(__dirname + "/views/admin/manageProduct.html");
 });
 
-app.get("/admin/manage-order", (req, res) => {
+app.get("/admin/manageOrder", (req, res) => {
   res.sendFile(__dirname + "/views/admin/manageOrder.html");
 });
 

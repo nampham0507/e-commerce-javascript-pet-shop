@@ -172,35 +172,35 @@
         <!-- Active State: Dashboard -->
         <a
           class="bg-primary-container text-on-primary-container rounded-xl mx-2 px-4 py-3 flex items-center gap-3 shadow-sm transition-all duration-150 translate-x-1"
-          href="#"
+          href="/admin"
         >
           <span class="material-symbols-outlined">dashboard</span>
           <span class="font-label-md text-label-md">Dashboard</span>
         </a>
         <a
           class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
-          href="#"
+          href="/admin/manageOrder"
         >
           <span class="material-symbols-outlined">shopping_bag</span>
           <span class="font-label-md text-label-md">Orders</span>
         </a>
         <a
           class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
-          href="#"
+          href="/admin/manageProduct"
         >
           <span class="material-symbols-outlined">inventory_2</span>
           <span class="font-label-md text-label-md">Products</span>
         </a>
         <a
           class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
-          href="#"
+          href="/admin/manageCustomer"
         >
           <span class="material-symbols-outlined">group</span>
           <span class="font-label-md text-label-md">Users</span>
         </a>
         <a
           class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
-          href="#"
+          href="/admin/report"
         >
           <span class="material-symbols-outlined">assessment</span>
           <span class="font-label-md text-label-md">Reports</span>
@@ -208,8 +208,8 @@
       </nav>
       <div class="pb-xl border-t border-outline-variant pt-md">
         <a
-          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
-          href="#"
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors cursor-pointer"
+          id="logoutBtn"
         >
           <span class="material-symbols-outlined">logout</span>
           <span class="font-label-md text-label-md">Logout</span>
@@ -624,5 +624,38 @@
         </div>
       </div>
     </footer>
+    <script type="module">
+      import { getDashboardStats, logoutUser } from "../js/admin.js";
+      import { isAuthenticated, getUserInfo } from "../js/auth.js";
+
+      // Check authentication
+      if (!isAuthenticated()) {
+        window.location.href = "/auth/login";
+      }
+
+      const userInfo = getUserInfo();
+      if (userInfo && userInfo.role !== "admin") {
+        window.location.href = "/";
+      }
+
+      // Load dashboard stats
+      async function loadDashboard() {
+        const result = await getDashboardStats();
+        if (result.success) {
+          console.log("Dashboard stats:", result.dashboard);
+          // Update dashboard UI với data từ API
+        }
+      }
+
+      // Handle logout
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        if (confirm("Bạn có chắc chắn muốn đăng xuất?")) {
+          logoutUser();
+          window.location.href = "/auth/login";
+        }
+      });
+
+      loadDashboard();
+    </script>
   </body>
 </html>

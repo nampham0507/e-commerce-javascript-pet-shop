@@ -591,5 +591,38 @@
         </div>
       </footer>
     </main>
+    <script type="module">
+      import {
+        getAdminCustomers,
+        getCustomerDetail,
+        getCustomerStats,
+      } from "../js/admin.js";
+      import { isAuthenticated, getUserInfo } from "../js/auth.js";
+
+      // Check auth
+      if (!isAuthenticated() || getUserInfo()?.role !== "admin") {
+        window.location.href = "/auth/login";
+      }
+
+      // Load customers
+      async function loadCustomers() {
+        const result = await getAdminCustomers({ page: 1, limit: 10 });
+        if (result.success) {
+          console.log("Customers:", result.customers);
+          // Cập nhật bảng khách hàng
+        }
+      }
+
+      loadCustomers();
+
+      // View customer detail
+      window.viewCustomer = async (customerId) => {
+        const result = await getCustomerDetail(customerId);
+        if (result.success) {
+          console.log("Customer detail:", result);
+          // Hiển thị chi tiết khách hàng
+        }
+      };
+    </script>
   </body>
 </html>
