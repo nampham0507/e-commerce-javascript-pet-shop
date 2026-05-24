@@ -221,6 +221,26 @@ export const createAdmin = async (data) => {
   }
 };
 
+// Create general user (admin can create customers or admins)
+export const createUser = async (data) => {
+  try {
+    // If creating admin, use admin endpoint which enforces admin role
+    if (data.role === "admin") {
+      return await createAdmin(data);
+    }
+
+    // Otherwise register via auth endpoint (creates customer by default)
+    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
 export const updateUserRole = async (userId, role) => {
   try {
     const response = await fetch(`${API_BASE_URL}/admin/update-role`, {

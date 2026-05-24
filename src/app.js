@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+const session = require("express-session");
+const passport = require("./config/passport");
 
 const app = express();
 
@@ -8,6 +10,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Session middleware
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "your-secret-key",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false, httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }, // 24 hours
+  }),
+);
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Serve static files from views folder
 app.use(express.static(path.join(__dirname, "../views")));
@@ -19,6 +35,7 @@ app.get("/api/test", (req, res) => {
 
 // Routes - API
 app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/auth", require("./routes/authRoutes")); // Also mount at /auth for direct access
 app.use("/api/products", require("./routes/productRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
 // app.use('/api/orders', require('./routes/orderRoutes'));

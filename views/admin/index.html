@@ -475,47 +475,75 @@
           </button>
         </div>
       </section>
-    </main>
-
-    <!-- Footer -->
-    <footer
-      class="ml-64 border-t border-outline-variant bg-surface-container-highest"
-    >
-      <div
-        class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto"
+      <!-- Footer -->
+      <footer
+        class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg bg-surface-container-highest dark:bg-surface-container mt-xl rounded-[24px]"
       >
-        <div class="col-span-1 md:col-span-2">
-          <h4 class="font-headline-sm text-headline-sm text-on-surface mb-md">
-            Xám Pet Shop
-          </h4>
-          <p
-            class="font-body-sm text-label-sm text-on-surface-variant max-w-xs"
+        <div class="col-span-1 md:col-span-1">
+          <span class="font-headline-sm text-headline-sm text-on-surface"
+            >Xám Pet Shop</span
           >
-            Hệ thống quản lý nội bộ dành cho nhân viên và quản trị viên.
+          <p class="mt-md text-on-surface-variant text-label-sm">
+            Cửa hàng chăm sóc thú cưng cao cấp, mang lại sự ấm áp và tin cậy cho
+            người bạn bốn chân của bạn.
           </p>
         </div>
-        <div>
-          <h5 class="font-label-md text-label-md text-primary mb-md">
-            Liên Hệ Hỗ Trợ
-          </h5>
-          <ul class="space-y-sm">
-            <li class="font-body-sm text-label-sm text-on-surface-variant">
-              Phone: 038.339.2903
-            </li>
-            <li class="font-body-sm text-label-sm text-on-surface-variant">
-              Email: nampham050723@gmail.com
-            </li>
-          </ul>
-        </div>
-        <div>
-          <p
-            class="font-body-sm text-label-sm text-on-surface-variant opacity-70"
+        <div class="flex flex-col gap-sm">
+          <span class="font-label-md text-label-md text-primary">Liên hệ</span>
+          <span class="text-on-surface-variant text-label-sm"
+            >Address: Bắc Từ Liêm, Hà Nội</span
           >
+          <span class="text-on-surface-variant text-label-sm"
+            >Phone: 038.339.2903</span
+          >
+          <span class="text-on-surface-variant text-label-sm"
+            >Email: nampham050723@gmail.com</span
+          >
+        </div>
+        <div class="flex flex-col gap-sm">
+          <span class="font-label-md text-label-md text-primary"
+            >Chính sách</span
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+            href="#"
+            >Chính sách bảo mật</a
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+            href="#"
+            >Điều khoản dịch vụ</a
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+            href="#"
+            >Giao hàng &amp; Hoàn trả</a
+          >
+        </div>
+        <div class="flex flex-col gap-sm">
+          <span class="font-label-md text-label-md text-primary"
+            >Mạng xã hội</span
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
+            href="#"
+          >
+            <span class="material-symbols-outlined text-sm">public</span>
+            Facebook
+          </a>
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
+            href="#"
+          >
+            <span class="material-symbols-outlined text-sm">camera_alt</span>
+            Instagram
+          </a>
+          <p class="mt-4 text-on-surface-variant text-[10px]">
             © 2026 Xám Pet Shop. All rights reserved.
           </p>
         </div>
-      </div>
-    </footer>
+      </footer>
+    </main>
 
     <script type="module">
       import { getDashboardStats } from "../js/admin.js";

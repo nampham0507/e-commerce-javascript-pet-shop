@@ -5,8 +5,14 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Tìm kiếm sản phẩm - Xám Pet Shop</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Plus+Jakarta+Sans:wght@200..800&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Plus+Jakarta+Sans:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -89,14 +95,37 @@
               "headline-xl": ["Quicksand"],
             },
             fontSize: {
-              "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "700" }],
-              "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
-              "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }],
+              "headline-lg": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "700" },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.01em",
+                  fontWeight: "600",
+                },
+              ],
               "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
-              "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "700" }],
+              "headline-lg-mobile": [
+                "28px",
+                { lineHeight: "36px", fontWeight: "700" },
+              ],
               "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
               "label-sm": ["12px", { lineHeight: "16px", fontWeight: "700" }],
-              "headline-xl": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
+              "headline-xl": [
+                "48px",
+                {
+                  lineHeight: "56px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
             },
           },
         },
@@ -104,82 +133,168 @@
     </script>
     <style>
       .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
       }
-      .soft-shadow { box-shadow: 0 10px 30px -10px rgba(132, 84, 0, 0.08); }
-      .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -15px rgba(132, 84, 0, 0.12); }
+      .soft-shadow {
+        box-shadow: 0 10px 30px -10px rgba(132, 84, 0, 0.08);
+      }
+      .card-hover:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px -15px rgba(132, 84, 0, 0.12);
+      }
       /* User dropdown */
-      #userMenu { display: none; }
-      #userMenu.open { display: block; }
-      #userAvatar {
-        width: 36px; height: 36px; border-radius: 9999px;
-        background: #ffb347; color: #704700;
-        font-weight: 700; font-size: 14px;
-        display: flex; align-items: center; justify-content: center;
-        cursor: pointer; border: 2px solid #ffddb6;
-        transition: transform 0.15s; flex-shrink: 0;
+      #userMenu {
+        display: none;
       }
-      #userAvatar:hover { transform: scale(1.08); }
+      #userMenu.open {
+        display: block;
+      }
+      #userAvatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 9999px;
+        background: #ffb347;
+        color: #704700;
+        font-weight: 700;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: 2px solid #ffddb6;
+        transition: transform 0.15s;
+        flex-shrink: 0;
+      }
+      #userAvatar:hover {
+        transform: scale(1.08);
+      }
     </style>
   </head>
-  <body class="bg-background text-on-background font-body-md selection:bg-primary-container/30">
-    <!-- TopNavBar -->
-    <header class="bg-surface/80 backdrop-blur-md shadow-sm fixed top-0 w-full z-50">
-      <div class="flex justify-between items-center px-lg py-md w-full max-w-container-max mx-auto">
+  <body
+    class="bg-background text-on-background font-body-md selection:bg-primary-container/30"
+  >
+    <!-- TopNavBar — KHÔNG có ô tìm kiếm -->
+    <header
+      class="bg-surface/80 backdrop-blur-md shadow-sm fixed top-0 w-full z-50"
+    >
+      <div
+        class="flex justify-between items-center px-lg py-md w-full max-w-container-max mx-auto"
+      >
         <div class="flex items-center gap-2">
-          <a href="/" class="font-headline-md text-headline-md font-bold text-primary">Xám Pet Shop</a>
+          <a
+            href="/"
+            class="font-headline-md text-headline-md font-bold text-primary"
+            >Xám Pet Shop</a
+          >
         </div>
         <nav class="hidden md:flex items-center gap-xl">
-          <a class="text-on-surface-variant hover:text-primary transition-transform duration-200 hover:scale-105 font-body-md text-body-md" href="/">Trang chủ</a>
-          <a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md" href="/product">Sản phẩm</a>
-          <a class="text-on-surface-variant hover:text-primary transition-transform duration-200 hover:scale-105 font-body-md text-body-md" href="/homepage/categories">Danh mục</a>
+          <a
+            class="text-on-surface-variant hover:text-primary transition-transform duration-200 hover:scale-105 font-body-md text-body-md"
+            href="/"
+            >Trang chủ</a
+          >
+          <a
+            class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md"
+            href="/product"
+            >Sản phẩm</a
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary transition-transform duration-200 hover:scale-105 font-body-md text-body-md"
+            href="/homepage/categories"
+            >Danh mục</a
+          >
         </nav>
         <div class="flex items-center gap-4">
-          <div class="relative group hidden sm:block">
-            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
-            <input
-              id="navSearchInput"
-              class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-label-md w-64 focus:ring-2 focus:ring-primary-container transition-all"
-              placeholder="Tìm kiếm thức ăn cho mèo..."
-              type="text"
-            />
-          </div>
-          <button class="relative hover:scale-105 transition-transform duration-200">
-            <span class="material-symbols-outlined text-primary">shopping_cart</span>
+          <button
+            class="relative hover:scale-105 transition-transform duration-200"
+          >
+            <span class="material-symbols-outlined text-primary"
+              >shopping_cart</span
+            >
           </button>
-          <!-- GUEST: hiển thị khi chưa đăng nhập -->
+          <!-- GUEST -->
           <div id="guestNav" class="hidden sm:flex items-center gap-sm">
-            <a href="/auth/login" class="text-on-surface-variant hover:text-primary font-label-md px-md py-sm transition-colors">Đăng nhập</a>
-            <a href="/auth/register" class="bg-primary-container text-on-primary-container px-lg py-sm rounded-full font-label-md hover:scale-105 transition-all active:scale-95 inline-block">Đăng ký</a>
+            <a
+              href="/auth/login"
+              class="text-on-surface-variant hover:text-primary font-label-md px-md py-sm transition-colors"
+              >Đăng nhập</a
+            >
+            <a
+              href="/auth/register"
+              class="bg-primary-container text-on-primary-container px-lg py-sm rounded-full font-label-md hover:scale-105 transition-all active:scale-95 inline-block"
+              >Đăng ký</a
+            >
           </div>
-          <!-- USER: hiển thị khi đã đăng nhập -->
+          <!-- USER -->
           <div id="userNav" class="hidden items-center gap-sm relative">
-            <a id="adminLink" href="/admin" class="hidden items-center gap-xs px-md py-1 bg-primary text-on-primary rounded-full font-label-sm hover:opacity-90 transition-opacity">
-              <span class="material-symbols-outlined text-[14px]">admin_panel_settings</span>
+            <a
+              id="adminLink"
+              href="/admin"
+              class="hidden items-center gap-xs px-md py-1 bg-primary text-on-primary rounded-full font-label-sm hover:opacity-90 transition-opacity"
+            >
+              <span class="material-symbols-outlined text-[14px]"
+                >admin_panel_settings</span
+              >
               Admin
             </a>
             <div class="relative">
               <button id="userAvatarBtn" class="flex items-center gap-sm group">
                 <div id="userAvatar">A</div>
-                <span id="userName" class="hidden sm:block font-label-md text-on-surface max-w-[120px] truncate"></span>
-                <span class="material-symbols-outlined text-on-surface-variant text-[18px] transition-transform group-hover:text-primary" id="chevronIcon">expand_more</span>
+                <span
+                  id="userName"
+                  class="hidden sm:block font-label-md text-on-surface max-w-[120px] truncate"
+                ></span>
+                <span
+                  class="material-symbols-outlined text-on-surface-variant text-[18px] transition-transform group-hover:text-primary"
+                  id="chevronIcon"
+                  >expand_more</span
+                >
               </button>
-              <div id="userMenu" class="absolute right-0 top-full mt-2 w-52 bg-surface-container-lowest rounded-2xl shadow-lg border border-outline-variant/30 overflow-hidden z-50">
+              <div
+                id="userMenu"
+                class="absolute right-0 top-full mt-2 w-52 bg-surface-container-lowest rounded-2xl shadow-lg border border-outline-variant/30 overflow-hidden z-50"
+              >
                 <div class="px-lg py-md border-b border-outline-variant/20">
-                  <p class="font-label-md text-on-surface truncate" id="menuUserName"></p>
-                  <p class="text-label-sm text-on-surface-variant truncate" id="menuUserEmail"></p>
+                  <p
+                    class="font-label-md text-on-surface truncate"
+                    id="menuUserName"
+                  ></p>
+                  <p
+                    class="text-label-sm text-on-surface-variant truncate"
+                    id="menuUserEmail"
+                  ></p>
                 </div>
                 <div class="py-sm">
-                  <a href="/order/detail" class="flex items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md">
-                    <span class="material-symbols-outlined text-[18px]">receipt_long</span>
+                  <a
+                    href="/order/detail"
+                    class="flex items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md"
+                  >
+                    <span class="material-symbols-outlined text-[18px]"
+                      >receipt_long</span
+                    >
                     Đơn hàng của tôi
                   </a>
-                  <a id="menuAdminLink" href="/admin" class="hidden items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md">
-                    <span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
+                  <a
+                    id="menuAdminLink"
+                    href="/admin"
+                    class="hidden items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md"
+                  >
+                    <span class="material-symbols-outlined text-[18px]"
+                      >admin_panel_settings</span
+                    >
                     Trang Admin
                   </a>
-                  <button id="logoutBtn" class="w-full flex items-center gap-sm px-lg py-sm text-error hover:bg-error-container/20 transition-colors font-label-md">
-                    <span class="material-symbols-outlined text-[18px]">logout</span>
+                  <button
+                    id="logoutBtn"
+                    class="w-full flex items-center gap-sm px-lg py-sm text-error hover:bg-error-container/20 transition-colors font-label-md"
+                  >
+                    <span class="material-symbols-outlined text-[18px]"
+                      >logout</span
+                    >
                     Đăng xuất
                   </button>
                 </div>
@@ -189,16 +304,20 @@
         </div>
       </div>
     </header>
+
     <main class="pt-32 pb-xl px-md max-w-container-max mx-auto min-h-screen">
-      <!-- Search Hero -->
+      <!-- Search Hero — có tìm kiếm realtime -->
       <div class="mb-xl text-center">
-        <h1 class="font-headline-xl text-headline-xl text-primary mb-md">Tìm kiếm sản phẩm</h1>
+        <h1 class="font-headline-xl text-headline-xl text-primary mb-md">
+          Tìm kiếm sản phẩm
+        </h1>
         <div class="max-w-2xl mx-auto relative group">
           <input
             id="heroSearchInput"
             class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary-container rounded-full px-lg py-4 text-body-lg soft-shadow focus:ring-0 transition-all outline-none"
             type="text"
             placeholder="Nhập tên sản phẩm, thương hiệu..."
+            autocomplete="off"
           />
           <button
             id="heroSearchBtn"
@@ -207,44 +326,95 @@
             <span class="material-symbols-outlined">search</span>
           </button>
         </div>
-        <p id="searchResultCount" class="mt-4 text-on-surface-variant font-label-md">Đang tải sản phẩm...</p>
+        <p
+          id="searchResultCount"
+          class="mt-4 text-on-surface-variant font-label-md"
+        >
+          Đang tải sản phẩm...
+        </p>
       </div>
+
       <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-lg">
-        <!-- Column Left: Filters -->
+        <!-- Filters -->
         <aside class="space-y-xl">
           <!-- Category Filter -->
-          <div class="bg-surface-container-low rounded-xl p-lg border border-outline-variant/30">
-            <h3 class="font-headline-md text-headline-md text-on-surface mb-md flex items-center gap-2">
+          <div
+            class="bg-surface-container-low rounded-xl p-lg border border-outline-variant/30"
+          >
+            <h3
+              class="font-headline-md text-headline-md text-on-surface mb-md flex items-center gap-2"
+            >
               <span class="material-symbols-outlined text-primary">pets</span>
               Danh mục
             </h3>
             <div class="space-y-3">
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5 category-filter" type="checkbox" value="food" />
-                <span class="text-body-md group-hover:text-primary transition-colors">Thức ăn hạt (Dry)</span>
+                <input
+                  class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5 category-filter"
+                  type="checkbox"
+                  value="food"
+                />
+                <span
+                  class="text-body-md group-hover:text-primary transition-colors"
+                  >Thức ăn hạt (Dry)</span
+                >
               </label>
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5 category-filter" type="checkbox" value="pate" />
-                <span class="text-body-md group-hover:text-primary transition-colors">Pate &amp; Súp (Wet)</span>
+                <input
+                  class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5 category-filter"
+                  type="checkbox"
+                  value="pate"
+                />
+                <span
+                  class="text-body-md group-hover:text-primary transition-colors"
+                  >Pate &amp; Súp (Wet)</span
+                >
               </label>
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5 category-filter" type="checkbox" value="snack" />
-                <span class="text-body-md group-hover:text-primary transition-colors">Snack &amp; Bánh thưởng</span>
+                <input
+                  class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5 category-filter"
+                  type="checkbox"
+                  value="snack"
+                />
+                <span
+                  class="text-body-md group-hover:text-primary transition-colors"
+                  >Snack &amp; Bánh thưởng</span
+                >
               </label>
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5 category-filter" type="checkbox" value="milk" />
-                <span class="text-body-md group-hover:text-primary transition-colors">Sữa mèo</span>
+                <input
+                  class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5 category-filter"
+                  type="checkbox"
+                  value="milk"
+                />
+                <span
+                  class="text-body-md group-hover:text-primary transition-colors"
+                  >Sữa mèo</span
+                >
               </label>
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5 category-filter" type="checkbox" value="accessories" />
-                <span class="text-body-md group-hover:text-primary transition-colors">Phụ kiện</span>
+                <input
+                  class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5 category-filter"
+                  type="checkbox"
+                  value="accessories"
+                />
+                <span
+                  class="text-body-md group-hover:text-primary transition-colors"
+                  >Phụ kiện</span
+                >
               </label>
             </div>
           </div>
           <!-- Price Filter -->
-          <div class="bg-surface-container-low rounded-xl p-lg border border-outline-variant/30">
-            <h3 class="font-headline-md text-headline-md text-on-surface mb-md flex items-center gap-2">
-              <span class="material-symbols-outlined text-primary">payments</span>
+          <div
+            class="bg-surface-container-low rounded-xl p-lg border border-outline-variant/30"
+          >
+            <h3
+              class="font-headline-md text-headline-md text-on-surface mb-md flex items-center gap-2"
+            >
+              <span class="material-symbols-outlined text-primary"
+                >payments</span
+              >
               Khoảng giá
             </h3>
             <div class="space-y-4">
@@ -256,55 +426,111 @@
                 value="2000000"
                 type="range"
               />
-              <div class="flex justify-between text-label-sm text-on-surface-variant font-bold">
+              <div
+                class="flex justify-between text-label-sm text-on-surface-variant font-bold"
+              >
                 <span>0đ</span>
                 <span id="priceDisplay">2.000.000đ</span>
               </div>
             </div>
           </div>
           <!-- Brand Filter -->
-          <div class="bg-surface-container-low rounded-xl p-lg border border-outline-variant/30">
-            <h3 class="font-headline-md text-headline-md text-on-surface mb-md flex items-center gap-2">
-              <span class="material-symbols-outlined text-primary">verified</span>
+          <div
+            class="bg-surface-container-low rounded-xl p-lg border border-outline-variant/30"
+          >
+            <h3
+              class="font-headline-md text-headline-md text-on-surface mb-md flex items-center gap-2"
+            >
+              <span class="material-symbols-outlined text-primary"
+                >verified</span
+              >
               Thương hiệu
             </h3>
             <div class="space-y-3">
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="border-outline-variant text-primary focus:ring-primary-container w-5 h-5" name="brand" type="radio" value="" checked />
-                <span class="text-body-md group-hover:text-primary transition-colors">Tất cả</span>
+                <input
+                  class="border-outline-variant text-primary focus:ring-primary-container w-5 h-5"
+                  name="brand"
+                  type="radio"
+                  value=""
+                  checked
+                />
+                <span
+                  class="text-body-md group-hover:text-primary transition-colors"
+                  >Tất cả</span
+                >
               </label>
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="border-outline-variant text-primary focus:ring-primary-container w-5 h-5" name="brand" type="radio" value="Royal Canin" />
-                <span class="text-body-md group-hover:text-primary transition-colors">Royal Canin</span>
+                <input
+                  class="border-outline-variant text-primary focus:ring-primary-container w-5 h-5"
+                  name="brand"
+                  type="radio"
+                  value="Royal Canin"
+                />
+                <span
+                  class="text-body-md group-hover:text-primary transition-colors"
+                  >Royal Canin</span
+                >
               </label>
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="border-outline-variant text-primary focus:ring-primary-container w-5 h-5" name="brand" type="radio" value="Me-O" />
-                <span class="text-body-md group-hover:text-primary transition-colors">Me-O Premium</span>
+                <input
+                  class="border-outline-variant text-primary focus:ring-primary-container w-5 h-5"
+                  name="brand"
+                  type="radio"
+                  value="Me-O"
+                />
+                <span
+                  class="text-body-md group-hover:text-primary transition-colors"
+                  >Me-O Premium</span
+                >
               </label>
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input class="border-outline-variant text-primary focus:ring-primary-container w-5 h-5" name="brand" type="radio" value="Catsrang" />
-                <span class="text-body-md group-hover:text-primary transition-colors">Catsrang</span>
+                <input
+                  class="border-outline-variant text-primary focus:ring-primary-container w-5 h-5"
+                  name="brand"
+                  type="radio"
+                  value="Catsrang"
+                />
+                <span
+                  class="text-body-md group-hover:text-primary transition-colors"
+                  >Catsrang</span
+                >
               </label>
             </div>
           </div>
           <!-- Reset button -->
-          <button id="resetFiltersBtn" class="w-full bg-primary text-on-primary py-3 rounded-full font-label-md hover:scale-105 transition-transform active:scale-95">
+          <button
+            id="resetFiltersBtn"
+            class="w-full bg-primary text-on-primary py-3 rounded-full font-label-md hover:scale-105 transition-transform active:scale-95"
+          >
             Xóa tất cả bộ lọc
           </button>
         </aside>
-        <!-- Column Right: Search Results -->
+
+        <!-- Search Results -->
         <section class="space-y-lg">
-          <!-- Sorting & View Options -->
-          <div class="flex justify-between items-center bg-white/50 backdrop-blur-sm p-md rounded-xl border border-outline-variant/20">
+          <!-- Sorting & View -->
+          <div
+            class="flex justify-between items-center bg-white/50 backdrop-blur-sm p-md rounded-xl border border-outline-variant/20"
+          >
             <div class="flex gap-4">
-              <button class="flex items-center gap-1 text-label-md text-primary font-bold">
-                <span class="material-symbols-outlined text-[20px]">grid_view</span>
+              <button
+                class="flex items-center gap-1 text-label-md text-primary font-bold"
+              >
+                <span class="material-symbols-outlined text-[20px]"
+                  >grid_view</span
+                >
                 Lưới
               </button>
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-label-sm text-on-surface-variant">Sắp xếp:</span>
-              <select id="sortSelect" class="bg-transparent border-none text-label-md text-on-surface font-bold focus:ring-0 cursor-pointer">
+              <span class="text-label-sm text-on-surface-variant"
+                >Sắp xếp:</span
+              >
+              <select
+                id="sortSelect"
+                class="bg-transparent border-none text-label-md text-on-surface font-bold focus:ring-0 cursor-pointer"
+              >
                 <option value="default">Mới nhất</option>
                 <option value="price_asc">Giá thấp đến cao</option>
                 <option value="price_desc">Giá cao đến thấp</option>
@@ -312,28 +538,58 @@
             </div>
           </div>
           <!-- Product Grid -->
-          <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-gutter">
-            <div class="col-span-full text-center py-xl text-on-surface-variant">Đang tải...</div>
+          <div
+            id="productsGrid"
+            class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-gutter"
+          >
+            <div
+              class="col-span-full text-center py-xl text-on-surface-variant"
+            >
+              Đang tải...
+            </div>
           </div>
           <!-- Empty State -->
-          <div id="emptyState" class="hidden flex-col items-center justify-center py-24 text-center space-y-6">
-            <div class="w-48 h-48 bg-surface-container-high rounded-full flex items-center justify-center">
-              <span class="material-symbols-outlined text-[80px] text-outline-variant">sentiment_dissatisfied</span>
+          <div
+            id="emptyState"
+            class="hidden flex-col items-center justify-center py-24 text-center space-y-6"
+          >
+            <div
+              class="w-48 h-48 bg-surface-container-high rounded-full flex items-center justify-center"
+            >
+              <span
+                class="material-symbols-outlined text-[80px] text-outline-variant"
+                >sentiment_dissatisfied</span
+              >
             </div>
             <div class="space-y-2">
-              <h2 class="font-headline-lg text-headline-lg text-on-surface">Rất tiếc, không tìm thấy sản phẩm</h2>
-              <p class="text-on-surface-variant max-w-sm mx-auto">Thử dùng từ khóa khác hoặc xóa bớt bộ lọc nhé!</p>
+              <h2 class="font-headline-lg text-headline-lg text-on-surface">
+                Rất tiếc, không tìm thấy sản phẩm
+              </h2>
+              <p class="text-on-surface-variant max-w-sm mx-auto">
+                Thử dùng từ khóa khác hoặc xóa bớt bộ lọc nhé!
+              </p>
             </div>
           </div>
         </section>
       </div>
     </main>
+
     <!-- Footer -->
-    <footer class="bg-surface-container-highest dark:bg-surface-container mt-24">
-      <div class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto">
+    <footer
+      class="bg-surface-container-highest dark:bg-surface-container mt-24"
+    >
+      <div
+        class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto"
+      >
         <div class="space-y-4">
-          <span class="font-headline-sm text-headline-sm text-on-surface font-bold">Xám Pet Shop</span>
-          <p class="text-on-surface-variant font-body-sm">Cửa hàng cung cấp các sản phẩm chăm sóc mèo cao cấp và tận tâm nhất tại Việt Nam.</p>
+          <span
+            class="font-headline-sm text-headline-sm text-on-surface font-bold"
+            >Xám Pet Shop</span
+          >
+          <p class="text-on-surface-variant font-body-sm">
+            Cửa hàng cung cấp các sản phẩm chăm sóc mèo cao cấp và tận tâm nhất
+            tại Việt Nam.
+          </p>
         </div>
         <div class="space-y-4">
           <h4 class="font-label-md text-primary uppercase">Liên hệ</h4>
@@ -346,27 +602,50 @@
         <div class="space-y-4">
           <h4 class="font-label-md text-primary uppercase">Chính sách</h4>
           <ul class="space-y-2 text-on-surface-variant font-body-sm">
-            <li><a class="hover:text-primary transition-colors" href="#">Vận chuyển</a></li>
-            <li><a class="hover:text-primary transition-colors" href="#">Đổi trả</a></li>
-            <li><a class="hover:text-primary transition-colors" href="#">Bảo mật</a></li>
+            <li>
+              <a class="hover:text-primary transition-colors" href="#"
+                >Vận chuyển</a
+              >
+            </li>
+            <li>
+              <a class="hover:text-primary transition-colors" href="#"
+                >Đổi trả</a
+              >
+            </li>
+            <li>
+              <a class="hover:text-primary transition-colors" href="#"
+                >Bảo mật</a
+              >
+            </li>
           </ul>
         </div>
         <div class="space-y-4">
           <h4 class="font-label-md text-primary uppercase">Theo dõi</h4>
           <div class="flex gap-4">
-            <a class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-all" href="#">
+            <a
+              class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-all"
+              href="#"
+            >
               <span class="material-symbols-outlined">social_leaderboard</span>
             </a>
-            <a class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-all" href="#">
+            <a
+              class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-all"
+              href="#"
+            >
               <span class="material-symbols-outlined">share</span>
             </a>
           </div>
         </div>
       </div>
-      <div class="max-w-container-max mx-auto px-lg py-md border-t border-outline-variant/30 text-center">
-        <p class="text-on-surface-variant text-label-sm">© 2026 Xám Pet Shop. All rights reserved.</p>
+      <div
+        class="max-w-container-max mx-auto px-lg py-md border-t border-outline-variant/30 text-center"
+      >
+        <p class="text-on-surface-variant text-label-sm">
+          © 2026 Xám Pet Shop. All rights reserved.
+        </p>
       </div>
     </footer>
+
     <script type="module">
       import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
       import { getPublicProducts } from "../js/product.js";
@@ -391,7 +670,9 @@
           if (!user) return;
           guestNav.style.display = "none";
           userNav.style.display = "flex";
-          const initial = (user.fullName || user.email || "U").charAt(0).toUpperCase();
+          const initial = (user.fullName || user.email || "U")
+            .charAt(0)
+            .toUpperCase();
           userAvatar.textContent = initial;
           const displayName = user.fullName || user.email;
           userName.textContent = displayName;
@@ -427,7 +708,6 @@
       const searchResultCount = document.getElementById("searchResultCount");
       const heroSearchInput = document.getElementById("heroSearchInput");
       const heroSearchBtn = document.getElementById("heroSearchBtn");
-      const navSearchInput = document.getElementById("navSearchInput");
       const priceRange = document.getElementById("priceRange");
       const priceDisplay = document.getElementById("priceDisplay");
       const sortSelect = document.getElementById("sortSelect");
@@ -439,9 +719,14 @@
       let currentBrand = "";
       let currentCategories = [];
       let currentSort = "default";
+      let debounceTimer = null;
 
       function formatPrice(price) {
-        return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND", minimumFractionDigits: 0 }).format(price);
+        return new Intl.NumberFormat("vi-VN", {
+          style: "currency",
+          currency: "VND",
+          minimumFractionDigits: 0,
+        }).format(price);
       }
 
       function renderProductCard(product) {
@@ -450,18 +735,18 @@
             <a href="/product/detail?id=${product._id}" class="relative aspect-square p-lg bg-white flex items-center justify-center block">
               <img
                 class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
-                src="${product.image || 'https://via.placeholder.com/256?text=No+Image'}"
+                src="${product.image || "https://via.placeholder.com/256?text=No+Image"}"
                 alt="${product.name}"
               />
             </a>
             <div class="p-lg space-y-2">
               <div class="flex gap-2 mb-2">
-                <span class="bg-surface-container-highest text-primary px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">${product.category || 'Sản phẩm'}</span>
+                <span class="bg-surface-container-highest text-primary px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">${product.category || "Sản phẩm"}</span>
               </div>
               <a href="/product/detail?id=${product._id}" class="hover:underline">
                 <h4 class="font-headline-md text-body-lg text-on-surface group-hover:text-primary transition-colors">${product.name}</h4>
               </a>
-              <p class="text-on-surface-variant text-label-sm line-clamp-2">${product.description || ''}</p>
+              <p class="text-on-surface-variant text-label-sm line-clamp-2">${product.description || ""}</p>
               <div class="flex justify-between items-center pt-4">
                 <span class="text-primary font-bold text-headline-md">${formatPrice(product.price)}</span>
                 <button class="bg-primary-container text-on-primary-container p-3 rounded-full hover:scale-110 transition-transform active:scale-95">
@@ -477,21 +762,28 @@
         let filtered = [...allProducts];
         if (currentSearch) {
           const q = currentSearch.toLowerCase();
-          filtered = filtered.filter(p =>
-            p.name.toLowerCase().includes(q) ||
-            (p.description && p.description.toLowerCase().includes(q)) ||
-            (p.brand && p.brand.toLowerCase().includes(q))
+          filtered = filtered.filter(
+            (p) =>
+              p.name.toLowerCase().includes(q) ||
+              (p.description && p.description.toLowerCase().includes(q)) ||
+              (p.brand && p.brand.toLowerCase().includes(q)),
           );
         }
         if (currentCategories.length > 0) {
-          filtered = filtered.filter(p => currentCategories.includes((p.category || "").toLowerCase()));
+          filtered = filtered.filter((p) =>
+            currentCategories.includes((p.category || "").toLowerCase()),
+          );
         }
-        filtered = filtered.filter(p => p.price <= currentMaxPrice);
+        filtered = filtered.filter((p) => p.price <= currentMaxPrice);
         if (currentBrand) {
-          filtered = filtered.filter(p => (p.brand || "").toLowerCase().includes(currentBrand.toLowerCase()));
+          filtered = filtered.filter((p) =>
+            (p.brand || "").toLowerCase().includes(currentBrand.toLowerCase()),
+          );
         }
-        if (currentSort === "price_asc") filtered.sort((a, b) => a.price - b.price);
-        else if (currentSort === "price_desc") filtered.sort((a, b) => b.price - a.price);
+        if (currentSort === "price_asc")
+          filtered.sort((a, b) => a.price - b.price);
+        else if (currentSort === "price_desc")
+          filtered.sort((a, b) => b.price - a.price);
         renderProducts(filtered);
       }
 
@@ -512,7 +804,8 @@
       }
 
       async function loadProducts() {
-        productsGrid.innerHTML = '<div class="col-span-full text-center py-xl text-on-surface-variant">Đang tải...</div>';
+        productsGrid.innerHTML =
+          '<div class="col-span-full text-center py-xl text-on-surface-variant">Đang tải...</div>';
         const response = await getPublicProducts({ limit: 200 });
         if (response && Array.isArray(response)) {
           allProducts = response;
@@ -521,50 +814,85 @@
         } else {
           allProducts = [];
         }
+        // Đọc query params từ URL
         const urlParams = new URLSearchParams(window.location.search);
         const q = urlParams.get("q") || urlParams.get("search") || "";
         const cat = urlParams.get("category") || "";
-        if (q) { heroSearchInput.value = q; navSearchInput.value = q; currentSearch = q; }
+        if (q) {
+          heroSearchInput.value = q;
+          currentSearch = q;
+        }
         if (cat) {
           const cb = document.querySelector(`.category-filter[value="${cat}"]`);
-          if (cb) { cb.checked = true; currentCategories = [cat]; }
+          if (cb) {
+            cb.checked = true;
+            currentCategories = [cat];
+          }
         }
         applyFilters();
       }
 
-      // Events
+      // ── Realtime search với debounce 300ms ───────────────────────────────────
+      heroSearchInput.addEventListener("input", () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          currentSearch = heroSearchInput.value.trim();
+          applyFilters();
+        }, 300);
+      });
+
+      // Enter hoặc click nút search → tìm ngay
       heroSearchBtn.addEventListener("click", () => {
+        clearTimeout(debounceTimer);
         currentSearch = heroSearchInput.value.trim();
-        navSearchInput.value = currentSearch;
         applyFilters();
       });
       heroSearchInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") { currentSearch = heroSearchInput.value.trim(); navSearchInput.value = currentSearch; applyFilters(); }
+        if (e.key === "Enter") {
+          clearTimeout(debounceTimer);
+          currentSearch = heroSearchInput.value.trim();
+          applyFilters();
+        }
       });
-      navSearchInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") { currentSearch = navSearchInput.value.trim(); heroSearchInput.value = currentSearch; applyFilters(); }
-      });
+
       priceRange.addEventListener("input", () => {
         currentMaxPrice = parseInt(priceRange.value);
-        priceDisplay.textContent = new Intl.NumberFormat("vi-VN").format(currentMaxPrice) + "đ";
+        priceDisplay.textContent =
+          new Intl.NumberFormat("vi-VN").format(currentMaxPrice) + "đ";
         applyFilters();
       });
-      document.querySelectorAll(".category-filter").forEach(cb => {
+      document.querySelectorAll(".category-filter").forEach((cb) => {
         cb.addEventListener("change", () => {
-          currentCategories = Array.from(document.querySelectorAll(".category-filter:checked")).map(c => c.value);
+          currentCategories = Array.from(
+            document.querySelectorAll(".category-filter:checked"),
+          ).map((c) => c.value);
           applyFilters();
         });
       });
-      document.querySelectorAll("[name='brand']").forEach(rb => {
-        rb.addEventListener("change", () => { currentBrand = rb.value; applyFilters(); });
+      document.querySelectorAll("[name='brand']").forEach((rb) => {
+        rb.addEventListener("change", () => {
+          currentBrand = rb.value;
+          applyFilters();
+        });
       });
-      sortSelect.addEventListener("change", () => { currentSort = sortSelect.value; applyFilters(); });
+      sortSelect.addEventListener("change", () => {
+        currentSort = sortSelect.value;
+        applyFilters();
+      });
+
       resetFiltersBtn.addEventListener("click", () => {
-        currentSearch = ""; currentCategories = []; currentMaxPrice = 2000000; currentBrand = ""; currentSort = "default";
-        heroSearchInput.value = ""; navSearchInput.value = "";
-        priceRange.value = 2000000; priceDisplay.textContent = "2.000.000đ";
+        currentSearch = "";
+        currentCategories = [];
+        currentMaxPrice = 2000000;
+        currentBrand = "";
+        currentSort = "default";
+        heroSearchInput.value = "";
+        priceRange.value = 2000000;
+        priceDisplay.textContent = "2.000.000đ";
         sortSelect.value = "default";
-        document.querySelectorAll(".category-filter").forEach(cb => cb.checked = false);
+        document
+          .querySelectorAll(".category-filter")
+          .forEach((cb) => (cb.checked = false));
         document.querySelectorAll("[name='brand']")[0].checked = true;
         applyFilters();
       });

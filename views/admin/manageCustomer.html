@@ -250,6 +250,7 @@
             />
           </div>
           <button
+            id="openCreateUserBtn"
             class="bg-primary text-on-primary px-lg py-2 rounded-full font-label-md hover:scale-105 transition-transform active:scale-95"
           >
             + Thêm mới
@@ -274,7 +275,9 @@
               >
                 Tổng thành viên
               </p>
-              <h3 class="font-headline-md text-headline-md">1,284</h3>
+              <h3 class="font-headline-md text-headline-md" id="totalUsersStat">
+                0
+              </h3>
             </div>
           </div>
           <div
@@ -289,9 +292,11 @@
               <p
                 class="font-label-sm text-on-surface-variant uppercase tracking-wider"
               >
-                Mới tháng này
+                Khách hàng
               </p>
-              <h3 class="font-headline-md text-headline-md">+142</h3>
+              <h3 class="font-headline-md text-headline-md" id="customersStat">
+                0
+              </h3>
             </div>
           </div>
           <div
@@ -308,7 +313,9 @@
               >
                 Tài khoản Admin
               </p>
-              <h3 class="font-headline-md text-headline-md">8</h3>
+              <h3 class="font-headline-md text-headline-md" id="adminsStat">
+                0
+              </h3>
             </div>
           </div>
         </div>
@@ -341,189 +348,11 @@
                   </th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-outline-variant">
-                <!-- Row 1 -->
-                <tr
-                  class="hover:bg-surface-container-low/50 transition-colors group"
-                >
-                  <td class="px-lg py-md">
-                    <div class="flex items-center gap-md">
-                      <div
-                        class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold overflow-hidden"
-                      >
-                        <img
-                          class="w-full h-full object-cover"
-                          data-alt="A professional headshot of a smiling young Vietnamese man with a clean, modern aesthetic. The background is a soft, blurred domestic interior with high-key lighting, creating a welcoming and warm mood consistent with premium pet care services. The colors are natural and balanced with a slight warm tint."
-                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0yQ69jmcYTQ_xWEv3_OS_cY9gnx5CVdieTod5b06twaEU6G1k4IsRjasQrbd9_eGTvsnpUgyOfJ3ndLN5Ds-zBApZsHgbxiV0ou_VtIAg-XdFKH6Es7SbqLx8Ilqi2qc81w8QsWiMtVh3-DESaYsNuhNIfQNAYkhBh2aYh4DEaTiOXz_6CIi01avOw3Sr9gP4c1auZYL6fzVqD8U7Nye9JHCWh1wnua6cwG9ose_RsVYvwd3zIK1CwrTuC55W1zZSQMfyWk9ICRI"
-                        />
-                      </div>
-                      <div>
-                        <p class="font-label-md text-on-surface">
-                          Nguyễn Văn An
-                        </p>
-                        <span
-                          class="font-label-sm text-on-surface-variant opacity-70"
-                          >ID: #UX001</span
-                        >
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-lg py-md font-body-md text-on-surface-variant">
-                    an.nguyen@email.com
-                  </td>
-                  <td class="px-lg py-md font-body-md text-on-surface-variant">
-                    090 123 4567
-                  </td>
-                  <td class="px-lg py-md">
-                    <span
-                      class="inline-flex items-center px-3 py-1 rounded-full bg-primary-container/20 text-primary font-label-sm"
-                      >Admin</span
-                    >
-                  </td>
-                  <td class="px-lg py-md text-right">
-                    <button
-                      class="text-on-surface-variant hover:text-error transition-colors p-2"
-                    >
-                      <span class="material-symbols-outlined">delete</span>
-                    </button>
-                  </td>
-                </tr>
-                <!-- Row 2 -->
-                <tr
-                  class="hover:bg-surface-container-low/50 transition-colors group"
-                >
-                  <td class="px-lg py-md">
-                    <div class="flex items-center gap-md">
-                      <div
-                        class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold overflow-hidden"
-                      >
-                        <img
-                          class="w-full h-full object-cover"
-                          data-alt="A high-quality portrait of a cheerful Vietnamese woman with a friendly expression. The image is set in a bright, cozy interior featuring soft ambient lighting and a minimalist design. Her look is professional and approachable, aligning with the trustworthy and dependable persona of a luxury pet brand."
-                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCr7JBVX_nReJ1TWjJ8wCSH4vgrVdGBe_-e6Ktj-E2pc4AUPvGhVlUuYS8qCcggAW-aTkdJZO6rxN2_nc9GF5FcmOo9sMzixZyON9QQmgq-foVydJvmu6EB6K8mm5LAxkSl19G8r7JR0fuzEdkW5sjWYUn62zCDkm9eBPAPNX2Ffa5wfU4R6IGjSWREH6PMahja5-NQBX5Y2LfaLQrNo5ykonvgDnriKXwiIg5lQ9Sx7XWwfyDRclM4JYjXB-2FB-hJZWyQZxrcxtc"
-                        />
-                      </div>
-                      <div>
-                        <p class="font-label-md text-on-surface">Lê Thị Bình</p>
-                        <span
-                          class="font-label-sm text-on-surface-variant opacity-70"
-                          >ID: #UX002</span
-                        >
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-lg py-md font-body-md text-on-surface-variant">
-                    binh.le@gmail.com
-                  </td>
-                  <td class="px-lg py-md font-body-md text-on-surface-variant">
-                    091 987 6543
-                  </td>
-                  <td class="px-lg py-md">
-                    <span
-                      class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-container/50 text-on-secondary-container font-label-sm"
-                      >Customer</span
-                    >
-                  </td>
-                  <td class="px-lg py-md text-right">
-                    <button
-                      class="text-on-surface-variant hover:text-error transition-colors p-2"
-                    >
-                      <span class="material-symbols-outlined">delete</span>
-                    </button>
-                  </td>
-                </tr>
-                <!-- Row 3 -->
-                <tr
-                  class="hover:bg-surface-container-low/50 transition-colors group"
-                >
-                  <td class="px-lg py-md">
-                    <div class="flex items-center gap-md">
-                      <div
-                        class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold overflow-hidden"
-                      >
-                        <img
-                          class="w-full h-full object-cover"
-                          data-alt="A portrait of a middle-aged Vietnamese gentleman with a kind face, captured in high-key, soft lighting. The setting is clean and modern with pastel grey and light orange accents in the background. The mood is calm and competent, reflecting the high-quality standards of a premium boutique cat shop."
-                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsARGe7fCAF-Qsb_hKLa3XCpzxg9yMWtWvt0jVd14i07VjPECZ6_fhvC8c9HiAPVY9NLxCy8TNCDj-ZczY3mFCF02A6WIUZUzTeNBvVkQUXpxTSrxlzva6bzDhqJnHGM9sUZ2vwqy99jKiDq1Tsw6RuG_yY3UwYDkiMFVC3aTQer-lHjuxQVfp4QftjjV8p4ipHI1Zdp5Oc0twy1yZjx0bEHj19dX2dG2O17dwGEEwrbko-Y2WjySrdGLs1fXVux50hF6kAyhxLFs"
-                        />
-                      </div>
-                      <div>
-                        <p class="font-label-md text-on-surface">
-                          Trần Minh Chiến
-                        </p>
-                        <span
-                          class="font-label-sm text-on-surface-variant opacity-70"
-                          >ID: #UX003</span
-                        >
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-lg py-md font-body-md text-on-surface-variant">
-                    chien.tm@work.vn
-                  </td>
-                  <td class="px-lg py-md font-body-md text-on-surface-variant">
-                    098 765 4321
-                  </td>
-                  <td class="px-lg py-md">
-                    <span
-                      class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-container/50 text-on-secondary-container font-label-sm"
-                      >Customer</span
-                    >
-                  </td>
-                  <td class="px-lg py-md text-right">
-                    <button
-                      class="text-on-surface-variant hover:text-error transition-colors p-2"
-                    >
-                      <span class="material-symbols-outlined">delete</span>
-                    </button>
-                  </td>
-                </tr>
-                <!-- Row 4 -->
-                <tr
-                  class="hover:bg-surface-container-low/50 transition-colors group"
-                >
-                  <td class="px-lg py-md">
-                    <div class="flex items-center gap-md">
-                      <div
-                        class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold overflow-hidden"
-                      >
-                        <img
-                          class="w-full h-full object-cover"
-                          data-alt="A serene portrait of a young Vietnamese woman with soft focus, set against a minimalist white background. The lighting is diffused and gentle, creating a sense of calm and competence. The image maintains the soft minimalist aesthetic with a restrained color palette suitable for a luxury pet care dashboard."
-                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgHxYbAm6BWPVWogQ7EF2RW2rBVrWrGIlPDlfYzDQOldsGLTVvcRvF7ctM_I6Q2V7KgnL5IoN7b1UgD2SeuGxOYhWaMeYNhb7BB-7xV9EWFDlWl2X6FjxhMBsEd2VcWfGLKMF0nERc_zm-wlkYTGOM_EIqMP1RIKW5mrT2GjTcdGTDHWr0HNyDIr6UxeG3Ika7Bl2DTILhm4VsakGtWhamwLv3oRq4IBwWYu5npWdWewRgM07VddwAVVGbIwPnH_werK7wknJHPRc"
-                        />
-                      </div>
-                      <div>
-                        <p class="font-label-md text-on-surface">
-                          Phạm Hương Giang
-                        </p>
-                        <span
-                          class="font-label-sm text-on-surface-variant opacity-70"
-                          >ID: #UX004</span
-                        >
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-lg py-md font-body-md text-on-surface-variant">
-                    giangph@email.com
-                  </td>
-                  <td class="px-lg py-md font-body-md text-on-surface-variant">
-                    097 555 1212
-                  </td>
-                  <td class="px-lg py-md">
-                    <span
-                      class="inline-flex items-center px-3 py-1 rounded-full bg-secondary-container/50 text-on-secondary-container font-label-sm"
-                      >Customer</span
-                    >
-                  </td>
-                  <td class="px-lg py-md text-right">
-                    <button
-                      class="text-on-surface-variant hover:text-error transition-colors p-2"
-                    >
-                      <span class="material-symbols-outlined">delete</span>
-                    </button>
-                  </td>
-                </tr>
+              <tbody
+                class="divide-y divide-outline-variant"
+                id="usersTableBody"
+              >
+                <!-- Users will be rendered here dynamically -->
               </tbody>
             </table>
           </div>
@@ -532,7 +361,9 @@
             class="p-lg flex justify-between items-center bg-surface-container-lowest border-t border-outline-variant"
           >
             <p class="font-label-sm text-on-surface-variant">
-              Hiển thị 1 - 4 trong 1,284 người dùng
+              Hiển thị <span id="userCountStart">0</span> -
+              <span id="userCountEnd">0</span> trong
+              <span id="totalUsersFooter">0</span> người dùng
             </p>
             <div class="flex gap-sm">
               <button
@@ -545,63 +376,74 @@
               >
                 1
               </button>
-              <button
-                class="w-10 h-10 rounded-full flex items-center justify-center border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant font-label-md"
-              >
-                2
-              </button>
-              <button
-                class="w-10 h-10 rounded-full flex items-center justify-center border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant font-label-md"
-              >
-                3
-              </button>
-              <button
-                class="w-10 h-10 rounded-full flex items-center justify-center border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant"
-              >
-                <span class="material-symbols-outlined">chevron_right</span>
-              </button>
             </div>
           </div>
         </div>
       </section>
       <!-- Footer -->
       <footer
-        class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto bg-surface-container-highest dark:bg-surface-container mt-xl"
+        class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg bg-surface-container-highest dark:bg-surface-container mt-xl rounded-[24px]"
       >
-        <div>
-          <h4 class="font-headline-sm text-headline-sm text-on-surface mb-md">
-            Xám Pet Shop
-          </h4>
-          <p class="font-body-sm text-label-sm text-on-surface-variant">
-            Chăm sóc thú cưng cao cấp với phong cách tối giản và hiện đại.
+        <div class="col-span-1 md:col-span-1">
+          <span class="font-headline-sm text-headline-sm text-on-surface"
+            >Xám Pet Shop</span
+          >
+          <p class="mt-md text-on-surface-variant text-label-sm">
+            Cửa hàng chăm sóc thú cưng cao cấp, mang lại sự ấm áp và tin cậy cho
+            người bạn bốn chân của bạn.
           </p>
         </div>
-        <div class="space-y-sm">
-          <p class="font-label-md text-primary">Liên hệ</p>
-          <p class="font-body-sm text-label-sm text-on-surface-variant">
-            Địa chỉ: 123 Cát Linh, Hà Nội
-          </p>
-          <p class="font-body-sm text-label-sm text-on-surface-variant">
-            Điện thoại: 038.339.2903
-          </p>
+        <div class="flex flex-col gap-sm">
+          <span class="font-label-md text-label-md text-primary">Liên hệ</span>
+          <span class="text-on-surface-variant text-label-sm"
+            >Address: Bắc Từ Liêm, Hà Nội</span
+          >
+          <span class="text-on-surface-variant text-label-sm"
+            >Phone: 038.339.2903</span
+          >
+          <span class="text-on-surface-variant text-label-sm"
+            >Email: nampham050723@gmail.com</span
+          >
         </div>
-        <div class="space-y-sm">
-          <p class="font-label-md text-primary">Hỗ trợ</p>
-          <p class="font-body-sm text-label-sm text-on-surface-variant">
-            Email: nampham050723@gmail.com
-          </p>
-          <p class="font-body-sm text-label-sm text-on-surface-variant">
-            Facebook: /xampetshop
-          </p>
+        <div class="flex flex-col gap-sm">
+          <span class="font-label-md text-label-md text-primary"
+            >Chính sách</span
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+            href="#"
+            >Chính sách bảo mật</a
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+            href="#"
+            >Điều khoản dịch vụ</a
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+            href="#"
+            >Giao hàng &amp; Hoàn trả</a
+          >
         </div>
-        <div class="flex flex-col justify-between">
-          <div class="flex gap-md">
-            <span class="material-symbols-outlined text-primary">pets</span>
-            <span class="material-symbols-outlined text-primary"
-              >shield_with_heart</span
-            >
-          </div>
-          <p class="font-body-sm text-label-sm text-on-surface-variant mt-md">
+        <div class="flex flex-col gap-sm">
+          <span class="font-label-md text-label-md text-primary"
+            >Mạng xã hội</span
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
+            href="#"
+          >
+            <span class="material-symbols-outlined text-sm">public</span>
+            Facebook
+          </a>
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
+            href="#"
+          >
+            <span class="material-symbols-outlined text-sm">camera_alt</span>
+            Instagram
+          </a>
+          <p class="mt-4 text-on-surface-variant text-[10px]">
             © 2026 Xám Pet Shop. All rights reserved.
           </p>
         </div>
@@ -609,36 +451,291 @@
     </main>
     <script type="module">
       import {
-        getAdminCustomers,
-        getCustomerDetail,
-        getCustomerStats,
+        getAllUsers,
+        updateUserRole,
+        deleteUser,
+        createUser,
       } from "../js/admin.js";
       import { isAuthenticated, getUserInfo } from "../js/auth.js";
 
       // Check auth
-      if (!isAuthenticated() || getUserInfo()?.role !== "admin") {
+      if (!isAuthenticated()) {
         window.location.href = "/auth/login";
       }
 
-      // Load customers
-      async function loadCustomers() {
-        const result = await getAdminCustomers({ page: 1, limit: 10 });
+      let allUsers = [];
+      const usersTableBody = document.getElementById("usersTableBody");
+      const searchInput = document.querySelector(
+        "input[placeholder='Tìm kiếm người dùng...']",
+      );
+
+      // Get avatar initial
+      function getInitial(name) {
+        return (name || "U").charAt(0).toUpperCase();
+      }
+
+      // Get role badge color
+      function getRoleBadgeClasses(role) {
+        if (role === "admin") {
+          return "bg-primary-container/20 text-primary";
+        }
+        return "bg-secondary-container/50 text-on-secondary-container";
+      }
+
+      // Get role display text
+      function getRoleDisplay(role) {
+        return role === "admin" ? "Admin" : "Customer";
+      }
+
+      // Render table row
+      function renderUserRow(user) {
+        return `
+          <tr class="hover:bg-surface-container-low/50 transition-colors group" data-user-id="${user._id}">
+            <td class="px-lg py-md">
+              <div class="flex items-center gap-md">
+                <div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold">
+                  ${getInitial(user.fullName)}
+                </div>
+                <div>
+                  <p class="font-label-md text-on-surface">${user.fullName || "N/A"}</p>
+                  <span class="font-label-sm text-on-surface-variant opacity-70">ID: #${user._id.substring(0, 8).toUpperCase()}</span>
+                </div>
+              </div>
+            </td>
+            <td class="px-lg py-md font-body-md text-on-surface-variant">${user.email}</td>
+            <td class="px-lg py-md font-body-md text-on-surface-variant">${user.phone || "---"}</td>
+            <td class="px-lg py-md">
+              <select class="role-select inline-flex items-center px-3 pr-8 py-1 rounded-full font-label-sm border-none bg-transparent cursor-pointer appearance-none" data-user-id="${user._id}">
+                <option value="customer" ${user.role === "customer" ? "selected" : ""}>Customer</option>
+                <option value="admin" ${user.role === "admin" ? "selected" : ""}>Admin</option>
+              </select>
+            </td>
+            <td class="px-lg py-md text-right">
+              <button class="delete-btn text-on-surface-variant hover:text-error transition-colors p-2" data-user-id="${user._id}" title="Xóa người dùng">
+                <span class="material-symbols-outlined">delete</span>
+              </button>
+            </td>
+          </tr>
+        `;
+      }
+
+      // Update statistics
+      function updateStats() {
+        const totalUsers = allUsers.length;
+        const adminCount = allUsers.filter((u) => u.role === "admin").length;
+        const customerCount = allUsers.filter(
+          (u) => u.role === "customer",
+        ).length;
+
+        document.getElementById("totalUsersStat").textContent = totalUsers;
+        document.getElementById("adminsStat").textContent = adminCount;
+        document.getElementById("customersStat").textContent = customerCount;
+        document.getElementById("userCountStart").textContent =
+          totalUsers > 0 ? 1 : 0;
+        document.getElementById("userCountEnd").textContent = totalUsers;
+        document.getElementById("totalUsersFooter").textContent = totalUsers;
+      }
+
+      // Render all users
+      function renderUsers(users = allUsers) {
+        usersTableBody.innerHTML =
+          users.length === 0
+            ? '<tr><td colspan="5" class="px-lg py-lg text-center text-on-surface-variant">Không có người dùng nào</td></tr>'
+            : users.map((user) => renderUserRow(user)).join("");
+
+        // Add event listeners
+        document.querySelectorAll(".role-select").forEach((select) => {
+          select.addEventListener("change", handleRoleChange);
+          // Apply styling based on role
+          updateRoleSelectStyle(select);
+        });
+
+        document.querySelectorAll(".delete-btn").forEach((btn) => {
+          btn.addEventListener("click", handleDeleteUser);
+        });
+      }
+
+      // Update role select styling
+      function updateRoleSelectStyle(select) {
+        const role = select.value;
+        select.className = `role-select inline-flex items-center px-3 pr-8 py-1 rounded-full font-label-sm border-none cursor-pointer appearance-none ${getRoleBadgeClasses(role)}`;
+      }
+
+      // Handle role change
+      async function handleRoleChange(e) {
+        const select = e.target;
+        const userId = select.dataset.userId;
+        const newRole = select.value;
+        const oldRole =
+          select.options[select.selectedIndex === 0 ? 1 : 0].value;
+
+        if (
+          !confirm(
+            `Bạn có chắc chắn muốn đổi vai trò thành ${getRoleDisplay(newRole)}?`,
+          )
+        ) {
+          select.value = oldRole;
+          return;
+        }
+
+        const result = await updateUserRole(userId, newRole);
         if (result.success) {
-          console.log("Customers:", result.customers);
-          // Cập nhật bảng khách hàng
+          // Update local data
+          const userIdx = allUsers.findIndex((u) => u._id === userId);
+          if (userIdx > -1) {
+            allUsers[userIdx].role = newRole;
+          }
+          updateStats();
+          updateRoleSelectStyle(select);
+          alert("Cập nhật vai trò thành công");
+        } else {
+          select.value = oldRole;
+          alert("Lỗi cập nhật vai trò: " + result.message);
         }
       }
 
-      loadCustomers();
+      // Handle delete user
+      async function handleDeleteUser(e) {
+        const userId = e.currentTarget.dataset.userId;
+        const user = allUsers.find((u) => u._id === userId);
 
-      // View customer detail
-      window.viewCustomer = async (customerId) => {
-        const result = await getCustomerDetail(customerId);
-        if (result.success) {
-          console.log("Customer detail:", result);
-          // Hiển thị chi tiết khách hàng
+        if (
+          !confirm(
+            `Bạn có chắc chắn muốn xóa người dùng ${user.fullName || user.email}?`,
+          )
+        ) {
+          return;
         }
-      };
+
+        const result = await deleteUser(userId);
+        if (result.success) {
+          allUsers = allUsers.filter((u) => u._id !== userId);
+          renderUsers();
+          updateStats();
+          alert("Xóa người dùng thành công");
+        } else {
+          alert("Lỗi xóa người dùng: " + result.message);
+        }
+      }
+
+      // Load users
+      async function loadUsers() {
+        console.log("Loading users...");
+        const result = await getAllUsers();
+        console.log("API Response:", result);
+
+        // Parse response correctly
+        if (result && result.users && Array.isArray(result.users)) {
+          allUsers = result.users;
+          console.log("Users loaded:", allUsers);
+        } else if (Array.isArray(result)) {
+          allUsers = result;
+          console.log("Users loaded (direct array):", allUsers);
+        } else {
+          console.error("Invalid response structure:", result);
+          allUsers = [];
+        }
+
+        renderUsers();
+        updateStats();
+      }
+
+      // Search functionality
+      if (searchInput) {
+        searchInput.addEventListener("input", (e) => {
+          const keyword = e.target.value.toLowerCase();
+          const filtered = allUsers.filter(
+            (user) =>
+              user.fullName?.toLowerCase().includes(keyword) ||
+              user.email?.toLowerCase().includes(keyword) ||
+              user.phone?.toLowerCase().includes(keyword),
+          );
+          renderUsers(filtered);
+        });
+      }
+
+      // Load initial data
+      loadUsers();
+
+      // --- Create user modal handling ---
+      const openCreateUserBtn = document.getElementById("openCreateUserBtn");
+      const modalHtml = `
+        <div id="createUserModal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 hidden">
+          <div class="bg-white rounded-xl p-lg w-full max-w-md">
+            <h3 class="font-headline-md mb-md">Thêm tài khoản mới</h3>
+            <form id="createUserForm" class="space-y-md">
+              <div>
+                <label class="font-label-sm">Họ và tên</label>
+                <input id="newFullName" required class="w-full mt-2 p-3 border rounded" />
+              </div>
+              <div>
+                <label class="font-label-sm">Email</label>
+                <input id="newEmail" type="email" required class="w-full mt-2 p-3 border rounded" />
+              </div>
+              <div>
+                <label class="font-label-sm">Mật khẩu</label>
+                <input id="newPassword" type="password" required minlength="6" class="w-full mt-2 p-3 border rounded" />
+              </div>
+              <div>
+                <label class="font-label-sm">Vai trò</label>
+                <select id="newRole" class="w-full mt-2 p-3 border rounded">
+                  <option value="customer">Customer</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+              <div class="flex justify-end gap-sm mt-md">
+                <button type="button" id="closeCreateModal" class="px-4 py-2 rounded border">Hủy</button>
+                <button type="submit" class="px-4 py-2 rounded bg-primary text-on-primary">Tạo</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      `;
+
+      // Insert modal into DOM
+      document.body.insertAdjacentHTML("beforeend", modalHtml);
+
+      const createUserModal = document.getElementById("createUserModal");
+      const createUserForm = document.getElementById("createUserForm");
+      const closeCreateModal = document.getElementById("closeCreateModal");
+
+      function showCreateModal() {
+        createUserModal.classList.remove("hidden");
+      }
+      function hideCreateModal() {
+        createUserModal.classList.add("hidden");
+      }
+
+      if (openCreateUserBtn)
+        openCreateUserBtn.addEventListener("click", showCreateModal);
+      if (closeCreateModal)
+        closeCreateModal.addEventListener("click", hideCreateModal);
+
+      createUserForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const fullName = document.getElementById("newFullName").value.trim();
+        const email = document.getElementById("newEmail").value.trim();
+        const password = document.getElementById("newPassword").value;
+        const role = document.getElementById("newRole").value;
+
+        if (!fullName || !email || !password) {
+          alert("Vui lòng điền đầy đủ thông tin");
+          return;
+        }
+
+        const result = await createUser({ fullName, email, password, role });
+        if (result && result.success) {
+          alert(result.message || "Tạo tài khoản thành công");
+          // Reload the whole page to ensure UI and data are in sync
+          window.location.reload();
+        } else {
+          alert(
+            "Lỗi tạo tài khoản: " +
+              (result.message ||
+                (result.errors && result.errors.map((e) => e.msg).join(", "))),
+          );
+        }
+      });
     </script>
     <script type="module">
       // === THÊM VÀO SCRIPT HIỆN CÓ CỦA MỖI TRANG ADMIN ===

@@ -1,8 +1,10 @@
 node_modules/
 .env
+.env.example
 views/images/
 views/uploads/
 package-lock.json
 package.json
 .DS_Store
 ADMIN_API.md
+GOOGLE_OAUTH_SETUP.md

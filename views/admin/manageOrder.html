@@ -730,57 +730,75 @@
           </div>
         </div>
       </div>
-    </main>
-    <!-- Footer Integration -->
-    <footer
-      class="ml-64 w-[calc(100%-16rem)] py-xl px-lg bg-surface-container-highest dark:bg-surface-container grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max border-t border-outline-variant"
-    >
-      <div class="col-span-1">
-        <h4 class="font-headline-sm text-headline-sm text-on-surface">
-          Xám Pet Shop
-        </h4>
-        <p class="text-on-surface-variant text-label-sm mt-sm">
-          © 2026 Xám Pet Shop. All rights reserved.
-        </p>
-      </div>
-      <div>
-        <h5 class="font-label-md text-primary mb-md">Contact</h5>
-        <ul class="space-y-sm text-on-surface-variant text-label-sm">
-          <li class="hover:text-primary transition-colors">
-            Address: Bắc Từ Liêm, Hà Nội
-          </li>
-          <li class="hover:text-primary transition-colors">
-            Phone: 038.339.2903
-          </li>
-        </ul>
-      </div>
-      <div>
-        <h5 class="font-label-md text-primary mb-md">Support</h5>
-        <ul class="space-y-sm text-on-surface-variant text-label-sm">
-          <li class="hover:text-primary transition-colors cursor-pointer">
-            Email: nampham050723@gmail.com
-          </li>
-          <li class="hover:text-primary transition-colors cursor-pointer">
-            Facebook
-          </li>
-        </ul>
-      </div>
-      <div>
-        <h5 class="font-label-md text-primary mb-md">Social</h5>
-        <div class="flex gap-md">
-          <span
-            class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors"
-            data-icon="share"
-            >share</span
+      <!-- Footer -->
+      <footer
+        class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg bg-surface-container-highest dark:bg-surface-container mt-xl rounded-[24px]"
+      >
+        <div class="col-span-1 md:col-span-1">
+          <span class="font-headline-sm text-headline-sm text-on-surface"
+            >Xám Pet Shop</span
           >
-          <span
-            class="material-symbols-outlined text-on-surface-variant hover:text-primary cursor-pointer transition-colors"
-            data-icon="language"
-            >language</span
+          <p class="mt-md text-on-surface-variant text-label-sm">
+            Cửa hàng chăm sóc thú cưng cao cấp, mang lại sự ấm áp và tin cậy cho
+            người bạn bốn chân của bạn.
+          </p>
+        </div>
+        <div class="flex flex-col gap-sm">
+          <span class="font-label-md text-label-md text-primary">Liên hệ</span>
+          <span class="text-on-surface-variant text-label-sm"
+            >Address: Bắc Từ Liêm, Hà Nội</span
+          >
+          <span class="text-on-surface-variant text-label-sm"
+            >Phone: 038.339.2903</span
+          >
+          <span class="text-on-surface-variant text-label-sm"
+            >Email: nampham050723@gmail.com</span
           >
         </div>
-      </div>
-    </footer>
+        <div class="flex flex-col gap-sm">
+          <span class="font-label-md text-label-md text-primary"
+            >Chính sách</span
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+            href="#"
+            >Chính sách bảo mật</a
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+            href="#"
+            >Điều khoản dịch vụ</a
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+            href="#"
+            >Giao hàng &amp; Hoàn trả</a
+          >
+        </div>
+        <div class="flex flex-col gap-sm">
+          <span class="font-label-md text-label-md text-primary"
+            >Mạng xã hội</span
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
+            href="#"
+          >
+            <span class="material-symbols-outlined text-sm">public</span>
+            Facebook
+          </a>
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
+            href="#"
+          >
+            <span class="material-symbols-outlined text-sm">camera_alt</span>
+            Instagram
+          </a>
+          <p class="mt-4 text-on-surface-variant text-[10px]">
+            © 2026 Xám Pet Shop. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </main>
     <script type="module">
       import {
         getAdminOrders,
