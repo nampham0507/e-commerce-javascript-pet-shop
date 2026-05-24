@@ -156,6 +156,18 @@
         background: #d6c3b0;
         border-radius: 10px;
       }
+      /* User dropdown */
+      #userMenu { display: none; }
+      #userMenu.open { display: block; }
+      #userAvatar {
+        width: 36px; height: 36px; border-radius: 9999px;
+        background: #ffb347; color: #704700;
+        font-weight: 700; font-size: 14px;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; border: 2px solid #ffddb6;
+        transition: transform 0.15s; flex-shrink: 0;
+      }
+      #userAvatar:hover { transform: scale(1.08); }
     </style>
   </head>
   <body class="bg-background text-on-background font-body-md min-h-screen">
@@ -169,41 +181,41 @@
         <div class="font-headline-md text-headline-md font-bold text-primary">
           Xám Pet Shop
         </div>
-        <div class="hidden md:flex items-center gap-xl">
-          <a
-            class="text-on-surface-variant hover:text-primary transition-colors font-body-md"
-            href="#"
-            >Home</a
-          >
-          <a
-            class="text-on-surface-variant hover:text-primary transition-colors font-body-md"
-            href="#"
-            >Products</a
-          >
-          <a
-            class="text-on-surface-variant hover:text-primary transition-colors font-body-md"
-            href="#"
-            >Categories</a
-          >
-        </div>
+        <nav class="hidden md:flex items-center gap-xl">
+          <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="/">Trang chủ</a>
+          <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="/product">Sản phẩm</a>
+          <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="/homepage/categories">Danh mục</a>
+        </nav>
         <div class="flex items-center gap-md">
-          <button
-            class="material-symbols-outlined text-primary p-sm hover:scale-110 transition-transform"
-            data-icon="shopping_cart"
-          >
-            shopping_cart
-          </button>
-          <div class="hidden md:flex items-center gap-sm">
-            <button
-              class="text-on-surface-variant hover:text-primary px-md py-sm font-label-md transition-colors"
-            >
-              Login
-            </button>
-            <button
-              class="bg-primary-container text-on-primary-container px-lg py-sm rounded-full font-label-md hover:scale-105 active:scale-95 transition-all"
-            >
-              Register
-            </button>
+          <button class="material-symbols-outlined text-primary p-sm hover:scale-110 transition-transform" data-icon="shopping_cart">shopping_cart</button>
+          <!-- GUEST -->
+          <div id="guestNav" class="hidden sm:flex items-center gap-sm">
+            <a href="/auth/login" class="text-on-surface-variant hover:text-primary font-label-md px-md py-sm transition-colors">Đăng nhập</a>
+            <a href="/auth/register" class="bg-primary-container text-on-primary-container px-lg py-sm rounded-full font-label-md hover:scale-105 transition-all active:scale-95 inline-block">Đăng ký</a>
+          </div>
+          <!-- USER -->
+          <div id="userNav" class="hidden items-center gap-sm relative">
+            <a id="adminLink" href="/admin" class="hidden items-center gap-xs px-md py-1 bg-primary text-on-primary rounded-full font-label-sm hover:opacity-90 transition-opacity">
+              <span class="material-symbols-outlined text-[14px]">admin_panel_settings</span> Admin
+            </a>
+            <div class="relative">
+              <button id="userAvatarBtn" class="flex items-center gap-sm group">
+                <div id="userAvatar">A</div>
+                <span id="userName" class="hidden sm:block font-label-md text-on-surface max-w-[120px] truncate"></span>
+                <span class="material-symbols-outlined text-on-surface-variant text-[18px] group-hover:text-primary" id="chevronIcon">expand_more</span>
+              </button>
+              <div id="userMenu" class="absolute right-0 top-full mt-2 w-52 bg-surface-container-lowest rounded-2xl shadow-lg border border-outline-variant/30 overflow-hidden z-50">
+                <div class="px-lg py-md border-b border-outline-variant/20">
+                  <p class="font-label-md text-on-surface truncate" id="menuUserName"></p>
+                  <p class="text-label-sm text-on-surface-variant truncate" id="menuUserEmail"></p>
+                </div>
+                <div class="py-sm">
+                  <a href="/order/detail" class="flex items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md"><span class="material-symbols-outlined text-[18px]">receipt_long</span> Đơn hàng của tôi</a>
+                  <a id="menuAdminLink" href="/admin" class="hidden items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md"><span class="material-symbols-outlined text-[18px]">admin_panel_settings</span> Trang Admin</a>
+                  <button id="logoutBtn" class="w-full flex items-center gap-sm px-lg py-sm text-error hover:bg-error-container/20 transition-colors font-label-md"><span class="material-symbols-outlined text-[18px]">logout</span> Đăng xuất</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -521,5 +533,36 @@
         </div>
       </div>
     </footer>
+    <script type="module">
+      import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
+      const guestNav = document.getElementById("guestNav");
+      const userNav = document.getElementById("userNav");
+      const userAvatar = document.getElementById("userAvatar");
+      const userName = document.getElementById("userName");
+      const menuUserName = document.getElementById("menuUserName");
+      const menuUserEmail = document.getElementById("menuUserEmail");
+      const adminLink = document.getElementById("adminLink");
+      const menuAdminLink = document.getElementById("menuAdminLink");
+      const userMenu = document.getElementById("userMenu");
+      const chevronIcon = document.getElementById("chevronIcon");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const userAvatarBtn = document.getElementById("userAvatarBtn");
+      function initNav() {
+        if (isAuthenticated()) {
+          const user = getUserInfo();
+          if (!user) return;
+          guestNav.style.display = "none"; userNav.style.display = "flex";
+          const initial = (user.fullName || user.email || "U").charAt(0).toUpperCase();
+          userAvatar.textContent = initial;
+          const displayName = user.fullName || user.email;
+          userName.textContent = displayName; menuUserName.textContent = displayName; menuUserEmail.textContent = user.email || "";
+          if (user.role === "admin") { adminLink.style.display = "flex"; menuAdminLink.style.display = "flex"; }
+        } else { guestNav.style.display = ""; userNav.style.display = "none"; }
+      }
+      userAvatarBtn.addEventListener("click", (e) => { e.stopPropagation(); const isOpen = userMenu.classList.toggle("open"); chevronIcon.textContent = isOpen ? "expand_less" : "expand_more"; });
+      document.addEventListener("click", () => { userMenu.classList.remove("open"); chevronIcon.textContent = "expand_more"; });
+      logoutBtn.addEventListener("click", async () => { await logoutUser(); window.location.href = "/auth/login"; });
+      initNav();
+    </script>
   </body>
 </html>

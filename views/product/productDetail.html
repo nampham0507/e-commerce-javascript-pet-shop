@@ -156,6 +156,35 @@
         border-bottom: 3px solid #845400;
         color: #845400;
       }
+
+      /* User dropdown */
+      #userMenu {
+        display: none;
+      }
+      #userMenu.open {
+        display: block;
+      }
+
+      /* Smooth avatar initial */
+      #userAvatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 9999px;
+        background: #ffb347;
+        color: #704700;
+        font-weight: 700;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: 2px solid #ffddb6;
+        transition: transform 0.15s;
+        flex-shrink: 0;
+      }
+      #userAvatar:hover {
+        transform: scale(1.08);
+      }
     </style>
   </head>
   <body class="font-body-md text-body-md overflow-x-hidden">
@@ -171,12 +200,12 @@
         </div>
         <nav class="hidden md:flex items-center gap-xl">
           <a
-            class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md"
+            class="text-on-surface-variant hover:text-primary transition-transform duration-200 hover:scale-105 font-body-md text-body-md"
             href="/"
             >Trang chủ</a
           >
           <a
-            class="text-on-surface-variant hover:text-primary transition-transform duration-200 hover:scale-105 font-body-md text-body-md"
+            class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md"
             href="/product"
             >Sản phẩm</a
           >
@@ -203,16 +232,100 @@
           >
             shopping_cart
           </button>
-          <button
-            class="hidden md:block px-md py-2 text-primary font-bold hover:opacity-80"
-          >
-            Login
-          </button>
-          <button
-            class="px-lg py-2 bg-primary-container text-on-primary-container rounded-full font-bold shadow-sm hover:scale-105 transition-all active:scale-95"
-          >
-            Register
-          </button>
+
+          <!-- GUEST: hiển thị khi chưa đăng nhập -->
+          <div id="guestNav" class="hidden sm:flex items-center gap-sm">
+            <a
+              href="/auth/login"
+              class="text-on-surface-variant hover:text-primary font-label-md px-md py-sm transition-colors"
+            >
+              Đăng nhập
+            </a>
+            <a
+              href="/auth/register"
+              class="bg-primary-container text-on-primary-container px-lg py-sm rounded-full font-label-md hover:scale-105 transition-all active:scale-95 inline-block"
+            >
+              Đăng ký
+            </a>
+          </div>
+
+          <!-- USER: hiển thị khi đã đăng nhập -->
+          <div id="userNav" class="hidden items-center gap-sm relative">
+            <!-- Admin badge (chỉ hiện với admin) -->
+            <a
+              id="adminLink"
+              href="/admin"
+              class="hidden items-center gap-xs px-md py-1 bg-primary text-on-primary rounded-full font-label-sm hover:opacity-90 transition-opacity"
+            >
+              <span class="material-symbols-outlined text-[14px]"
+                >admin_panel_settings</span
+              >
+              Admin
+            </a>
+
+            <!-- Avatar + tên -->
+            <div class="relative">
+              <button id="userAvatarBtn" class="flex items-center gap-sm group">
+                <div id="userAvatar">A</div>
+                <span
+                  id="userName"
+                  class="hidden sm:block font-label-md text-on-surface max-w-[120px] truncate"
+                ></span>
+                <span
+                  class="material-symbols-outlined text-on-surface-variant text-[18px] transition-transform group-hover:text-primary"
+                  id="chevronIcon"
+                  >expand_more</span
+                >
+              </button>
+
+              <!-- Dropdown menu -->
+              <div
+                id="userMenu"
+                class="absolute right-0 top-full mt-2 w-52 bg-surface-container-lowest rounded-2xl shadow-lg border border-outline-variant/30 overflow-hidden z-50"
+              >
+                <div class="px-lg py-md border-b border-outline-variant/20">
+                  <p
+                    class="font-label-md text-on-surface truncate"
+                    id="menuUserName"
+                  ></p>
+                  <p
+                    class="text-label-sm text-on-surface-variant truncate"
+                    id="menuUserEmail"
+                  ></p>
+                </div>
+                <div class="py-sm">
+                  <a
+                    href="/order/detail"
+                    class="flex items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md"
+                  >
+                    <span class="material-symbols-outlined text-[18px]"
+                      >receipt_long</span
+                    >
+                    Đơn hàng của tôi
+                  </a>
+                  <a
+                    id="menuAdminLink"
+                    href="/admin"
+                    class="hidden items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md"
+                  >
+                    <span class="material-symbols-outlined text-[18px]"
+                      >admin_panel_settings</span
+                    >
+                    Trang Admin
+                  </a>
+                  <button
+                    id="logoutBtn"
+                    class="w-full flex items-center gap-sm px-lg py-sm text-error hover:bg-error-container/20 transition-colors font-label-md"
+                  >
+                    <span class="material-symbols-outlined text-[18px]"
+                      >logout</span
+                    >
+                    Đăng xuất
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
@@ -227,48 +340,10 @@
             class="bg-white rounded-[32px] p-lg border border-outline-variant overflow-hidden custom-shadow group"
           >
             <img
+              id="detailImageMain"
               class="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105"
-              data-alt="A professional studio product photograph of premium organic cat food in minimalist packaging. The background is a soft, high-key warm grey, creating a clean and elegant atmosphere. The lighting is diffused and natural, highlighting the textures of the high-quality ingredients shown on the bag. The overall aesthetic is calm, professional, and sophisticated, consistent with a high-end pet care brand's visual identity."
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDr8l3wOqRKaTVQvv0hNZr_plw1j_LVnRoDfLYMgI1zYr4ZqcW4Y8mlEGVz-475Ox_mgGt3NVPUfJ_oFcf77epXAaYkIaCrxnG1G9GSpy5-gte90ulCQn67OEhXL3ONakGs7EFno2TgIxrsX4vbseCl7XG_qNUl5ZFU_7XJsMkk4TcmCU0YKhx0_8OMxICPJZOxares1LZs287e1iQJbffathY3TXMQrOIHu6vSafR5AcbfCKSudp0Xl89PHHL3g7xjBSnRKq4Az1w"
+              src=""
             />
-          </div>
-          <div class="grid grid-cols-4 gap-md">
-            <div
-              class="bg-white p-2 rounded-xl border-2 border-primary cursor-pointer hover:scale-105 transition-transform"
-            >
-              <img
-                class="w-full aspect-square object-cover rounded-lg"
-                data-alt="Close-up detail of premium cat food bag showing the brand logo and organic certification badge in a minimalist style."
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCgaGTiSYo55aHAJVptO66C7OGrTQxOorxClimLD6Z-xU-9hNfO58x1ObtpJW6yGgAZWr9XLbd_fh3wSTgzXexaCT1Jv8tGhNTyN8w21c8VJpPQWKPSAYtTynqfZWRqNHqH4LnEF93f2Y16rSa7i7Wh-miRVhOR3-RL3LNGl0gIa_kl8Z0gwSwXESpU7KHmKQkhmSH2tkWdtzWpZz0TLHyKraM5yvRa40ntOel6zZPdsTTDcPSdgzpPiAo29AKHZDoxCs-tt1tyxI"
-              />
-            </div>
-            <div
-              class="bg-white p-2 rounded-xl border border-outline-variant cursor-pointer hover:border-primary hover:scale-105 transition-transform"
-            >
-              <img
-                class="w-full aspect-square object-cover rounded-lg"
-                data-alt="A small pile of heart-shaped crunchy cat treats on a clean white surface with soft shadows and high-key lighting."
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8x12KIoeyV8kl4Bk0KN52BuBv1UUcflnmbvCH8zR3XmBHrSYuuZTQoqihiz84Q6aDK66QlSTjJkk9MKG1ysqZ-BRYSErV2pNFachUWPwOC4_w0-0cSA1jTmXkH6KMf7uic2rhLBfCtf1CZZoWT4G5ZSXXagK0LRxuQEaL2IhxkggYp8eVd2I7JMr_xsS-833BJc1SPJ7nq_9uXk2d0uMD0trfkBYVEmAa7N6WKp8fkIQUlOhktkDpRrt9oRYmNaP66bIa-DvyWBg"
-              />
-            </div>
-            <div
-              class="bg-white p-2 rounded-xl border border-outline-variant cursor-pointer hover:border-primary hover:scale-105 transition-transform"
-            >
-              <img
-                class="w-full aspect-square object-cover rounded-lg"
-                data-alt="High-quality kibble textures displayed in a minimalist ceramic bowl, photographed with soft depth of field."
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5gE9af2UlLKhcN5qwbWscS_25xSH7X91FzwlukroPB4E_YBCMLbqI6wZVMoD4I1Px0Rsxq3us5U3rphJAwRdi9wI7kKi-nNuHaALlGa26nefYpsFz5KWqhKB4rI61EsFqtevlVyf9kZch_7cXZnPk6v5MqSAO6Bm76iLCQA4mnJ5_jroxkCx64ExTMZ5VuhoK61DOcy1NAuc3umGMcYER67oXOhGVWtk1FEm_chjljY58_SFu__za8JE6rZNYsubhk3JdJgcQcN8"
-              />
-            </div>
-            <div
-              class="bg-white p-2 rounded-xl border border-outline-variant cursor-pointer hover:border-primary hover:scale-105 transition-transform"
-            >
-              <img
-                class="w-full aspect-square object-cover rounded-lg"
-                data-alt="A happy, healthy domestic cat enjoying its premium meal in a cozy, modern living room setting with natural morning light."
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqjal6Py4alsotnq85Udhr8KYaHM0Qqbb8rOrBZXDI04-JhsHF1D3FdHKHVL_9M05H_d2eJxex6u0S5vRiDrhfGKrrHSLjqk-CdSKM9ISs1dPowuieGwT7TBK8yl3cY9uJQhfyvRdy177lF6LzsjMO2QFV2W8omZtx-qbEtmmvTz2Zucc25KqN99M6EPD7ofDISy8gBG95mlizNnp1WCh39nw2bS3GLEadlYWiSaeWmYjxkunMTJpqzVtPWdgclZ3OJmSvTmx7uMw"
-              />
-            </div>
           </div>
         </div>
         <!-- Right: Info -->
@@ -278,33 +353,31 @@
           >
             <span>Products</span>
             <span class="mx-2">/</span>
-            <span class="text-primary font-bold">Cat Food</span>
+            <span id="detailCategory" class="text-primary font-bold">...</span>
           </nav>
-          <h1 class="font-headline-xl text-headline-xl text-on-surface mb-xs">
-            Organic Salmon Crunchies
+          <h1
+            id="detailName"
+            class="font-headline-xl text-headline-xl text-on-surface mb-xs"
+          >
+            Đang tải...
           </h1>
           <div class="flex items-center gap-md mb-md">
-            <span
-              class="bg-tertiary-fixed text-on-tertiary-fixed-variant px-md py-1 rounded-full text-label-sm"
-              >High Protein</span
-            >
+            <div id="detailBenefitsContainer" class="flex gap-2"></div>
             <span class="text-outline text-label-md"
-              >Brand:
-              <span class="text-on-surface font-bold">Xám Select</span></span
+              >Thương hiệu:
+              <span id="detailBrand" class="text-on-surface font-bold"
+                >...</span
+              ></span
             >
           </div>
           <div class="text-headline-md text-primary font-bold mb-lg">
-            450.000 VNĐ
-            <span
-              class="text-body-md text-outline font-normal line-through ml-md"
-              >520.000 VNĐ</span
-            >
+            <span id="detailPrice">...</span> VNĐ
           </div>
-          <p class="text-on-surface-variant text-body-lg mb-xl leading-relaxed">
-            Nourish your feline friend with our premium Organic Salmon
-            Crunchies. Sourced from sustainable wild-caught salmon, these treats
-            are packed with Omega-3 and essential amino acids for a shiny coat
-            and vibrant energy.
+          <p
+            id="detailShortDesc"
+            class="text-on-surface-variant text-body-lg mb-xl leading-relaxed"
+          >
+            ...
           </p>
           <div class="space-y-lg mb-xl">
             <div class="flex items-center gap-lg">
@@ -320,8 +393,10 @@
                 </button>
               </div>
               <span class="text-label-md text-outline"
-                >Stock:
-                <span class="text-on-surface">24 packs available</span></span
+                >Kho:
+                <span id="detailQuantity" class="text-on-surface"
+                  >...</span
+                ></span
               >
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
@@ -342,28 +417,7 @@
             </div>
           </div>
           <!-- Benefits Chips -->
-          <div class="flex flex-wrap gap-sm">
-            <div
-              class="flex items-center gap-1 px-3 py-2 bg-surface-container-high rounded-lg text-label-sm text-on-surface-variant"
-            >
-              <span class="material-symbols-outlined text-[18px]"
-                >verified</span
-              >
-              Free Shipping
-            </div>
-            <div
-              class="flex items-center gap-1 px-3 py-2 bg-surface-container-high rounded-lg text-label-sm text-on-surface-variant"
-            >
-              <span class="material-symbols-outlined text-[18px]">eco</span>
-              100% Organic
-            </div>
-            <div
-              class="flex items-center gap-1 px-3 py-2 bg-surface-container-high rounded-lg text-label-sm text-on-surface-variant"
-            >
-              <span class="material-symbols-outlined text-[18px]">history</span>
-              30-Day Returns
-            </div>
-          </div>
+          <div id="detailExtraBenefits" class="flex flex-wrap gap-sm"></div>
         </div>
       </div>
       <!-- Tabs Content Section -->
@@ -379,223 +433,48 @@
           <button
             class="px-xl py-4 font-headline-md text-headline-md text-outline hover:text-primary transition-colors whitespace-nowrap"
           >
-            Thành phần dinh dưỡng
-          </button>
-          <button
-            class="px-xl py-4 font-headline-md text-headline-md text-outline hover:text-primary transition-colors whitespace-nowrap"
-          >
-            Đánh giá (124)
+            Đánh giá
           </button>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-xl">
           <div class="md:col-span-2 space-y-lg">
-            <p class="text-body-lg text-on-surface-variant leading-relaxed">
-              Our Organic Salmon Crunchies are more than just a treat. We focus
-              on "Cat Centric" nutrition, ensuring every bite provides holistic
-              health benefits. Unlike mass-market alternatives, our crunchies
-              are air-dried at low temperatures to preserve natural enzymes and
-              nutrients.
+            <p
+              id="detailLongDesc"
+              class="text-body-lg text-on-surface-variant leading-relaxed"
+            >
+              ...
             </p>
-            <ul class="space-y-md">
-              <li class="flex items-start gap-md">
-                <span class="material-symbols-outlined text-primary mt-1"
-                  >check_circle</span
-                >
-                <span class="text-body-md text-on-surface-variant"
-                  >Wild-caught salmon from sustainable North Atlantic
-                  fisheries.</span
-                >
-              </li>
-              <li class="flex items-start gap-md">
-                <span class="material-symbols-outlined text-primary mt-1"
-                  >check_circle</span
-                >
-                <span class="text-body-md text-on-surface-variant"
-                  >No artificial fillers, soy, wheat, or corn. Perfect for
-                  sensitive stomachs.</span
-                >
-              </li>
-              <li class="flex items-start gap-md">
-                <span class="material-symbols-outlined text-primary mt-1"
-                  >check_circle</span
-                >
-                <span class="text-body-md text-on-surface-variant"
-                  >Heart-shaped pieces designed to help clean teeth and support
-                  gum health.</span
-                >
-              </li>
-            </ul>
+            <ul id="detailIngredientsList" class="space-y-md mt-md"></ul>
           </div>
           <div
             class="bg-surface-container-low rounded-[24px] p-lg border border-outline-variant h-fit"
           >
             <h4 class="font-headline-md text-headline-md mb-md text-on-surface">
-              Key Specs
+              Thông số kĩ thuật
             </h4>
             <div class="space-y-md">
               <div
                 class="flex justify-between border-b border-outline-variant/30 pb-2"
               >
-                <span class="text-outline">Weight</span>
-                <span class="font-bold">250g</span>
+                <span class="text-outline">Trọng lượng</span>
+                <span id="detailWeight" class="font-bold">...</span>
               </div>
               <div
                 class="flex justify-between border-b border-outline-variant/30 pb-2"
               >
-                <span class="text-outline">Life Stage</span>
-                <span class="font-bold">Adult Cats</span>
+                <span class="text-outline">Giai đoạn sống</span>
+                <span id="detailLifeStage" class="font-bold">...</span>
               </div>
               <div
                 class="flex justify-between border-b border-outline-variant/30 pb-2"
               >
-                <span class="text-outline">Flavor</span>
-                <span class="font-bold">Smoked Salmon</span>
+                <span class="text-outline">Hương vị</span>
+                <span id="detailFlavor" class="font-bold">...</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-outline">Origin</span>
-                <span class="font-bold">Norway</span>
+                <span class="text-outline">Xuất xứ</span>
+                <span id="detailOrigin" class="font-bold">...</span>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- Related Products Section -->
-      <section class="mt-xl">
-        <div class="flex justify-between items-end mb-lg">
-          <div>
-            <h2 class="font-headline-lg text-headline-lg text-on-surface">
-              Sản phẩm liên quan
-            </h2>
-            <p class="text-outline text-body-md">
-              Sản phẩm khách hàng cũng thường mua cùng
-            </p>
-          </div>
-          <button
-            class="text-primary font-bold flex items-center gap-1 hover:underline"
-          >
-            View All
-            <span class="material-symbols-outlined">chevron_right</span>
-          </button>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
-          <!-- Related Card 1 -->
-          <div
-            class="bg-white rounded-[24px] p-md border border-outline-variant hover:shadow-xl transition-all group flex flex-col h-full"
-          >
-            <div
-              class="relative overflow-hidden rounded-[20px] mb-md aspect-square bg-surface-container-lowest"
-            >
-              <img
-                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                data-alt="A beautifully designed minimalist bag of gourmet tuna and catnip treats. The packaging uses clean typography and soft pastel colors, set against a bright, airy studio background with gentle feline shadows."
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiqAtONdbJHYAoTwTek_daSYRdJxkdHAxyHBEl7j0UkUmYSL2VzS1oPE0vOmw3OAx91WzXmkHwutL7nKo_N7RuiU3HM1xLpn14C4lNHbrWiooad8aPGuJc5t_PxW6GJ-LnyL0LFhKku7cq-aZfOZNK-Kh8XXrVHlSuuoy1n_I5fJNdn-8OqAn2DgNizQgwNxNt0Y0-emaxtkVGazGlvABiHQnjuFrJxcrG5AeXZaWgn3XDi_wwtMvXQCur3cBMHLXW_Kl61I6O0jo"
-              />
-              <button
-                class="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-primary shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
-              >
-                <span class="material-symbols-outlined">favorite</span>
-              </button>
-            </div>
-            <div class="px-2 pb-2">
-              <h3 class="font-headline-md text-label-md mb-xs text-on-surface">
-                Gourmet Tuna &amp; Catnip
-              </h3>
-              <div class="text-primary font-bold mb-md">380.000 VNĐ</div>
-              <button
-                class="w-full py-2 bg-surface-container-high rounded-full text-label-sm text-primary font-bold group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors"
-              >
-                Add to Cart
-              </button>
-            </div>
-          </div>
-          <!-- Related Card 2 -->
-          <div
-            class="bg-white rounded-[24px] p-md border border-outline-variant hover:shadow-xl transition-all group flex flex-col h-full"
-          >
-            <div
-              class="relative overflow-hidden rounded-[20px] mb-md aspect-square bg-surface-container-lowest"
-            >
-              <img
-                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                data-alt="Premium cat dental sticks in a sleek, minimalist wooden container. The scene is illuminated with warm, soft afternoon sunlight, creating a cozy and high-quality aesthetic."
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFpBT8dBJwPMII_w-g9C_kaXl3UEHTo_NeundFci9dVJZ6ozodd4Z3AL2TuAL9361UVeEyeLr8odyElKttl7s0q3N5Z3lB1llbjKr0nHpzG07rsBLMzNK7xJUZ4MaFywjFN8XKLKVs9Tj5cx_HuUBufi3r7QfEbFBLGiCP7cMKhEi05rkGw7R_WGT6gbDUEXfgc9bSKv1NFqjQHXpa0YiTUxQR1bc9iXBC-JfZPK2F8k4vvnACgacvaGuv-_oAFIXRYXNId0nQlTc"
-              />
-              <button
-                class="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-primary shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
-              >
-                <span class="material-symbols-outlined">favorite</span>
-              </button>
-            </div>
-            <div class="px-2 pb-2">
-              <h3 class="font-headline-md text-label-md mb-xs text-on-surface">
-                Dental Care Sticks
-              </h3>
-              <div class="text-primary font-bold mb-md">290.000 VNĐ</div>
-              <button
-                class="w-full py-2 bg-surface-container-high rounded-full text-label-sm text-primary font-bold group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors"
-              >
-                Add to Cart
-              </button>
-            </div>
-          </div>
-          <!-- Related Card 3 -->
-          <div
-            class="bg-white rounded-[24px] p-md border border-outline-variant hover:shadow-xl transition-all group flex flex-col h-full"
-          >
-            <div
-              class="relative overflow-hidden rounded-[20px] mb-md aspect-square bg-surface-container-lowest"
-            >
-              <img
-                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                data-alt="A high-end ceramic cat water fountain in a modern, sun-drenched apartment. The clean lines and pristine white finish reflect a minimalist, luxury lifestyle for pets."
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCY80mF1HPGKRnoBo4aBn-iMCH2YdQZ2aOTxaUY3_cMNgL02UqAkpyFWun9YwnI38jb6BJU07XSIbrH-BXUqF9MC0hQMkk5_a_ZCS2_ykgln8yDK4BpTTdB6lfd1-2i0jB5usznJkVamRMaoRd2noa7Sm3YN19w0k31p8d1HaU6-CUIU00j1bLHHzHsd8NWWZhT8xbDi5rkxXshqptF7VW23rAJ0zNFGRoRHMOj6K3IOQIunzU9ac7rxzvoBGkBet_NyP2ctS1us0I"
-              />
-              <button
-                class="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-primary shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
-              >
-                <span class="material-symbols-outlined">favorite</span>
-              </button>
-            </div>
-            <div class="px-2 pb-2">
-              <h3 class="font-headline-md text-label-md mb-xs text-on-surface">
-                Ceramic Flow Fountain
-              </h3>
-              <div class="text-primary font-bold mb-md">1.250.000 VNĐ</div>
-              <button
-                class="w-full py-2 bg-surface-container-high rounded-full text-label-sm text-primary font-bold group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors"
-              >
-                Add to Cart
-              </button>
-            </div>
-          </div>
-          <!-- Related Card 4 -->
-          <div
-            class="bg-white rounded-[24px] p-md border border-outline-variant hover:shadow-xl transition-all group flex flex-col h-full"
-          >
-            <div
-              class="relative overflow-hidden rounded-[20px] mb-md aspect-square bg-surface-container-lowest"
-            >
-              <img
-                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                data-alt="A cozy, hand-woven cat bed in a soft cream color, placed on a light oak floor. The scene is shot with high-key lighting and minimalist decor, emphasizing comfort and high-quality craftsmanship."
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuATJSFaoWs1VJ0YvRZi4RVizIclE-zmaDQNlpy23psFrVFdLNgiz-ddem8mlv-cXAaetHNvyHuEjoxJP0EqhXED3U7wkZfUMU7TrkEy-2a4QR9HNsYDgsVaIE-O56Z6ye1W3RJR2sCqLbNuRXu5-gXMvOaf9P8Ce2iX2FzCrIJIWsrhc38ESToWxhLRPBQoJgBtYt-FB0zOCRWGI28vL-KGr8iLDQXNfb-rRMu_6DoMjiNwgl9hDBQjYhT2f8fVG5Llgx-ucgOwNXU"
-              />
-              <button
-                class="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-primary shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
-              >
-                <span class="material-symbols-outlined">favorite</span>
-              </button>
-            </div>
-            <div class="px-2 pb-2">
-              <h3 class="font-headline-md text-label-md mb-xs text-on-surface">
-                Hand-woven Nest Bed
-              </h3>
-              <div class="text-primary font-bold mb-md">850.000 VNĐ</div>
-              <button
-                class="w-full py-2 bg-surface-container-high rounded-full text-label-sm text-primary font-bold group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors"
-              >
-                Add to Cart
-              </button>
             </div>
           </div>
         </div>
@@ -696,5 +575,166 @@
         © 2026 Xám Pet Shop. All rights reserved.
       </div>
     </footer>
+    <script type="module">
+      import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
+
+      const guestNav = document.getElementById("guestNav");
+      const userNav = document.getElementById("userNav");
+      const userAvatar = document.getElementById("userAvatar");
+      const userName = document.getElementById("userName");
+      const menuUserName = document.getElementById("menuUserName");
+      const menuUserEmail = document.getElementById("menuUserEmail");
+      const adminLink = document.getElementById("adminLink");
+      const menuAdminLink = document.getElementById("menuAdminLink");
+      const userMenu = document.getElementById("userMenu");
+      const chevronIcon = document.getElementById("chevronIcon");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const userAvatarBtn = document.getElementById("userAvatarBtn");
+
+      function initNav() {
+        if (isAuthenticated()) {
+          const user = getUserInfo();
+          if (!user) return;
+
+          // Hiển thị khu vực user, ẩn guest
+          guestNav.style.display = "none";
+          userNav.style.display = "flex";
+
+          // Đặt chữ cái đầu tên vào avatar
+          const initial = (user.fullName || user.email || "U")
+            .charAt(0)
+            .toUpperCase();
+          userAvatar.textContent = initial;
+
+          // Đặt tên hiển thị
+          const displayName = user.fullName || user.email;
+          userName.textContent = displayName;
+          menuUserName.textContent = displayName;
+          menuUserEmail.textContent = user.email || "";
+
+          // Hiện link Admin nếu là admin
+          if (user.role === "admin") {
+            adminLink.style.display = "flex";
+            menuAdminLink.style.display = "flex";
+          }
+        } else {
+          guestNav.style.display = "";
+          userNav.style.display = "none";
+        }
+      }
+
+      // Toggle dropdown
+      userAvatarBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isOpen = userMenu.classList.toggle("open");
+        chevronIcon.textContent = isOpen ? "expand_less" : "expand_more";
+      });
+
+      // Đóng dropdown khi click ra ngoài
+      document.addEventListener("click", () => {
+        userMenu.classList.remove("open");
+        chevronIcon.textContent = "expand_more";
+      });
+
+      // Đăng xuất
+      logoutBtn.addEventListener("click", async () => {
+        await logoutUser();
+        window.location.href = "/auth/login";
+      });
+
+      // Load product details
+      async function loadProductDetail() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get("id");
+        if (!productId) {
+          document.getElementById("detailName").textContent =
+            "Không tìm thấy sản phẩm";
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `http://localhost:5000/api/products/${productId}`,
+          );
+          if (!response.ok) throw new Error("Lỗi khi tải sản phẩm");
+          const product = await response.json();
+
+          // Populate DOM
+          document.title = `${product.name} | Xám Pet Shop`;
+          document.getElementById("detailImageMain").src =
+            product.image || "https://via.placeholder.com/500?text=No+Image";
+          document.getElementById("detailCategory").textContent =
+            product.category || "General";
+          document.getElementById("detailName").textContent = product.name;
+          document.getElementById("detailBrand").textContent =
+            product.brand || "Chưa cập nhật";
+
+          document.getElementById("detailPrice").textContent =
+            new Intl.NumberFormat("vi-VN").format(product.price);
+          document.getElementById("detailShortDesc").textContent =
+            product.description || "Chưa có mô tả ngắn.";
+          document.getElementById("detailQuantity").textContent =
+            product.quantity + " sản phẩm có sẵn";
+          document.getElementById("detailLongDesc").textContent =
+            product.detailedDescription || "Chưa có mô tả chi tiết.";
+
+          document.getElementById("detailWeight").textContent =
+            product.weight || "N/A";
+          document.getElementById("detailLifeStage").textContent =
+            product.lifeStage || "N/A";
+          document.getElementById("detailFlavor").textContent =
+            product.flavor || "N/A";
+          document.getElementById("detailOrigin").textContent =
+            product.origin || "N/A";
+
+          // Populate benefits
+          const benefitsContainer = document.getElementById(
+            "detailBenefitsContainer",
+          );
+          const extraBenefitsContainer = document.getElementById(
+            "detailExtraBenefits",
+          );
+          benefitsContainer.innerHTML = "";
+          extraBenefitsContainer.innerHTML = "";
+
+          if (product.benefits && product.benefits.length > 0) {
+            product.benefits.forEach((benefit, index) => {
+              if (index === 0) {
+                benefitsContainer.innerHTML = `<span class="bg-tertiary-fixed text-on-tertiary-fixed-variant px-md py-1 rounded-full text-label-sm">${benefit}</span>`;
+              } else {
+                extraBenefitsContainer.innerHTML += `
+                  <div class="flex items-center gap-1 px-3 py-2 bg-surface-container-high rounded-lg text-label-sm text-on-surface-variant">
+                    <span class="material-symbols-outlined text-[18px]">verified</span> ${benefit}
+                  </div>
+                `;
+              }
+            });
+          }
+
+          // Populate ingredients
+          const ingredientsList = document.getElementById(
+            "detailIngredientsList",
+          );
+          ingredientsList.innerHTML = "";
+          if (product.ingredients && product.ingredients.length > 0) {
+            product.ingredients.forEach((ingredient) => {
+              ingredientsList.innerHTML += `
+                <li class="flex items-start gap-md">
+                  <span class="material-symbols-outlined text-primary mt-1">check_circle</span>
+                  <span class="text-body-md text-on-surface-variant">${ingredient}</span>
+                </li>
+              `;
+            });
+          }
+        } catch (error) {
+          console.error(error);
+          document.getElementById("detailName").textContent =
+            "Sản phẩm không tồn tại hoặc đã bị xóa.";
+        }
+      }
+
+      initNav();
+      loadProductDetail();
+    </script>
   </body>
 </html>

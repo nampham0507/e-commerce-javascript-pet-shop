@@ -1,39 +1,12 @@
 <!doctype html>
-
 <html class="light" lang="vi">
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Tìm kiếm sản phẩm - Xám Pet Shop</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&amp;family=Plus+Jakarta+Sans:wght@200..800&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      .material-symbols-outlined {
-        font-variation-settings:
-          "FILL" 0,
-          "wght" 400,
-          "GRAD" 0,
-          "opsz" 24;
-      }
-      .soft-shadow {
-        box-shadow: 0 10px 30px -10px rgba(132, 84, 0, 0.08);
-      }
-      .card-hover:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 40px -15px rgba(132, 84, 0, 0.12);
-      }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Plus+Jakarta+Sans:wght@200..800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -116,522 +89,251 @@
               "headline-xl": ["Quicksand"],
             },
             fontSize: {
-              "headline-lg": [
-                "32px",
-                { lineHeight: "40px", fontWeight: "700" },
-              ],
-              "headline-md": [
-                "24px",
-                { lineHeight: "32px", fontWeight: "600" },
-              ],
-              "label-md": [
-                "14px",
-                {
-                  lineHeight: "20px",
-                  letterSpacing: "0.01em",
-                  fontWeight: "600",
-                },
-              ],
+              "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "700" }],
+              "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+              "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }],
               "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
-              "headline-lg-mobile": [
-                "28px",
-                { lineHeight: "36px", fontWeight: "700" },
-              ],
+              "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "700" }],
               "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
               "label-sm": ["12px", { lineHeight: "16px", fontWeight: "700" }],
-              "headline-xl": [
-                "48px",
-                {
-                  lineHeight: "56px",
-                  letterSpacing: "-0.02em",
-                  fontWeight: "700",
-                },
-              ],
+              "headline-xl": ["48px", { lineHeight: "56px", letterSpacing: "-0.02em", fontWeight: "700" }],
             },
           },
         },
       };
     </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+      .soft-shadow { box-shadow: 0 10px 30px -10px rgba(132, 84, 0, 0.08); }
+      .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -15px rgba(132, 84, 0, 0.12); }
+      /* User dropdown */
+      #userMenu { display: none; }
+      #userMenu.open { display: block; }
+      #userAvatar {
+        width: 36px; height: 36px; border-radius: 9999px;
+        background: #ffb347; color: #704700;
+        font-weight: 700; font-size: 14px;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; border: 2px solid #ffddb6;
+        transition: transform 0.15s; flex-shrink: 0;
+      }
+      #userAvatar:hover { transform: scale(1.08); }
+    </style>
   </head>
-  <body
-    class="bg-background text-on-background font-body-md selection:bg-primary-container/30"
-  >
+  <body class="bg-background text-on-background font-body-md selection:bg-primary-container/30">
     <!-- TopNavBar -->
-    <header
-      class="bg-surface/80 backdrop-blur-md shadow-sm fixed top-0 w-full z-50"
-    >
-      <div
-        class="flex justify-between items-center px-lg py-md w-full max-w-container-max mx-auto"
-      >
+    <header class="bg-surface/80 backdrop-blur-md shadow-sm fixed top-0 w-full z-50">
+      <div class="flex justify-between items-center px-lg py-md w-full max-w-container-max mx-auto">
         <div class="flex items-center gap-2">
-          <span
-            class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim"
-            >Xám Pet Shop</span
-          >
+          <a href="/" class="font-headline-md text-headline-md font-bold text-primary">Xám Pet Shop</a>
         </div>
         <nav class="hidden md:flex items-center gap-xl">
-          <a
-            class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md"
-            href="/"
-            >Trang chủ</a
-          >
-          <a
-            class="text-on-surface-variant hover:text-primary transition-transform duration-200 hover:scale-105 font-body-md text-body-md"
-            href="/product"
-            >Sản phẩm</a
-          >
-          <a
-            class="text-on-surface-variant hover:text-primary transition-transform duration-200 hover:scale-105 font-body-md text-body-md"
-            href="/homepage/categories"
-            >Danh mục</a
-          >
+          <a class="text-on-surface-variant hover:text-primary transition-transform duration-200 hover:scale-105 font-body-md text-body-md" href="/">Trang chủ</a>
+          <a class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md" href="/product">Sản phẩm</a>
+          <a class="text-on-surface-variant hover:text-primary transition-transform duration-200 hover:scale-105 font-body-md text-body-md" href="/homepage/categories">Danh mục</a>
         </nav>
         <div class="flex items-center gap-4">
           <div class="relative group hidden sm:block">
-            <span
-              class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant"
-              >search</span
-            >
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
             <input
+              id="navSearchInput"
               class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-label-md w-64 focus:ring-2 focus:ring-primary-container transition-all"
               placeholder="Tìm kiếm thức ăn cho mèo..."
               type="text"
             />
           </div>
-          <button
-            class="relative hover:scale-105 transition-transform duration-200"
-          >
-            <span class="material-symbols-outlined text-primary"
-              >shopping_cart</span
-            >
-            <span
-              class="absolute -top-2 -right-2 bg-primary text-on-primary text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold"
-              >2</span
-            >
+          <button class="relative hover:scale-105 transition-transform duration-200">
+            <span class="material-symbols-outlined text-primary">shopping_cart</span>
           </button>
-          <button
-            class="text-on-surface-variant hover:text-primary transition-colors text-label-md"
-          >
-            Đăng nhập
-          </button>
-          <button
-            class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-md hover:scale-105 transition-transform"
-          >
-            Đăng ký
-          </button>
+          <!-- GUEST: hiển thị khi chưa đăng nhập -->
+          <div id="guestNav" class="hidden sm:flex items-center gap-sm">
+            <a href="/auth/login" class="text-on-surface-variant hover:text-primary font-label-md px-md py-sm transition-colors">Đăng nhập</a>
+            <a href="/auth/register" class="bg-primary-container text-on-primary-container px-lg py-sm rounded-full font-label-md hover:scale-105 transition-all active:scale-95 inline-block">Đăng ký</a>
+          </div>
+          <!-- USER: hiển thị khi đã đăng nhập -->
+          <div id="userNav" class="hidden items-center gap-sm relative">
+            <a id="adminLink" href="/admin" class="hidden items-center gap-xs px-md py-1 bg-primary text-on-primary rounded-full font-label-sm hover:opacity-90 transition-opacity">
+              <span class="material-symbols-outlined text-[14px]">admin_panel_settings</span>
+              Admin
+            </a>
+            <div class="relative">
+              <button id="userAvatarBtn" class="flex items-center gap-sm group">
+                <div id="userAvatar">A</div>
+                <span id="userName" class="hidden sm:block font-label-md text-on-surface max-w-[120px] truncate"></span>
+                <span class="material-symbols-outlined text-on-surface-variant text-[18px] transition-transform group-hover:text-primary" id="chevronIcon">expand_more</span>
+              </button>
+              <div id="userMenu" class="absolute right-0 top-full mt-2 w-52 bg-surface-container-lowest rounded-2xl shadow-lg border border-outline-variant/30 overflow-hidden z-50">
+                <div class="px-lg py-md border-b border-outline-variant/20">
+                  <p class="font-label-md text-on-surface truncate" id="menuUserName"></p>
+                  <p class="text-label-sm text-on-surface-variant truncate" id="menuUserEmail"></p>
+                </div>
+                <div class="py-sm">
+                  <a href="/order/detail" class="flex items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md">
+                    <span class="material-symbols-outlined text-[18px]">receipt_long</span>
+                    Đơn hàng của tôi
+                  </a>
+                  <a id="menuAdminLink" href="/admin" class="hidden items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md">
+                    <span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
+                    Trang Admin
+                  </a>
+                  <button id="logoutBtn" class="w-full flex items-center gap-sm px-lg py-sm text-error hover:bg-error-container/20 transition-colors font-label-md">
+                    <span class="material-symbols-outlined text-[18px]">logout</span>
+                    Đăng xuất
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </header>
     <main class="pt-32 pb-xl px-md max-w-container-max mx-auto min-h-screen">
       <!-- Search Hero -->
       <div class="mb-xl text-center">
-        <h1 class="font-headline-xl text-headline-xl text-primary mb-md">
-          Tìm kiếm của bạn
-        </h1>
+        <h1 class="font-headline-xl text-headline-xl text-primary mb-md">Tìm kiếm sản phẩm</h1>
         <div class="max-w-2xl mx-auto relative group">
           <input
+            id="heroSearchInput"
             class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary-container rounded-full px-lg py-4 text-body-lg soft-shadow focus:ring-0 transition-all outline-none"
             type="text"
-            value="Thức ăn hạt cao cấp"
+            placeholder="Nhập tên sản phẩm, thương hiệu..."
           />
           <button
+            id="heroSearchBtn"
             class="absolute right-2 top-1/2 -translate-y-1/2 bg-primary-container text-on-primary-container h-12 w-12 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
           >
             <span class="material-symbols-outlined">search</span>
           </button>
         </div>
-        <p class="mt-4 text-on-surface-variant font-label-md">
-          Hiển thị 12 kết quả cho "Thức ăn hạt cao cấp"
-        </p>
+        <p id="searchResultCount" class="mt-4 text-on-surface-variant font-label-md">Đang tải sản phẩm...</p>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-lg">
         <!-- Column Left: Filters -->
         <aside class="space-y-xl">
           <!-- Category Filter -->
-          <div
-            class="bg-surface-container-low rounded-xl p-lg border border-outline-variant/30"
-          >
-            <h3
-              class="font-headline-md text-headline-md text-on-surface mb-md flex items-center gap-2"
-            >
+          <div class="bg-surface-container-low rounded-xl p-lg border border-outline-variant/30">
+            <h3 class="font-headline-md text-headline-md text-on-surface mb-md flex items-center gap-2">
               <span class="material-symbols-outlined text-primary">pets</span>
-              Loại thức ăn
+              Danh mục
             </h3>
             <div class="space-y-3">
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input
-                  checked=""
-                  class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5"
-                  type="checkbox"
-                />
-                <span
-                  class="text-body-md group-hover:text-primary transition-colors"
-                  >Thức ăn hạt (Dry)</span
-                >
+                <input class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5 category-filter" type="checkbox" value="food" />
+                <span class="text-body-md group-hover:text-primary transition-colors">Thức ăn hạt (Dry)</span>
               </label>
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input
-                  class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5"
-                  type="checkbox"
-                />
-                <span
-                  class="text-body-md group-hover:text-primary transition-colors"
-                  >Pate &amp; Súp (Wet)</span
-                >
+                <input class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5 category-filter" type="checkbox" value="pate" />
+                <span class="text-body-md group-hover:text-primary transition-colors">Pate &amp; Súp (Wet)</span>
               </label>
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input
-                  class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5"
-                  type="checkbox"
-                />
-                <span
-                  class="text-body-md group-hover:text-primary transition-colors"
-                  >Thức ăn sấy lạnh</span
-                >
+                <input class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5 category-filter" type="checkbox" value="snack" />
+                <span class="text-body-md group-hover:text-primary transition-colors">Snack &amp; Bánh thưởng</span>
               </label>
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input
-                  class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5"
-                  type="checkbox"
-                />
-                <span
-                  class="text-body-md group-hover:text-primary transition-colors"
-                  >Bánh thưởng (Treats)</span
-                >
+                <input class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5 category-filter" type="checkbox" value="milk" />
+                <span class="text-body-md group-hover:text-primary transition-colors">Sữa mèo</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <input class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5 category-filter" type="checkbox" value="accessories" />
+                <span class="text-body-md group-hover:text-primary transition-colors">Phụ kiện</span>
               </label>
             </div>
           </div>
           <!-- Price Filter -->
-          <div
-            class="bg-surface-container-low rounded-xl p-lg border border-outline-variant/30"
-          >
-            <h3
-              class="font-headline-md text-headline-md text-on-surface mb-md flex items-center gap-2"
-            >
-              <span class="material-symbols-outlined text-primary"
-                >payments</span
-              >
+          <div class="bg-surface-container-low rounded-xl p-lg border border-outline-variant/30">
+            <h3 class="font-headline-md text-headline-md text-on-surface mb-md flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary">payments</span>
               Khoảng giá
             </h3>
             <div class="space-y-4">
               <input
+                id="priceRange"
                 class="w-full h-2 bg-outline-variant rounded-lg appearance-none cursor-pointer accent-primary"
                 max="2000000"
                 min="0"
+                value="2000000"
                 type="range"
               />
-              <div
-                class="flex justify-between text-label-sm text-on-surface-variant font-bold"
-              >
+              <div class="flex justify-between text-label-sm text-on-surface-variant font-bold">
                 <span>0đ</span>
-                <span>2.000.000đ</span>
+                <span id="priceDisplay">2.000.000đ</span>
               </div>
             </div>
           </div>
           <!-- Brand Filter -->
-          <div
-            class="bg-surface-container-low rounded-xl p-lg border border-outline-variant/30"
-          >
-            <h3
-              class="font-headline-md text-headline-md text-on-surface mb-md flex items-center gap-2"
-            >
-              <span class="material-symbols-outlined text-primary"
-                >verified</span
-              >
+          <div class="bg-surface-container-low rounded-xl p-lg border border-outline-variant/30">
+            <h3 class="font-headline-md text-headline-md text-on-surface mb-md flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary">verified</span>
               Thương hiệu
             </h3>
             <div class="space-y-3">
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input
-                  class="border-outline-variant text-primary focus:ring-primary-container w-5 h-5"
-                  name="brand"
-                  type="radio"
-                />
-                <span
-                  class="text-body-md group-hover:text-primary transition-colors"
-                  >Royal Canin</span
-                >
+                <input class="border-outline-variant text-primary focus:ring-primary-container w-5 h-5" name="brand" type="radio" value="" checked />
+                <span class="text-body-md group-hover:text-primary transition-colors">Tất cả</span>
               </label>
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input
-                  class="border-outline-variant text-primary focus:ring-primary-container w-5 h-5"
-                  name="brand"
-                  type="radio"
-                />
-                <span
-                  class="text-body-md group-hover:text-primary transition-colors"
-                  >Me-O Premium</span
-                >
+                <input class="border-outline-variant text-primary focus:ring-primary-container w-5 h-5" name="brand" type="radio" value="Royal Canin" />
+                <span class="text-body-md group-hover:text-primary transition-colors">Royal Canin</span>
               </label>
               <label class="flex items-center gap-3 cursor-pointer group">
-                <input
-                  class="border-outline-variant text-primary focus:ring-primary-container w-5 h-5"
-                  name="brand"
-                  type="radio"
-                />
-                <span
-                  class="text-body-md group-hover:text-primary transition-colors"
-                  >Catsrang</span
-                >
+                <input class="border-outline-variant text-primary focus:ring-primary-container w-5 h-5" name="brand" type="radio" value="Me-O" />
+                <span class="text-body-md group-hover:text-primary transition-colors">Me-O Premium</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <input class="border-outline-variant text-primary focus:ring-primary-container w-5 h-5" name="brand" type="radio" value="Catsrang" />
+                <span class="text-body-md group-hover:text-primary transition-colors">Catsrang</span>
               </label>
             </div>
           </div>
+          <!-- Reset button -->
+          <button id="resetFiltersBtn" class="w-full bg-primary text-on-primary py-3 rounded-full font-label-md hover:scale-105 transition-transform active:scale-95">
+            Xóa tất cả bộ lọc
+          </button>
         </aside>
         <!-- Column Right: Search Results -->
         <section class="space-y-lg">
           <!-- Sorting & View Options -->
-          <div
-            class="flex justify-between items-center bg-white/50 backdrop-blur-sm p-md rounded-xl border border-outline-variant/20"
-          >
+          <div class="flex justify-between items-center bg-white/50 backdrop-blur-sm p-md rounded-xl border border-outline-variant/20">
             <div class="flex gap-4">
-              <button
-                class="flex items-center gap-1 text-label-md text-primary font-bold"
-              >
-                <span class="material-symbols-outlined text-[20px]"
-                  >grid_view</span
-                >
+              <button class="flex items-center gap-1 text-label-md text-primary font-bold">
+                <span class="material-symbols-outlined text-[20px]">grid_view</span>
                 Lưới
-              </button>
-              <button
-                class="flex items-center gap-1 text-label-md text-on-surface-variant hover:text-primary transition-colors"
-              >
-                <span class="material-symbols-outlined text-[20px]"
-                  >view_list</span
-                >
-                Danh sách
               </button>
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-label-sm text-on-surface-variant"
-                >Sắp xếp:</span
-              >
-              <select
-                class="bg-transparent border-none text-label-md text-on-surface font-bold focus:ring-0 cursor-pointer"
-              >
-                <option>Mới nhất</option>
-                <option>Giá thấp đến cao</option>
-                <option>Giá cao đến thấp</option>
-                <option>Phổ biến nhất</option>
+              <span class="text-label-sm text-on-surface-variant">Sắp xếp:</span>
+              <select id="sortSelect" class="bg-transparent border-none text-label-md text-on-surface font-bold focus:ring-0 cursor-pointer">
+                <option value="default">Mới nhất</option>
+                <option value="price_asc">Giá thấp đến cao</option>
+                <option value="price_desc">Giá cao đến thấp</option>
               </select>
             </div>
           </div>
           <!-- Product Grid -->
-          <div
-            class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-gutter"
-          >
-            <!-- Product Card 1 -->
-            <div
-              class="bg-white rounded-[24px] border border-outline-variant/40 overflow-hidden card-hover transition-all duration-300 group"
-            >
-              <div
-                class="relative aspect-square p-lg bg-white flex items-center justify-center"
-              >
-                <img
-                  class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
-                  data-alt="Premium cat food kibble packaging featuring a majestic Persian cat on a minimalist white background. The packaging has elegant typography and orange accents, illuminated by soft high-key studio lighting to highlight its high-end quality and texture. A soft grey shadow sits beneath the bag on a clean white surface."
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuARLBrW3_MdZ1VP8RTHWOQqOJ18rsMnPk7wm7rc6b_FCTIFMagjRRjS6tNG8u7hBTwb-PXsqrWB0WqJ6fsrgjIq6GmcqtrED8M-uANz0_BOtANRUnNn2mW9STt6EkgMS0yQCu1B59944bJ79-UDPdbnoUeYpYjmbDdZP52aumCFMRECQ8TSKLM_b9pC8vrxMwDUaKgEyF0x9d0mKX9IN4u5YyMUR4PTtE2ajo7DcH2sI9RMZIF7KHxK-XpGQtbJjEC6A7Eu6RkhLRA"
-                />
-                <span
-                  class="absolute top-4 left-4 bg-primary-container text-on-primary-container px-3 py-1 rounded-full text-label-sm"
-                  >Bán chạy</span
-                >
-              </div>
-              <div class="p-lg space-y-2">
-                <div class="flex gap-2 mb-2">
-                  <span
-                    class="bg-surface-container-highest text-primary px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider"
-                    >Grain Free</span
-                  >
-                </div>
-                <h4
-                  class="font-headline-md text-body-lg text-on-surface group-hover:text-primary transition-colors"
-                >
-                  Thức ăn hạt Royal Canin Fit 32
-                </h4>
-                <p class="text-on-surface-variant text-label-sm">
-                  Hỗ trợ tiêu hóa và cân bằng dinh dưỡng tối ưu cho mèo trưởng
-                  thành.
-                </p>
-                <div class="flex justify-between items-center pt-4">
-                  <span class="text-primary font-bold text-headline-md"
-                    >450.000đ</span
-                  >
-                  <button
-                    class="bg-primary-container text-on-primary-container p-3 rounded-full hover:scale-110 transition-transform active:scale-95"
-                  >
-                    <span class="material-symbols-outlined"
-                      >add_shopping_cart</span
-                    >
-                  </button>
-                </div>
-              </div>
-            </div>
-            <!-- Product Card 2 -->
-            <div
-              class="bg-white rounded-[24px] border border-outline-variant/40 overflow-hidden card-hover transition-all duration-300 group"
-            >
-              <div
-                class="relative aspect-square p-lg bg-white flex items-center justify-center"
-              >
-                <img
-                  class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
-                  data-alt="A premium bag of high-protein cat kibble with modern packaging design. The bag is placed in a cozy home environment with soft natural light streaming in from a window, creating a warm and welcoming domestic atmosphere. A sleek grey cat is partially visible in the blurred background, adding a touch of lifestyle context."
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSX1ceAogu9v3I3g4QlInKh6Rt4ZKfdQCeSSKzJBpSuwLUV0ySb4n9bu1HdvsVUYCzlpChULERXX8MT82Bb9gQGSpJzXmKSDVmAOIKdmvN-tnYrNw_wicTG886IMGnA8jxeRjRR0Wv3M28NkRHL2ueEeagPH0XfH3_Av2NTI3JSiwLNNnrWeHJiwlHUtaN1n_dKzFHQmhWmCbnmonxFNr_LJxLtW3CfNbegm7X2xYoAsGvbY5PE1pKRs2AHSKiAmZsUxGWbJDGc0I"
-                />
-              </div>
-              <div class="p-lg space-y-2">
-                <div class="flex gap-2 mb-2">
-                  <span
-                    class="bg-surface-container-highest text-primary px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider"
-                    >High Protein</span
-                  >
-                </div>
-                <h4
-                  class="font-headline-md text-body-lg text-on-surface group-hover:text-primary transition-colors"
-                >
-                  Hạt Me-O Gold Indoor
-                </h4>
-                <p class="text-on-surface-variant text-label-sm">
-                  Giảm mùi hôi chất thải, phù hợp cho mèo nuôi hoàn toàn trong
-                  nhà.
-                </p>
-                <div class="flex justify-between items-center pt-4">
-                  <span class="text-primary font-bold text-headline-md"
-                    >320.000đ</span
-                  >
-                  <button
-                    class="bg-primary-container text-on-primary-container p-3 rounded-full hover:scale-110 transition-transform active:scale-95"
-                  >
-                    <span class="material-symbols-outlined"
-                      >add_shopping_cart</span
-                    >
-                  </button>
-                </div>
-              </div>
-            </div>
-            <!-- Product Card 3 -->
-            <div
-              class="bg-white rounded-[24px] border border-outline-variant/40 overflow-hidden card-hover transition-all duration-300 group"
-            >
-              <div
-                class="relative aspect-square p-lg bg-white flex items-center justify-center"
-              >
-                <img
-                  class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
-                  data-alt="Designer packaging for cat treats showing organic ingredients like salmon and chicken. The visual style is minimal and sophisticated, using a palette of soft cream and vibrant orange. The shot is captured from a slightly elevated angle with a shallow depth of field, emphasizing the premium quality of the product in a clean, modern studio setting."
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzd4X_6IqtBZ1KeZWTbj9ZTIC4AqcfwpApXBcLOcXYu3Viyu-Kxod4G3QkrRn6vX6aW8meRU5s9DvYwxVBvTHUoiTrqmPdKWoc68mpKyN4KOS_XXndQ3a5jZo40sTQdq1jDu9OCAGV6GXgOwXC58n10m93wHsjq1ymOwoGptTAcfCn79-mc0nM35Wux5Y_i47csOypwwQo3GJ61yI61p12phgdZ6jgGrhWW3z4d7lfx8prtJ2CEAN_OSa1nJ_70u7OmNC_CTk0HtE"
-                />
-              </div>
-              <div class="p-lg space-y-2">
-                <div class="flex gap-2 mb-2">
-                  <span
-                    class="bg-surface-container-highest text-primary px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider"
-                    >Organic</span
-                  >
-                </div>
-                <h4
-                  class="font-headline-md text-body-lg text-on-surface group-hover:text-primary transition-colors"
-                >
-                  Hạt Wellness CORE Sterile
-                </h4>
-                <p class="text-on-surface-variant text-label-sm">
-                  Dành riêng cho mèo đã triệt sản, kiểm soát cân nặng hiệu quả.
-                </p>
-                <div class="flex justify-between items-center pt-4">
-                  <span class="text-primary font-bold text-headline-md"
-                    >680.000đ</span
-                  >
-                  <button
-                    class="bg-primary-container text-on-primary-container p-3 rounded-full hover:scale-110 transition-transform active:scale-95"
-                  >
-                    <span class="material-symbols-outlined"
-                      >add_shopping_cart</span
-                    >
-                  </button>
-                </div>
-              </div>
-            </div>
+          <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-gutter">
+            <div class="col-span-full text-center py-xl text-on-surface-variant">Đang tải...</div>
           </div>
-          <!-- Empty State (Hidden by default, shown when no results) -->
-          <div
-            class="hidden flex-col items-center justify-center py-24 text-center space-y-6"
-          >
-            <div
-              class="w-48 h-48 bg-surface-container-high rounded-full flex items-center justify-center"
-            >
-              <span
-                class="material-symbols-outlined text-[80px] text-outline-variant"
-                >sentiment_dissatisfied</span
-              >
+          <!-- Empty State -->
+          <div id="emptyState" class="hidden flex-col items-center justify-center py-24 text-center space-y-6">
+            <div class="w-48 h-48 bg-surface-container-high rounded-full flex items-center justify-center">
+              <span class="material-symbols-outlined text-[80px] text-outline-variant">sentiment_dissatisfied</span>
             </div>
             <div class="space-y-2">
-              <h2 class="font-headline-lg text-headline-lg text-on-surface">
-                Rất tiếc, không tìm thấy sản phẩm
-              </h2>
-              <p class="text-on-surface-variant max-w-sm mx-auto">
-                Chúng mình không tìm thấy kết quả nào khớp với từ khóa của bạn.
-                Hãy thử dùng từ khóa khác hoặc xóa bớt bộ lọc nhé!
-              </p>
+              <h2 class="font-headline-lg text-headline-lg text-on-surface">Rất tiếc, không tìm thấy sản phẩm</h2>
+              <p class="text-on-surface-variant max-w-sm mx-auto">Thử dùng từ khóa khác hoặc xóa bớt bộ lọc nhé!</p>
             </div>
-            <button
-              class="bg-primary text-on-primary px-8 py-3 rounded-full font-label-md hover:scale-105 transition-transform"
-            >
-              Xóa tất cả bộ lọc
-            </button>
-          </div>
-          <!-- Pagination -->
-          <div class="flex justify-center items-center gap-2 pt-12">
-            <button
-              class="w-10 h-10 flex items-center justify-center rounded-full border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-all"
-            >
-              <span class="material-symbols-outlined">chevron_left</span>
-            </button>
-            <button
-              class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-on-primary font-bold"
-            >
-              1
-            </button>
-            <button
-              class="w-10 h-10 flex items-center justify-center rounded-full border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-all"
-            >
-              2
-            </button>
-            <button
-              class="w-10 h-10 flex items-center justify-center rounded-full border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-all"
-            >
-              3
-            </button>
-            <span class="px-2">...</span>
-            <button
-              class="w-10 h-10 flex items-center justify-center rounded-full border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-all"
-            >
-              10
-            </button>
-            <button
-              class="w-10 h-10 flex items-center justify-center rounded-full border border-outline-variant text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container transition-all"
-            >
-              <span class="material-symbols-outlined">chevron_right</span>
-            </button>
           </div>
         </section>
       </div>
     </main>
     <!-- Footer -->
-    <footer
-      class="bg-surface-container-highest dark:bg-surface-container mt-24"
-    >
-      <div
-        class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto"
-      >
+    <footer class="bg-surface-container-highest dark:bg-surface-container mt-24">
+      <div class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto">
         <div class="space-y-4">
-          <span
-            class="font-headline-sm text-headline-sm text-on-surface font-bold"
-            >Xám Pet Shop</span
-          >
-          <p class="text-on-surface-variant font-body-sm">
-            Cửa hàng cung cấp các sản phẩm chăm sóc mèo cao cấp và tận tâm nhất
-            tại Việt Nam.
-          </p>
+          <span class="font-headline-sm text-headline-sm text-on-surface font-bold">Xám Pet Shop</span>
+          <p class="text-on-surface-variant font-body-sm">Cửa hàng cung cấp các sản phẩm chăm sóc mèo cao cấp và tận tâm nhất tại Việt Nam.</p>
         </div>
         <div class="space-y-4">
           <h4 class="font-label-md text-primary uppercase">Liên hệ</h4>
@@ -644,48 +346,231 @@
         <div class="space-y-4">
           <h4 class="font-label-md text-primary uppercase">Chính sách</h4>
           <ul class="space-y-2 text-on-surface-variant font-body-sm">
-            <li>
-              <a class="hover:text-primary transition-colors" href="#"
-                >Vận chuyển</a
-              >
-            </li>
-            <li>
-              <a class="hover:text-primary transition-colors" href="#"
-                >Đổi trả</a
-              >
-            </li>
-            <li>
-              <a class="hover:text-primary transition-colors" href="#"
-                >Bảo mật</a
-              >
-            </li>
+            <li><a class="hover:text-primary transition-colors" href="#">Vận chuyển</a></li>
+            <li><a class="hover:text-primary transition-colors" href="#">Đổi trả</a></li>
+            <li><a class="hover:text-primary transition-colors" href="#">Bảo mật</a></li>
           </ul>
         </div>
         <div class="space-y-4">
           <h4 class="font-label-md text-primary uppercase">Theo dõi</h4>
           <div class="flex gap-4">
-            <a
-              class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-all"
-              href="#"
-            >
+            <a class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-all" href="#">
               <span class="material-symbols-outlined">social_leaderboard</span>
             </a>
-            <a
-              class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-all"
-              href="#"
-            >
+            <a class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary hover:bg-primary hover:text-on-primary transition-all" href="#">
               <span class="material-symbols-outlined">share</span>
             </a>
           </div>
         </div>
       </div>
-      <div
-        class="max-w-container-max mx-auto px-lg py-md border-t border-outline-variant/30 text-center"
-      >
-        <p class="text-on-surface-variant text-label-sm">
-          © 2026 Xám Pet Shop. All rights reserved.
-        </p>
+      <div class="max-w-container-max mx-auto px-lg py-md border-t border-outline-variant/30 text-center">
+        <p class="text-on-surface-variant text-label-sm">© 2026 Xám Pet Shop. All rights reserved.</p>
       </div>
     </footer>
+    <script type="module">
+      import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
+      import { getPublicProducts } from "../js/product.js";
+
+      // ── Auth Nav ─────────────────────────────────────────────────────────────
+      const guestNav = document.getElementById("guestNav");
+      const userNav = document.getElementById("userNav");
+      const userAvatar = document.getElementById("userAvatar");
+      const userName = document.getElementById("userName");
+      const menuUserName = document.getElementById("menuUserName");
+      const menuUserEmail = document.getElementById("menuUserEmail");
+      const adminLink = document.getElementById("adminLink");
+      const menuAdminLink = document.getElementById("menuAdminLink");
+      const userMenu = document.getElementById("userMenu");
+      const chevronIcon = document.getElementById("chevronIcon");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const userAvatarBtn = document.getElementById("userAvatarBtn");
+
+      function initNav() {
+        if (isAuthenticated()) {
+          const user = getUserInfo();
+          if (!user) return;
+          guestNav.style.display = "none";
+          userNav.style.display = "flex";
+          const initial = (user.fullName || user.email || "U").charAt(0).toUpperCase();
+          userAvatar.textContent = initial;
+          const displayName = user.fullName || user.email;
+          userName.textContent = displayName;
+          menuUserName.textContent = displayName;
+          menuUserEmail.textContent = user.email || "";
+          if (user.role === "admin") {
+            adminLink.style.display = "flex";
+            menuAdminLink.style.display = "flex";
+          }
+        } else {
+          guestNav.style.display = "";
+          userNav.style.display = "none";
+        }
+      }
+
+      userAvatarBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isOpen = userMenu.classList.toggle("open");
+        chevronIcon.textContent = isOpen ? "expand_less" : "expand_more";
+      });
+      document.addEventListener("click", () => {
+        userMenu.classList.remove("open");
+        chevronIcon.textContent = "expand_more";
+      });
+      logoutBtn.addEventListener("click", async () => {
+        await logoutUser();
+        window.location.href = "/auth/login";
+      });
+
+      // ── Search & Filter ───────────────────────────────────────────────────────
+      const productsGrid = document.getElementById("productsGrid");
+      const emptyState = document.getElementById("emptyState");
+      const searchResultCount = document.getElementById("searchResultCount");
+      const heroSearchInput = document.getElementById("heroSearchInput");
+      const heroSearchBtn = document.getElementById("heroSearchBtn");
+      const navSearchInput = document.getElementById("navSearchInput");
+      const priceRange = document.getElementById("priceRange");
+      const priceDisplay = document.getElementById("priceDisplay");
+      const sortSelect = document.getElementById("sortSelect");
+      const resetFiltersBtn = document.getElementById("resetFiltersBtn");
+
+      let allProducts = [];
+      let currentSearch = "";
+      let currentMaxPrice = 2000000;
+      let currentBrand = "";
+      let currentCategories = [];
+      let currentSort = "default";
+
+      function formatPrice(price) {
+        return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND", minimumFractionDigits: 0 }).format(price);
+      }
+
+      function renderProductCard(product) {
+        return `
+          <div class="bg-white rounded-[24px] border border-outline-variant/40 overflow-hidden card-hover transition-all duration-300 group">
+            <a href="/product/detail?id=${product._id}" class="relative aspect-square p-lg bg-white flex items-center justify-center block">
+              <img
+                class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                src="${product.image || 'https://via.placeholder.com/256?text=No+Image'}"
+                alt="${product.name}"
+              />
+            </a>
+            <div class="p-lg space-y-2">
+              <div class="flex gap-2 mb-2">
+                <span class="bg-surface-container-highest text-primary px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">${product.category || 'Sản phẩm'}</span>
+              </div>
+              <a href="/product/detail?id=${product._id}" class="hover:underline">
+                <h4 class="font-headline-md text-body-lg text-on-surface group-hover:text-primary transition-colors">${product.name}</h4>
+              </a>
+              <p class="text-on-surface-variant text-label-sm line-clamp-2">${product.description || ''}</p>
+              <div class="flex justify-between items-center pt-4">
+                <span class="text-primary font-bold text-headline-md">${formatPrice(product.price)}</span>
+                <button class="bg-primary-container text-on-primary-container p-3 rounded-full hover:scale-110 transition-transform active:scale-95">
+                  <span class="material-symbols-outlined">add_shopping_cart</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function applyFilters() {
+        let filtered = [...allProducts];
+        if (currentSearch) {
+          const q = currentSearch.toLowerCase();
+          filtered = filtered.filter(p =>
+            p.name.toLowerCase().includes(q) ||
+            (p.description && p.description.toLowerCase().includes(q)) ||
+            (p.brand && p.brand.toLowerCase().includes(q))
+          );
+        }
+        if (currentCategories.length > 0) {
+          filtered = filtered.filter(p => currentCategories.includes((p.category || "").toLowerCase()));
+        }
+        filtered = filtered.filter(p => p.price <= currentMaxPrice);
+        if (currentBrand) {
+          filtered = filtered.filter(p => (p.brand || "").toLowerCase().includes(currentBrand.toLowerCase()));
+        }
+        if (currentSort === "price_asc") filtered.sort((a, b) => a.price - b.price);
+        else if (currentSort === "price_desc") filtered.sort((a, b) => b.price - a.price);
+        renderProducts(filtered);
+      }
+
+      function renderProducts(products) {
+        if (products.length === 0) {
+          productsGrid.classList.add("hidden");
+          emptyState.classList.remove("hidden");
+          emptyState.classList.add("flex");
+          searchResultCount.textContent = "Không tìm thấy sản phẩm nào";
+        } else {
+          productsGrid.classList.remove("hidden");
+          emptyState.classList.add("hidden");
+          emptyState.classList.remove("flex");
+          productsGrid.innerHTML = products.map(renderProductCard).join("");
+          const keyword = currentSearch ? ` cho "${currentSearch}"` : "";
+          searchResultCount.textContent = `Hiển thị ${products.length} sản phẩm${keyword}`;
+        }
+      }
+
+      async function loadProducts() {
+        productsGrid.innerHTML = '<div class="col-span-full text-center py-xl text-on-surface-variant">Đang tải...</div>';
+        const response = await getPublicProducts({ limit: 200 });
+        if (response && Array.isArray(response)) {
+          allProducts = response;
+        } else if (response && response.success) {
+          allProducts = response.products || [];
+        } else {
+          allProducts = [];
+        }
+        const urlParams = new URLSearchParams(window.location.search);
+        const q = urlParams.get("q") || urlParams.get("search") || "";
+        const cat = urlParams.get("category") || "";
+        if (q) { heroSearchInput.value = q; navSearchInput.value = q; currentSearch = q; }
+        if (cat) {
+          const cb = document.querySelector(`.category-filter[value="${cat}"]`);
+          if (cb) { cb.checked = true; currentCategories = [cat]; }
+        }
+        applyFilters();
+      }
+
+      // Events
+      heroSearchBtn.addEventListener("click", () => {
+        currentSearch = heroSearchInput.value.trim();
+        navSearchInput.value = currentSearch;
+        applyFilters();
+      });
+      heroSearchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") { currentSearch = heroSearchInput.value.trim(); navSearchInput.value = currentSearch; applyFilters(); }
+      });
+      navSearchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") { currentSearch = navSearchInput.value.trim(); heroSearchInput.value = currentSearch; applyFilters(); }
+      });
+      priceRange.addEventListener("input", () => {
+        currentMaxPrice = parseInt(priceRange.value);
+        priceDisplay.textContent = new Intl.NumberFormat("vi-VN").format(currentMaxPrice) + "đ";
+        applyFilters();
+      });
+      document.querySelectorAll(".category-filter").forEach(cb => {
+        cb.addEventListener("change", () => {
+          currentCategories = Array.from(document.querySelectorAll(".category-filter:checked")).map(c => c.value);
+          applyFilters();
+        });
+      });
+      document.querySelectorAll("[name='brand']").forEach(rb => {
+        rb.addEventListener("change", () => { currentBrand = rb.value; applyFilters(); });
+      });
+      sortSelect.addEventListener("change", () => { currentSort = sortSelect.value; applyFilters(); });
+      resetFiltersBtn.addEventListener("click", () => {
+        currentSearch = ""; currentCategories = []; currentMaxPrice = 2000000; currentBrand = ""; currentSort = "default";
+        heroSearchInput.value = ""; navSearchInput.value = "";
+        priceRange.value = 2000000; priceDisplay.textContent = "2.000.000đ";
+        sortSelect.value = "default";
+        document.querySelectorAll(".category-filter").forEach(cb => cb.checked = false);
+        document.querySelectorAll("[name='brand']")[0].checked = true;
+        applyFilters();
+      });
+
+      initNav();
+      loadProducts();
+    </script>
   </body>
 </html>

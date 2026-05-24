@@ -6,10 +6,15 @@ const API_BASE_URL = "http://localhost:5000/api";
 const getToken = () => localStorage.getItem("token");
 
 // Header with authorization
-const getAuthHeaders = () => ({
-  "Content-Type": "application/json",
-  Authorization: `Bearer ${getToken()}`,
-});
+const getAuthHeaders = (isFormData = false) => {
+  const headers = {
+    Authorization: `Bearer ${getToken()}`,
+  };
+  if (!isFormData) {
+    headers["Content-Type"] = "application/json";
+  }
+  return headers;
+};
 
 // Dashboard API
 export const getDashboardStats = async () => {
@@ -38,10 +43,11 @@ export const getAdminProducts = async (params = {}) => {
 
 export const createProduct = async (data) => {
   try {
+    const isFormData = data instanceof FormData;
     const response = await fetch(`${API_BASE_URL}/admin/products`, {
       method: "POST",
-      headers: getAuthHeaders(),
-      body: JSON.stringify(data),
+      headers: getAuthHeaders(isFormData),
+      body: isFormData ? data : JSON.stringify(data),
     });
     return await response.json();
   } catch (error) {
@@ -51,12 +57,13 @@ export const createProduct = async (data) => {
 
 export const updateProduct = async (productId, data) => {
   try {
+    const isFormData = data instanceof FormData;
     const response = await fetch(
       `${API_BASE_URL}/admin/products/${productId}`,
       {
         method: "PUT",
-        headers: getAuthHeaders(),
-        body: JSON.stringify(data),
+        headers: getAuthHeaders(isFormData),
+        body: isFormData ? data : JSON.stringify(data),
       },
     );
     return await response.json();
