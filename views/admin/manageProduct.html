@@ -269,13 +269,15 @@
           />
         </div>
         <select
+          id="tableCategoryFilter"
           class="bg-surface-container-low border-none rounded-full py-3 px-lg focus:ring-2 focus:ring-primary-container font-label-md text-label-md text-on-surface-variant"
         >
-          <option>Tất cả danh mục</option>
-          <option>Hạt</option>
-          <option>Pate</option>
-          <option>Snack</option>
-          <option>Phụ kiện</option>
+          <option value="">Tất cả danh mục</option>
+          <option value="food">Thức ăn hạt</option>
+          <option value="pate">Pate & Súp</option>
+          <option value="snack">Snack & Bánh thưởng</option>
+          <option value="milk">Sữa mèo</option>
+          <option value="accessories">Phụ kiện</option>
         </select>
         <button
           class="p-3 bg-surface-container-low rounded-full text-on-surface-variant hover:bg-secondary-container transition-colors"
@@ -462,11 +464,11 @@
                 required
               >
                 <option value="">Chọn danh mục</option>
-                <option value="dogs">Dogs</option>
-                <option value="cats">Cats</option>
-                <option value="birds">Birds</option>
-                <option value="fish">Fish</option>
-                <option value="accessories">Accessories</option>
+                <option value="food">Thức ăn hạt</option>
+                <option value="pate">Pate & Súp</option>
+                <option value="snack">Snack & Bánh thưởng</option>
+                <option value="milk">Sữa mèo</option>
+                <option value="accessories">Phụ kiện</option>
               </select>
             </div>
 
@@ -506,7 +508,12 @@
           <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
             <div>
               <label class="block font-label-md text-label-md text-on-surface mb-sm">Thương hiệu</label>
-              <input id="productBrand" type="text" class="w-full bg-surface-container-low border-none rounded-full px-lg py-md focus:ring-2 focus:ring-primary-container outline-none" placeholder="VD: Royal Canin" />
+              <select id="productBrand" class="w-full bg-surface-container-low border-none rounded-full px-lg py-md focus:ring-2 focus:ring-primary-container outline-none">
+                <option value="">Chọn thương hiệu</option>
+                <option value="Royal Canin">Royal Canin</option>
+                <option value="Me-O">Me-O Premium</option>
+                <option value="Catsrang">Catsrang</option>
+              </select>
             </div>
             <div>
               <label class="block font-label-md text-label-md text-on-surface mb-sm">Trọng lượng</label>
@@ -601,7 +608,7 @@
       const searchInput = document.querySelector(
         'input[placeholder*="Tìm kiếm"]',
       );
-      const categorySelect = document.querySelector("select");
+      const categorySelect = document.getElementById("tableCategoryFilter");
 
       let currentPage = 1;
       let currentFilters = {};
@@ -869,7 +876,7 @@
 
       // Category filter
       categorySelect?.addEventListener("change", (e) => {
-        if (e.target.value !== "Tất cả danh mục") {
+        if (e.target.value) {
           currentFilters.category = e.target.value;
         } else {
           delete currentFilters.category;

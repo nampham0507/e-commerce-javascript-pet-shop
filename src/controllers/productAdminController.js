@@ -11,7 +11,7 @@ const validateProductData = (data) => {
   if (!data.category) {
     errors.push("Danh mục không hợp lệ");
   } else {
-    const validCategories = ["dogs", "cats", "birds", "fish", "accessories"];
+    const validCategories = ["food", "pate", "snack", "milk", "accessories"];
     if (!validCategories.includes(data.category)) {
       errors.push("Danh mục không tồn tại");
     }
@@ -260,6 +260,21 @@ exports.deleteProduct = async (req, res) => {
         success: false,
         message: "Sản phẩm không tồn tại",
       });
+    }
+
+    // Delete associated image file from uploads folder if it's a local upload
+    if (product.image && product.image.startsWith("/uploads/")) {
+      const fs = require("fs");
+      const path = require("path");
+      const imagePath = path.join(__dirname, "../../views", product.image);
+      if (fs.existsSync(imagePath)) {
+        try {
+          fs.unlinkSync(imagePath);
+          console.log(`Successfully deleted local image file: ${imagePath}`);
+        } catch (err) {
+          console.error(`Error deleting image file: ${err.message}`);
+        }
+      }
     }
 
     res.json({
