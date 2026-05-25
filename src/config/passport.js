@@ -42,8 +42,8 @@ passport.use(
       } catch (error) {
         return done(error, null);
       }
-    },
-  ),
+    }
+  )
 );
 
 // Serialize user ID to session

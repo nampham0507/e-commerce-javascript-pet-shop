@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { body, validationResult } = require("express-validator");
+const { body } = require("express-validator");
 const authController = require("../controllers/authController");
 const authMiddleware = require("../middlewares/auth");
 const passport = require("passport");
@@ -15,20 +15,20 @@ router.post(
       .withMessage("Mật khẩu phải ít nhất 6 ký tự"),
     body("fullName").notEmpty().withMessage("Tên không được để trống"),
   ],
-  authController.register,
+  authController.register
 );
 
 // Login
 router.post(
   "/login",
   [body("email").isEmail(), body("password").notEmpty()],
-  authController.login,
+  authController.login
 );
 
 // Google OAuth Routes
 router.get(
   "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] }),
+  passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
 router.get(
@@ -37,7 +37,7 @@ router.get(
     failureRedirect: "/auth/google/failure",
     session: false,
   }),
-  authController.googleCallback,
+  authController.googleCallback
 );
 
 router.get("/google/success", authController.googleSuccess);

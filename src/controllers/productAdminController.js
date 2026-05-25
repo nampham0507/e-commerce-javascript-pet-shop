@@ -49,7 +49,11 @@ const validateProductData = (data) => {
 // Helper to parse arrays from string
 const parseArray = (input) => {
   if (Array.isArray(input)) return input;
-  if (typeof input === "string") return input.split(",").map(i => i.trim()).filter(i => i);
+  if (typeof input === "string")
+    return input
+      .split(",")
+      .map((i) => i.trim())
+      .filter((i) => i);
   return [];
 };
 
@@ -70,13 +74,13 @@ const normalizeProductData = (data, file) => {
     ingredients: parseArray(data.ingredients),
     detailedDescription: data.detailedDescription?.trim() || "",
   };
-  
+
   if (file) {
     normalized.image = "/uploads/" + file.filename;
   } else if (data.image) {
     normalized.image = data.image.trim();
   }
-  
+
   return normalized;
 };
 
@@ -232,7 +236,7 @@ exports.updateProduct = async (req, res) => {
     const updatedProduct = await Product.findByIdAndUpdate(
       productId,
       { ...normalizedData, updatedAt: Date.now() },
-      { new: true },
+      { new: true }
     );
 
     res.json({

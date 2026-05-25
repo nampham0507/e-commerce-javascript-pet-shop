@@ -110,7 +110,7 @@ exports.getCustomerStats = async (req, res) => {
           orderCount: stat.orderCount,
           totalSpent: stat.totalSpent,
         };
-      }),
+      })
     );
 
     res.json({

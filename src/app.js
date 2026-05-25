@@ -18,7 +18,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false, httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }, // 24 hours
-  }),
+  })
 );
 
 // Passport middleware
@@ -82,6 +82,10 @@ app.get("/product/detail", (req, res) => {
   res.sendFile(path.join(__dirname, "../views/product/productDetail.html"));
 });
 
+app.get("/cart", (req, res) => {
+  res.sendFile(path.join(__dirname, "../views/cart/cart.html"));
+});
+
 app.get("/order/checkout", (req, res) => {
   res.sendFile(path.join(__dirname, "../views/order/checkout.html"));
 });
@@ -95,7 +99,7 @@ app.get("/homepage/categories", (req, res) => {
 });
 
 // Error handling middleware
-app.use((err, req, res, next) => {
+app.use((err, req, res, _next) => {
   console.error(err.stack);
   res
     .status(500)

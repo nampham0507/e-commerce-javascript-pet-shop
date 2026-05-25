@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + "-" + file.originalname);
-  }
+  },
 });
 const upload = multer({ storage: storage });
 
@@ -40,7 +40,7 @@ router.get(
   "/dashboard",
   authMiddleware,
   adminMiddleware,
-  dashboardController.getDashboardStats,
+  dashboardController.getDashboardStats
 );
 
 // User Management
@@ -48,25 +48,25 @@ router.post(
   "/create-admin",
   authMiddleware,
   adminMiddleware,
-  adminController.createAdmin,
+  adminController.createAdmin
 );
 router.get(
   "/users",
   authMiddleware,
   adminMiddleware,
-  adminController.getAllUsers,
+  adminController.getAllUsers
 );
 router.put(
   "/update-role",
   authMiddleware,
   adminMiddleware,
-  adminController.updateUserRole,
+  adminController.updateUserRole
 );
 router.delete(
   "/delete-user/:userId",
   authMiddleware,
   adminMiddleware,
-  adminController.deleteUser,
+  adminController.deleteUser
 );
 
 // Product Management
@@ -74,33 +74,33 @@ router.get(
   "/products",
   authMiddleware,
   adminMiddleware,
-  productAdminController.getProductsAdmin,
+  productAdminController.getProductsAdmin
 );
 router.post(
   "/products",
   authMiddleware,
   adminMiddleware,
   uploadMiddleware,
-  productAdminController.createProduct,
+  productAdminController.createProduct
 );
 router.put(
   "/products/:productId",
   authMiddleware,
   adminMiddleware,
   uploadMiddleware,
-  productAdminController.updateProduct,
+  productAdminController.updateProduct
 );
 router.delete(
   "/products/:productId",
   authMiddleware,
   adminMiddleware,
-  productAdminController.deleteProduct,
+  productAdminController.deleteProduct
 );
 router.get(
   "/products/stats/all",
   authMiddleware,
   adminMiddleware,
-  productAdminController.getProductStats,
+  productAdminController.getProductStats
 );
 
 // Order Management
@@ -108,31 +108,31 @@ router.get(
   "/orders",
   authMiddleware,
   adminMiddleware,
-  orderAdminController.getAllOrders,
+  orderAdminController.getAllOrders
 );
 router.get(
   "/orders/:orderId",
   authMiddleware,
   adminMiddleware,
-  orderAdminController.getOrderDetail,
+  orderAdminController.getOrderDetail
 );
 router.put(
   "/orders/:orderId",
   authMiddleware,
   adminMiddleware,
-  orderAdminController.updateOrderStatus,
+  orderAdminController.updateOrderStatus
 );
 router.delete(
   "/orders/:orderId",
   authMiddleware,
   adminMiddleware,
-  orderAdminController.deleteOrder,
+  orderAdminController.deleteOrder
 );
 router.get(
   "/orders/stats/all",
   authMiddleware,
   adminMiddleware,
-  orderAdminController.getOrderStats,
+  orderAdminController.getOrderStats
 );
 
 // Customer Management
@@ -140,19 +140,19 @@ router.get(
   "/customers",
   authMiddleware,
   adminMiddleware,
-  customerAdminController.getAllCustomers,
+  customerAdminController.getAllCustomers
 );
 router.get(
   "/customers/:customerId",
   authMiddleware,
   adminMiddleware,
-  customerAdminController.getCustomerDetail,
+  customerAdminController.getCustomerDetail
 );
 router.get(
   "/customers/stats/all",
   authMiddleware,
   adminMiddleware,
-  customerAdminController.getCustomerStats,
+  customerAdminController.getCustomerStats
 );
 
 module.exports = router;

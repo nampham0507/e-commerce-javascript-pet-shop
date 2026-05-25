@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Product = require("../models/Product");
 const productAdminController = require("../controllers/productAdminController");
-const { body, validationResult } = require("express-validator");
 
 // ===== PUBLIC ROUTES (No Auth Required) =====
 

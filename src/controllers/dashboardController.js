@@ -44,6 +44,21 @@ exports.getDashboardStats = async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(5);
 
+    // Top selling products
+    const topProductsRaw = await Order.aggregate([
+      { $unwind: "$products" },
+      {
+        $group: {
+          _id: "$products.product",
+          sold: { $sum: "$products.quantity" },
+          revenue: { $sum: { $multiply: ["$products.price", "$products.quantity"] } }
+        }
+      },
+      { $sort: { sold: -1 } },
+      { $limit: 3 }
+    ]);
+    const topProducts = await Product.populate(topProductsRaw, { path: "_id", select: "name category image" });
+
     res.json({
       success: true,
       dashboard: {
@@ -63,6 +78,7 @@ exports.getDashboardStats = async (req, res) => {
         revenueByMonth,
         recentOrders,
         recentUsers,
+        topProducts,
       },
     });
   } catch (error) {

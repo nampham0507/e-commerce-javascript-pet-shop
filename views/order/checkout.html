@@ -157,17 +157,31 @@
         border-radius: 10px;
       }
       /* User dropdown */
-      #userMenu { display: none; }
-      #userMenu.open { display: block; }
-      #userAvatar {
-        width: 36px; height: 36px; border-radius: 9999px;
-        background: #ffb347; color: #704700;
-        font-weight: 700; font-size: 14px;
-        display: flex; align-items: center; justify-content: center;
-        cursor: pointer; border: 2px solid #ffddb6;
-        transition: transform 0.15s; flex-shrink: 0;
+      #userMenu {
+        display: none;
       }
-      #userAvatar:hover { transform: scale(1.08); }
+      #userMenu.open {
+        display: block;
+      }
+      #userAvatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 9999px;
+        background: #ffb347;
+        color: #704700;
+        font-weight: 700;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: 2px solid #ffddb6;
+        transition: transform 0.15s;
+        flex-shrink: 0;
+      }
+      #userAvatar:hover {
+        transform: scale(1.08);
+      }
     </style>
   </head>
   <body class="bg-background text-on-background font-body-md min-h-screen">
@@ -182,37 +196,108 @@
           Xám Pet Shop
         </div>
         <nav class="hidden md:flex items-center gap-xl">
-          <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="/">Trang chủ</a>
-          <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="/product">Sản phẩm</a>
-          <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md" href="/homepage/categories">Danh mục</a>
+          <a
+            class="text-on-surface-variant hover:text-primary transition-colors font-body-md"
+            href="/"
+            >Trang chủ</a
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary transition-colors font-body-md"
+            href="/product"
+            >Sản phẩm</a
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary transition-colors font-body-md"
+            href="/homepage/categories"
+            >Danh mục</a
+          >
         </nav>
         <div class="flex items-center gap-md">
-          <button class="material-symbols-outlined text-primary p-sm hover:scale-110 transition-transform" data-icon="shopping_cart">shopping_cart</button>
+          <button
+            class="material-symbols-outlined text-primary p-sm hover:scale-110 transition-transform"
+            data-icon="shopping_cart"
+          >
+            shopping_cart
+          </button>
           <!-- GUEST -->
           <div id="guestNav" class="hidden sm:flex items-center gap-sm">
-            <a href="/auth/login" class="text-on-surface-variant hover:text-primary font-label-md px-md py-sm transition-colors">Đăng nhập</a>
-            <a href="/auth/register" class="bg-primary-container text-on-primary-container px-lg py-sm rounded-full font-label-md hover:scale-105 transition-all active:scale-95 inline-block">Đăng ký</a>
+            <a
+              href="/auth/login"
+              class="text-on-surface-variant hover:text-primary font-label-md px-md py-sm transition-colors"
+              >Đăng nhập</a
+            >
+            <a
+              href="/auth/register"
+              class="bg-primary-container text-on-primary-container px-lg py-sm rounded-full font-label-md hover:scale-105 transition-all active:scale-95 inline-block"
+              >Đăng ký</a
+            >
           </div>
           <!-- USER -->
           <div id="userNav" class="hidden items-center gap-sm relative">
-            <a id="adminLink" href="/admin" class="hidden items-center gap-xs px-md py-1 bg-primary text-on-primary rounded-full font-label-sm hover:opacity-90 transition-opacity">
-              <span class="material-symbols-outlined text-[14px]">admin_panel_settings</span> Admin
+            <a
+              id="adminLink"
+              href="/admin"
+              class="hidden items-center gap-xs px-md py-1 bg-primary text-on-primary rounded-full font-label-sm hover:opacity-90 transition-opacity"
+            >
+              <span class="material-symbols-outlined text-[14px]"
+                >admin_panel_settings</span
+              >
+              Admin
             </a>
             <div class="relative">
               <button id="userAvatarBtn" class="flex items-center gap-sm group">
                 <div id="userAvatar">A</div>
-                <span id="userName" class="hidden sm:block font-label-md text-on-surface max-w-[120px] truncate"></span>
-                <span class="material-symbols-outlined text-on-surface-variant text-[18px] group-hover:text-primary" id="chevronIcon">expand_more</span>
+                <span
+                  id="userName"
+                  class="hidden sm:block font-label-md text-on-surface max-w-[120px] truncate"
+                ></span>
+                <span
+                  class="material-symbols-outlined text-on-surface-variant text-[18px] group-hover:text-primary"
+                  id="chevronIcon"
+                  >expand_more</span
+                >
               </button>
-              <div id="userMenu" class="absolute right-0 top-full mt-2 w-52 bg-surface-container-lowest rounded-2xl shadow-lg border border-outline-variant/30 overflow-hidden z-50">
+              <div
+                id="userMenu"
+                class="absolute right-0 top-full mt-2 w-52 bg-surface-container-lowest rounded-2xl shadow-lg border border-outline-variant/30 overflow-hidden z-50"
+              >
                 <div class="px-lg py-md border-b border-outline-variant/20">
-                  <p class="font-label-md text-on-surface truncate" id="menuUserName"></p>
-                  <p class="text-label-sm text-on-surface-variant truncate" id="menuUserEmail"></p>
+                  <p
+                    class="font-label-md text-on-surface truncate"
+                    id="menuUserName"
+                  ></p>
+                  <p
+                    class="text-label-sm text-on-surface-variant truncate"
+                    id="menuUserEmail"
+                  ></p>
                 </div>
                 <div class="py-sm">
-                  <a href="/order/detail" class="flex items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md"><span class="material-symbols-outlined text-[18px]">receipt_long</span> Đơn hàng của tôi</a>
-                  <a id="menuAdminLink" href="/admin" class="hidden items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md"><span class="material-symbols-outlined text-[18px]">admin_panel_settings</span> Trang Admin</a>
-                  <button id="logoutBtn" class="w-full flex items-center gap-sm px-lg py-sm text-error hover:bg-error-container/20 transition-colors font-label-md"><span class="material-symbols-outlined text-[18px]">logout</span> Đăng xuất</button>
+                  <a
+                    href="/order/detail"
+                    class="flex items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md"
+                    ><span class="material-symbols-outlined text-[18px]"
+                      >receipt_long</span
+                    >
+                    Đơn hàng của tôi</a
+                  >
+                  <a
+                    id="menuAdminLink"
+                    href="/admin"
+                    class="hidden items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md"
+                    ><span class="material-symbols-outlined text-[18px]"
+                      >admin_panel_settings</span
+                    >
+                    Trang Admin</a
+                  >
+                  <button
+                    id="logoutBtn"
+                    class="w-full flex items-center gap-sm px-lg py-sm text-error hover:bg-error-container/20 transition-colors font-label-md"
+                  >
+                    <span class="material-symbols-outlined text-[18px]"
+                      >logout</span
+                    >
+                    Đăng xuất
+                  </button>
                 </div>
               </div>
             </div>
@@ -285,7 +370,7 @@
                 >
                 <textarea
                   class="w-full bg-surface-container-low border-none rounded-xl px-md py-3 focus:ring-2 focus:ring-primary-container transition-all outline-none resize-none"
-                  placeholder="Yêu cầu đặc biệt cho shipper..."
+                  placeholder="..."
                   rows="3"
                 ></textarea>
               </div>
@@ -304,26 +389,27 @@
                 Phương thức thanh toán
               </h2>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
               <label
                 class="relative flex items-center p-md bg-surface-container-low rounded-2xl cursor-pointer hover:bg-primary-fixed/20 transition-colors group"
               >
                 <input
                   checked=""
+                  value="cod"
                   class="w-5 h-5 text-primary border-outline focus:ring-primary focus:ring-offset-0"
                   name="payment"
                   type="radio"
                 />
                 <div class="ml-md flex flex-col">
-                  <span class="font-label-md text-on-surface"
-                    >Thanh toán khi nhận hàng (COD)</span
+                  <span class="font-label-md text-on-surface text-[14px] font-semibold"
+                    >COD</span
                   >
-                  <span class="text-xs text-on-surface-variant"
-                    >Thanh toán tiền mặt cho shipper</span
+                  <span class="text-[10px] text-on-surface-variant"
+                    >Nhận hàng trả tiền</span
                   >
                 </div>
                 <span
-                  class="material-symbols-outlined ml-auto text-primary opacity-40 group-hover:opacity-100"
+                  class="material-symbols-outlined ml-auto text-primary opacity-40 group-hover:opacity-100 hidden sm:inline"
                   data-icon="local_shipping"
                   >local_shipping</span
                 >
@@ -332,20 +418,21 @@
                 class="relative flex items-center p-md bg-surface-container-low rounded-2xl cursor-pointer hover:bg-primary-fixed/20 transition-colors group"
               >
                 <input
+                  value="banking"
                   class="w-5 h-5 text-primary border-outline focus:ring-primary focus:ring-offset-0"
                   name="payment"
                   type="radio"
                 />
                 <div class="ml-md flex flex-col">
-                  <span class="font-label-md text-on-surface"
-                    >Chuyển khoản ngân hàng</span
+                  <span class="font-label-md text-on-surface text-[14px] font-semibold"
+                    >Chuyển khoản</span
                   >
-                  <span class="text-xs text-on-surface-variant"
-                    >Nhận thông tin qua email/tin nhắn</span
+                  <span class="text-[10px] text-on-surface-variant"
+                    >Qua ngân hàng</span
                   >
                 </div>
                 <span
-                  class="material-symbols-outlined ml-auto text-primary opacity-40 group-hover:opacity-100"
+                  class="material-symbols-outlined ml-auto text-primary opacity-40 group-hover:opacity-100 hidden sm:inline"
                   data-icon="account_balance"
                   >account_balance</span
                 >
@@ -371,68 +458,10 @@
               </div>
               <!-- Product List -->
               <div
+                id="checkoutItemsContainer"
                 class="space-y-md max-h-[400px] overflow-y-auto pr-sm custom-scrollbar"
               >
-                <div class="flex gap-md group">
-                  <div
-                    class="w-20 h-20 bg-surface-container-low rounded-2xl flex-shrink-0 p-2 overflow-hidden border border-outline-variant/20"
-                  >
-                    <img
-                      class="w-full h-full object-cover rounded-xl"
-                      data-alt="A premium bag of high-quality cat food displayed against a soft, sunlit living room background. The packaging features elegant feline graphics and is surrounded by clean, minimalist pet accessories in a warm, cozy domestic setting. Soft-focus lighting creates a high-end, caring atmosphere for cat lovers."
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuCOtaYsWq-M4UTh-u6iHa9jOPOc1HUByvqknkqSL8zasOwtwjUmye9h0CFT3PRig6Kkh8D3ErS9Hn5C-GcoIBwHhP_BWz8KTs69CPM1UDw5g4I30PgVk_tipKLhCPG7BhmnZ_2IDRMPAPBZUfXbYLiPlSpxY51k_3BnNCZngP1zkk-hmddFCRRmccK4uxGfxGnxeDdePo6Pjn-1S_CUDoS7Yrvv1XzXWNjHYTAVt2boZ9wzI3wWnilVqwtpX_TSLGvalqTkMy8uA"
-                    />
-                  </div>
-                  <div class="flex-grow flex flex-col justify-between py-1">
-                    <div>
-                      <h3 class="font-label-md text-on-surface">
-                        Thức ăn hạt Royal Canin Kitten
-                      </h3>
-                      <p class="text-xs text-on-surface-variant">Số lượng: 2</p>
-                    </div>
-                    <p class="font-label-md text-primary">850.000₫</p>
-                  </div>
-                </div>
-                <div class="flex gap-md group">
-                  <div
-                    class="w-20 h-20 bg-surface-container-low rounded-2xl flex-shrink-0 p-2 overflow-hidden border border-outline-variant/20"
-                  >
-                    <img
-                      class="w-full h-full object-cover rounded-xl"
-                      data-alt="A stylish, modern ceramic water fountain for cats, placed on a light oak wooden floor. Gentle water ripples catch the soft morning light entering through a large window. The surrounding area is clutter-free, reflecting a peaceful and hygienic environment for a healthy pet lifestyle."
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuB43LBZoT-OI-WWlxEjb4HRpo933dSNv-kXRcjrC_aGzyZr8BGbJjJlxtBImBcWEMW_U1o9oj8qiAlmLnvO2WVEylNu1-vNKub1HWmrZnjzsTnlQOrOgRYXODMxyfWewpfnWfQN85YgMS1oi-T82zdw6iXcCohParZIvG8O42LzhPz0q_xAsvaVdlVCMFQDoBNAW8X_fdBEkAg6KYheh9qUTV4HaZo7WL20ZwXLeJ4wAFTxFJxt4p7xfIpE3vkNSkltDKKelI20_FM"
-                    />
-                  </div>
-                  <div class="flex-grow flex flex-col justify-between py-1">
-                    <div>
-                      <h3 class="font-label-md text-on-surface">
-                        Vòng cổ chuông cao cấp
-                      </h3>
-                      <p class="text-xs text-on-surface-variant">Số lượng: 1</p>
-                    </div>
-                    <p class="font-label-md text-primary">125.000₫</p>
-                  </div>
-                </div>
-                <div class="flex gap-md group">
-                  <div
-                    class="w-20 h-20 bg-surface-container-low rounded-2xl flex-shrink-0 p-2 overflow-hidden border border-outline-variant/20"
-                  >
-                    <img
-                      class="w-full h-full object-cover rounded-xl"
-                      data-alt="A collection of colorful cat teaser toys and plush mice arranged neatly on a white plush rug. The lighting is soft and bright, emphasizing the high-quality textures and gentle pastel colors of the toys. The aesthetic is playful yet sophisticated, fitting a premium pet shop's branding."
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfmVxqqRRhFpz2PRt_D3SpH6w9OASqkyzQA_nD7zp_qOEa5ij9kr18nv4Frneyn4Y6Eb7Wn7DV7WztlxS92kXba3Kn-pUDYJT4VZ7rbacmXJf8LIMJZhA03tw41aeboWCGLHyAPc5yGZkFE33MQfHaQLoqZ8c036cFOHb-TX4z68NOz_Y5V6v9-vERskgM1quY4jwyMTyEWwg53ykNbror2rFJZRsh7LMN5oSPnAljj9Js7u54pEi1h458mdOOYtG2A3gUn_KbltM"
-                    />
-                  </div>
-                  <div class="flex-grow flex flex-col justify-between py-1">
-                    <div>
-                      <h3 class="font-label-md text-on-surface">
-                        Cát vệ sinh đậu nành 6L
-                      </h3>
-                      <p class="text-xs text-on-surface-variant">Số lượng: 3</p>
-                    </div>
-                    <p class="font-label-md text-primary">450.000₫</p>
-                  </div>
-                </div>
+                <!-- Dữ liệu động sẽ hiển thị ở đây -->
               </div>
               <!-- Price Calculation -->
               <div
@@ -442,25 +471,28 @@
                   class="flex justify-between font-body-md text-on-surface-variant"
                 >
                   <span>Tạm tính</span>
-                  <span>1.425.000₫</span>
+                  <span id="subtotalValue">0₫</span>
                 </div>
                 <div
                   class="flex justify-between font-body-md text-on-surface-variant"
                 >
                   <span>Phí vận chuyển</span>
-                  <span>35.000₫</span>
+                  <span id="shippingValue">30.000₫</span>
                 </div>
                 <div class="flex justify-between items-center pt-md">
                   <span
                     class="font-headline-md text-headline-md text-on-surface"
                     >Tổng cộng</span
                   >
-                  <span class="font-headline-md text-headline-md text-primary"
-                    >1.460.000₫</span
+                  <span
+                    id="totalValue"
+                    class="font-headline-md text-headline-md text-primary"
+                    >0₫</span
                   >
                 </div>
               </div>
               <button
+                id="placeOrderBtn"
                 class="w-full mt-lg bg-primary text-on-primary font-label-md py-4 rounded-full hover:bg-primary-fixed-variant hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-sm"
               >
                 <span class="material-symbols-outlined" data-icon="lock"
@@ -535,6 +567,8 @@
     </footer>
     <script type="module">
       import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
+      import { getCart, getCartTotal, getCartItemCount, clearCart } from "../js/cart.js";
+
       const guestNav = document.getElementById("guestNav");
       const userNav = document.getElementById("userNav");
       const userAvatar = document.getElementById("userAvatar");
@@ -547,22 +581,121 @@
       const chevronIcon = document.getElementById("chevronIcon");
       const logoutBtn = document.getElementById("logoutBtn");
       const userAvatarBtn = document.getElementById("userAvatarBtn");
+
       function initNav() {
         if (isAuthenticated()) {
           const user = getUserInfo();
           if (!user) return;
-          guestNav.style.display = "none"; userNav.style.display = "flex";
-          const initial = (user.fullName || user.email || "U").charAt(0).toUpperCase();
+          guestNav.style.display = "none";
+          userNav.style.display = "flex";
+          const initial = (user.fullName || user.email || "U")
+            .charAt(0)
+            .toUpperCase();
           userAvatar.textContent = initial;
           const displayName = user.fullName || user.email;
-          userName.textContent = displayName; menuUserName.textContent = displayName; menuUserEmail.textContent = user.email || "";
-          if (user.role === "admin") { adminLink.style.display = "flex"; menuAdminLink.style.display = "flex"; }
-        } else { guestNav.style.display = ""; userNav.style.display = "none"; }
+          userName.textContent = displayName;
+          menuUserName.textContent = displayName;
+          menuUserEmail.textContent = user.email || "";
+          if (user.role === "admin") {
+            adminLink.style.display = "flex";
+            menuAdminLink.style.display = "flex";
+          }
+        } else {
+          guestNav.style.display = "";
+          userNav.style.display = "none";
+        }
       }
-      userAvatarBtn.addEventListener("click", (e) => { e.stopPropagation(); const isOpen = userMenu.classList.toggle("open"); chevronIcon.textContent = isOpen ? "expand_less" : "expand_more"; });
-      document.addEventListener("click", () => { userMenu.classList.remove("open"); chevronIcon.textContent = "expand_more"; });
-      logoutBtn.addEventListener("click", async () => { await logoutUser(); window.location.href = "/auth/login"; });
+      userAvatarBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isOpen = userMenu.classList.toggle("open");
+        chevronIcon.textContent = isOpen ? "expand_less" : "expand_more";
+      });
+      document.addEventListener("click", () => {
+        userMenu.classList.remove("open");
+        chevronIcon.textContent = "expand_more";
+      });
+      logoutBtn.addEventListener("click", async () => {
+        await logoutUser();
+        window.location.href = "/auth/login";
+      });
+
+      function formatCurrency(value) {
+        return new Intl.NumberFormat("vi-VN", {
+          style: "currency",
+          currency: "VND",
+          maximumFractionDigits: 0,
+        }).format(value);
+      }
+
+      function renderCheckoutSummary() {
+        const cart = getCart();
+        const checkoutItemsContainer = document.getElementById(
+          "checkoutItemsContainer"
+        );
+        const subtotalValue = document.getElementById("subtotalValue");
+        const shippingValue = document.getElementById("shippingValue");
+        const totalValue = document.getElementById("totalValue");
+
+        if (!cart || cart.length === 0) {
+          checkoutItemsContainer.innerHTML =
+            '<p class="text-on-surface-variant text-center py-4">Giỏ hàng trống.</p>';
+          subtotalValue.textContent = formatCurrency(0);
+          shippingValue.textContent = formatCurrency(0);
+          totalValue.textContent = formatCurrency(0);
+          return;
+        }
+
+        checkoutItemsContainer.innerHTML = cart
+          .map(
+            (item) => `
+          <div class="flex gap-md group">
+            <div class="w-20 h-20 bg-surface-container-low rounded-2xl flex-shrink-0 p-2 overflow-hidden border border-outline-variant/20">
+              <img class="w-full h-full object-cover rounded-xl" src="${item.image || "https://via.placeholder.com/96?text=No+Image"}" alt="${item.name}">
+            </div>
+            <div class="flex-grow flex flex-col justify-between py-1">
+              <div>
+                <h3 class="font-label-md text-on-surface line-clamp-1">${item.name}</h3>
+                <p class="text-xs text-on-surface-variant">Số lượng: ${item.quantity}</p>
+              </div>
+              <p class="font-label-md text-primary">${formatCurrency(item.price)}</p>
+            </div>
+          </div>
+        `
+          )
+          .join("");
+
+        const subtotal = getCartTotal();
+        const shippingFee = 30000;
+        subtotalValue.textContent = formatCurrency(subtotal);
+        shippingValue.textContent = formatCurrency(shippingFee);
+        totalValue.textContent = formatCurrency(subtotal + shippingFee);
+      }
+
+      const placeOrderBtn = document.getElementById("placeOrderBtn");
+
+      placeOrderBtn.addEventListener("click", () => {
+        // Collect form info
+        const fullName = document.querySelector('input[placeholder="Nguyễn Văn A"]').value.trim();
+        const phoneNumber = document.querySelector('input[placeholder="090 123 4567"]').value.trim();
+        const address = document.querySelector('input[placeholder="Số nhà, tên đường, phường/xã..."]').value.trim();
+
+        if (!fullName || !phoneNumber || !address) {
+          alert("Vui lòng điền đầy đủ thông tin giao hàng!");
+          return;
+        }
+
+        const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+        const total = getCartTotal() + 30000;
+
+        alert("Đặt hàng thành công! Đơn hàng của bạn đang được xử lý.");
+        clearCart();
+        window.location.href = "/order/detail";
+      });
+
       initNav();
+      renderCheckoutSummary();
     </script>
+
+
   </body>
 </html>

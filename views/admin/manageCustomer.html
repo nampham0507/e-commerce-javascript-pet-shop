@@ -367,14 +367,20 @@
             </p>
             <div class="flex gap-sm">
               <button
-                class="w-10 h-10 rounded-full flex items-center justify-center border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant"
+                id="prevUserPageBtn"
+                class="w-10 h-10 rounded-full flex items-center justify-center border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant disabled:opacity-30"
+                disabled
               >
                 <span class="material-symbols-outlined">chevron_left</span>
               </button>
+              <div id="userPaginationContainer" class="flex gap-sm">
+                <!-- Page buttons will be rendered here -->
+              </div>
               <button
-                class="w-10 h-10 rounded-full flex items-center justify-center bg-primary text-on-primary font-label-md"
+                id="nextUserPageBtn"
+                class="w-10 h-10 rounded-full flex items-center justify-center border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant"
               >
-                1
+                <span class="material-symbols-outlined">chevron_right</span>
               </button>
             </div>
           </div>
@@ -466,8 +472,18 @@
       let allUsers = [];
       const usersTableBody = document.getElementById("usersTableBody");
       const searchInput = document.querySelector(
-        "input[placeholder='Tìm kiếm người dùng...']",
+        "input[placeholder='Tìm kiếm người dùng...']"
       );
+      const userPaginationContainer = document.getElementById(
+        "userPaginationContainer"
+      );
+      const prevUserPageBtn = document.getElementById("prevUserPageBtn");
+      const nextUserPageBtn = document.getElementById("nextUserPageBtn");
+
+      let currentUserPage = 1;
+      let totalUserPages = 1;
+      let totalUserCount = 0;
+      let userSearchKeyword = "";
 
       // Get avatar initial
       function getInitial(name) {
@@ -519,12 +535,56 @@
         `;
       }
 
+      // Update user pagination UI
+      function updateUserPaginationUI(pagination) {
+        if (!pagination) return;
+
+        totalUserPages = pagination.pages;
+        totalUserCount = pagination.total;
+
+        // Update display text
+        const startNum = (pagination.page - 1) * pagination.limit + 1;
+        const endNum = Math.min(
+          pagination.page * pagination.limit,
+          pagination.total
+        );
+
+        document.getElementById("userCountStart").textContent = startNum;
+        document.getElementById("userCountEnd").textContent = endNum;
+        document.getElementById("totalUsersFooter").textContent =
+          pagination.total;
+
+        // Render page buttons
+        userPaginationContainer.innerHTML = "";
+        for (let i = 1; i <= totalUserPages; i++) {
+          const btn = document.createElement("button");
+          btn.className =
+            i === currentUserPage
+              ? "w-10 h-10 rounded-full bg-primary text-on-primary font-label-md flex items-center justify-center"
+              : "w-10 h-10 rounded-full border border-outline-variant hover:bg-surface-container-high text-on-surface-variant font-label-md flex items-center justify-center";
+          btn.textContent = i;
+          btn.addEventListener("click", () => goToUserPage(i));
+          userPaginationContainer.appendChild(btn);
+        }
+
+        // Update prev/next button states
+        prevUserPageBtn.disabled = currentUserPage === 1;
+        nextUserPageBtn.disabled = currentUserPage === totalUserPages;
+      }
+
+      // Go to specific user page
+      function goToUserPage(page) {
+        if (page < 1 || page > totalUserPages) return;
+        currentUserPage = page;
+        loadUsers();
+      }
+
       // Update statistics
       function updateStats() {
         const totalUsers = allUsers.length;
         const adminCount = allUsers.filter((u) => u.role === "admin").length;
         const customerCount = allUsers.filter(
-          (u) => u.role === "customer",
+          (u) => u.role === "customer"
         ).length;
 
         document.getElementById("totalUsersStat").textContent = totalUsers;
@@ -571,7 +631,7 @@
 
         if (
           !confirm(
-            `Bạn có chắc chắn muốn đổi vai trò thành ${getRoleDisplay(newRole)}?`,
+            `Bạn có chắc chắn muốn đổi vai trò thành ${getRoleDisplay(newRole)}?`
           )
         ) {
           select.value = oldRole;
@@ -601,7 +661,7 @@
 
         if (
           !confirm(
-            `Bạn có chắc chắn muốn xóa người dùng ${user.fullName || user.email}?`,
+            `Bạn có chắc chắn muốn xóa người dùng ${user.fullName || user.email}?`
           )
         ) {
           return;
@@ -621,38 +681,49 @@
       // Load users
       async function loadUsers() {
         console.log("Loading users...");
-        const result = await getAllUsers();
+        const result = await getAllUsers({
+          page: currentUserPage,
+          limit: 10,
+          search: userSearchKeyword,
+        });
         console.log("API Response:", result);
 
         // Parse response correctly
-        if (result && result.users && Array.isArray(result.users)) {
-          allUsers = result.users;
+        if (
+          result &&
+          result.success &&
+          result.customers &&
+          Array.isArray(result.customers)
+        ) {
+          allUsers = result.customers;
           console.log("Users loaded:", allUsers);
-        } else if (Array.isArray(result)) {
-          allUsers = result;
-          console.log("Users loaded (direct array):", allUsers);
+          renderUsers(allUsers);
+          updateStats();
+          updateUserPaginationUI(result.pagination);
         } else {
           console.error("Invalid response structure:", result);
           allUsers = [];
+          renderUsers();
+          updateStats();
         }
-
-        renderUsers();
-        updateStats();
       }
 
       // Search functionality
       if (searchInput) {
         searchInput.addEventListener("input", (e) => {
-          const keyword = e.target.value.toLowerCase();
-          const filtered = allUsers.filter(
-            (user) =>
-              user.fullName?.toLowerCase().includes(keyword) ||
-              user.email?.toLowerCase().includes(keyword) ||
-              user.phone?.toLowerCase().includes(keyword),
-          );
-          renderUsers(filtered);
+          userSearchKeyword = e.target.value.toLowerCase();
+          currentUserPage = 1;
+          loadUsers();
         });
       }
+
+      // Pagination handlers
+      prevUserPageBtn?.addEventListener("click", () =>
+        goToUserPage(currentUserPage - 1)
+      );
+      nextUserPageBtn?.addEventListener("click", () =>
+        goToUserPage(currentUserPage + 1)
+      );
 
       // Load initial data
       loadUsers();
@@ -732,7 +803,7 @@
           alert(
             "Lỗi tạo tài khoản: " +
               (result.message ||
-                (result.errors && result.errors.map((e) => e.msg).join(", "))),
+                (result.errors && result.errors.map((e) => e.msg).join(", ")))
           );
         }
       });

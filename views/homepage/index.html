@@ -202,12 +202,17 @@
           >
         </nav>
         <div class="flex items-center gap-md">
-          <button
-            class="material-symbols-outlined text-primary p-2 transition-transform duration-200 hover:scale-110 active:scale-95"
+          <a
+            href="/cart"
+            class="relative inline-flex items-center justify-center text-primary p-2 transition-transform duration-200 hover:scale-110 active:scale-95"
             data-icon="shopping_cart"
           >
-            shopping_cart
-          </button>
+            <span class="material-symbols-outlined">shopping_cart</span>
+            <span
+              id="cartBadge"
+              class="hidden absolute -top-1 -right-1 min-w-[18px] h-[18px] rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center px-1"
+            ></span>
+          </a>
 
           <!-- GUEST: hiển thị khi chưa đăng nhập -->
           <div id="guestNav" class="hidden sm:flex items-center gap-sm">
@@ -586,6 +591,7 @@
     <script type="module">
       import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
       import { getPublicProducts } from "../js/product.js";
+      import { addToCart, getCartItemCount } from "../js/cart.js";
 
       const guestNav = document.getElementById("guestNav");
       const userNav = document.getElementById("userNav");
@@ -642,6 +648,31 @@
         }).format(price);
       }
 
+      function showToast(message) {
+        const toast = document.createElement("div");
+        toast.className =
+          "fixed bottom-5 right-5 z-[60] rounded-full bg-on-surface text-background px-lg py-3 shadow-lg text-label-md";
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+          toast.remove();
+        }, 2200);
+      }
+
+      function updateCartBadge() {
+        const badge = document.getElementById("cartBadge");
+        if (!badge) return;
+
+        const count = getCartItemCount();
+        if (count > 0) {
+          badge.textContent = count;
+          badge.classList.remove("hidden");
+        } else {
+          badge.classList.add("hidden");
+        }
+      }
+
       // Render product card HTML
       function renderProductCard(product) {
         return `
@@ -652,7 +683,7 @@
                 class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300"
                 src="${product.image || "https://via.placeholder.com/256?text=No+Image"}"
               />
-              ${product.quantity < 10 ? '<div class="absolute top-md right-md"><span class="bg-error/20 text-error px-sm py-1 rounded-full font-label-sm">Hạn chế</span></div>' : ""}
+              ${product.quantity < 10 ? '<div class="absolute top-md right-md"><span class="bg-error/20 text-error px-sm py-1 rounded-full font-label-sm">Sắp hết hàng</span></div>' : ""}
             </a>
             <div class="p-lg flex flex-col flex-grow">
               <div class="flex items-center gap-xs mb-sm">
@@ -679,6 +710,7 @@
                   data-product-id="${product._id}"
                   data-product-name="${product.name}"
                   data-product-price="${product.price}"
+                  data-product-image="${product.image || ""}"
                 >
                   <span class="material-symbols-outlined">add_shopping_cart</span>
                 </button>
@@ -722,7 +754,17 @@
         // Add event listeners to add-to-cart buttons
         document.querySelectorAll("[data-product-id]").forEach((btn) => {
           btn.addEventListener("click", () => {
-            alert(`Đã thêm "${btn.dataset.productName}" vào giỏ hàng!`);
+            addToCart(
+              {
+                _id: btn.dataset.productId,
+                name: btn.dataset.productName,
+                price: Number(btn.dataset.productPrice || 0),
+                image: btn.dataset.productImage || "",
+              },
+              1
+            );
+            updateCartBadge();
+            showToast(`Đã thêm "${btn.dataset.productName}" vào giỏ hàng`);
           });
         });
       }
@@ -747,6 +789,7 @@
       });
 
       initNav();
+      updateCartBadge();
       loadProducts();
     </script>
   </body>

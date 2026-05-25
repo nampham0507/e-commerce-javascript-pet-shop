@@ -8,3 +8,6 @@ package.json
 .DS_Store
 ADMIN_API.md
 GOOGLE_OAUTH_SETUP.md
+.eslintrc.json
+.prettierignore
+vnpay_nodejs

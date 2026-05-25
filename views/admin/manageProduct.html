@@ -343,36 +343,29 @@
           class="px-lg py-md bg-surface-container-low flex justify-between items-center"
         >
           <span class="text-label-sm text-on-surface-variant"
-            >Hiển thị 1-10 trên 156 sản phẩm</span
+            >Hiển thị <span id="productCountStart">0</span> -
+            <span id="productCountEnd">0</span> trên
+            <span id="totalProductsFooter">0</span> sản phẩm</span
           >
           <div class="flex gap-2">
             <button
               class="p-2 rounded-full hover:bg-surface-container-high text-on-surface-variant disabled:opacity-30"
+              id="prevPageBtn"
               disabled=""
             >
               <span class="material-symbols-outlined">chevron_left</span>
             </button>
-            <button
-              class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container font-label-md flex items-center justify-center"
-            >
-              1
-            </button>
-            <button
-              class="w-10 h-10 rounded-full hover:bg-surface-container-high text-on-surface-variant font-label-md flex items-center justify-center"
-            >
-              2
-            </button>
-            <button
-              class="w-10 h-10 rounded-full hover:bg-surface-container-high text-on-surface-variant font-label-md flex items-center justify-center"
-            >
-              3
-            </button>
+            <div id="paginationContainer" class="flex gap-2">
+              <!-- Page buttons will be rendered here -->
+            </div>
             <button
               class="p-2 rounded-full hover:bg-surface-container-high text-on-surface-variant"
+              id="nextPageBtn"
             >
               <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+          </div>
         </div>
-      </div>
       
       <footer class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto bg-surface-container-highest dark:bg-surface-container mt-xl rounded-[24px]">
         <div class="col-span-1 md:col-span-1">
@@ -609,10 +602,61 @@
         'input[placeholder*="Tìm kiếm"]',
       );
       const categorySelect = document.getElementById("tableCategoryFilter");
+      const paginationContainer = document.getElementById(
+        "paginationContainer",
+      );
+      const prevPageBtn = document.getElementById("prevPageBtn");
+      const nextPageBtn = document.getElementById("nextPageBtn");
 
       let currentPage = 1;
       let currentFilters = {};
       let editingProductId = null;
+      let totalPages = 1;
+      let totalProducts = 0;
+
+      // Update pagination UI
+      function updatePaginationUI(pagination) {
+        if (!pagination) return;
+
+        totalPages = pagination.pages;
+        totalProducts = pagination.total;
+
+        // Update display text
+        const startNum = (pagination.page - 1) * pagination.limit + 1;
+        const endNum = Math.min(
+          pagination.page * pagination.limit,
+          pagination.total,
+        );
+
+        document.getElementById("productCountStart").textContent = startNum;
+        document.getElementById("productCountEnd").textContent = endNum;
+        document.getElementById("totalProductsFooter").textContent =
+          pagination.total;
+
+        // Render page buttons
+        paginationContainer.innerHTML = "";
+        for (let i = 1; i <= totalPages; i++) {
+          const btn = document.createElement("button");
+          btn.className =
+            i === currentPage
+              ? "w-10 h-10 rounded-full bg-primary-container text-on-primary-container font-label-md flex items-center justify-center"
+              : "w-10 h-10 rounded-full hover:bg-surface-container-high text-on-surface-variant font-label-md flex items-center justify-center";
+          btn.textContent = i;
+          btn.addEventListener("click", () => goToPage(i));
+          paginationContainer.appendChild(btn);
+        }
+
+        // Update prev/next button states
+        prevPageBtn.disabled = currentPage === 1;
+        nextPageBtn.disabled = currentPage === totalPages;
+      }
+
+      // Go to specific page
+      function goToPage(page) {
+        if (page < 1 || page > totalPages) return;
+        currentPage = page;
+        loadProducts();
+      }
 
       // Format currency
       function formatPrice(price) {
@@ -699,11 +743,13 @@
                   </td>
                 </tr>
               `;
+              updatePaginationUI(result.pagination);
             } else {
               productsTableBody.innerHTML = result.products
                 .map(renderProductRow)
                 .join("");
               attachRowEventListeners();
+              updatePaginationUI(result.pagination);
             }
           } else {
             productsTableBody.innerHTML = `
@@ -859,6 +905,10 @@
       addProductBtn.addEventListener("click", openAddModal);
       closeModalBtn.addEventListener("click", closeModal);
       cancelBtn.addEventListener("click", closeModal);
+
+      // Pagination handlers
+      prevPageBtn?.addEventListener("click", () => goToPage(currentPage - 1));
+      nextPageBtn?.addEventListener("click", () => goToPage(currentPage + 1));
 
       // Close modal when clicking outside
       productModal.addEventListener("click", (e) => {

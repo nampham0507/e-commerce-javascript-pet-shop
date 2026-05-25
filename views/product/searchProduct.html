@@ -209,13 +209,16 @@
           >
         </nav>
         <div class="flex items-center gap-4">
-          <button
-            class="relative hover:scale-105 transition-transform duration-200"
+          <a
+            href="/cart"
+            class="relative inline-flex items-center justify-center text-primary hover:scale-105 transition-transform"
           >
-            <span class="material-symbols-outlined text-primary"
-              >shopping_cart</span
-            >
-          </button>
+            <span class="material-symbols-outlined">shopping_cart</span>
+            <span
+              id="cartBadge"
+              class="hidden absolute -top-1 -right-1 min-w-[18px] h-[18px] rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center px-1"
+            ></span>
+          </a>
           <!-- GUEST -->
           <div id="guestNav" class="hidden sm:flex items-center gap-sm">
             <a
@@ -649,6 +652,7 @@
     <script type="module">
       import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
       import { getPublicProducts } from "../js/product.js";
+      import { addToCart, getCartItemCount } from "../js/cart.js";
 
       // ── Auth Nav ─────────────────────────────────────────────────────────────
       const guestNav = document.getElementById("guestNav");
@@ -749,7 +753,7 @@
               <p class="text-on-surface-variant text-label-sm line-clamp-2">${product.description || ""}</p>
               <div class="flex justify-between items-center pt-4">
                 <span class="text-primary font-bold text-headline-md">${formatPrice(product.price)}</span>
-                <button class="bg-primary-container text-on-primary-container p-3 rounded-full hover:scale-110 transition-transform active:scale-95">
+                <button data-add-id="${product._id}" class="bg-primary-container text-on-primary-container p-3 rounded-full hover:scale-110 transition-transform active:scale-95">
                   <span class="material-symbols-outlined">add_shopping_cart</span>
                 </button>
               </div>
@@ -897,7 +901,47 @@
         applyFilters();
       });
 
+      function showToast(message) {
+        const toast = document.createElement("div");
+        toast.className =
+          "fixed bottom-5 right-5 z-[60] rounded-full bg-on-surface text-background px-lg py-3 shadow-lg text-label-md";
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+          toast.remove();
+        }, 2200);
+      }
+
+      function updateCartBadge() {
+        const badge = document.getElementById("cartBadge");
+        if (!badge) return;
+
+        const count = getCartItemCount();
+        if (count > 0) {
+          badge.textContent = count;
+          badge.classList.remove("hidden");
+        } else {
+          badge.classList.add("hidden");
+        }
+      }
+
+      // Add to cart click handler (Event delegation)
+      productsGrid.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-add-id]");
+        if (btn) {
+          const productId = btn.dataset.addId;
+          const product = allProducts.find((p) => p._id === productId);
+          if (product) {
+            addToCart(product, 1);
+            updateCartBadge();
+            showToast(`Đã thêm "${product.name}" vào giỏ hàng`);
+          }
+        }
+      });
+
       initNav();
+      updateCartBadge();
       loadProducts();
     </script>
   </body>

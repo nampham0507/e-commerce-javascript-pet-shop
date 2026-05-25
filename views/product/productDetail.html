@@ -227,11 +227,16 @@
               type="text"
             />
           </div>
-          <button
-            class="material-symbols-outlined text-primary hover:scale-105 transition-transform"
+          <a
+            href="/cart"
+            class="relative inline-flex items-center justify-center text-primary hover:scale-105 transition-transform"
           >
-            shopping_cart
-          </button>
+            <span class="material-symbols-outlined">shopping_cart</span>
+            <span
+              id="cartBadge"
+              class="hidden absolute -top-1 -right-1 min-w-[18px] h-[18px] rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center px-1"
+            ></span>
+          </a>
 
           <!-- GUEST: hiển thị khi chưa đăng nhập -->
           <div id="guestNav" class="hidden sm:flex items-center gap-sm">
@@ -384,11 +389,21 @@
               <div
                 class="flex items-center bg-surface-container rounded-full px-md py-2 gap-md border border-outline-variant"
               >
-                <button class="material-symbols-outlined text-primary">
+                <button
+                  id="qtyDecreaseBtn"
+                  type="button"
+                  class="material-symbols-outlined text-primary disabled:opacity-40"
+                >
                   remove
                 </button>
-                <span class="font-bold w-8 text-center">1</span>
-                <button class="material-symbols-outlined text-primary">
+                <span id="quantityValue" class="font-bold w-8 text-center"
+                  >1</span
+                >
+                <button
+                  id="qtyIncreaseBtn"
+                  type="button"
+                  class="material-symbols-outlined text-primary disabled:opacity-40"
+                >
                   add
                 </button>
               </div>
@@ -401,6 +416,7 @@
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
               <button
+                id="addToCartBtn"
                 class="flex items-center justify-center gap-md py-4 rounded-full border-2 border-outline-variant text-primary font-bold hover:border-primary transition-all active:scale-95"
               >
                 <span class="material-symbols-outlined">shopping_basket</span>
@@ -485,98 +501,74 @@
       <div
         class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-lg"
       >
-        <div class="col-span-1 md:col-span-1">
+        <div class="flex flex-col gap-md">
           <div
-            class="font-headline-sm text-headline-sm text-on-surface mb-md font-bold"
+            class="font-headline-sm text-headline-sm text-on-surface font-bold"
           >
             Xám Pet Shop
           </div>
-          <p
-            class="text-on-surface-variant text-label-sm leading-relaxed mb-md"
+          <p class="font-body-sm text-label-sm text-on-surface-variant">
+            Nơi cung cấp giải pháp dinh dưỡng toàn diện và cao cấp cho những chú
+            mèo của bạn.
+          </p>
+        </div>
+        <div class="flex flex-col gap-sm">
+          <h4 class="font-label-md text-primary mb-md">Liên hệ</h4>
+          <p class="font-body-sm text-label-sm text-on-surface-variant">
+            Address: Bắc Từ Liêm, Hà Nội
+          </p>
+          <p class="font-body-sm text-label-sm text-on-surface-variant">
+            Phone: 038.339.2903
+          </p>
+          <p class="font-body-sm text-label-sm text-on-surface-variant">
+            Email: nampham050723@gmail.com
+          </p>
+        </div>
+        <div class="flex flex-col gap-sm">
+          <h4 class="font-label-md text-primary mb-md">Khám phá</h4>
+          <a
+            class="font-body-sm text-label-sm text-on-surface-variant hover:text-primary transition-opacity"
+            href="#"
+            >Về chúng tôi</a
           >
-            Dedicated to providing the finest care for your feline companions
-            since 2026. Quality you can trust, comfort they will love.
-          </p>
+          <a
+            class="font-body-sm text-label-sm text-on-surface-variant hover:text-primary transition-opacity"
+            href="#"
+            >Chính sách giao hàng</a
+          >
+          <a
+            class="font-body-sm text-label-sm text-on-surface-variant hover:text-primary transition-opacity"
+            href="#"
+            >Đổi trả sản phẩm</a
+          >
+        </div>
+        <div class="flex flex-col gap-sm">
+          <h4 class="font-label-md text-primary mb-md">Mạng xã hội</h4>
           <div class="flex gap-md">
-            <a class="text-primary hover:opacity-80 transition-opacity" href="#"
-              ><span class="material-symbols-outlined"
-                >social_leaderboard</span
-              ></a
+            <a
+              class="text-on-surface-variant hover:text-primary transition-opacity"
+              href="#"
+              >Facebook</a
             >
-            <a class="text-primary hover:opacity-80 transition-opacity" href="#"
-              ><span class="material-symbols-outlined">language</span></a
+            <a
+              class="text-on-surface-variant hover:text-primary transition-opacity"
+              href="#"
+              >Instagram</a
             >
-          </div>
-        </div>
-        <div>
-          <h4 class="font-bold text-on-surface mb-md">Quick Links</h4>
-          <ul class="space-y-sm text-label-sm text-on-surface-variant">
-            <li>
-              <a class="hover:text-primary transition-colors" href="#">Home</a>
-            </li>
-            <li>
-              <a class="hover:text-primary transition-colors" href="#"
-                >Product Catalog</a
-              >
-            </li>
-            <li>
-              <a class="hover:text-primary transition-colors" href="#"
-                >Cat Care Blog</a
-              >
-            </li>
-            <li>
-              <a class="hover:text-primary transition-colors" href="#"
-                >Pet Adoption</a
-              >
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-bold text-on-surface mb-md">Contact Us</h4>
-          <ul class="space-y-sm text-label-sm text-on-surface-variant">
-            <li class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-[18px]"
-                >location_on</span
-              >
-              Address: Bắc Từ Liêm, Hà Nội
-            </li>
-            <li class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-[18px]">call</span>
-              Phone: 038.339.2903
-            </li>
-            <li class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-[18px]">mail</span>
-              Email: nampham050723@gmail.com
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h4 class="font-bold text-on-surface mb-md">Newsletter</h4>
-          <p class="text-label-sm text-on-surface-variant mb-md">
-            Join for exclusive cat tips &amp; deals!
-          </p>
-          <div class="flex">
-            <input
-              class="flex-grow bg-surface border-none rounded-l-full px-md py-2 text-label-sm focus:ring-1 focus:ring-primary"
-              placeholder="Your email"
-              type="email"
-            />
-            <button
-              class="bg-primary text-white px-md py-2 rounded-r-full hover:opacity-90 transition-opacity"
-            >
-              <span class="material-symbols-outlined">send</span>
-            </button>
           </div>
         </div>
       </div>
       <div
-        class="max-w-container-max mx-auto mt-xl pt-md border-t border-outline-variant text-center text-label-sm text-on-surface-variant"
+        class="max-w-container-max mx-auto mt-xl pt-lg border-t border-outline-variant/30 text-center"
       >
-        © 2026 Xám Pet Shop. All rights reserved.
+        <p class="font-body-sm text-label-sm text-on-surface-variant">
+          © 2026 Xám Pet Shop. All rights reserved.
+        </p>
       </div>
     </footer>
     <script type="module">
       import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
+      import { addToCart, getCartItemCount } from "../js/cart.js";
 
       const guestNav = document.getElementById("guestNav");
       const userNav = document.getElementById("userNav");
@@ -590,6 +582,10 @@
       const chevronIcon = document.getElementById("chevronIcon");
       const logoutBtn = document.getElementById("logoutBtn");
       const userAvatarBtn = document.getElementById("userAvatarBtn");
+      const addToCartBtn = document.getElementById("addToCartBtn");
+      const quantityValue = document.getElementById("quantityValue");
+      const qtyDecreaseBtn = document.getElementById("qtyDecreaseBtn");
+      const qtyIncreaseBtn = document.getElementById("qtyIncreaseBtn");
 
       function initNav() {
         if (isAuthenticated()) {
@@ -623,6 +619,31 @@
         }
       }
 
+      function showToast(message) {
+        const toast = document.createElement("div");
+        toast.className =
+          "fixed bottom-5 right-5 z-[60] rounded-full bg-on-surface text-background px-lg py-3 shadow-lg text-label-md";
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+          toast.remove();
+        }, 2200);
+      }
+
+      function updateCartBadge() {
+        const badge = document.getElementById("cartBadge");
+        if (!badge) return;
+
+        const count = getCartItemCount();
+        if (count > 0) {
+          badge.textContent = count;
+          badge.classList.remove("hidden");
+        } else {
+          badge.classList.add("hidden");
+        }
+      }
+
       // Toggle dropdown
       userAvatarBtn.addEventListener("click", (e) => {
         e.stopPropagation();
@@ -642,6 +663,33 @@
         window.location.href = "/auth/login";
       });
 
+      let currentProduct = null;
+      let currentQuantity = 1;
+      let availableQuantity = 1;
+
+      function updateQuantityControls() {
+        if (!quantityValue) return;
+
+        currentQuantity = Math.max(
+          1,
+          Math.min(currentQuantity, availableQuantity || 1)
+        );
+        quantityValue.textContent = currentQuantity;
+
+        if (qtyDecreaseBtn) {
+          qtyDecreaseBtn.disabled = currentQuantity <= 1;
+          qtyDecreaseBtn.classList.toggle("opacity-40", currentQuantity <= 1);
+        }
+
+        if (qtyIncreaseBtn) {
+          qtyIncreaseBtn.disabled = currentQuantity >= availableQuantity;
+          qtyIncreaseBtn.classList.toggle(
+            "opacity-40",
+            currentQuantity >= availableQuantity
+          );
+        }
+      }
+
       // Load product details
       async function loadProductDetail() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -653,11 +701,15 @@
         }
 
         try {
-          const response = await fetch(
-            `http://localhost:5000/api/products/${productId}`,
-          );
+          const response = await fetch(`/api/products/${productId}`);
           if (!response.ok) throw new Error("Lỗi khi tải sản phẩm");
           const product = await response.json();
+          currentProduct = product;
+          availableQuantity = Number(product.quantity || 0);
+          currentQuantity = Math.min(
+            currentQuantity,
+            Math.max(1, availableQuantity || 1)
+          );
 
           // Populate DOM
           document.title = `${product.name} | Xám Pet Shop`;
@@ -677,6 +729,7 @@
             product.quantity + " sản phẩm có sẵn";
           document.getElementById("detailLongDesc").textContent =
             product.detailedDescription || "Chưa có mô tả chi tiết.";
+          updateQuantityControls();
 
           document.getElementById("detailWeight").textContent =
             product.weight || "N/A";
@@ -689,10 +742,10 @@
 
           // Populate benefits
           const benefitsContainer = document.getElementById(
-            "detailBenefitsContainer",
+            "detailBenefitsContainer"
           );
           const extraBenefitsContainer = document.getElementById(
-            "detailExtraBenefits",
+            "detailExtraBenefits"
           );
           benefitsContainer.innerHTML = "";
           extraBenefitsContainer.innerHTML = "";
@@ -713,7 +766,7 @@
 
           // Populate ingredients
           const ingredientsList = document.getElementById(
-            "detailIngredientsList",
+            "detailIngredientsList"
           );
           ingredientsList.innerHTML = "";
           if (product.ingredients && product.ingredients.length > 0) {
@@ -733,7 +786,29 @@
         }
       }
 
+      qtyDecreaseBtn?.addEventListener("click", () => {
+        currentQuantity = Math.max(1, currentQuantity - 1);
+        updateQuantityControls();
+      });
+
+      qtyIncreaseBtn?.addEventListener("click", () => {
+        currentQuantity = Math.min(availableQuantity || 1, currentQuantity + 1);
+        updateQuantityControls();
+      });
+
+      addToCartBtn?.addEventListener("click", () => {
+        if (!currentProduct) {
+          showToast("Không thể thêm sản phẩm vào giỏ hàng");
+          return;
+        }
+
+        addToCart(currentProduct, currentQuantity);
+        updateCartBadge();
+        showToast(`Đã thêm ${currentQuantity} sản phẩm vào giỏ hàng`);
+      });
+
       initNav();
+      updateCartBadge();
       loadProductDetail();
     </script>
   </body>

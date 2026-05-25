@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap"
       rel="stylesheet"
@@ -245,6 +246,7 @@
             Tháng này
           </button>
           <button
+            id="exportReportBtn"
             class="bg-primary text-white px-lg py-sm rounded-full font-label-md hover:scale-105 transition-transform flex items-center gap-2"
           >
             <span class="material-symbols-outlined">download</span>
@@ -265,13 +267,14 @@
               <span class="material-symbols-outlined text-3xl">payments</span>
             </div>
             <span
+              id="reportRevenueGrowth"
               class="text-green-600 font-label-sm bg-green-100 px-sm py-xs rounded-full"
-              >+12.5%</span
+              >--</span
             >
           </div>
-          <p class="text-on-surface-variant font-label-md">Doanh thu tháng</p>
-          <h3 class="text-headline-md font-headline-md text-primary mt-xs">
-            125.400.000₫
+          <p class="text-on-surface-variant font-label-md">Doanh thu</p>
+          <h3 id="reportRevenue" class="text-headline-md font-headline-md text-primary mt-xs">
+            Đang tải...
           </h3>
         </div>
         <!-- Orders Card -->
@@ -287,13 +290,14 @@
               >
             </div>
             <span
+              id="reportOrdersGrowth"
               class="text-green-600 font-label-sm bg-green-100 px-sm py-xs rounded-full"
-              >+8.2%</span
+              >--</span
             >
           </div>
           <p class="text-on-surface-variant font-label-md">Tổng đơn hàng</p>
-          <h3 class="text-headline-md font-headline-md text-on-surface mt-xs">
-            1,248 đơn
+          <h3 id="reportOrders" class="text-headline-md font-headline-md text-on-surface mt-xs">
+            Đang tải...
           </h3>
         </div>
         <!-- Top Products Metric -->
@@ -307,15 +311,16 @@
               <span class="material-symbols-outlined text-3xl">pets</span>
             </div>
             <span
+              id="reportProductsStatus"
               class="text-primary font-label-sm bg-primary-container/20 px-sm py-xs rounded-full"
-              >Hot</span
+              >Live</span
             >
           </div>
           <p class="text-on-surface-variant font-label-md">
-            Sản phẩm bán chạy nhất
+            Sản phẩm trong kho
           </p>
-          <h3 class="text-headline-md font-headline-md text-on-surface mt-xs">
-            Hạt Royal Canin
+          <h3 id="reportProducts" class="text-headline-md font-headline-md text-on-surface mt-xs">
+            Đang tải...
           </h3>
         </div>
       </div>
@@ -513,70 +518,8 @@
                   </th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-outline-variant">
-                <tr>
-                  <td class="py-md flex items-center gap-md">
-                    <img
-                      class="w-12 h-12 rounded-xl object-cover bg-surface-container"
-                      data-alt="Premium high-protein dry cat food packaging with minimalist orange and white design, presented in high-key professional studio lighting for an e-commerce catalog. The background is a soft light grey, creating a clean minimalist aesthetic typical of high-end pet supplies. Sharp focus on texture and branding details."
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuDANTs9e5lr60oNEPD_dgvOMyxm9C6L_DhOfgfC9dqjQMy4oxlXg-M7c60uW_m_6atXiakOMIsT1GnpsUsBjumvcyJRSv0087z-s5JQvV3Y3WnnKVqcVqqFFw_qQjshLXotneA46dw8-pVM8LxHvEyMJlcStHeHxA4Bl5HvF1xOafdhntCXzLr-bwB_aFF-9tjZ7XG1BvEQnOAYCkpzwxOeHgAnn32Nw9XhQDFv0N2l9O0UGjz2HAF1mLvaTBslMrAPhf0SqDOvetk"
-                    />
-                    <div>
-                      <div class="font-label-md text-on-surface">
-                        Hạt Royal Canin 2kg
-                      </div>
-                      <div class="text-[12px] text-on-surface-variant">
-                        Danh mục: Thức ăn khô
-                      </div>
-                    </div>
-                  </td>
-                  <td class="py-md text-center font-body-md">452</td>
-                  <td class="py-md text-right font-bold text-primary">
-                    22.600.000₫
-                  </td>
-                </tr>
-                <tr>
-                  <td class="py-md flex items-center gap-md">
-                    <img
-                      class="w-12 h-12 rounded-xl object-cover bg-surface-container"
-                      data-alt="Elegant cream-colored modern cat tree with soft velvet cushions and sisal scratching posts, standing in a brightly lit contemporary living room with minimalist decor. The lighting is warm and natural, casting soft shadows that emphasize the cozy and premium quality of the pet furniture. Subtle neutral tones dominate the scene."
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3ttEO_WW8nhu7-AReNJQaVRQ3s71SOobciTTwqD_oHsBRwVkwziqsPqciejrK37sBePk0YziJhloLx1I2M356N_UHDR6lvCqfXGom9GnzhHNf7EevA7yw7FalJC7LvneNsLKrIuQ_frJjH-LAMpWj8ZoFn2kp9UXbkJyPThZOqIlXTjsYmofI6ZUaPRg0fapmyp-dgZcoFCCgH5E3N3jKkBi9s9TlfVshkXD-W--L8oMoJfwBtL5ivthtb8thtf3BMIBPNX9Uuoc"
-                    />
-                    <div>
-                      <div class="font-label-md text-on-surface">
-                        Trụ cào móng Velvet
-                      </div>
-                      <div class="text-[12px] text-on-surface-variant">
-                        Danh mục: Phụ kiện
-                      </div>
-                    </div>
-                  </td>
-                  <td class="py-md text-center font-body-md">128</td>
-                  <td class="py-md text-right font-bold text-primary">
-                    15.360.000₫
-                  </td>
-                </tr>
-                <tr>
-                  <td class="py-md flex items-center gap-md">
-                    <img
-                      class="w-12 h-12 rounded-xl object-cover bg-surface-container"
-                      data-alt="Artistic close-up of premium cat canned wet food with chunks of tuna and jelly, styled on a white ceramic plate with a sprig of parsley. The lighting is crisp and bright, highlighting the fresh texture of the food. The overall mood is high-end and gourmet, appealing to discerning pet owners seeking quality nutrition."
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuAY-oRbyDCWq-1WXmPmS-NwNLrxcb88SKfvzi-GAFyt-zMHmX08oYvt_qWarjpNPnEF0n0-bpkqmcX7GqdcBkIJ6NtdzQU2O1QCMvketwzwqd77isWf09ua4d6gL6lzVHcgyUcYpBHY8bCrd_w-Tr7Jxal_vF0y1-UfiGKtcO0C5tRB6cDDXOdbgJsNWsMVZC2efgIJ5Sa8WSBxubzQsty0bdy6VSdJQcrnVhora1AAg9306De67LwGL-frTEXMJ1Ali2fyMqCnRTM"
-                    />
-                    <div>
-                      <div class="font-label-md text-on-surface">
-                        Pate Ciao Cá Ngừ
-                      </div>
-                      <div class="text-[12px] text-on-surface-variant">
-                        Danh mục: Thức ăn ướt
-                      </div>
-                    </div>
-                  </td>
-                  <td class="py-md text-center font-body-md">890</td>
-                  <td class="py-md text-right font-bold text-primary">
-                    13.350.000₫
-                  </td>
-                </tr>
+              <tbody id="topProductsTableBody" class="divide-y divide-outline-variant">
+                <!-- Data will be loaded here -->
               </tbody>
             </table>
           </div>
@@ -588,59 +531,8 @@
           <h4 class="font-headline-md text-on-surface mb-lg">
             Hoạt động gần đây
           </h4>
-          <div class="space-y-md">
-            <div class="flex gap-md">
-              <div
-                class="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"
-              ></div>
-              <div>
-                <p class="text-body-md text-on-surface">
-                  <strong>Đơn hàng mới #1294</strong> vừa được xác nhận
-                </p>
-                <span class="text-[12px] text-on-surface-variant"
-                  >2 phút trước</span
-                >
-              </div>
-            </div>
-            <div class="flex gap-md">
-              <div
-                class="w-2 h-2 rounded-full bg-tertiary mt-2 flex-shrink-0"
-              ></div>
-              <div>
-                <p class="text-body-md text-on-surface">
-                  Kho hàng: <strong>Sữa tắm Mèo</strong> chỉ còn 5 sản phẩm
-                </p>
-                <span class="text-[12px] text-on-surface-variant"
-                  >45 phút trước</span
-                >
-              </div>
-            </div>
-            <div class="flex gap-md">
-              <div
-                class="w-2 h-2 rounded-full bg-green-500 mt-2 flex-shrink-0"
-              ></div>
-              <div>
-                <p class="text-body-md text-on-surface">
-                  Thanh toán thành công cho đơn <strong>#1289</strong>
-                </p>
-                <span class="text-[12px] text-on-surface-variant"
-                  >1 giờ trước</span
-                >
-              </div>
-            </div>
-            <div class="flex gap-md">
-              <div
-                class="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"
-              ></div>
-              <div>
-                <p class="text-body-md text-on-surface">
-                  <strong>Báo cáo tồn kho</strong> tháng 10 đã sẵn sàng
-                </p>
-                <span class="text-[12px] text-on-surface-variant"
-                  >3 giờ trước</span
-                >
-              </div>
-            </div>
+          <div id="recentActivitiesList" class="space-y-md">
+            <!-- Data will be loaded here -->
           </div>
           <button
             class="w-full mt-xl py-md text-primary font-label-md border-2 border-primary/20 rounded-xl hover:bg-primary-container/10 transition-colors"
@@ -721,6 +613,7 @@
     <script type="module">
       // === THÊM VÀO SCRIPT HIỆN CÓ CỦA MỖI TRANG ADMIN ===
       import { logoutUser, getUserInfo, isAuthenticated } from "../js/auth.js";
+      import { getDashboardStats } from "../js/admin.js";
 
       // Kiểm tra auth
       if (!isAuthenticated()) {
@@ -754,6 +647,148 @@
           }
         });
       }
+
+      // Utils
+      function timeSince(date) {
+        const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+        let interval = seconds / 31536000;
+        if (interval > 1) return Math.floor(interval) + " năm trước";
+        interval = seconds / 2592000;
+        if (interval > 1) return Math.floor(interval) + " tháng trước";
+        interval = seconds / 86400;
+        if (interval > 1) return Math.floor(interval) + " ngày trước";
+        interval = seconds / 3600;
+        if (interval > 1) return Math.floor(interval) + " giờ trước";
+        interval = seconds / 60;
+        if (interval > 1) return Math.floor(interval) + " phút trước";
+        return Math.floor(seconds) + " giây trước";
+      }
+
+      // Load dữ liệu báo cáo
+      async function loadReportStats() {
+        const result = await getDashboardStats();
+        if (result.success) {
+          const d = result.dashboard;
+          const revEl = document.getElementById("reportRevenue");
+          const ordEl = document.getElementById("reportOrders");
+          const prdEl = document.getElementById("reportProducts");
+          
+          const revGrowthEl = document.getElementById("reportRevenueGrowth");
+          const ordGrowthEl = document.getElementById("reportOrdersGrowth");
+          const prdStatusEl = document.getElementById("reportProductsStatus");
+
+          const topProductsBody = document.getElementById("topProductsTableBody");
+          const recentList = document.getElementById("recentActivitiesList");
+          
+          if (revEl) revEl.textContent = (d.orders?.revenue || 0).toLocaleString("vi-VN") + "₫";
+          if (ordEl) ordEl.textContent = (d.orders?.total || 0).toLocaleString("vi-VN") + " đơn";
+          if (prdEl) prdEl.textContent = (d.products?.total || 0).toLocaleString("vi-VN") + " SP";
+
+          // Calculate revenue growth if possible
+          if (revGrowthEl && d.revenueByMonth && d.revenueByMonth.length >= 2) {
+            const current = d.revenueByMonth[0].revenue || 0;
+            const prev = d.revenueByMonth[1].revenue || 1;
+            const growth = ((current - prev) / prev) * 100;
+            revGrowthEl.textContent = (growth > 0 ? "+" : "") + growth.toFixed(1) + "%";
+            revGrowthEl.className = growth >= 0 
+              ? "text-green-600 font-label-sm bg-green-100 px-sm py-xs rounded-full"
+              : "text-red-600 font-label-sm bg-red-100 px-sm py-xs rounded-full";
+          } else if (revGrowthEl) {
+            revGrowthEl.textContent = "+0%";
+          }
+
+          if (ordGrowthEl) ordGrowthEl.textContent = "Mới";
+          if (prdStatusEl) prdStatusEl.textContent = d.products?.total > 0 ? "Sẵn sàng" : "Hết hàng";
+
+          // Render top products
+          if (topProductsBody && d.topProducts) {
+            topProductsBody.innerHTML = d.topProducts.map(p => `
+                <tr>
+                  <td class="py-md flex items-center gap-md">
+                    <img class="w-12 h-12 rounded-xl object-cover bg-surface-container" src="${p._id?.image || ''}" />
+                    <div>
+                      <div class="font-label-md text-on-surface">${p._id?.name || 'Sản phẩm'}</div>
+                      <div class="text-[12px] text-on-surface-variant">Danh mục: ${p._id?.category || 'Khác'}</div>
+                    </div>
+                  </td>
+                  <td class="py-md text-center font-body-md">${p.sold.toLocaleString("vi-VN")}</td>
+                  <td class="py-md text-right font-bold text-primary">${p.revenue.toLocaleString("vi-VN")}₫</td>
+                </tr>
+            `).join("");
+          }
+
+          // Render recent activities (using orders)
+          if (recentList && d.recentOrders) {
+            recentList.innerHTML = d.recentOrders.map(o => `
+            <div class="flex gap-md">
+              <div class="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
+              <div>
+                <p class="text-body-md text-on-surface">
+                  Đơn hàng <strong>#${o.orderNumber || o._id.substring(0,6)}</strong> vừa được cập nhật (${o.status})
+                </p>
+                <span class="text-[12px] text-on-surface-variant">${timeSince(o.updatedAt || o.createdAt)}</span>
+              </div>
+            </div>
+            `).join("");
+          }
+
+          // Setup Excel Export
+          const exportBtn = document.getElementById("exportReportBtn");
+          if (exportBtn) {
+            exportBtn.onclick = () => {
+              const wb = XLSX.utils.book_new();
+
+              // Sheet 1: Overview
+              const overviewData = [
+                ["Thống Kê", "Giá Trị"],
+                ["Doanh Thu", d.orders?.revenue || 0],
+                ["Tổng Đơn Hàng", d.orders?.total || 0],
+                ["Sản Phẩm Trong Kho", d.products?.total || 0],
+              ];
+              const wsOverview = XLSX.utils.aoa_to_sheet(overviewData);
+              XLSX.utils.book_append_sheet(wb, wsOverview, "Tổng Quan");
+
+              // Sheet 2: Top Products
+              if (d.topProducts && d.topProducts.length > 0) {
+                const topProductsData = [
+                  ["Tên Sản Phẩm", "Danh Mục", "Số Lượng Đã Bán", "Doanh Thu"]
+                ];
+                d.topProducts.forEach(p => {
+                  topProductsData.push([
+                    p._id?.name || 'Sản phẩm',
+                    p._id?.category || 'Khác',
+                    p.sold || 0,
+                    p.revenue || 0
+                  ]);
+                });
+                const wsTopProducts = XLSX.utils.aoa_to_sheet(topProductsData);
+                XLSX.utils.book_append_sheet(wb, wsTopProducts, "Sản Phẩm Bán Chạy");
+              }
+
+              // Sheet 3: Recent Orders
+              if (d.recentOrders && d.recentOrders.length > 0) {
+                const ordersData = [
+                  ["Mã Đơn", "Khách Hàng", "Trạng Thái", "Tổng Tiền", "Thời Gian"]
+                ];
+                d.recentOrders.forEach(o => {
+                  ordersData.push([
+                    o.orderNumber || o._id.substring(0,8),
+                    o.customer?.fullName || o.customer?.email || 'Khách',
+                    o.status,
+                    o.totalPrice || 0,
+                    new Date(o.createdAt).toLocaleString("vi-VN")
+                  ]);
+                });
+                const wsOrders = XLSX.utils.aoa_to_sheet(ordersData);
+                XLSX.utils.book_append_sheet(wb, wsOrders, "Đơn Hàng Gần Đây");
+              }
+
+              XLSX.writeFile(wb, "Bao_Cao_Thong_Ke.xlsx");
+            };
+          }
+        }
+      }
+      loadReportStats();
     </script>
   </body>
 </html>

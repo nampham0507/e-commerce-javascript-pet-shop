@@ -64,7 +64,7 @@ export const updateProduct = async (productId, data) => {
         method: "PUT",
         headers: getAuthHeaders(isFormData),
         body: isFormData ? data : JSON.stringify(data),
-      },
+      }
     );
     return await response.json();
   } catch (error) {
@@ -79,7 +79,7 @@ export const deleteProduct = async (productId) => {
       {
         method: "DELETE",
         headers: getAuthHeaders(),
-      },
+      }
     );
     return await response.json();
   } catch (error) {
@@ -177,7 +177,7 @@ export const getCustomerDetail = async (customerId) => {
       `${API_BASE_URL}/admin/customers/${customerId}`,
       {
         headers: getAuthHeaders(),
-      },
+      }
     );
     return await response.json();
   } catch (error) {
@@ -197,9 +197,10 @@ export const getCustomerStats = async () => {
 };
 
 // User Management
-export const getAllUsers = async () => {
+export const getAllUsers = async (params = {}) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/admin/users`, {
+    const query = new URLSearchParams(params).toString();
+    const response = await fetch(`${API_BASE_URL}/admin/users?${query}`, {
       headers: getAuthHeaders(),
     });
     return await response.json();
@@ -261,7 +262,7 @@ export const deleteUser = async (userId) => {
       {
         method: "DELETE",
         headers: getAuthHeaders(),
-      },
+      }
     );
     return await response.json();
   } catch (error) {

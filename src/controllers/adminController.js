@@ -46,10 +46,35 @@ exports.createAdmin = async (req, res) => {
 // Get all users (admin only)
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().select("-password");
+    const { page = 1, limit = 10, search } = req.query;
+
+    let query = {};
+
+    if (search) {
+      query.$or = [
+        { fullName: { $regex: search, $options: "i" } },
+        { email: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    const skip = (page - 1) * limit;
+
+    const users = await User.find(query)
+      .select("-password")
+      .skip(skip)
+      .limit(parseInt(limit));
+
+    const total = await User.countDocuments(query);
+
     res.json({
       success: true,
-      users,
+      customers: users,
+      pagination: {
+        total,
+        page: parseInt(page),
+        limit: parseInt(limit),
+        pages: Math.ceil(total / limit),
+      },
     });
   } catch (error) {
     res.status(500).json({
@@ -76,7 +101,7 @@ exports.updateUserRole = async (req, res) => {
     const user = await User.findByIdAndUpdate(
       userId,
       { role },
-      { new: true },
+      { new: true }
     ).select("-password");
 
     if (!user) {

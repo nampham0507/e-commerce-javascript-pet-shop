@@ -35,7 +35,7 @@ exports.register = async (req, res) => {
     const token = jwt.sign(
       { userId: user._id, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: "7d" },
+      { expiresIn: "7d" }
     );
 
     res.status(201).json({
@@ -90,7 +90,7 @@ exports.login = async (req, res) => {
     const token = jwt.sign(
       { userId: user._id, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: "7d" },
+      { expiresIn: "7d" }
     );
 
     res.json({
@@ -152,12 +152,12 @@ exports.googleCallback = async (req, res) => {
     const token = jwt.sign(
       { userId: user._id, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: "7d" },
+      { expiresIn: "7d" }
     );
 
     // Return token - can be redirected with token as query param
     res.redirect(
-      `/auth/success?token=${token}&userId=${user._id}&email=${user.email}&fullName=${user.fullName}`,
+      `/auth/success?token=${token}&userId=${user._id}&email=${user.email}&fullName=${user.fullName}`
     );
   } catch (error) {
     res.status(500).json({
