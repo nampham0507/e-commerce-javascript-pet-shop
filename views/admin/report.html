@@ -592,14 +592,16 @@
           >
           <a
             class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
-            href="#"
+            href="https://www.facebook.com/pdn.0507"
+            target="_blank"
           >
             <span class="material-symbols-outlined text-sm">public</span>
             Facebook
           </a>
           <a
             class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
-            href="#"
+            href="https://www.instagram.com/dinhnam.ph"
+            target="_blank"
           >
             <span class="material-symbols-outlined text-sm">camera_alt</span>
             Instagram
@@ -732,58 +734,53 @@
             `).join("");
           }
 
-          // Setup Excel Export
+          // Setup Excel Export via Backend API
           const exportBtn = document.getElementById("exportReportBtn");
           if (exportBtn) {
-            exportBtn.onclick = () => {
-              const wb = XLSX.utils.book_new();
+            exportBtn.onclick = async () => {
+              try {
+                const token = localStorage.getItem("token");
+                exportBtn.disabled = true;
+                exportBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Đang tạo...';
 
-              // Sheet 1: Overview
-              const overviewData = [
-                ["Thống Kê", "Giá Trị"],
-                ["Doanh Thu", d.orders?.revenue || 0],
-                ["Tổng Đơn Hàng", d.orders?.total || 0],
-                ["Sản Phẩm Trong Kho", d.products?.total || 0],
-              ];
-              const wsOverview = XLSX.utils.aoa_to_sheet(overviewData);
-              XLSX.utils.book_append_sheet(wb, wsOverview, "Tổng Quan");
-
-              // Sheet 2: Top Products
-              if (d.topProducts && d.topProducts.length > 0) {
-                const topProductsData = [
-                  ["Tên Sản Phẩm", "Danh Mục", "Số Lượng Đã Bán", "Doanh Thu"]
-                ];
-                d.topProducts.forEach(p => {
-                  topProductsData.push([
-                    p._id?.name || 'Sản phẩm',
-                    p._id?.category || 'Khác',
-                    p.sold || 0,
-                    p.revenue || 0
-                  ]);
+                const response = await fetch("/api/admin/reports/export/excel", {
+                  method: 'GET',
+                  headers: {
+                    'Authorization': `Bearer ${token}`
+                  }
                 });
-                const wsTopProducts = XLSX.utils.aoa_to_sheet(topProductsData);
-                XLSX.utils.book_append_sheet(wb, wsTopProducts, "Sản Phẩm Bán Chạy");
-              }
 
-              // Sheet 3: Recent Orders
-              if (d.recentOrders && d.recentOrders.length > 0) {
-                const ordersData = [
-                  ["Mã Đơn", "Khách Hàng", "Trạng Thái", "Tổng Tiền", "Thời Gian"]
-                ];
-                d.recentOrders.forEach(o => {
-                  ordersData.push([
-                    o.orderNumber || o._id.substring(0,8),
-                    o.customer?.fullName || o.customer?.email || 'Khách',
-                    o.status,
-                    o.totalPrice || 0,
-                    new Date(o.createdAt).toLocaleString("vi-VN")
-                  ]);
-                });
-                const wsOrders = XLSX.utils.aoa_to_sheet(ordersData);
-                XLSX.utils.book_append_sheet(wb, wsOrders, "Đơn Hàng Gần Đây");
-              }
+                if (!response.ok) {
+                  throw new Error("Lỗi khi tải báo cáo");
+                }
 
-              XLSX.writeFile(wb, "Bao_Cao_Thong_Ke.xlsx");
+                // Convert response to blob
+                const blob = await response.blob();
+                
+                // Get filename from Content-Disposition header if possible
+                let filename = "Bao_Cao_Xam_Pet_Shop.xlsx";
+                const disposition = response.headers.get('Content-Disposition');
+                if (disposition && disposition.indexOf('filename=') !== -1) {
+                    filename = disposition.split('filename=')[1];
+                }
+
+                // Create download link
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+              } catch (error) {
+                console.error("Export error:", error);
+                alert("Không thể tải báo cáo lúc này.");
+              } finally {
+                exportBtn.disabled = false;
+                exportBtn.innerHTML = '<span class="material-symbols-outlined">download</span> Xuất báo cáo';
+              }
             };
           }
         }

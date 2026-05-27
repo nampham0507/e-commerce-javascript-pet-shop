@@ -255,7 +255,6 @@
                 >shopping_cart</span
               >
             </div>
-            <span class="text-primary font-label-sm">+12% vs tháng trước</span>
           </div>
           <p class="font-label-md text-on-surface-variant opacity-70">
             Tổng Đơn Hàng
@@ -273,7 +272,6 @@
                 >payments</span
               >
             </div>
-            <span class="text-primary font-label-sm">+8.5% hôm nay</span>
           </div>
           <p class="font-label-md text-on-surface-variant opacity-70">
             Doanh Thu (VND)
@@ -291,9 +289,6 @@
                 >person_add</span
               >
             </div>
-            <span class="text-tertiary font-label-sm" id="statNewCustomers"
-              >—</span
-            >
           </div>
           <p class="font-label-md text-on-surface-variant opacity-70">
             Người Dùng Mới
@@ -346,6 +341,7 @@
             </div>
           </div>
           <div
+            id="revenueChartContainer"
             class="relative h-[300px] w-full flex items-end justify-between gap-md pb-lg group"
           >
             <div
@@ -359,40 +355,11 @@
                 class="border-b-2 border-outline-variant/50 w-full h-0"
               ></div>
             </div>
-            <div
-              class="relative flex-1 bg-primary-container/20 hover:bg-primary-container transition-all duration-300 rounded-t-xl"
-              style="height: 45%"
-            ></div>
-            <div
-              class="relative flex-1 bg-primary-container/20 hover:bg-primary-container transition-all duration-300 rounded-t-xl"
-              style="height: 65%"
-            ></div>
-            <div
-              class="relative flex-1 bg-primary-container/20 hover:bg-primary-container transition-all duration-300 rounded-t-xl"
-              style="height: 85%"
-            ></div>
-            <div
-              class="relative flex-1 bg-primary-container/40 hover:bg-primary-container transition-all duration-300 rounded-t-xl"
-              style="height: 55%"
-            ></div>
-            <div
-              class="relative flex-1 bg-primary-container/20 hover:bg-primary-container transition-all duration-300 rounded-t-xl"
-              style="height: 95%"
-            ></div>
-            <div
-              class="relative flex-1 bg-primary-container/20 hover:bg-primary-container transition-all duration-300 rounded-t-xl"
-              style="height: 75%"
-            ></div>
-            <div
-              class="relative flex-1 bg-primary-container/60 hover:bg-primary-container transition-all duration-300 rounded-t-xl"
-              style="height: 80%"
-            ></div>
           </div>
           <div
+            id="revenueChartLabels"
             class="flex justify-between mt-sm px-2 text-label-sm text-on-surface-variant opacity-60"
           >
-            <span>Th2</span><span>Th3</span><span>Th4</span><span>Th5</span
-            ><span>Th6</span><span>Th7</span><span>CN</span>
           </div>
         </div>
         <!-- Recent Activity -->
@@ -539,8 +506,58 @@
             d.users?.customers?.toLocaleString("vi-VN") || "—";
           document.getElementById("statProducts").textContent =
             d.products?.total?.toLocaleString("vi-VN") || "—";
-          document.getElementById("statNewCustomers").textContent =
-            d.orders?.pending + " đơn chờ" || "—";
+
+          // Hoạt động gần đây
+          const activitiesContainer = document.getElementById("dashboardRecentActivities");
+          if (d.recentOrders && d.recentOrders.length > 0) {
+            activitiesContainer.innerHTML = d.recentOrders.map(order => `
+              <div class="flex items-center gap-md">
+                <div class="p-sm bg-primary-container/20 rounded-xl">
+                  <span class="material-symbols-outlined text-primary">local_mall</span>
+                </div>
+                <div class="flex-1">
+                  <h4 class="font-label-md text-on-surface">Đơn hàng mới #${order._id.substring(0, 8)}</h4>
+                  <p class="text-label-sm text-on-surface-variant">${order.user?.fullName || order.shippingAddress?.fullName || 'Khách vãng lai'} - ${order.totalPrice.toLocaleString('vi-VN')} đ</p>
+                </div>
+                <span class="text-label-sm text-on-surface-variant">${new Date(order.createdAt).toLocaleDateString('vi-VN')}</span>
+              </div>
+            `).join('');
+          } else {
+             activitiesContainer.innerHTML = '<p class="text-on-surface-variant">Không có hoạt động nào</p>';
+          }
+
+          // Biểu đồ
+          const chartContainer = document.getElementById("revenueChartContainer");
+          const labelsContainer = document.getElementById("revenueChartLabels");
+          if (d.revenueByMonth && d.revenueByMonth.length > 0) {
+            const sortedRev = d.revenueByMonth.sort((a, b) => {
+              if(a._id.year === b._id.year) return a._id.month - b._id.month;
+              return a._id.year - b._id.year;
+            });
+            const maxRev = Math.max(...sortedRev.map(item => item.revenue)) || 1;
+            
+            const barsHtml = sortedRev.map(item => {
+              const heightPct = Math.max(10, Math.round((item.revenue / maxRev) * 100));
+              return `<div class="relative flex-1 bg-primary-container/40 hover:bg-primary-container transition-all duration-300 rounded-t-xl group/bar" style="height: ${heightPct}%">
+                <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-xs px-2 py-1 rounded opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
+                  ${item.revenue.toLocaleString('vi-VN')} đ
+                </div>
+              </div>`;
+            }).join('');
+            
+            chartContainer.innerHTML = `
+              <div class="absolute inset-0 flex flex-col justify-between pointer-events-none">
+                <div class="border-b border-outline-variant/20 w-full h-0"></div>
+                <div class="border-b border-outline-variant/20 w-full h-0"></div>
+                <div class="border-b border-outline-variant/20 w-full h-0"></div>
+                <div class="border-b border-outline-variant/20 w-full h-0"></div>
+                <div class="border-b-2 border-outline-variant/50 w-full h-0"></div>
+              </div>
+              ${barsHtml}
+            `;
+            
+            labelsContainer.innerHTML = sortedRev.map(item => `<span>Th${item._id.month}</span>`).join('');
+          }
         }
       }
       loadDashboard();

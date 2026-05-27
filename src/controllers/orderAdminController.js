@@ -1,4 +1,17 @@
 const Order = require("../models/Order");
+const Product = require("../models/Product");
+
+async function restoreInventoryForOrder(order) {
+  if (!order?.products?.length) {
+    return;
+  }
+
+  for (const item of order.products) {
+    await Product.findByIdAndUpdate(item.product, {
+      $inc: { quantity: item.quantity },
+    });
+  }
+}
 
 // Get all orders (admin)
 exports.getAllOrders = async (req, res) => {
@@ -89,11 +102,23 @@ exports.updateOrderStatus = async (req, res) => {
       });
     }
 
+    const oldOrder = await Order.findById(orderId);
+    if (!oldOrder) {
+      return res.status(404).json({
+        success: false,
+        message: "Đơn hàng không tìm thấy",
+      });
+    }
+
     const order = await Order.findByIdAndUpdate(
       orderId,
       { status, updatedAt: Date.now() },
       { new: true }
     );
+
+    if (status === "cancelled" && oldOrder.status !== "cancelled") {
+      await restoreInventoryForOrder(order);
+    }
 
     if (!order) {
       return res.status(404).json({
@@ -159,13 +184,19 @@ exports.deleteOrder = async (req, res) => {
   try {
     const { orderId } = req.params;
 
-    const order = await Order.findByIdAndDelete(orderId);
+    const order = await Order.findById(orderId);
     if (!order) {
       return res.status(404).json({
         success: false,
         message: "Đơn hàng không tìm thấy",
       });
     }
+
+    if (order.status !== "cancelled") {
+      await restoreInventoryForOrder(order);
+    }
+
+    await Order.findByIdAndDelete(orderId);
 
     res.json({
       success: true,

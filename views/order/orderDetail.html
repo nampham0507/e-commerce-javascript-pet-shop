@@ -1,21 +1,16 @@
 <!doctype html>
-
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Order Tracking - Xám Pet Shop</title>
+    <title>Đơn hàng của tôi - Xám Pet Shop</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
       rel="stylesheet"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&amp;family=Plus+Jakarta+Sans:wght@300..800&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Plus+Jakarta+Sans:wght@300..800&display=swap"
       rel="stylesheet"
     />
     <script id="tailwind-config">
@@ -24,53 +19,27 @@
         theme: {
           extend: {
             colors: {
-              "inverse-primary": "#ffb95a",
-              "surface-tint": "#845400",
-              "primary-fixed-dim": "#ffb95a",
-              "on-secondary": "#ffffff",
-              "on-error-container": "#93000a",
-              "surface-variant": "#eee0d4",
               primary: "#845400",
-              outline: "#847463",
-              "on-primary-container": "#704700",
-              "tertiary-fixed": "#b8eaff",
-              "on-error": "#ffffff",
-              "on-background": "#211a13",
-              tertiary: "#006780",
-              "on-tertiary-container": "#00576d",
-              "surface-container-low": "#fff1e5",
-              "on-tertiary": "#ffffff",
-              "on-secondary-fixed": "#1e1c0f",
-              "surface-container": "#f9ecdf",
-              "on-tertiary-fixed-variant": "#004d61",
-              secondary: "#625f4e",
-              "outline-variant": "#d6c3b0",
-              "surface-container-highest": "#eee0d4",
-              "surface-dim": "#e5d8cc",
-              "secondary-fixed-dim": "#ccc7b2",
-              "tertiary-fixed-dim": "#58d5fe",
-              background: "#fff8f4",
-              "secondary-fixed": "#e8e3cd",
-              "on-secondary-container": "#686554",
-              error: "#ba1a1a",
               "primary-container": "#ffb347",
+              "on-primary-container": "#704700",
               "on-primary": "#ffffff",
-              "inverse-surface": "#372f27",
-              surface: "#fff8f4",
-              "primary-fixed": "#ffddb6",
-              "on-secondary-fixed-variant": "#4a4737",
-              "on-surface-variant": "#524535",
-              "on-primary-fixed": "#2a1800",
-              "inverse-on-surface": "#fceee2",
-              "on-surface": "#211a13",
-              "tertiary-container": "#52d0f9",
+              secondary: "#625f4e",
               "secondary-container": "#e8e3cd",
-              "on-primary-fixed-variant": "#643f00",
+              background: "#fff8f4",
+              surface: "#fff8f4",
+              "surface-container": "#f9ecdf",
+              "surface-container-low": "#fff1e5",
               "surface-container-lowest": "#ffffff",
               "surface-container-high": "#f3e6da",
-              "on-tertiary-fixed": "#001f28",
-              "surface-bright": "#fff8f4",
+              "surface-container-highest": "#eee0d4",
+              "on-surface": "#211a13",
+              "on-surface-variant": "#524535",
+              outline: "#847463",
+              "outline-variant": "#d6c3b0",
+              error: "#ba1a1a",
               "error-container": "#ffdad6",
+              "on-error-container": "#93000a",
+              tertiary: "#006780",
             },
             borderRadius: {
               DEFAULT: "0.25rem",
@@ -79,58 +48,29 @@
               full: "9999px",
             },
             spacing: {
-              unit: "4px",
-              "margin-mobile": "16px",
-              "container-max": "1200px",
+              lg: "24px",
               xs: "4px",
               xl: "40px",
-              md: "16px",
-              sm: "8px",
-              lg: "24px",
+              "margin-mobile": "16px",
+              "container-max": "1200px",
+              unit: "4px",
               gutter: "24px",
+              sm: "8px",
+              md: "16px",
             },
             fontFamily: {
-              "headline-lg": ["Quicksand"],
-              "body-lg": ["Plus Jakarta Sans"],
-              "headline-lg-mobile": ["Quicksand"],
-              "label-sm": ["Plus Jakarta Sans"],
               "label-md": ["Plus Jakarta Sans"],
+              "headline-lg": ["Quicksand"],
               "headline-md": ["Quicksand"],
               "body-md": ["Plus Jakarta Sans"],
-              "headline-xl": ["Quicksand"],
+              "label-sm": ["Plus Jakarta Sans"],
             },
             fontSize: {
-              "headline-lg": [
-                "32px",
-                { lineHeight: "40px", fontWeight: "700" },
-              ],
-              "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
-              "headline-lg-mobile": [
-                "28px",
-                { lineHeight: "36px", fontWeight: "700" },
-              ],
-              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "700" }],
-              "label-md": [
-                "14px",
-                {
-                  lineHeight: "20px",
-                  letterSpacing: "0.01em",
-                  fontWeight: "600",
-                },
-              ],
-              "headline-md": [
-                "24px",
-                { lineHeight: "32px", fontWeight: "600" },
-              ],
+              "label-md": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }],
+              "headline-lg": ["32px", { lineHeight: "40px", fontWeight: "700" }],
+              "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
               "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
-              "headline-xl": [
-                "48px",
-                {
-                  lineHeight: "56px",
-                  letterSpacing: "-0.02em",
-                  fontWeight: "700",
-                },
-              ],
+              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "700" }],
             },
           },
         },
@@ -138,75 +78,153 @@
     </script>
     <style>
       .material-symbols-outlined {
-        font-variation-settings:
-          "FILL" 0,
-          "wght" 400,
-          "GRAD" 0,
-          "opsz" 24;
-        display: inline-block;
-        vertical-align: middle;
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
       }
-      body {
-        background-color: #fff8f4;
-        -webkit-font-smoothing: antialiased;
-      }
-      /* User dropdown */
       #userMenu { display: none; }
       #userMenu.open { display: block; }
       #userAvatar {
-        width: 36px; height: 36px; border-radius: 9999px;
-        background: #ffb347; color: #704700;
-        font-weight: 700; font-size: 14px;
-        display: flex; align-items: center; justify-content: center;
-        cursor: pointer; border: 2px solid #ffddb6;
-        transition: transform 0.15s; flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 9999px;
+        background: #ffb347;
+        color: #704700;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
-      #userAvatar:hover { transform: scale(1.08); }
+
+      /* Chatbot inline */
+      #orderChatWindow {
+        display: none;
+        flex-direction: column;
+        height: 360px;
+        border: 1px solid #d6c3b0;
+        border-radius: 16px;
+        overflow: hidden;
+        margin-top: 12px;
+        background: #fff;
+      }
+      #orderChatWindow.open { display: flex; }
+      #orderChatMessages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background: #fff8f4;
+      }
+      .ochat-msg {
+        max-width: 85%;
+        padding: 8px 12px;
+        border-radius: 14px;
+        font-size: 13px;
+        line-height: 1.4;
+        word-wrap: break-word;
+      }
+      .ochat-msg.user {
+        background: #845400;
+        color: #fff;
+        align-self: flex-end;
+        border-bottom-right-radius: 4px;
+      }
+      .ochat-msg.bot {
+        background: #ffffff;
+        color: #211a13;
+        align-self: flex-start;
+        border: 1px solid #d6c3b0;
+        border-bottom-left-radius: 4px;
+      }
+      .otyping-indicator {
+        display: flex;
+        gap: 4px;
+        padding: 10px 14px;
+        background: #fff;
+        border: 1px solid #d6c3b0;
+        border-radius: 14px;
+        border-bottom-left-radius: 4px;
+        align-self: flex-start;
+        width: fit-content;
+      }
+      .otyping-dot {
+        width: 5px; height: 5px;
+        background: #845400;
+        border-radius: 50%;
+        animation: otyping 1.4s infinite ease-in-out both;
+      }
+      .otyping-dot:nth-child(1) { animation-delay: -0.32s; }
+      .otyping-dot:nth-child(2) { animation-delay: -0.16s; }
+      @keyframes otyping {
+        0%, 80%, 100% { transform: scale(0); }
+        40% { transform: scale(1); }
+      }
+
+      /* Return policy modal */
+      #returnPolicyOverlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+        z-index: 200;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+      }
+      #returnPolicyOverlay.open { display: flex; }
+      #returnPolicyModal {
+        background: #fff;
+        border-radius: 20px;
+        max-width: 560px;
+        width: 100%;
+        max-height: 80vh;
+        overflow-y: auto;
+        padding: 28px;
+        box-shadow: 0 16px 40px rgba(132,84,0,0.15);
+        animation: modalIn 0.25s ease-out;
+      }
+      @keyframes modalIn {
+        from { transform: scale(0.92); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+      }
     </style>
   </head>
-  <body class="font-body-md text-on-surface">
-    <!-- TopAppBar -->
-    <header
-      class="fixed top-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-md shadow-sm"
-    >
+  <body class="bg-background text-on-surface">
+    <header class="fixed top-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-md shadow-sm">
       <div class="max-w-container-max mx-auto px-lg py-md flex justify-between items-center">
         <div class="flex items-center gap-xl">
-          <a class="font-headline-md text-headline-md font-bold text-primary" href="/">Xám Pet Shop</a>
+          <a class="font-bold text-primary text-headline-md" href="/">Xám Pet Shop</a>
           <nav class="hidden md:flex gap-lg">
-            <a class="text-on-surface-variant hover:text-primary font-body-md transition-all" href="/">Trang chủ</a>
-            <a class="text-on-surface-variant hover:text-primary font-body-md transition-all" href="/product">Sản phẩm</a>
-            <a class="text-on-surface-variant hover:text-primary font-body-md transition-all" href="/homepage/categories">Danh mục</a>
+            <a class="text-on-surface-variant hover:text-primary" href="/">Trang chủ</a>
+            <a class="text-on-surface-variant hover:text-primary" href="/product">Sản phẩm</a>
+            <a class="text-on-surface-variant hover:text-primary" href="/homepage/categories">Danh mục</a>
           </nav>
         </div>
         <div class="flex items-center gap-md">
-          <button class="p-2 hover:scale-105 transition-transform text-on-surface-variant">
-            <span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
-          </button>
-          <!-- GUEST -->
+          <a href="/cart" class="p-2 hover:scale-105 text-on-surface-variant">
+            <span class="material-symbols-outlined">shopping_cart</span>
+          </a>
           <div id="guestNav" class="hidden sm:flex items-center gap-sm">
-            <a href="/auth/login" class="text-on-surface-variant hover:text-primary font-label-md px-md py-sm transition-colors">Đăng nhập</a>
-            <a href="/auth/register" class="bg-primary-container text-on-primary-container px-lg py-sm rounded-full font-label-md hover:scale-105 transition-all active:scale-95 inline-block">Đăng ký</a>
+            <a href="/auth/login" class="text-on-surface-variant hover:text-primary px-md py-sm">Đăng nhập</a>
+            <a href="/auth/register" class="bg-primary-container text-on-primary-container px-lg py-sm rounded-full">Đăng ký</a>
           </div>
-          <!-- USER -->
           <div id="userNav" class="hidden items-center gap-sm relative">
-            <a id="adminLink" href="/admin" class="hidden items-center gap-xs px-md py-1 bg-primary text-on-primary rounded-full font-label-sm hover:opacity-90 transition-opacity">
-              <span class="material-symbols-outlined text-[14px]">admin_panel_settings</span> Admin
-            </a>
+            <a id="adminLink" href="/admin" class="hidden items-center gap-xs px-md py-1 bg-primary text-on-primary rounded-full text-label-sm">Admin</a>
             <div class="relative">
               <button id="userAvatarBtn" class="flex items-center gap-sm group">
                 <div id="userAvatar">A</div>
-                <span id="userName" class="hidden sm:block font-label-md text-on-surface max-w-[120px] truncate"></span>
-                <span class="material-symbols-outlined text-on-surface-variant text-[18px] group-hover:text-primary" id="chevronIcon">expand_more</span>
+                <span id="userName" class="hidden sm:block max-w-[120px] truncate"></span>
+                <span class="material-symbols-outlined text-[18px]" id="chevronIcon">expand_more</span>
               </button>
               <div id="userMenu" class="absolute right-0 top-full mt-2 w-52 bg-surface-container-lowest rounded-2xl shadow-lg border border-outline-variant/30 overflow-hidden z-50">
                 <div class="px-lg py-md border-b border-outline-variant/20">
-                  <p class="font-label-md text-on-surface truncate" id="menuUserName"></p>
-                  <p class="text-label-sm text-on-surface-variant truncate" id="menuUserEmail"></p>
+                  <p class="font-label-md" id="menuUserName"></p>
+                  <p class="text-label-sm text-on-surface-variant" id="menuUserEmail"></p>
                 </div>
                 <div class="py-sm">
-                  <a href="/order/detail" class="flex items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md"><span class="material-symbols-outlined text-[18px]">receipt_long</span> Đơn hàng của tôi</a>
-                  <a id="menuAdminLink" href="/admin" class="hidden items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md"><span class="material-symbols-outlined text-[18px]">admin_panel_settings</span> Trang Admin</a>
-                  <button id="logoutBtn" class="w-full flex items-center gap-sm px-lg py-sm text-error hover:bg-error-container/20 transition-colors font-label-md"><span class="material-symbols-outlined text-[18px]">logout</span> Đăng xuất</button>
+                  <a href="/order/detail" class="flex items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">receipt_long</span> Đơn hàng của tôi</a>
+                  <a id="menuAdminLink" href="/admin" class="hidden items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined">admin_panel_settings</span> Trang Admin</a>
+                  <button id="logoutBtn" class="w-full flex items-center gap-sm px-lg py-sm text-error hover:bg-error-container/20"><span class="material-symbols-outlined">logout</span> Đăng xuất</button>
                 </div>
               </div>
             </div>
@@ -214,516 +232,259 @@
         </div>
       </div>
     </header>
-    <main
-      class="mt-24 mb-xl max-w-container-max mx-auto px-margin-mobile md:px-lg min-h-screen"
-    >
-      <!-- Breadcrumbs -->
-      <nav
-        class="flex items-center gap-xs text-on-surface-variant mb-xl font-label-sm"
-      >
-        <a class="hover:text-primary" href="#">Home</a>
+
+    <main class="mt-24 mb-xl max-w-container-max mx-auto px-margin-mobile md:px-lg min-h-screen">
+      <nav class="flex items-center gap-xs text-on-surface-variant mb-xl text-label-sm">
+        <a class="hover:text-primary" href="/">Home</a>
         <span class="material-symbols-outlined text-[14px]">chevron_right</span>
-        <a class="hover:text-primary" href="#">Orders</a>
-        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
-        <span class="text-primary font-bold">Order #ORD-90234</span>
+        <span class="text-primary font-bold" id="breadcrumbOrder">Đơn hàng của tôi</span>
       </nav>
-      <!-- Order Summary Header -->
-      <div
-        class="bg-surface-container-lowest rounded-[24px] p-lg md:p-xl shadow-[0_4px_24px_rgba(132,84,0,0.06)] border border-outline-variant/30 mb-lg"
-      >
-        <div
-          class="flex flex-col md:flex-row justify-between items-start md:items-center gap-md"
-        >
-          <div>
-            <h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">
-              Mã đơn hàng: #ORD-90234
-            </h1>
-            <p class="text-on-surface-variant font-body-md">
-              Ngày đặt: 12 Tháng 10, 2024 • 14:35
-            </p>
-          </div>
-          <div
-            class="flex items-center gap-sm bg-primary-container/10 px-lg py-sm rounded-full border border-primary-container/20"
-          >
-            <span
-              class="w-2.5 h-2.5 bg-primary rounded-full animate-pulse"
-            ></span>
-            <span class="text-primary font-bold text-label-md"
-              >Đang giao hàng</span
-            >
-          </div>
+
+      <div id="orderListView" class="hidden">
+        <h1 class="font-headline-lg text-headline-lg text-on-surface mb-lg">Danh sách đơn hàng của tôi</h1>
+        <div class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30 overflow-x-auto">
+          <table class="w-full text-left">
+            <thead class="text-label-sm text-on-surface-variant uppercase tracking-wider border-b border-outline-variant/30">
+              <tr>
+                <th class="pb-md px-sm">Mã đơn hàng</th>
+                <th class="pb-md px-sm">Ngày đặt</th>
+                <th class="pb-md px-sm">Tổng tiền</th>
+                <th class="pb-md px-sm">Trạng thái</th>
+                <th class="pb-md px-sm">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="allOrdersBody" class="text-body-md divide-y divide-outline-variant/10"></tbody>
+          </table>
         </div>
-        <!-- Progress Tracker -->
-        <div class="mt-xl relative px-4">
-          <div class="absolute top-5 left-8 right-8 h-[2px] bg-outline-variant">
-            <div
-              class="h-full bg-primary-container w-3/4 transition-all duration-1000"
-            ></div>
+      </div>
+
+      <div id="orderHeaderDetail" class="hidden bg-surface-container-lowest rounded-[24px] p-lg md:p-xl shadow-sm border border-outline-variant/30 mb-lg">
+        <div class="flex flex-col md:flex-row justify-between gap-md items-start md:items-center">
+          <div>
+            <a href="/order/detail" class="inline-flex items-center gap-xs text-primary hover:underline mb-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">arrow_back</span> Quay lại danh sách</a>
+            <h1 id="orderHeading" class="font-headline-lg text-headline-lg text-on-surface mb-xs">Đơn hàng của tôi</h1>
+            <p id="orderDate" class="text-on-surface-variant">Đang tải dữ liệu...</p>
           </div>
-          <div class="relative z-10 flex justify-between">
-            <!-- Step 1 -->
-            <div class="flex flex-col items-center gap-sm">
-              <div
-                class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-md"
-              >
-                <span
-                  class="material-symbols-outlined text-[20px]"
-                  data-weight="fill"
-                  >check_circle</span
-                >
-              </div>
-              <span class="text-label-sm text-center">Chờ xác nhận</span>
-            </div>
-            <!-- Step 2 -->
-            <div class="flex flex-col items-center gap-sm">
-              <div
-                class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-md"
-              >
-                <span
-                  class="material-symbols-outlined text-[20px]"
-                  data-weight="fill"
-                  >verified</span
-                >
-              </div>
-              <span class="text-label-sm text-center">Đã xác nhận</span>
-            </div>
-            <!-- Step 3 -->
-            <div class="flex flex-col items-center gap-sm">
-              <div
-                class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-md"
-              >
-                <span
-                  class="material-symbols-outlined text-[20px]"
-                  data-weight="fill"
-                  >inventory_2</span
-                >
-              </div>
-              <span class="text-label-sm text-center">Đang đóng gói</span>
-            </div>
-            <!-- Step 4 (Current) -->
-            <div class="flex flex-col items-center gap-sm">
-              <div
-                class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center shadow-[0_0_15px_rgba(132,84,0,0.3)] ring-4 ring-primary-container/20"
-              >
-                <span class="material-symbols-outlined text-[24px]"
-                  >local_shipping</span
-                >
-              </div>
-              <span class="text-label-sm font-bold text-primary text-center"
-                >Đang giao hàng</span
-              >
-            </div>
-            <!-- Step 5 -->
-            <div class="flex flex-col items-center gap-sm opacity-40">
-              <div
-                class="w-10 h-10 rounded-full bg-outline-variant flex items-center justify-center"
-              >
-                <span class="material-symbols-outlined text-[20px]"
-                  >task_alt</span
-                >
-              </div>
-              <span class="text-label-sm text-center">Thành công</span>
-            </div>
+          <div class="flex items-center gap-sm bg-primary-container/10 px-lg py-sm rounded-full border border-primary-container/20">
+            <span class="w-2.5 h-2.5 bg-primary rounded-full animate-pulse"></span>
+            <span id="orderStatusBadge" class="text-primary font-bold text-label-md">Đang tải</span>
           </div>
         </div>
       </div>
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
-        <!-- Left Column: Details & Items -->
+
+      <div id="emptyState" class="hidden bg-surface-container-lowest rounded-[24px] p-xl shadow-sm border border-outline-variant/30 text-center">
+        <h2 class="font-headline-md text-headline-md mb-sm">Bạn chưa có đơn hàng nào</h2>
+        <p class="text-on-surface-variant mb-lg">Hãy thêm sản phẩm vào giỏ và đặt hàng để theo dõi ngay tại đây.</p>
+        <a href="/product" class="inline-flex items-center gap-sm bg-primary text-on-primary px-lg py-3 rounded-full font-bold">Mua sắm ngay</a>
+      </div>
+
+      <div id="mainContent" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-lg">
         <div class="lg:col-span-2 space-y-lg">
-          <!-- Shipping Details -->
-          <div
-            class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30"
-          >
-            <h2
-              class="font-headline-md text-headline-md mb-lg flex items-center gap-sm"
-            >
-              <span class="material-symbols-outlined text-primary"
-                >location_on</span
-              >
+          <div class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30">
+            <h2 class="font-headline-md text-headline-md mb-lg flex items-center gap-sm">
+              <span class="material-symbols-outlined text-primary">location_on</span>
               Thông tin giao hàng
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-xl">
               <div class="space-y-sm">
-                <p
-                  class="text-label-sm text-on-surface-variant uppercase tracking-wider"
-                >
-                  Người nhận
-                </p>
-                <p class="font-bold text-body-lg">Nguyễn Minh Anh</p>
-                <p class="text-on-surface-variant">(+84) 902 345 678</p>
-                <p class="text-on-surface-variant">
-                  45 Đường Lê Lợi, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh
-                </p>
-              </div>
-              <div
-                class="bg-surface-container-low rounded-xl p-md border border-primary-container/20"
-              >
-                <p
-                  class="text-label-sm text-on-surface-variant uppercase tracking-wider mb-xs"
-                >
-                  Thời gian dự kiến
-                </p>
-                <div class="flex items-baseline gap-xs">
-                  <span class="text-headline-md font-bold text-primary"
-                    >Thứ 3</span
-                  >
-                  <span class="text-body-md text-on-surface"
-                    >15 Tháng 10, 2024</span
-                  >
-                </div>
-                <p
-                  class="text-label-sm text-primary mt-2 flex items-center gap-xs"
-                >
-                  <span class="material-symbols-outlined text-[16px]"
-                    >info</span
-                  >
-                  Shipper sẽ liên hệ trước khi giao
-                </p>
+                <p class="text-label-sm text-on-surface-variant uppercase">Người nhận</p>
+                <p id="recipientName" class="font-bold text-body-lg">—</p>
+                <p id="recipientPhone" class="text-on-surface-variant">—</p>
+                <p id="recipientAddress" class="text-on-surface-variant">—</p>
               </div>
             </div>
           </div>
-          <!-- Order Items -->
-          <div
-            class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30 overflow-hidden"
-          >
-            <h2
-              class="font-headline-md text-headline-md mb-lg flex items-center gap-sm"
-            >
+
+          <div class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30 overflow-hidden">
+            <h2 class="font-headline-md text-headline-md mb-lg flex items-center gap-sm">
               <span class="material-symbols-outlined text-primary">pets</span>
-              Sản phẩm đã chọn
+              Sản phẩm đã đặt
             </h2>
-            <div class="space-y-md">
-              <!-- Item 1 -->
-              <div
-                class="flex gap-md p-sm hover:bg-surface-container-low/50 rounded-xl transition-colors group"
-              >
-                <div
-                  class="w-24 h-24 bg-white rounded-xl overflow-hidden border border-outline-variant/30 p-2 flex-shrink-0"
-                >
-                  <img
-                    class="w-full h-full object-contain group-hover:scale-105 transition-transform"
-                    data-alt="Premium Royal Canin cat food packaging displayed in a bright, clean, minimalist setting with soft natural sunlight. The aesthetic is modern and high-end, focusing on quality pet nutrition. Warm orange tones highlight the brand identity of Xám Pet Shop while maintaining a spacious, professional light-mode UI atmosphere."
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBClm3Mxg4VExZdrGJnwkinD8Sps0x9R-Zp_zj8zTkJS6PVg7Zh1Vs6pqCB3jqQ3T9_13lg4LeuQVlRgLkNEL3eTi6BnA2dg5vBsbdE_EhYItGkn_fQXQCHSxNn6djgvKeZmnhJkOnQFOebL81Y-dYkeEqaE9RhbBRt7XxZ89WDpR7-w0P2tEof_toACx24TncNNJUuP3f8UQrmBO-yxHXe6h5fjIyljO7I6U-VwHc40NiEZCGkAO3mHjbbgrQklAyWouVSLKp1sIc"
-                  />
-                </div>
-                <div class="flex-grow flex flex-col justify-between py-1">
-                  <div>
-                    <h3 class="font-bold text-body-lg text-on-surface">
-                      Royal Canin British Shorthair Adult
-                    </h3>
-                    <p class="text-label-sm text-on-surface-variant">
-                      Phân loại: 2kg • Túi
-                    </p>
-                    <div class="mt-1">
-                      <span
-                        class="inline-block bg-surface-container-high px-2 py-0.5 rounded text-[10px] font-bold text-on-surface-variant"
-                        >GRAIN FREE</span
-                      >
-                    </div>
-                  </div>
-                  <div class="flex justify-between items-end">
-                    <span class="text-on-surface-variant font-label-md"
-                      >Số lượng: x2</span
-                    >
-                    <span class="text-primary font-bold text-body-lg"
-                      >840.000đ</span
-                    >
-                  </div>
-                </div>
-              </div>
-              <!-- Divider -->
-              <div class="h-px bg-outline-variant/30"></div>
-              <!-- Item 2 -->
-              <div
-                class="flex gap-md p-sm hover:bg-surface-container-low/50 rounded-xl transition-colors group"
-              >
-                <div
-                  class="w-24 h-24 bg-white rounded-xl overflow-hidden border border-outline-variant/30 p-2 flex-shrink-0"
-                >
-                  <img
-                    class="w-full h-full object-contain group-hover:scale-105 transition-transform"
-                    data-alt="A stylish, multi-level modern cat tree made of natural wood and light grey fabric, standing in a cozy domestic living room with warm lighting. The furniture piece fits perfectly into a soft minimalist home aesthetic. High-key lighting creates a gentle, airy mood consistent with a premium cat care shopping experience."
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3EN6HHzgWe6_x1b4_LfzPYskPe6L8s6HN0wkh4yXsJ4gFQAXfgXYmg09Vj3ob9V7Na47JZHlEY4CoyCuSpraiGhb-jz43S_ahCS7-jMj2DXLAimUaHlSiOVCdeF69BD4nOQQvL3omJ7pVFMthq74zytlIkjcmdmINC5u_9PPZqgXcsQkJLohR51UBXwRPgZnn78opuYx4wesRyK_3YjVcgb7dfB9d3dkMxxSJIMnrRbjXUN-bGsYfUcE09jG9jMkhTlag95mH0r8"
-                  />
-                </div>
-                <div class="flex-grow flex flex-col justify-between py-1">
-                  <div>
-                    <h3 class="font-bold text-body-lg text-on-surface">
-                      Cat Tree Xám Minimalist Edition
-                    </h3>
-                    <p class="text-label-sm text-on-surface-variant">
-                      Màu: Xám Khói • 120cm
-                    </p>
-                  </div>
-                  <div class="flex justify-between items-end">
-                    <span class="text-on-surface-variant font-label-md"
-                      >Số lượng: x1</span
-                    >
-                    <span class="text-primary font-bold text-body-lg"
-                      >1.250.000đ</span
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div id="productsContainer" class="space-y-md"></div>
           </div>
-          <div
-            class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30 mt-lg"
-          >
-            <h2
-              class="font-headline-md text-headline-md mb-lg flex items-center gap-sm"
-            >
-              <span class="material-symbols-outlined text-primary"
-                >history</span
-              >
-              Lịch sử mua hàng
-            </h2>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left">
-                <thead
-                  class="text-label-sm text-on-surface-variant uppercase tracking-wider border-b border-outline-variant/30"
-                >
-                  <tr>
-                    <th class="pb-md px-sm">Mã đơn hàng</th>
-                    <th class="pb-md px-sm">Ngày đặt</th>
-                    <th class="pb-md px-sm">Tổng tiền</th>
-                    <th class="pb-md px-sm">Trạng thái</th>
-                  </tr>
-                </thead>
-                <tbody class="text-body-md divide-y divide-outline-variant/10">
-                  <tr
-                    class="hover:bg-surface-container-low/50 transition-colors"
-                  >
-                    <td class="py-md px-sm font-bold">#ORD-90220</td>
-                    <td class="py-md px-sm">05 Tháng 10, 2024</td>
-                    <td class="py-md px-sm font-bold text-primary">450.000đ</td>
-                    <td class="py-md px-sm">
-                      <span
-                        class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-label-sm font-bold"
-                        >Hoàn thành</span
-                      >
-                    </td>
-                  </tr>
-                  <tr
-                    class="hover:bg-surface-container-low/50 transition-colors"
-                  >
-                    <td class="py-md px-sm font-bold">#ORD-90215</td>
-                    <td class="py-md px-sm">28 Tháng 09, 2024</td>
-                    <td class="py-md px-sm font-bold text-primary">
-                      1.120.000đ
-                    </td>
-                    <td class="py-md px-sm">
-                      <span
-                        class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-label-sm font-bold"
-                        >Hoàn thành</span
-                      >
-                    </td>
-                  </tr>
-                  <tr
-                    class="hover:bg-surface-container-low/50 transition-colors"
-                  >
-                    <td class="py-md px-sm font-bold">#ORD-90200</td>
-                    <td class="py-md px-sm">15 Tháng 09, 2024</td>
-                    <td class="py-md px-sm font-bold text-primary">215.000đ</td>
-                    <td class="py-md px-sm">
-                      <span
-                        class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-label-sm font-bold"
-                        >Hoàn thành</span
-                      >
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+
+
         </div>
-        <!-- Right Column: Summary & Support -->
+
         <div class="space-y-lg">
-          <!-- Payment Summary -->
-          <div
-            class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30"
-          >
-            <h2 class="font-headline-md text-headline-md mb-lg">
-              Chi tiết thanh toán
-            </h2>
+          <div class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30">
+            <h2 class="font-headline-md text-headline-md mb-lg">Chi tiết thanh toán</h2>
             <div class="space-y-md">
-              <div
-                class="flex justify-between text-body-md text-on-surface-variant"
-              >
-                <span>Tạm tính (3 sản phẩm)</span>
-                <span>2.090.000đ</span>
+              <div class="flex justify-between text-body-md text-on-surface-variant">
+                <span id="subtotalLabel">Tạm tính</span>
+                <span id="subtotalValue">—</span>
               </div>
-              <div
-                class="flex justify-between text-body-md text-on-surface-variant"
-              >
+              <div class="flex justify-between text-body-md text-on-surface-variant">
                 <span>Phí vận chuyển</span>
-                <span>30.000đ</span>
-              </div>
-              <div
-                class="flex justify-between text-body-md text-on-surface-variant"
-              >
-                <span>Giảm giá voucher</span>
-                <span class="text-error">-25.000đ</span>
+                <span id="shippingValue">—</span>
               </div>
               <div class="h-px bg-outline-variant/30 my-sm"></div>
               <div class="flex justify-between items-center">
-                <span class="font-bold text-headline-md text-on-surface"
-                  >Tổng cộng</span
-                >
-                <span class="font-bold text-headline-md text-primary"
-                  >2.095.000đ</span
-                >
-              </div>
-              <div
-                class="mt-lg p-md bg-surface-container-low rounded-xl border border-outline-variant/50"
-              >
-                <div class="flex items-center gap-sm">
-                  <span
-                    class="material-symbols-outlined text-on-surface-variant"
-                    >payments</span
-                  >
-                  <div>
-                    <p class="text-label-sm text-on-surface-variant uppercase">
-                      Phương thức thanh toán
-                    </p>
-                    <p class="font-bold">Tiền mặt (COD)</p>
-                  </div>
-                </div>
+                <span class="font-bold text-headline-md text-on-surface">Tổng cộng</span>
+                <span id="totalValue" class="font-bold text-headline-md text-primary">—</span>
               </div>
             </div>
           </div>
-          <!-- Customer Support CTA -->
-          <div
-            class="bg-primary/5 rounded-[24px] p-lg border-2 border-dashed border-primary-container/40 flex flex-col items-center text-center"
-          >
-            <div
-              class="w-16 h-16 bg-primary-container rounded-full flex items-center justify-center text-on-primary-container mb-md shadow-sm"
-            >
-              <span class="material-symbols-outlined text-[32px]"
-                >support_agent</span
-              >
-            </div>
-            <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">
-              Cần hỗ trợ?
-            </h3>
-            <p class="text-on-surface-variant font-body-md mb-lg">
-              Nếu có vấn đề gì với đơn hàng, hãy liên hệ với đội ngũ chăm sóc
-              mèo của chúng tôi ngay!
-            </p>
-            <button
-              class="w-full bg-primary text-white py-4 rounded-full font-bold hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-sm shadow-md"
-            >
+
+          <div id="cancelSection" class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30 hidden">
+            <h2 class="font-headline-md text-headline-md mb-lg flex items-center gap-sm">
+              <span class="material-symbols-outlined text-primary">cancel</span>
+              Hủy đơn hàng
+            </h2>
+            <p class="text-on-surface-variant mb-md">Bạn có thể hủy đơn khi trạng thái còn ở <strong>Chờ xử lý</strong> hoặc <strong>Đã xác nhận</strong>.</p>
+            <label for="cancelReason" class="block text-label-md mb-2">Lý do hủy</label>
+            <select id="cancelReason" class="w-full rounded-lg border border-outline-variant bg-surface-container p-3 text-on-surface">
+              <option value="">-- Chọn lý do --</option>
+              <option value="Đổi ý không muốn mua nữa">Đổi ý không muốn mua nữa</option>
+              <option value="Sản phẩm quá đắt">Sản phẩm quá đắt</option>
+              <option value="Nhập sai thông tin giao hàng">Nhập sai thông tin giao hàng</option>
+              <option value="Khác">Khác</option>
+            </select>
+            <button type="button" id="cancelOrderBtn" class="mt-md w-full bg-error text-on-error py-3 rounded-full font-bold hover:opacity-90">Hủy đơn hàng</button>
+            <p id="cancelMessage" class="mt-3 text-sm text-on-surface-variant"></p>
+          </div>
+
+          <div class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30">
+            <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">Cần hỗ trợ?</h3>
+            <p class="text-on-surface-variant mb-lg">Nếu có vấn đề gì với đơn hàng, hãy liên hệ với đội ngũ chăm sóc mèo của chúng tôi ngay!</p>
+            <button id="toggleOrderChatBtn" class="w-full bg-primary text-white py-4 rounded-full font-bold hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-sm shadow-md">
               <span class="material-symbols-outlined">headset_mic</span>
               Chát với CSKH
             </button>
-            <button
-              class="w-full mt-sm border-2 border-outline-variant bg-white text-on-surface-variant py-3 rounded-full font-bold hover:bg-surface-container transition-all"
-            >
+
+            <!-- Inline Chatbot -->
+            <div id="orderChatWindow">
+              <div class="bg-primary text-on-primary px-4 py-2.5 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="material-symbols-outlined text-[18px]">pets</span>
+                  <span class="font-label-md text-[13px]">Trợ lý Xám - Hỗ trợ đơn hàng</span>
+                </div>
+                <button id="closeOrderChatBtn" class="hover:bg-black/10 p-1 rounded-full transition-colors">
+                  <span class="material-symbols-outlined text-[16px]">close</span>
+                </button>
+              </div>
+              <div id="orderChatMessages">
+                <div class="ochat-msg bot">Xin chào! Mình là trợ lý của Xám Pet Shop. Bạn cần hỗ trợ gì về đơn hàng ạ? 🐾</div>
+              </div>
+              <div class="p-2.5 bg-white border-t border-outline-variant/30 flex items-center gap-2">
+                <input type="text" id="orderChatInput" placeholder="Nhập tin nhắn..." autocomplete="off"
+                  class="flex-1 bg-surface border border-outline-variant rounded-full px-3 py-1.5 text-[13px] focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" />
+                <button id="sendOrderChatBtn" class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center hover:scale-105 active:scale-95 transition-all flex-shrink-0 disabled:opacity-50">
+                  <span class="material-symbols-outlined text-[16px]">send</span>
+                </button>
+              </div>
+            </div>
+
+            <button id="openReturnPolicyBtn" class="w-full mt-sm border-2 border-outline-variant bg-white text-on-surface-variant py-3 rounded-full font-bold hover:bg-surface-container transition-all">
               Xem chính sách đổi trả
             </button>
           </div>
         </div>
       </div>
     </main>
-    <!-- Footer -->
-    <footer
-      class="bg-surface-container-highest dark:bg-surface-container w-full py-xl px-lg"
-    >
-      <div
-        class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-lg"
-      >
-        <div class="space-y-md">
-          <h2
-            class="font-headline-sm text-headline-sm text-on-surface font-bold"
-          >
-            Xám Pet Shop
+
+    <!-- Return Policy Modal -->
+    <div id="returnPolicyOverlay">
+      <div id="returnPolicyModal">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary">policy</span>
+            Chính sách đổi trả
           </h2>
-          <p class="text-on-surface-variant font-body-sm leading-relaxed">
-            Nơi cung cấp những sản phẩm chăm sóc mèo cao cấp nhất. Chúng tôi
-            hiểu rõ từng tiếng "meo" của bé.
-          </p>
+          <button id="closeReturnPolicyBtn" class="w-9 h-9 rounded-full hover:bg-surface-container flex items-center justify-center transition-colors">
+            <span class="material-symbols-outlined">close</span>
+          </button>
         </div>
-        <div class="space-y-md">
-          <h4 class="font-label-md text-primary uppercase tracking-widest">
-            Liên hệ
-          </h4>
-          <ul class="space-y-sm">
-            <li
-              class="text-on-surface-variant text-label-sm flex items-center gap-2"
-            >
-              <span class="material-symbols-outlined text-[18px]"
-                >location_on</span
-              >
-              Bắc Từ Liêm, Hà Nội
-            </li>
-            <li
-              class="text-on-surface-variant text-label-sm flex items-center gap-2"
-            >
-              <span class="material-symbols-outlined text-[18px]">call</span>
-              038.339.2903
-            </li>
-            <li
-              class="text-on-surface-variant text-label-sm flex items-center gap-2"
-            >
-              <span class="material-symbols-outlined text-[18px]">mail</span>
-              nampham050723@gmail.com
-            </li>
-          </ul>
-        </div>
-        <div class="space-y-md">
-          <h4 class="font-label-md text-primary uppercase tracking-widest">
-            Chính sách
-          </h4>
-          <ul class="space-y-sm">
-            <li>
-              <a
-                class="text-on-surface-variant hover:text-primary text-label-sm transition-colors"
-                href="#"
-                >Vận chuyển</a
-              >
-            </li>
-            <li>
-              <a
-                class="text-on-surface-variant hover:text-primary text-label-sm transition-colors"
-                href="#"
-                >Đổi trả &amp; Hoàn tiền</a
-              >
-            </li>
-            <li>
-              <a
-                class="text-on-surface-variant hover:text-primary text-label-sm transition-colors"
-                href="#"
-                >Bảo mật thông tin</a
-              >
-            </li>
-          </ul>
-        </div>
-        <div class="space-y-md">
-          <h4 class="font-label-md text-primary uppercase tracking-widest">
-            Theo dõi
-          </h4>
-          <div class="flex gap-md">
-            <a
-              class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary hover:bg-primary-container hover:text-on-primary-container transition-all"
-              href="#"
-            >
-              <span class="material-symbols-outlined">social_leaderboard</span>
-            </a>
-            <a
-              class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary hover:bg-primary-container hover:text-on-primary-container transition-all"
-              href="#"
-            >
-              <span class="material-symbols-outlined">camera</span>
-            </a>
+
+        <div class="space-y-4 text-body-md text-on-surface-variant">
+          <div class="bg-primary-container/10 border border-primary-container/20 rounded-xl p-4">
+            <h3 class="font-label-md text-primary mb-1">⏰ Thời gian đổi trả</h3>
+            <p>Trong vòng <strong class="text-on-surface">7 ngày</strong> kể từ ngày nhận hàng.</p>
           </div>
-          <p class="text-on-surface-variant text-label-sm mt-md italic">
-            © 2026 Xám Pet Shop. All rights reserved.
-          </p>
+
+          <div class="bg-green-50 border border-green-200 rounded-xl p-4">
+            <h3 class="font-label-md text-green-700 mb-2">✅ Điều kiện được đổi trả</h3>
+            <ul class="space-y-1 list-disc list-inside text-[14px]">
+              <li>Sản phẩm bị lỗi do nhà sản xuất</li>
+              <li>Sản phẩm hết hạn sử dụng trước ngày giao</li>
+              <li>Giao sai sản phẩm hoặc sai số lượng</li>
+              <li>Bao bì bị hư hỏng, rách, móp méo nghiêm trọng</li>
+              <li>Sản phẩm không đúng mô tả trên website</li>
+            </ul>
+          </div>
+
+          <div class="bg-red-50 border border-red-200 rounded-xl p-4">
+            <h3 class="font-label-md text-red-600 mb-2">❌ Không áp dụng đổi trả</h3>
+            <ul class="space-y-1 list-disc list-inside text-[14px]">
+              <li>Sản phẩm đã mở nắp / bóc seal sử dụng</li>
+              <li>Quá 7 ngày kể từ ngày nhận hàng</li>
+              <li>Sản phẩm bị hư hỏng do khách hàng bảo quản sai cách</li>
+              <li>Đổi trả vì lý do không thích, đổi ý</li>
+            </ul>
+          </div>
+
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4">
+            <h3 class="font-label-md text-blue-700 mb-2">📋 Quy trình đổi trả</h3>
+            <ol class="space-y-1 list-decimal list-inside text-[14px]">
+              <li>Liên hệ CSKH qua chat hoặc hotline <strong>038.339.2903</strong></li>
+              <li>Cung cấp mã đơn hàng, ảnh/video sản phẩm lỗi</li>
+              <li>CSKH xác nhận và hướng dẫn gửi trả hàng</li>
+              <li>Hoàn tiền/đổi hàng trong 3-5 ngày làm việc</li>
+            </ol>
+          </div>
+
+          <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+            <h3 class="font-label-md text-yellow-700 mb-2">💰 Phương thức hoàn tiền</h3>
+            <ul class="space-y-1 list-disc list-inside text-[14px]">
+              <li>Thanh toán COD: Hoàn tiền qua chuyển khoản ngân hàng</li>
+              <li>Thanh toán VNPAY: Hoàn tiền về tài khoản gốc</li>
+              <li>Phí vận chuyển đổi trả do Xám Pet Shop chi trả (nếu lỗi từ shop)</li>
+            </ul>
+          </div>
         </div>
+
+        <button id="closeReturnPolicyBtn2" class="w-full mt-5 bg-primary text-on-primary py-3 rounded-full font-bold hover:opacity-90 transition-all">
+          Đã hiểu
+        </button>
+      </div>
+    </div>
+
+    <footer class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto bg-surface-container-highest dark:bg-surface-container mt-xl rounded-[24px]">
+      <div class="col-span-1 md:col-span-1">
+        <span class="font-headline-sm text-headline-sm text-on-surface">Xám Pet Shop</span>
+        <p class="mt-md text-on-surface-variant text-label-sm">
+          Cửa hàng chăm sóc thú cưng cao cấp, mang lại sự ấm áp và tin cậy cho người bạn bốn chân của bạn.
+        </p>
+      </div>
+      <div class="flex flex-col gap-sm">
+        <span class="font-label-md text-label-md text-primary">Liên hệ</span>
+        <span class="text-on-surface-variant text-label-sm">Address: Bắc Từ Liêm, Hà Nội</span>
+        <span class="text-on-surface-variant text-label-sm">Phone: 038.339.2903</span>
+        <span class="text-on-surface-variant text-label-sm">Email: nampham050723@gmail.com</span>
+      </div>
+      <div class="flex flex-col gap-sm">
+        <span class="font-label-md text-label-md text-primary">Chính sách</span>
+        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity" href="#">Chính sách bảo mật</a>
+        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity" href="#">Điều khoản dịch vụ</a>
+        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity" href="#">Giao hàng &amp; Hoàn trả</a>
+      </div>
+      <div class="flex flex-col gap-sm">
+        <span class="font-label-md text-label-md text-primary">Mạng xã hội</span>
+        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2" href="https://www.facebook.com/pdn.0507" target="_blank">
+          <span class="material-symbols-outlined text-sm">public</span> Facebook
+        </a>
+        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2" href="https://www.instagram.com/dinhnam.ph" target="_blank">
+          <span class="material-symbols-outlined text-sm">camera_alt</span> Instagram
+        </a>
+        <p class="mt-4 text-on-surface-variant text-[10px]">
+          © 2026 Xám Pet Shop. All rights reserved.
+        </p>
       </div>
     </footer>
+
     <script type="module">
       import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
+
       const guestNav = document.getElementById("guestNav");
       const userNav = document.getElementById("userNav");
       const userAvatar = document.getElementById("userAvatar");
@@ -736,22 +497,356 @@
       const chevronIcon = document.getElementById("chevronIcon");
       const logoutBtn = document.getElementById("logoutBtn");
       const userAvatarBtn = document.getElementById("userAvatarBtn");
+      const cancelSection = document.getElementById("cancelSection");
+      const cancelReason = document.getElementById("cancelReason");
+      const cancelOrderBtn = document.getElementById("cancelOrderBtn");
+      const cancelMessage = document.getElementById("cancelMessage");
+
+      const statusMap = {
+        pending: "Chờ xử lý",
+        confirmed: "Đã xác nhận",
+        shipped: "Đang giao",
+        delivered: "Đã giao",
+        cancelled: "Đã hủy",
+      };
+
+      function formatCurrency(value) {
+        return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(Number(value || 0));
+      }
+
+      function renderOrderList(orders) {
+        const tbody = document.getElementById("allOrdersBody");
+        if (!orders.length) {
+          tbody.innerHTML = '<tr><td colspan="5" class="px-sm py-md text-center text-on-surface-variant">Chưa có đơn hàng nào</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = orders.map((order) => `
+          <tr class="hover:bg-surface-container-low/50 transition-colors">
+            <td class="py-md px-sm font-bold">#${order.orderNumber}</td>
+            <td class="py-md px-sm">${new Date(order.createdAt).toLocaleDateString("vi-VN")}</td>
+            <td class="py-md px-sm font-bold text-primary">${formatCurrency(order.totalPrice)}</td>
+            <td class="py-md px-sm"><span class="px-3 py-1 rounded-full text-label-sm font-bold ${order.status === "cancelled" ? "bg-error-container text-on-error-container" : order.status === "delivered" ? "bg-green-100 text-green-700" : "bg-primary-container text-on-primary-container"}">${statusMap[order.status] || order.status}</span></td>
+            <td class="py-md px-sm"><a href="/order/detail?id=${order._id}" class="text-primary font-bold hover:underline">Chi tiết</a></td>
+          </tr>
+        `).join("");
+      }
+
+      function renderProducts(order) {
+        const container = document.getElementById("productsContainer");
+        const items = order.products || [];
+
+        if (!items.length) {
+          container.innerHTML = '<p class="text-on-surface-variant">Không có sản phẩm trong đơn hàng.</p>';
+          return;
+        }
+
+        container.innerHTML = items.map((item) => {
+          const subtotal = (item.price || 0) * (item.quantity || 1);
+          return `
+            <div class="flex gap-md p-sm hover:bg-surface-container-low/50 rounded-xl border-b border-outline-variant/30 last:border-b-0">
+              <div class="w-24 h-24 bg-white rounded-xl overflow-hidden border border-outline-variant/30 p-2 flex-shrink-0">
+                <img class="w-full h-full object-contain" src="${item.product?.image || "https://via.placeholder.com/96"}" alt="${item.product?.name || "Sản phẩm"}" />
+              </div>
+              <div class="flex-grow flex flex-col justify-between">
+                <div>
+                  <h3 class="font-bold text-body-lg text-on-surface">${item.product?.name || "Sản phẩm"}</h3>
+                  <p class="text-label-sm text-on-surface-variant">Danh mục: ${item.product?.category || "—"}</p>
+                </div>
+                <div class="flex justify-between items-end mt-2">
+                  <span class="text-on-surface-variant">Số lượng: x${item.quantity}</span>
+                  <span class="text-primary font-bold text-body-lg">${formatCurrency(subtotal)}</span>
+                </div>
+              </div>
+            </div>`;
+        }).join("");
+      }
+
+      function renderOrder(order, orders) {
+        document.getElementById("breadcrumbOrder").textContent = `#${order.orderNumber}`;
+        document.getElementById("orderHeading").textContent = `Mã đơn hàng: #${order.orderNumber}`;
+        document.getElementById("orderDate").textContent = `Ngày đặt: ${new Date(order.createdAt).toLocaleString("vi-VN")}`;
+        document.getElementById("orderStatusBadge").textContent = statusMap[order.status] || order.status;
+
+        const recipient = order.shippingAddress || {};
+        document.getElementById("recipientName").textContent = recipient.fullName || "—";
+        document.getElementById("recipientPhone").textContent = recipient.phone || "—";
+        document.getElementById("recipientAddress").textContent = [recipient.address, recipient.city].filter(Boolean).join(", ") || "—";
+
+        renderProducts(order);
+
+        const subtotal = (order.products || []).reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 1), 0);
+        document.getElementById("subtotalLabel").textContent = `Tạm tính (${order.products?.length || 0} sản phẩm)`;
+        document.getElementById("subtotalValue").textContent = formatCurrency(subtotal);
+        document.getElementById("shippingValue").textContent = formatCurrency(30000);
+        document.getElementById("totalValue").textContent = formatCurrency(order.totalPrice);
+
+        if (["pending", "confirmed"].includes(order.status)) {
+          cancelSection.classList.remove("hidden");
+        } else {
+          cancelSection.classList.add("hidden");
+        }
+
+        if (order.status === "cancelled") {
+          cancelMessage.textContent = `Đơn hàng đã được hủy${order.cancelReason ? ` với lý do: ${order.cancelReason}` : ""}.`;
+          cancelMessage.className = "mt-3 text-sm text-on-surface-variant";
+        } else {
+          cancelMessage.textContent = "";
+        }
+      }
+
+      async function loadOrders() {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          window.location.href = "/auth/login";
+          return;
+        }
+
+        const response = await fetch("/api/orders", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const data = await response.json();
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || "Không thể tải đơn hàng của bạn.");
+        }
+
+        const orders = data.orders || [];
+        const selectedOrderId = new URLSearchParams(window.location.search).get("id");
+
+        if (orders.length === 0) {
+          document.getElementById("emptyState").classList.remove("hidden");
+          return;
+        }
+
+        if (selectedOrderId) {
+          const order = orders.find((item) => item._id === selectedOrderId);
+          if (order) {
+             document.getElementById("orderHeaderDetail").classList.remove("hidden");
+             document.getElementById("mainContent").classList.remove("hidden");
+             renderOrder(order, orders);
+          } else {
+             window.location.href = "/order/detail";
+          }
+        } else {
+          document.getElementById("orderListView").classList.remove("hidden");
+          renderOrderList(orders);
+        }
+      }
+
+      async function cancelOrder(e) {
+        if (e) e.preventDefault();
+        const token = localStorage.getItem("token");
+        if (!token) {
+          window.location.href = "/auth/login";
+          return;
+        }
+
+        const reason = cancelReason.value;
+        if (!reason) {
+          alert("Vui lòng chọn lý do hủy đơn.");
+          return;
+        }
+
+        try {
+          const selectedOrderId = new URLSearchParams(window.location.search).get("id");
+          const ordersRes = await fetch("/api/orders", { headers: { Authorization: `Bearer ${token}` } });
+          const orders = await ordersRes.json();
+          const currentOrder = orders.orders?.find((item) => item._id === selectedOrderId) || orders.orders?.[0];
+
+          if (!currentOrder) {
+            alert("Không tìm thấy đơn hàng để hủy.");
+            return;
+          }
+
+          const response = await fetch(`/api/orders/${currentOrder._id}/cancel`, {
+            method: "PATCH",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ cancelReason: reason }),
+          });
+
+          if (!response.ok) {
+            const text = await response.text();
+            console.error("Server Error Response:", text);
+            try {
+              const data = JSON.parse(text);
+              alert(data.message || "Không thể hủy đơn hàng.");
+            } catch (e) {
+              alert("Lỗi máy chủ (404/500). Vui lòng thử lại.");
+            }
+            return;
+          }
+
+          const data = await response.json();
+          if (!data.success) {
+            alert(data.message || "Không thể hủy đơn hàng.");
+            return;
+          }
+
+          alert("Hủy đơn hàng thành công.");
+          window.location.reload();
+        } catch (error) {
+          console.error("Cancel Order Error:", error);
+          alert("Có lỗi xảy ra: " + error.message);
+        }
+      }
+
       function initNav() {
         if (isAuthenticated()) {
           const user = getUserInfo();
           if (!user) return;
-          guestNav.style.display = "none"; userNav.style.display = "flex";
-          const initial = (user.fullName || user.email || "U").charAt(0).toUpperCase();
-          userAvatar.textContent = initial;
-          const displayName = user.fullName || user.email;
-          userName.textContent = displayName; menuUserName.textContent = displayName; menuUserEmail.textContent = user.email || "";
-          if (user.role === "admin") { adminLink.style.display = "flex"; menuAdminLink.style.display = "flex"; }
-        } else { guestNav.style.display = ""; userNav.style.display = "none"; }
+          guestNav.style.display = "none";
+          userNav.style.display = "flex";
+          userAvatar.textContent = (user.fullName || user.email || "U").charAt(0).toUpperCase();
+          userName.textContent = user.fullName || user.email;
+          menuUserName.textContent = user.fullName || user.email;
+          menuUserEmail.textContent = user.email || "";
+          if (user.role === "admin") {
+            adminLink.style.display = "flex";
+            menuAdminLink.style.display = "flex";
+          }
+        } else {
+          guestNav.style.display = "";
+          userNav.style.display = "none";
+        }
       }
-      userAvatarBtn.addEventListener("click", (e) => { e.stopPropagation(); const isOpen = userMenu.classList.toggle("open"); chevronIcon.textContent = isOpen ? "expand_less" : "expand_more"; });
-      document.addEventListener("click", () => { userMenu.classList.remove("open"); chevronIcon.textContent = "expand_more"; });
-      logoutBtn.addEventListener("click", async () => { await logoutUser(); window.location.href = "/auth/login"; });
+
+      userAvatarBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isOpen = userMenu.classList.toggle("open");
+        chevronIcon.textContent = isOpen ? "expand_less" : "expand_more";
+      });
+
+      document.addEventListener("click", () => {
+        userMenu.classList.remove("open");
+        chevronIcon.textContent = "expand_more";
+      });
+
+      logoutBtn.addEventListener("click", async () => {
+        await logoutUser();
+        window.location.href = "/auth/login";
+      });
+
+      cancelOrderBtn.addEventListener("click", cancelOrder);
+
+      // ===== Chatbot Logic =====
+      const orderChatWindow = document.getElementById("orderChatWindow");
+      const toggleOrderChatBtn = document.getElementById("toggleOrderChatBtn");
+      const closeOrderChatBtn = document.getElementById("closeOrderChatBtn");
+      const orderChatInput = document.getElementById("orderChatInput");
+      const sendOrderChatBtn = document.getElementById("sendOrderChatBtn");
+      const orderChatMessages = document.getElementById("orderChatMessages");
+
+      let orderChatHistory = [];
+      let orderIsTyping = false;
+
+      toggleOrderChatBtn.addEventListener("click", () => {
+        const isOpen = orderChatWindow.classList.toggle("open");
+        toggleOrderChatBtn.innerHTML = isOpen
+          ? '<span class="material-symbols-outlined">expand_less</span> Ẩn chat'
+          : '<span class="material-symbols-outlined">headset_mic</span> Chát với CSKH';
+        if (isOpen) orderChatInput.focus();
+      });
+
+      closeOrderChatBtn.addEventListener("click", () => {
+        orderChatWindow.classList.remove("open");
+        toggleOrderChatBtn.innerHTML = '<span class="material-symbols-outlined">headset_mic</span> Chát với CSKH';
+      });
+
+      function addOChatMsg(content, sender) {
+        const div = document.createElement("div");
+        div.className = `ochat-msg ${sender}`;
+        div.textContent = content;
+        orderChatMessages.appendChild(div);
+        orderChatMessages.scrollTop = orderChatMessages.scrollHeight;
+      }
+
+      function showOTyping() {
+        const div = document.createElement("div");
+        div.className = "otyping-indicator";
+        div.id = "oTypingIndicator";
+        div.innerHTML = '<div class="otyping-dot"></div><div class="otyping-dot"></div><div class="otyping-dot"></div>';
+        orderChatMessages.appendChild(div);
+        orderChatMessages.scrollTop = orderChatMessages.scrollHeight;
+      }
+
+      function hideOTyping() {
+        const el = document.getElementById("oTypingIndicator");
+        if (el) el.remove();
+      }
+
+      async function handleOrderChat() {
+        const message = orderChatInput.value.trim();
+        if (!message || orderIsTyping) return;
+
+        orderChatInput.value = "";
+        addOChatMsg(message, "user");
+        orderIsTyping = true;
+        sendOrderChatBtn.disabled = true;
+        showOTyping();
+
+        try {
+          const resp = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message, history: orderChatHistory }),
+          });
+          const data = await resp.json();
+          hideOTyping();
+
+          if (data.success) {
+            addOChatMsg(data.message, "bot");
+            orderChatHistory.push({ role: "user", content: message });
+            orderChatHistory.push({ role: "assistant", content: data.message });
+            if (orderChatHistory.length > 10) orderChatHistory = orderChatHistory.slice(-10);
+          } else {
+            addOChatMsg("Rất tiếc, mình đang gặp lỗi kỹ thuật. Bạn thử lại sau nhé!", "bot");
+          }
+        } catch (err) {
+          console.error("Chat Error:", err);
+          hideOTyping();
+          addOChatMsg("Không thể kết nối đến máy chủ. Vui lòng kiểm tra mạng.", "bot");
+        } finally {
+          orderIsTyping = false;
+          sendOrderChatBtn.disabled = false;
+          orderChatInput.focus();
+        }
+      }
+
+      sendOrderChatBtn.addEventListener("click", handleOrderChat);
+      orderChatInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") handleOrderChat();
+      });
+
+      // ===== Return Policy Modal =====
+      const returnPolicyOverlay = document.getElementById("returnPolicyOverlay");
+      const openReturnPolicyBtn = document.getElementById("openReturnPolicyBtn");
+      const closeReturnPolicyBtn = document.getElementById("closeReturnPolicyBtn");
+      const closeReturnPolicyBtn2 = document.getElementById("closeReturnPolicyBtn2");
+
+      openReturnPolicyBtn.addEventListener("click", () => {
+        returnPolicyOverlay.classList.add("open");
+      });
+
+      function closeReturnPolicy() {
+        returnPolicyOverlay.classList.remove("open");
+      }
+
+      closeReturnPolicyBtn.addEventListener("click", closeReturnPolicy);
+      closeReturnPolicyBtn2.addEventListener("click", closeReturnPolicy);
+      returnPolicyOverlay.addEventListener("click", (e) => {
+        if (e.target === returnPolicyOverlay) closeReturnPolicy();
+      });
+
       initNav();
+      loadOrders().catch((error) => {
+        document.getElementById("mainContent").classList.add("hidden");
+        document.getElementById("emptyState").classList.remove("hidden");
+        document.getElementById("emptyState").innerHTML = `<h2 class="font-headline-md text-headline-md mb-sm">Không thể tải đơn hàng</h2><p class="text-on-surface-variant mb-lg">${error.message}</p>`;
+      });
     </script>
   </body>
 </html>

@@ -1,36 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const Product = require("../models/Product");
+const productController = require("../controllers/productController");
 const productAdminController = require("../controllers/productAdminController");
 
-// ===== PUBLIC ROUTES (No Auth Required) =====
+// ===== PUBLIC ROUTES (Không cần đăng nhập) =====
 
-// Get all products (public)
+// Lấy tất cả sản phẩm
 router.get("/public", productAdminController.getPublicProducts);
 
-// Get product by ID (public)
-router.get("/:id", async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-    res.json(product);
-  } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
-});
+// Lấy sản phẩm theo ID
+router.get("/:id", productController.getProductById);
 
-// Get products by category (public)
-router.get("/category/:category", async (req, res) => {
-  try {
-    const products = await Product.find({
-      category: req.params.category.toLowerCase(),
-    });
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
-});
+// Lấy sản phẩm theo danh mục
+router.get("/category/:category", productController.getProductsByCategory);
 
 module.exports = router;

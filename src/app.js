@@ -38,7 +38,9 @@ app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/auth", require("./routes/authRoutes")); // Also mount at /auth for direct access
 app.use("/api/products", require("./routes/productRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
-// app.use('/api/orders', require('./routes/orderRoutes'));
+app.use("/api/orders", require("./routes/orderRoutes"));
+app.use("/api/payments", require("./routes/vnpayRoutes"));
+app.use("/api/chat", require("./routes/chatRoutes"));
 // app.use('/api/customers', require('./routes/customerRoutes'));
 
 // Routes - HTML Pages

@@ -4,6 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Thanh toán - Xám Pet Shop</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&amp;family=Plus+Jakarta+Sans:wght@200..800&amp;display=swap"
@@ -354,15 +355,24 @@
                   type="tel"
                 />
               </div>
+              <div class="md:col-span-2 space-y-xs relative">
+                <label class="font-label-md text-on-surface-variant ml-sm">Tỉnh / Thành phố</label>
+                <input id="province-input" class="w-full bg-surface-container-low border-none rounded-xl px-md py-3 focus:ring-2 focus:ring-primary-container transition-all outline-none" placeholder="Tìm hoặc chọn Tỉnh/Thành phố..." type="text" autocomplete="off" />
+                <div id="province-dropdown" class="hidden absolute z-10 w-full mt-1 bg-surface-container-lowest border border-outline-variant/30 rounded-xl shadow-lg max-h-60 overflow-y-auto custom-scrollbar"></div>
+              </div>
+              <div class="md:col-span-2 space-y-xs relative">
+                <label class="font-label-md text-on-surface-variant ml-sm">Quận / Huyện</label>
+                <input id="district-input" class="w-full bg-surface-container-low border-none rounded-xl px-md py-3 focus:ring-2 focus:ring-primary-container transition-all outline-none disabled:opacity-50" placeholder="Tìm hoặc chọn Quận/Huyện..." type="text" autocomplete="off" disabled />
+                <div id="district-dropdown" class="hidden absolute z-10 w-full mt-1 bg-surface-container-lowest border border-outline-variant/30 rounded-xl shadow-lg max-h-60 overflow-y-auto custom-scrollbar"></div>
+              </div>
+              <div class="md:col-span-2 space-y-xs relative">
+                <label class="font-label-md text-on-surface-variant ml-sm">Phường / Xã</label>
+                <input id="ward-input" class="w-full bg-surface-container-low border-none rounded-xl px-md py-3 focus:ring-2 focus:ring-primary-container transition-all outline-none disabled:opacity-50" placeholder="Tìm hoặc chọn Phường/Xã..." type="text" autocomplete="off" disabled />
+                <div id="ward-dropdown" class="hidden absolute z-10 w-full mt-1 bg-surface-container-lowest border border-outline-variant/30 rounded-xl shadow-lg max-h-60 overflow-y-auto custom-scrollbar"></div>
+              </div>
               <div class="md:col-span-2 space-y-xs">
-                <label class="font-label-md text-on-surface-variant ml-sm"
-                  >Địa chỉ chi tiết</label
-                >
-                <input
-                  class="w-full bg-surface-container-low border-none rounded-xl px-md py-3 focus:ring-2 focus:ring-primary-container transition-all outline-none"
-                  placeholder="Số nhà, tên đường, phường/xã..."
-                  type="text"
-                />
+                <label class="font-label-md text-on-surface-variant ml-sm">Số nhà, thôn, đường</label>
+                <input id="street" class="w-full bg-surface-container-low border-none rounded-xl px-md py-3 focus:ring-2 focus:ring-primary-container transition-all outline-none" placeholder="Số nhà, tên đường..." type="text" />
               </div>
               <div class="md:col-span-2 space-y-xs">
                 <label class="font-label-md text-on-surface-variant ml-sm"
@@ -401,7 +411,8 @@
                   type="radio"
                 />
                 <div class="ml-md flex flex-col">
-                  <span class="font-label-md text-on-surface text-[14px] font-semibold"
+                  <span
+                    class="font-label-md text-on-surface text-[14px] font-semibold"
                     >COD</span
                   >
                   <span class="text-[10px] text-on-surface-variant"
@@ -424,7 +435,8 @@
                   type="radio"
                 />
                 <div class="ml-md flex flex-col">
-                  <span class="font-label-md text-on-surface text-[14px] font-semibold"
+                  <span
+                    class="font-label-md text-on-surface text-[14px] font-semibold"
                     >Chuyển khoản</span
                   >
                   <span class="text-[10px] text-on-surface-variant"
@@ -567,7 +579,7 @@
     </footer>
     <script type="module">
       import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
-      import { getCart, getCartTotal, getCartItemCount, clearCart } from "../js/cart.js";
+      import { getCart, getCartTotal, clearCart } from "../js/cart.js";
 
       const guestNav = document.getElementById("guestNav");
       const userNav = document.getElementById("userNav");
@@ -618,6 +630,90 @@
         await logoutUser();
         window.location.href = "/auth/login";
       });
+
+      const provinceInput = document.getElementById("province-input");
+      const districtInput = document.getElementById("district-input");
+      const wardInput = document.getElementById("ward-input");
+      const streetInput = document.getElementById("street");
+
+      let provincesData = [];
+      let districtsData = [];
+      let wardsData = [];
+
+      function setupDropdown(input, dropdown, dataGetter, onSelect) {
+        function renderOptions() {
+          const list = dataGetter();
+          const val = input.value.trim().toLowerCase();
+          const filtered = val ? list.filter(item => item.name.toLowerCase().includes(val)) : list;
+          
+          if (filtered.length === 0) {
+            dropdown.innerHTML = '<div class="px-4 py-3 text-on-surface-variant text-sm">Không tìm thấy kết quả</div>';
+            return;
+          }
+          dropdown.innerHTML = filtered.map(item => `<div class="px-4 py-3 hover:bg-primary-container/20 cursor-pointer text-on-surface text-sm border-b border-outline-variant/10 last:border-0" data-value="${item.code}">${item.name}</div>`).join('');
+        }
+        
+        input.addEventListener('focus', () => {
+          input.select();
+          dropdown.classList.remove('hidden');
+          renderOptions();
+        });
+        
+        input.addEventListener('input', () => {
+          dropdown.classList.remove('hidden');
+          renderOptions();
+        });
+        
+        dropdown.addEventListener('mousedown', (e) => {
+          const div = e.target.closest('div[data-value]');
+          if (div) {
+            input.value = div.textContent;
+            input.dataset.code = div.getAttribute('data-value');
+            dropdown.classList.add('hidden');
+            if (onSelect) onSelect(input.dataset.code);
+          }
+        });
+        
+        input.addEventListener('blur', () => {
+          dropdown.classList.add('hidden');
+          const list = dataGetter();
+          const selected = list.find(d => d.code == input.dataset.code);
+          if (!selected || selected.name !== input.value) {
+            input.value = '';
+            input.dataset.code = '';
+            if (onSelect) onSelect('');
+          }
+        });
+      }
+
+      setupDropdown(provinceInput, document.getElementById("province-dropdown"), () => provincesData, (pCode) => {
+        districtInput.value = ''; districtInput.dataset.code = '';
+        wardInput.value = ''; wardInput.dataset.code = '';
+        districtInput.disabled = true; wardInput.disabled = true;
+        districtsData = []; wardsData = [];
+        if (pCode) {
+          fetch(`https://provinces.open-api.vn/api/p/${pCode}?depth=2`)
+            .then(res => res.json())
+            .then(pData => { districtsData = pData.districts; districtInput.disabled = false; });
+        }
+      });
+
+      setupDropdown(districtInput, document.getElementById("district-dropdown"), () => districtsData, (dCode) => {
+        wardInput.value = ''; wardInput.dataset.code = '';
+        wardInput.disabled = true;
+        wardsData = [];
+        if (dCode) {
+          fetch(`https://provinces.open-api.vn/api/d/${dCode}?depth=2`)
+            .then(res => res.json())
+            .then(dData => { wardsData = dData.wards; wardInput.disabled = false; });
+        }
+      });
+      
+      setupDropdown(wardInput, document.getElementById("ward-dropdown"), () => wardsData, () => {});
+
+      fetch("https://provinces.open-api.vn/api/p/")
+        .then(res => res.json())
+        .then(data => { provincesData = data; });
 
       function formatCurrency(value) {
         return new Intl.NumberFormat("vi-VN", {
@@ -673,29 +769,126 @@
 
       const placeOrderBtn = document.getElementById("placeOrderBtn");
 
-      placeOrderBtn.addEventListener("click", () => {
-        // Collect form info
-        const fullName = document.querySelector('input[placeholder="Nguyễn Văn A"]').value.trim();
-        const phoneNumber = document.querySelector('input[placeholder="090 123 4567"]').value.trim();
-        const address = document.querySelector('input[placeholder="Số nhà, tên đường, phường/xã..."]').value.trim();
+      async function getAuthHeaders() {
+        const token = localStorage.getItem("token");
+
+        return {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        };
+      }
+
+      async function createOrder(paymentMethod, shippingAddress) {
+        const cart = getCart();
+        const totalPrice = getCartTotal() + 30000;
+
+        const response = await fetch("/api/orders", {
+          method: "POST",
+          headers: await getAuthHeaders(),
+          body: JSON.stringify({
+            paymentMethod,
+            shippingAddress,
+            cart,
+            totalPrice,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || "Không thể tạo đơn hàng.");
+        }
+
+        return data.order;
+      }
+
+      async function handleVnpayCheckout(paymentMethod, shippingAddress) {
+        const order = await createOrder(paymentMethod, shippingAddress);
+
+        const response = await fetch("/api/payments/vnpay/create", {
+          method: "POST",
+          headers: await getAuthHeaders(),
+          body: JSON.stringify({
+            amount: order.totalPrice,
+            language: "vn",
+            orderId: order.orderNumber,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+          throw new Error(data.message || "Không thể tạo liên kết thanh toán.");
+        }
+
+        clearCart();
+        window.location.href = data.redirectUrl;
+      }
+
+      placeOrderBtn.addEventListener("click", async () => {
+        if (!isAuthenticated()) {
+          window.location.href = "/auth/login";
+          return;
+        }
+
+        const fullName = document
+          .querySelector('input[placeholder="Nguyễn Văn A"]')
+          .value.trim();
+        const phoneNumber = document
+          .querySelector('input[placeholder="090 123 4567"]')
+          .value.trim();
+        const pName = provinceInput.value.trim();
+        const dName = districtInput.value.trim();
+        const wName = wardInput.value.trim();
+        const street = streetInput.value.trim();
+        const address = [street, wName, dName, pName].filter(x => x).join(", ");
 
         if (!fullName || !phoneNumber || !address) {
           alert("Vui lòng điền đầy đủ thông tin giao hàng!");
           return;
         }
 
-        const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
-        const total = getCartTotal() + 30000;
+        const cart = getCart();
+        if (!cart || cart.length === 0) {
+          alert("Giỏ hàng trống. Vui lòng thêm sản phẩm trước khi thanh toán.");
+          return;
+        }
 
-        alert("Đặt hàng thành công! Đơn hàng của bạn đang được xử lý.");
-        clearCart();
-        window.location.href = "/order/detail";
+        const selectedPayment = document.querySelector(
+          'input[name="payment"]:checked'
+        ).value;
+
+        placeOrderBtn.disabled = true;
+
+        try {
+          if (selectedPayment === "banking") {
+            placeOrderBtn.textContent = "Đang tạo liên kết thanh toán...";
+            await handleVnpayCheckout(selectedPayment, {
+              fullName,
+              address,
+              phone: phoneNumber,
+            });
+            return;
+          }
+
+          const order = await createOrder(selectedPayment, {
+            fullName,
+            address,
+            phone: phoneNumber,
+          });
+
+          alert(`Đặt hàng thành công! Mã đơn hàng: ${order.orderNumber}`);
+          clearCart();
+          window.location.href = "/order/detail";
+        } catch (error) {
+          alert(error.message);
+          placeOrderBtn.disabled = false;
+          placeOrderBtn.textContent = "Đặt hàng ngay";
+        }
       });
 
       initNav();
       renderCheckoutSummary();
     </script>
-
-
   </body>
 </html>

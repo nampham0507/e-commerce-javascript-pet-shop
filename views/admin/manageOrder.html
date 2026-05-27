@@ -280,15 +280,12 @@
             <h3 class="text-on-surface-variant font-label-md">Tổng đơn hàng</h3>
           </div>
           <div class="mt-md">
-            <p class="text-headline-md font-bold text-on-surface">1,284</p>
-            <span class="text-label-sm text-green-600 flex items-center gap-1">
-              <span
-                class="material-symbols-outlined text-[14px]"
-                data-icon="trending_up"
-                >trending_up</span
-              >
-              +12% tháng này
-            </span>
+            <p
+              class="text-headline-md font-bold text-on-surface"
+              id="statTotalOrders"
+            >
+              —
+            </p>
           </div>
         </div>
         <div
@@ -300,7 +297,12 @@
             >pending</span
           >
           <h3 class="text-on-surface-variant font-label-md">Đang xử lý</h3>
-          <p class="text-headline-md font-bold text-on-surface mt-md">45</p>
+          <p
+            class="text-headline-md font-bold text-on-surface mt-md"
+            id="statPendingOrders"
+          >
+            —
+          </p>
         </div>
         <div
           class="col-span-12 md:col-span-5 bg-primary-container p-lg rounded-xl shadow-sm relative overflow-hidden flex items-center"
@@ -309,11 +311,11 @@
             <h3 class="text-on-primary-container font-headline-md font-bold">
               Doanh thu hôm nay
             </h3>
-            <p class="text-headline-lg font-bold text-on-primary-fixed mt-sm">
-              24.500.000đ
-            </p>
-            <p class="text-on-primary-container/80 text-label-md mt-xs">
-              Đã đạt 85% mục tiêu ngày
+            <p
+              class="text-headline-lg font-bold text-on-primary-fixed mt-sm"
+              id="statDailyRevenue"
+            >
+              —
             </p>
           </div>
           <!-- Decorative Graphic -->
@@ -426,7 +428,12 @@
           </thead>
           <tbody class="divide-y divide-outline-variant" id="orderTableBody">
             <tr class="hover:bg-surface-bright transition-colors group">
-              <td colspan="6" class="px-lg py-md text-center text-on-surface-variant">Đang tải dữ liệu...</td>
+              <td
+                colspan="6"
+                class="px-lg py-md text-center text-on-surface-variant"
+              >
+                Đang tải dữ liệu...
+              </td>
             </tr>
           </tbody>
         </table>
@@ -434,53 +441,18 @@
         <div
           class="px-lg py-md bg-surface-container-low border-t border-outline-variant flex items-center justify-between"
         >
-          <p class="text-label-sm text-on-surface-variant">
-            Hiển thị 1 - 4 của 1,284 đơn hàng
+          <p id="paginationInfo" class="text-label-sm text-on-surface-variant">
+            Đang tải dữ liệu...
           </p>
-          <div class="flex items-center gap-sm">
-            <button
-              class="p-xs text-outline hover:bg-surface-variant rounded-md disabled:opacity-30"
-              disabled=""
-            >
-              <span class="material-symbols-outlined" data-icon="chevron_left"
-                >chevron_left</span
-              >
-            </button>
-            <button
-              class="w-8 h-8 rounded-md bg-primary text-on-primary font-bold text-label-sm"
-            >
-              1
-            </button>
-            <button
-              class="w-8 h-8 rounded-md hover:bg-surface-variant text-on-surface text-label-sm transition-colors"
-            >
-              2
-            </button>
-            <button
-              class="w-8 h-8 rounded-md hover:bg-surface-variant text-on-surface text-label-sm transition-colors"
-            >
-              3
-            </button>
-            <span class="px-xs text-outline">...</span>
-            <button
-              class="w-8 h-8 rounded-md hover:bg-surface-variant text-on-surface text-label-sm transition-colors"
-            >
-              45
-            </button>
-            <button
-              class="p-xs text-outline hover:bg-surface-variant rounded-md"
-            >
-              <span class="material-symbols-outlined" data-icon="chevron_right"
-                >chevron_right</span
-              >
-            </button>
+          <div id="paginationControls" class="flex items-center gap-sm">
+            <!-- Dynamic controls here -->
           </div>
         </div>
       </div>
       <!-- Secondary Info Cards (Bento) -->
       <div class="grid grid-cols-12 gap-lg mt-xl">
         <div
-          class="col-span-12 lg:col-span-8 bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-sm"
+          class="col-span-12 bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-sm"
         >
           <div class="flex items-center justify-between mb-lg">
             <h3 class="font-headline-sm text-headline-sm">
@@ -492,30 +464,6 @@
           </div>
           <div class="space-y-md" id="manageOrderRecentHistory">
             <p class="text-on-surface-variant text-center p-md">Đang tải...</p>
-          </div>
-        </div>
-        <div
-          class="col-span-12 lg:col-span-4 bg-surface-container-lowest p-lg rounded-xl border border-outline-variant shadow-sm"
-        >
-          <h3 class="font-headline-sm text-headline-sm mb-lg">
-            Ghi chú vận chuyển
-          </h3>
-          <div class="flex flex-col gap-md">
-            <div
-              class="p-md bg-primary-container/10 border-l-4 border-primary rounded-r-lg"
-            >
-              <p class="text-label-md font-bold text-on-primary-container">
-                Đơn hàng Hỏa Tốc
-              </p>
-              <p class="text-body-md text-on-surface-variant mt-xs">
-                Hiện có 3 đơn hàng cần giao trong 2h tới tại khu vực Quận 1.
-              </p>
-            </div>
-            <button
-              class="w-full py-md bg-surface-container-high hover:bg-surface-container-highest rounded-xl text-on-surface-variant font-label-md transition-colors"
-            >
-              Quản lý đội giao hàng
-            </button>
           </div>
         </div>
       </div>
@@ -570,14 +518,16 @@
           >
           <a
             class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
-            href="#"
+            href="https://www.facebook.com/pdn.0507"
+            target="_blank"
           >
             <span class="material-symbols-outlined text-sm">public</span>
             Facebook
           </a>
           <a
             class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
-            href="#"
+            href="https://www.instagram.com/dinhnam.ph"
+            target="_blank"
           >
             <span class="material-symbols-outlined text-sm">camera_alt</span>
             Instagram
@@ -587,12 +537,124 @@
           </p>
         </div>
       </footer>
+      <!-- Order Detail Modal -->
+      <div
+        id="orderDetailModal"
+        class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4"
+      >
+        <div
+          class="absolute inset-0 bg-black/40 backdrop-blur-sm"
+          onclick="window.closeOrderDetail()"
+        ></div>
+        <div
+          class="relative bg-surface rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl"
+        >
+          <div
+            class="p-lg border-b border-outline-variant flex items-center justify-between"
+          >
+            <h3 class="font-headline-md text-headline-md text-on-surface">
+              Chi tiết đơn hàng
+              <span id="modalOrderNumber" class="text-primary"></span>
+            </h3>
+            <button
+              onclick="window.closeOrderDetail()"
+              class="p-xs hover:bg-surface-variant rounded-full text-on-surface-variant transition-colors flex items-center"
+            >
+              <span class="material-symbols-outlined">close</span>
+            </button>
+          </div>
+          <div class="p-lg overflow-y-auto space-y-lg flex-1">
+            <div class="grid grid-cols-2 gap-lg">
+              <div>
+                <p class="text-label-sm text-on-surface-variant mb-1">
+                  Khách hàng
+                </p>
+                <p
+                  id="modalCustomerName"
+                  class="font-label-md text-on-surface"
+                ></p>
+                <p
+                  id="modalCustomerPhone"
+                  class="text-body-md text-on-surface mt-1"
+                ></p>
+              </div>
+              <div>
+                <p class="text-label-sm text-on-surface-variant mb-1">
+                  Trạng thái
+                </p>
+                <span
+                  id="modalOrderStatus"
+                  class="px-2 py-1 rounded-full text-xs font-bold mt-1 inline-block"
+                ></span>
+              </div>
+              <div class="col-span-2">
+                <p class="text-label-sm text-on-surface-variant mb-1">
+                  Địa chỉ giao hàng
+                </p>
+                <p
+                  id="modalCustomerAddress"
+                  class="text-body-md text-on-surface"
+                ></p>
+              </div>
+            </div>
+
+            <div>
+              <p class="font-label-md text-on-surface mb-md">Sản phẩm</p>
+              <div
+                class="border border-outline-variant rounded-xl overflow-hidden"
+              >
+                <table class="w-full text-left">
+                  <thead
+                    class="bg-surface-container-low border-b border-outline-variant"
+                  >
+                    <tr>
+                      <th
+                        class="px-md py-sm text-label-sm text-on-surface-variant uppercase"
+                      >
+                        Sản phẩm
+                      </th>
+                      <th
+                        class="px-md py-sm text-label-sm text-on-surface-variant uppercase text-right"
+                      >
+                        SL
+                      </th>
+                      <th
+                        class="px-md py-sm text-label-sm text-on-surface-variant uppercase text-right"
+                      >
+                        Thành tiền
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    id="modalOrderProducts"
+                    class="divide-y divide-outline-variant"
+                  ></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div
+              class="flex justify-end gap-md mt-lg pt-md border-t border-outline-variant"
+            >
+              <div class="text-right">
+                <p class="text-label-sm text-on-surface-variant">Tổng cộng</p>
+                <p
+                  id="modalOrderTotal"
+                  class="font-headline-md text-primary mt-1"
+                ></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
     <script type="module">
       import {
         getAdminOrders,
         updateOrderStatus,
+        deleteOrder,
         getOrderStats,
+        getDashboardStats,
       } from "../js/admin.js";
       import { isAuthenticated, getUserInfo } from "../js/auth.js";
 
@@ -601,16 +663,288 @@
         window.location.href = "/auth/login";
       }
 
-      // Load orders
-      async function loadOrders() {
-        const result = await getAdminOrders({ page: 1, limit: 10 });
+      // Load dashboard stats
+      (async () => {
+        const result = await getDashboardStats();
         if (result.success) {
-          console.log("Orders:", result.orders);
-          // Cập nhật bảng đơn hàng
+          const d = result.dashboard;
+          document.getElementById("statTotalOrders").textContent =
+            d.orders?.total?.toLocaleString("vi-VN") || "—";
+          document.getElementById("statPendingOrders").textContent =
+            d.orders?.pending || "—";
+          const revenue = d.orders?.revenue || 0;
+          document.getElementById("statDailyRevenue").textContent =
+            new Intl.NumberFormat("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            }).format(revenue);
         }
+      })();
+
+      let currentPage = 1;
+      const pageSize = 10;
+
+      function renderRecentHistory(orders) {
+        const container = document.getElementById("manageOrderRecentHistory");
+        if (!container) return;
+        if (!orders || orders.length === 0) {
+          container.innerHTML =
+            '<p class="text-on-surface-variant text-center p-md">Không có dữ liệu</p>';
+          return;
+        }
+
+        const recent = orders.slice(0, 4);
+        container.innerHTML = recent
+          .map((order) => {
+            const customerName =
+              order.user?.fullName ||
+              order.user?.email ||
+              order.shippingAddress?.phone ||
+              "Khách ẩn danh";
+            const formattedPrice = new Intl.NumberFormat("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            }).format(order.totalPrice);
+            const dateStr = order.createdAt
+              ? new Date(order.createdAt).toLocaleDateString("vi-VN")
+              : "Vừa xong";
+
+            return `
+            <div class="flex items-center justify-between p-sm hover:bg-surface-container-low rounded-lg transition-colors">
+              <div class="flex items-center gap-md">
+                <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold">
+                  <span class="material-symbols-outlined text-[20px]">receipt_long</span>
+                </div>
+                <div>
+                  <p class="font-label-md text-on-surface">${order.orderNumber}</p>
+                  <p class="text-xs text-on-surface-variant">${customerName} • ${dateStr}</p>
+                </div>
+              </div>
+              <div class="text-right">
+                <p class="font-label-md text-primary">${formattedPrice}</p>
+                <p class="text-[10px] text-on-surface-variant uppercase font-bold">${order.status}</p>
+              </div>
+            </div>
+          `;
+          })
+          .join("");
       }
 
-      loadOrders();
+      window.currentOrders = [];
+
+      window.loadOrders = async function (page = 1) {
+        currentPage = page;
+        const orderTableBody = document.getElementById("orderTableBody");
+        const paginationInfo = document.getElementById("paginationInfo");
+        const paginationControls =
+          document.getElementById("paginationControls");
+
+        const result = await getAdminOrders({ page, limit: pageSize });
+        if (result.success) {
+          const orders = result.orders;
+          window.currentOrders = orders;
+          const totalOrders =
+            result.total ||
+            (orders.length < pageSize && page === 1
+              ? orders.length
+              : page * pageSize + 1); // Mock total if not returned
+          const totalPages =
+            result.totalPages || Math.ceil(totalOrders / pageSize) || 1;
+
+          if (page === 1) renderRecentHistory(orders);
+
+          if (!orders || orders.length === 0) {
+            orderTableBody.innerHTML =
+              '<tr><td colspan="6" class="px-lg py-md text-center text-on-surface-variant">Không có đơn hàng nào.</td></tr>';
+            if (paginationInfo) paginationInfo.textContent = "Không có dữ liệu";
+            if (paginationControls) paginationControls.innerHTML = "";
+            return;
+          }
+
+          orderTableBody.innerHTML = orders
+            .map((order) => {
+              const customerName =
+                order.user?.fullName ||
+                order.user?.email ||
+                order.shippingAddress?.phone ||
+                "Khách ẩn danh";
+              const productCount = order.products?.length || 0;
+              const statusMap = {
+                pending: {
+                  label: "Chờ xử lý",
+                  class: "bg-primary-container text-on-primary-container",
+                },
+                confirmed: {
+                  label: "Đã xác nhận",
+                  class: "bg-tertiary-container text-on-tertiary-container",
+                },
+                shipped: {
+                  label: "Đang giao",
+                  class: "bg-blue-100 text-blue-800",
+                },
+                delivered: {
+                  label: "Đã giao",
+                  class: "bg-green-100 text-green-800",
+                },
+                cancelled: {
+                  label: "Đã hủy",
+                  class: "bg-error-container text-on-error-container",
+                },
+              };
+              const statusInfo = statusMap[order.status] || {
+                label: order.status,
+                class: "bg-surface-variant text-on-surface-variant",
+              };
+
+              const formattedPrice = new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(order.totalPrice);
+
+              return `
+              <tr class="hover:bg-surface-bright transition-colors group border-b border-outline-variant/30">
+                <td class="px-lg py-md text-label-md font-bold text-primary">${order.orderNumber}</td>
+                <td class="px-lg py-md text-body-md text-on-surface">${customerName}</td>
+                <td class="px-lg py-md text-body-md text-on-surface-variant">${productCount} sản phẩm</td>
+                <td class="px-lg py-md">
+                  <span class="px-2 py-1 rounded-full text-xs font-bold ${statusInfo.class}">${statusInfo.label}</span>
+                </td>
+                <td class="px-lg py-md text-label-md text-on-surface">${formattedPrice}</td>
+                <td class="px-lg py-md">
+                   <div class="flex items-center justify-end gap-2">
+                     <select onchange="window.updateOrder('${order._id}', this.value)" class="text-sm border-outline-variant rounded-md bg-surface-container text-on-surface py-1 pl-3 pr-8 focus:ring-primary focus:border-primary">
+                       <option value="pending" ${order.status === "pending" ? "selected" : ""}>Chờ xử lý</option>
+                       <option value="confirmed" ${order.status === "confirmed" ? "selected" : ""}>Xác nhận</option>
+                       <option value="shipped" ${order.status === "shipped" ? "selected" : ""}>Giao hàng</option>
+                       <option value="delivered" ${order.status === "delivered" ? "selected" : ""}>Đã giao</option>
+                       <option value="cancelled" ${order.status === "cancelled" ? "selected" : ""}>Hủy</option>
+                     </select>
+                     <button onclick="window.openOrderDetail('${order._id}')" class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-high text-on-surface hover:text-primary transition-colors hover:bg-primary-container/20" title="Xem chi tiết">
+                       <span class="material-symbols-outlined text-[18px]">visibility</span>
+                     </button>
+                     <button onclick="window.deleteOrder('${order._id}')" class="w-8 h-8 flex items-center justify-center rounded-full bg-error-container text-on-error-container hover:bg-error/90 transition-colors" title="Xóa đơn">
+                       <span class="material-symbols-outlined text-[18px]">delete</span>
+                     </button>
+                   </div>
+                </td>
+              </tr>
+             `;
+            })
+            .join("");
+
+          if (paginationInfo) {
+            const start = (page - 1) * pageSize + 1;
+            const end = Math.min(page * pageSize, totalOrders);
+            paginationInfo.textContent = `Hiển thị ${start} - ${end} của ${totalOrders} đơn hàng`;
+          }
+
+          if (paginationControls) {
+            let controlsHTML = `
+                <button onclick="window.loadOrders(${page - 1})" class="p-xs text-outline hover:bg-surface-variant rounded-md disabled:opacity-30" ${page <= 1 ? "disabled" : ""}>
+                  <span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
+                </button>
+             `;
+
+            for (let i = 1; i <= totalPages; i++) {
+              if (i === page) {
+                controlsHTML += `<button class="w-8 h-8 rounded-md bg-primary text-on-primary font-bold text-label-sm">${i}</button>`;
+              } else {
+                controlsHTML += `<button onclick="window.loadOrders(${i})" class="w-8 h-8 rounded-md hover:bg-surface-variant text-on-surface text-label-sm transition-colors">${i}</button>`;
+              }
+            }
+
+            controlsHTML += `
+                <button onclick="window.loadOrders(${page + 1})" class="p-xs text-outline hover:bg-surface-variant rounded-md disabled:opacity-30" ${page >= totalPages ? "disabled" : ""}>
+                  <span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+                </button>
+             `;
+            paginationControls.innerHTML = controlsHTML;
+          }
+        } else {
+          orderTableBody.innerHTML =
+            '<tr><td colspan="6" class="px-lg py-md text-center text-error">Lỗi khi tải dữ liệu.</td></tr>';
+        }
+      };
+
+      window.loadOrders();
+
+      window.openOrderDetail = function (orderId) {
+        const order = window.currentOrders.find((o) => o._id === orderId);
+        if (!order) return;
+
+        document.getElementById("modalOrderNumber").textContent =
+          order.orderNumber;
+        document.getElementById("modalCustomerName").textContent =
+          order.user?.fullName ||
+          order.user?.email ||
+          order.shippingAddress?.fullName ||
+          "Khách ẩn danh";
+        document.getElementById("modalCustomerPhone").textContent =
+          order.shippingAddress?.phone || "";
+
+        const address = order.shippingAddress;
+        const addressParts = [address?.address, address?.city].filter(Boolean);
+        document.getElementById("modalCustomerAddress").textContent =
+          addressParts.length > 0 ? addressParts.join(", ") : "Chưa cập nhật";
+
+        const statusMap = {
+          pending: {
+            label: "Chờ xử lý",
+            class: "bg-primary-container text-on-primary-container",
+          },
+          confirmed: {
+            label: "Đã xác nhận",
+            class: "bg-tertiary-container text-on-tertiary-container",
+          },
+          shipped: { label: "Đang giao", class: "bg-blue-100 text-blue-800" },
+          delivered: { label: "Đã giao", class: "bg-green-100 text-green-800" },
+          cancelled: {
+            label: "Đã hủy",
+            class: "bg-error-container text-on-error-container",
+          },
+        };
+        const statusInfo = statusMap[order.status] || {
+          label: order.status,
+          class: "bg-surface-variant text-on-surface-variant",
+        };
+
+        const statusEl = document.getElementById("modalOrderStatus");
+        statusEl.textContent = statusInfo.label;
+        statusEl.className = `px-2 py-1 rounded-full text-xs font-bold mt-1 inline-block ${statusInfo.class}`;
+
+        const productsHtml = (order.products || [])
+          .map((p) => {
+            const price = p.product?.price || 0;
+            const qty = p.quantity || 1;
+            const fmtPrice = new Intl.NumberFormat("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            }).format(price * qty);
+            return `
+             <tr class="hover:bg-surface-bright transition-colors">
+               <td class="px-md py-sm text-body-md text-on-surface">${p.product?.name || "Sản phẩm"}</td>
+               <td class="px-md py-sm text-body-md text-on-surface-variant text-right">${qty}</td>
+               <td class="px-md py-sm text-label-md text-on-surface text-right">${fmtPrice}</td>
+             </tr>
+           `;
+          })
+          .join("");
+        document.getElementById("modalOrderProducts").innerHTML =
+          productsHtml ||
+          '<tr><td colspan="3" class="text-center py-2 text-on-surface-variant">Không có sản phẩm</td></tr>';
+
+        document.getElementById("modalOrderTotal").textContent =
+          new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+          }).format(order.totalPrice);
+
+        document.getElementById("orderDetailModal").classList.remove("hidden");
+      };
+
+      window.closeOrderDetail = function () {
+        document.getElementById("orderDetailModal").classList.add("hidden");
+      };
 
       // Update order status
       window.updateOrder = async (orderId, status) => {
@@ -618,6 +952,21 @@
         if (result.success) {
           alert("Cập nhật trạng thái thành công");
           loadOrders();
+        }
+      };
+
+      // Delete order
+      window.deleteOrder = async (orderId) => {
+        if (!confirm("Bạn có chắc chắn muốn xóa đơn hàng này?")) {
+          return;
+        }
+
+        const result = await deleteOrder(orderId);
+        if (result.success) {
+          alert("Xóa đơn hàng thành công");
+          loadOrders();
+        } else {
+          alert(result.message || "Không thể xóa đơn hàng");
         }
       };
     </script>

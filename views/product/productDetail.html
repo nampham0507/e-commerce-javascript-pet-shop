@@ -423,6 +423,7 @@
                 Thêm vào giỏ
               </button>
               <button
+                id="placeOrderNowBtn"
                 class="flex items-center justify-center gap-md py-4 rounded-full bg-primary-container text-on-primary-container font-bold shadow-md hover:scale-105 transition-all active:scale-95"
               >
                 <span class="material-symbols-outlined" data-weight="fill"
@@ -497,71 +498,34 @@
       </section>
     </main>
     <!-- Footer -->
-    <footer class="bg-surface-container-highest w-full py-xl px-lg mt-xl">
-      <div
-        class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-lg"
-      >
-        <div class="flex flex-col gap-md">
-          <div
-            class="font-headline-sm text-headline-sm text-on-surface font-bold"
-          >
-            Xám Pet Shop
-          </div>
-          <p class="font-body-sm text-label-sm text-on-surface-variant">
-            Nơi cung cấp giải pháp dinh dưỡng toàn diện và cao cấp cho những chú
-            mèo của bạn.
-          </p>
-        </div>
-        <div class="flex flex-col gap-sm">
-          <h4 class="font-label-md text-primary mb-md">Liên hệ</h4>
-          <p class="font-body-sm text-label-sm text-on-surface-variant">
-            Address: Bắc Từ Liêm, Hà Nội
-          </p>
-          <p class="font-body-sm text-label-sm text-on-surface-variant">
-            Phone: 038.339.2903
-          </p>
-          <p class="font-body-sm text-label-sm text-on-surface-variant">
-            Email: nampham050723@gmail.com
-          </p>
-        </div>
-        <div class="flex flex-col gap-sm">
-          <h4 class="font-label-md text-primary mb-md">Khám phá</h4>
-          <a
-            class="font-body-sm text-label-sm text-on-surface-variant hover:text-primary transition-opacity"
-            href="#"
-            >Về chúng tôi</a
-          >
-          <a
-            class="font-body-sm text-label-sm text-on-surface-variant hover:text-primary transition-opacity"
-            href="#"
-            >Chính sách giao hàng</a
-          >
-          <a
-            class="font-body-sm text-label-sm text-on-surface-variant hover:text-primary transition-opacity"
-            href="#"
-            >Đổi trả sản phẩm</a
-          >
-        </div>
-        <div class="flex flex-col gap-sm">
-          <h4 class="font-label-md text-primary mb-md">Mạng xã hội</h4>
-          <div class="flex gap-md">
-            <a
-              class="text-on-surface-variant hover:text-primary transition-opacity"
-              href="#"
-              >Facebook</a
-            >
-            <a
-              class="text-on-surface-variant hover:text-primary transition-opacity"
-              href="#"
-              >Instagram</a
-            >
-          </div>
-        </div>
+    <footer class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto bg-surface-container-highest dark:bg-surface-container mt-xl rounded-[24px]">
+      <div class="col-span-1 md:col-span-1">
+        <span class="font-headline-sm text-headline-sm text-on-surface">Xám Pet Shop</span>
+        <p class="mt-md text-on-surface-variant text-label-sm">
+          Cửa hàng chăm sóc thú cưng cao cấp, mang lại sự ấm áp và tin cậy cho người bạn bốn chân của bạn.
+        </p>
       </div>
-      <div
-        class="max-w-container-max mx-auto mt-xl pt-lg border-t border-outline-variant/30 text-center"
-      >
-        <p class="font-body-sm text-label-sm text-on-surface-variant">
+      <div class="flex flex-col gap-sm">
+        <span class="font-label-md text-label-md text-primary">Liên hệ</span>
+        <span class="text-on-surface-variant text-label-sm">Address: Bắc Từ Liêm, Hà Nội</span>
+        <span class="text-on-surface-variant text-label-sm">Phone: 038.339.2903</span>
+        <span class="text-on-surface-variant text-label-sm">Email: nampham050723@gmail.com</span>
+      </div>
+      <div class="flex flex-col gap-sm">
+        <span class="font-label-md text-label-md text-primary">Chính sách</span>
+        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity" href="#">Chính sách bảo mật</a>
+        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity" href="#">Điều khoản dịch vụ</a>
+        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity" href="#">Giao hàng &amp; Hoàn trả</a>
+      </div>
+      <div class="flex flex-col gap-sm">
+        <span class="font-label-md text-label-md text-primary">Mạng xã hội</span>
+        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2" href="https://www.facebook.com/pdn.0507" target="_blank">
+          <span class="material-symbols-outlined text-sm">public</span> Facebook
+        </a>
+        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2" href="https://www.instagram.com/dinhnam.ph" target="_blank">
+          <span class="material-symbols-outlined text-sm">camera_alt</span> Instagram
+        </a>
+        <p class="mt-4 text-on-surface-variant text-[10px]">
           © 2026 Xám Pet Shop. All rights reserved.
         </p>
       </div>
@@ -805,6 +769,24 @@
         addToCart(currentProduct, currentQuantity);
         updateCartBadge();
         showToast(`Đã thêm ${currentQuantity} sản phẩm vào giỏ hàng`);
+      });
+
+      const placeOrderNowBtn = document.getElementById("placeOrderNowBtn");
+      placeOrderNowBtn?.addEventListener("click", () => {
+        if (!currentProduct) {
+          showToast("Không thể đặt hàng sản phẩm này");
+          return;
+        }
+
+        if (!isAuthenticated()) {
+          window.location.href = "/auth/login";
+          return;
+        }
+
+        // Add to cart then redirect to checkout
+        addToCart(currentProduct, currentQuantity);
+        updateCartBadge();
+        window.location.href = "/order/checkout";
       });
 
       initNav();
