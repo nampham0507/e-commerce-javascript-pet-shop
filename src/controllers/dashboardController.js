@@ -18,7 +18,7 @@ exports.getDashboardStats = async (req, res) => {
 
     const pendingOrders = await Order.countDocuments({ status: "pending" });
 
-    // Revenue by month
+    // Revenue by month (for growth calculation)
     const revenueByMonth = await Order.aggregate([
       {
         $group: {
@@ -31,6 +31,58 @@ exports.getDashboardStats = async (req, res) => {
       },
       { $sort: { "_id.year": -1, "_id.month": -1 } },
       { $limit: 12 },
+    ]);
+
+    // Revenue by category
+    const revenueByCategory = await Order.aggregate([
+      { $unwind: "$products" },
+      {
+        $lookup: {
+          from: "products",
+          localField: "products.product",
+          foreignField: "_id",
+          as: "productInfo",
+        },
+      },
+      { $unwind: "$productInfo" },
+      {
+        $group: {
+          _id: "$productInfo.category",
+          revenue: {
+            $sum: { $multiply: ["$products.price", "$products.quantity"] },
+          },
+          count: { $sum: "$products.quantity" },
+        },
+      },
+      { $sort: { revenue: -1 } },
+    ]);
+
+    // Revenue by day (last 14 days)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const fourteenDaysAgo = new Date(today);
+    fourteenDaysAgo.setDate(fourteenDaysAgo.getDate() - 13);
+
+    const revenueByDay = await Order.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $gte: fourteenDaysAgo,
+            $lt: new Date(today.getTime() + 24 * 60 * 60 * 1000),
+          },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            year: { $year: "$createdAt" },
+            month: { $month: "$createdAt" },
+            day: { $dayOfMonth: "$createdAt" },
+          },
+          revenue: { $sum: "$totalPrice" },
+        },
+      },
+      { $sort: { "_id.year": 1, "_id.month": 1, "_id.day": 1 } },
     ]);
 
     // Recent activities
@@ -51,13 +103,18 @@ exports.getDashboardStats = async (req, res) => {
         $group: {
           _id: "$products.product",
           sold: { $sum: "$products.quantity" },
-          revenue: { $sum: { $multiply: ["$products.price", "$products.quantity"] } }
-        }
+          revenue: {
+            $sum: { $multiply: ["$products.price", "$products.quantity"] },
+          },
+        },
       },
       { $sort: { sold: -1 } },
-      { $limit: 3 }
+      { $limit: 3 },
     ]);
-    const topProducts = await Product.populate(topProductsRaw, { path: "_id", select: "name category image" });
+    const topProducts = await Product.populate(topProductsRaw, {
+      path: "_id",
+      select: "name category image",
+    });
 
     res.json({
       success: true,
@@ -75,7 +132,9 @@ exports.getDashboardStats = async (req, res) => {
           pending: pendingOrders,
           revenue: totalRevenue[0]?.total || 0,
         },
+        revenueByDay,
         revenueByMonth,
+        revenueByCategory,
         recentOrders,
         recentUsers,
         topProducts,

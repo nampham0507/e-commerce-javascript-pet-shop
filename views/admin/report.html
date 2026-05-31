@@ -150,6 +150,16 @@
       .soft-shadow {
         box-shadow: 0 4px 20px -2px rgba(132, 84, 0, 0.08);
       }
+      /* ===== ANIMATIONS ===== */
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes slideInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes scaleUp { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+      main { animation: fadeIn 0.6s ease-out; }
+      main > div { animation: scaleUp 0.6s ease-out backwards; }
+      main > div:nth-child(1) { animation-delay: 0s; }
+      main > div:nth-child(2) { animation-delay: 0.1s; }
+      main > div:nth-child(3) { animation-delay: 0.2s; }
+      main > div:nth-child(4) { animation-delay: 0.3s; }
     </style>
   </head>
   <body class="bg-background text-on-surface font-body-md min-h-screen">
@@ -239,12 +249,21 @@
           </p>
         </div>
         <div class="flex gap-md">
-          <button
-            class="bg-white border-2 border-outline-variant px-lg py-sm rounded-full font-label-md text-on-surface-variant hover:border-primary transition-all flex items-center gap-2"
-          >
-            <span class="material-symbols-outlined">calendar_today</span>
-            Tháng này
-          </button>
+          <div class="relative">
+            <button
+              id="monthSelector"
+              class="bg-white border-2 border-outline-variant px-lg py-sm rounded-full font-label-md text-on-surface-variant hover:border-primary transition-all flex items-center gap-2"
+            >
+              <span class="material-symbols-outlined">calendar_today</span>
+              <span id="monthSelectorText">Tháng này</span>
+            </button>
+            <div
+              id="monthDropdown"
+              class="absolute top-full mt-2 left-0 bg-white border border-outline-variant rounded-xl shadow-lg hidden z-50 min-w-[200px]"
+            >
+              <div class="p-md max-h-80 overflow-y-auto"></div>
+            </div>
+          </div>
           <button
             id="exportReportBtn"
             class="bg-primary text-white px-lg py-sm rounded-full font-label-md hover:scale-105 transition-transform flex items-center gap-2"
@@ -273,7 +292,10 @@
             >
           </div>
           <p class="text-on-surface-variant font-label-md">Doanh thu</p>
-          <h3 id="reportRevenue" class="text-headline-md font-headline-md text-primary mt-xs">
+          <h3
+            id="reportRevenue"
+            class="text-headline-md font-headline-md text-primary mt-xs"
+          >
             Đang tải...
           </h3>
         </div>
@@ -296,7 +318,10 @@
             >
           </div>
           <p class="text-on-surface-variant font-label-md">Tổng đơn hàng</p>
-          <h3 id="reportOrders" class="text-headline-md font-headline-md text-on-surface mt-xs">
+          <h3
+            id="reportOrders"
+            class="text-headline-md font-headline-md text-on-surface mt-xs"
+          >
             Đang tải...
           </h3>
         </div>
@@ -319,7 +344,10 @@
           <p class="text-on-surface-variant font-label-md">
             Sản phẩm trong kho
           </p>
-          <h3 id="reportProducts" class="text-headline-md font-headline-md text-on-surface mt-xs">
+          <h3
+            id="reportProducts"
+            class="text-headline-md font-headline-md text-on-surface mt-xs"
+          >
             Đang tải...
           </h3>
         </div>
@@ -338,7 +366,10 @@
               >Đơn vị: Triệu VNĐ</span
             >
           </div>
-          <div class="h-64 flex items-end justify-between gap-md px-md">
+          <div
+            class="h-64 flex items-end justify-between gap-md px-md"
+            id="weekRevenueChart"
+          >
             <div class="flex flex-col items-center gap-sm flex-1">
               <div
                 class="w-full bg-outline-variant/30 rounded-t-lg h-[40%] hover:bg-primary-container transition-colors relative group"
@@ -432,57 +463,12 @@
           <h4 class="font-headline-md text-on-surface mb-xl">
             Cơ cấu danh mục
           </h4>
-          <div class="relative w-48 h-48 mx-auto mb-lg">
-            <div
-              class="absolute inset-0 rounded-full border-[32px] border-primary"
-              style="
-                clip-path: polygon(
-                  50% 50%,
-                  50% 0,
-                  100% 0,
-                  100% 100%,
-                  0 100%,
-                  0 50%
-                );
-              "
-            ></div>
-            <div
-              class="absolute inset-0 rounded-full border-[32px] border-primary-container/40"
-              style="clip-path: polygon(50% 50%, 50% 0, 0 0, 0 50%)"
-            ></div>
-            <div
-              class="absolute inset-0 flex items-center justify-center flex-col"
-            >
-              <span class="text-headline-md font-bold text-primary">65%</span>
-              <span
-                class="text-[10px] text-on-surface-variant uppercase tracking-widest"
-                >Thức ăn</span
-              >
+          <div class="relative w-48 h-48 mx-auto mb-lg" id="categoryChart">
+            <div class="flex items-center justify-center h-full">
+              <span class="text-on-surface-variant">Đang tải...</span>
             </div>
           </div>
-          <div class="space-y-sm">
-            <div class="flex justify-between items-center text-label-sm">
-              <div class="flex items-center gap-2">
-                <div class="w-3 h-3 rounded-full bg-primary"></div>
-                <span>Thức ăn</span>
-              </div>
-              <span class="font-bold">65%</span>
-            </div>
-            <div class="flex justify-between items-center text-label-sm">
-              <div class="flex items-center gap-2">
-                <div class="w-3 h-3 rounded-full bg-primary-container/40"></div>
-                <span>Phụ kiện</span>
-              </div>
-              <span class="font-bold">25%</span>
-            </div>
-            <div class="flex justify-between items-center text-label-sm">
-              <div class="flex items-center gap-2">
-                <div class="w-3 h-3 rounded-full bg-secondary"></div>
-                <span>Khác</span>
-              </div>
-              <span class="font-bold">10%</span>
-            </div>
-          </div>
+          <div class="space-y-sm" id="categoryLegend"></div>
         </div>
       </div>
       <!-- Asymmetric Layout: Top Products Table & Recent Activity -->
@@ -493,7 +479,9 @@
         >
           <div class="flex justify-between items-center mb-lg">
             <h4 class="font-headline-md text-on-surface">Sản phẩm bán chạy</h4>
-            <a class="text-primary font-label-md hover:underline" href="#"
+            <a
+              class="text-primary font-label-md hover:underline"
+              href="/admin/manageProduct"
               >Xem tất cả</a
             >
           </div>
@@ -518,7 +506,10 @@
                   </th>
                 </tr>
               </thead>
-              <tbody id="topProductsTableBody" class="divide-y divide-outline-variant">
+              <tbody
+                id="topProductsTableBody"
+                class="divide-y divide-outline-variant"
+              >
                 <!-- Data will be loaded here -->
               </tbody>
             </table>
@@ -535,6 +526,7 @@
             <!-- Data will be loaded here -->
           </div>
           <button
+            onclick="window.location.href = '/admin/manageOrder'"
             class="w-full mt-xl py-md text-primary font-label-md border-2 border-primary/20 rounded-xl hover:bg-primary-container/10 transition-colors"
           >
             Xem tất cả lịch sử
@@ -674,64 +666,242 @@
           const revEl = document.getElementById("reportRevenue");
           const ordEl = document.getElementById("reportOrders");
           const prdEl = document.getElementById("reportProducts");
-          
+
           const revGrowthEl = document.getElementById("reportRevenueGrowth");
           const ordGrowthEl = document.getElementById("reportOrdersGrowth");
           const prdStatusEl = document.getElementById("reportProductsStatus");
 
-          const topProductsBody = document.getElementById("topProductsTableBody");
+          const topProductsBody = document.getElementById(
+            "topProductsTableBody"
+          );
           const recentList = document.getElementById("recentActivitiesList");
-          
-          if (revEl) revEl.textContent = (d.orders?.revenue || 0).toLocaleString("vi-VN") + "₫";
-          if (ordEl) ordEl.textContent = (d.orders?.total || 0).toLocaleString("vi-VN") + " đơn";
-          if (prdEl) prdEl.textContent = (d.products?.total || 0).toLocaleString("vi-VN") + " SP";
+
+          if (revEl)
+            revEl.textContent =
+              (d.orders?.revenue || 0).toLocaleString("vi-VN") + "₫";
+          if (ordEl)
+            ordEl.textContent =
+              (d.orders?.total || 0).toLocaleString("vi-VN") + " đơn";
+          if (prdEl)
+            prdEl.textContent =
+              (d.products?.total || 0).toLocaleString("vi-VN") + " SP";
 
           // Calculate revenue growth if possible
           if (revGrowthEl && d.revenueByMonth && d.revenueByMonth.length >= 2) {
             const current = d.revenueByMonth[0].revenue || 0;
             const prev = d.revenueByMonth[1].revenue || 1;
             const growth = ((current - prev) / prev) * 100;
-            revGrowthEl.textContent = (growth > 0 ? "+" : "") + growth.toFixed(1) + "%";
-            revGrowthEl.className = growth >= 0 
-              ? "text-green-600 font-label-sm bg-green-100 px-sm py-xs rounded-full"
-              : "text-red-600 font-label-sm bg-red-100 px-sm py-xs rounded-full";
+            revGrowthEl.textContent =
+              (growth > 0 ? "+" : "") + growth.toFixed(1) + "%";
+            revGrowthEl.className =
+              growth >= 0
+                ? "text-green-600 font-label-sm bg-green-100 px-sm py-xs rounded-full"
+                : "text-red-600 font-label-sm bg-red-100 px-sm py-xs rounded-full";
           } else if (revGrowthEl) {
             revGrowthEl.textContent = "+0%";
           }
 
           if (ordGrowthEl) ordGrowthEl.textContent = "Mới";
-          if (prdStatusEl) prdStatusEl.textContent = d.products?.total > 0 ? "Sẵn sàng" : "Hết hàng";
+          if (prdStatusEl)
+            prdStatusEl.textContent =
+              d.products?.total > 0 ? "Sẵn sàng" : "Hết hàng";
 
           // Render top products
           if (topProductsBody && d.topProducts) {
-            topProductsBody.innerHTML = d.topProducts.map(p => `
+            topProductsBody.innerHTML = d.topProducts
+              .map(
+                (p) => `
                 <tr>
                   <td class="py-md flex items-center gap-md">
-                    <img class="w-12 h-12 rounded-xl object-cover bg-surface-container" src="${p._id?.image || ''}" />
+                    <img class="w-12 h-12 rounded-xl object-cover bg-surface-container" src="${p._id?.image || ""}" />
                     <div>
-                      <div class="font-label-md text-on-surface">${p._id?.name || 'Sản phẩm'}</div>
-                      <div class="text-[12px] text-on-surface-variant">Danh mục: ${p._id?.category || 'Khác'}</div>
+                      <div class="font-label-md text-on-surface">${p._id?.name || "Sản phẩm"}</div>
+                      <div class="text-[12px] text-on-surface-variant">Danh mục: ${p._id?.category || "Khác"}</div>
                     </div>
                   </td>
                   <td class="py-md text-center font-body-md">${p.sold.toLocaleString("vi-VN")}</td>
                   <td class="py-md text-right font-bold text-primary">${p.revenue.toLocaleString("vi-VN")}₫</td>
                 </tr>
-            `).join("");
+            `
+              )
+              .join("");
+          }
+
+          // Render weekly revenue chart
+          if (d.revenueByDay) {
+            const dayNames = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
+            const dayMap = {};
+            d.revenueByDay.forEach((item) => {
+              const key = `${item._id.year}-${String(item._id.month).padStart(2, "0")}-${String(item._id.day).padStart(2, "0")}`;
+              dayMap[key] = item.revenue;
+            });
+
+            const today = new Date();
+            const currentDayOfWeek = today.getDay();
+            const daysToMonday =
+              currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1;
+            const monday = new Date(today);
+            monday.setDate(monday.getDate() - daysToMonday);
+            monday.setHours(0, 0, 0, 0);
+
+            const weekDays = [];
+            for (let i = 0; i < 7; i++) {
+              const date = new Date(monday);
+              date.setDate(date.getDate() + i);
+              weekDays.push(date);
+            }
+
+            const weekRevs = weekDays.map((date) => {
+              const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+              return dayMap[key] || 0;
+            });
+            const maxWeekRev = Math.max(...weekRevs) || 1;
+
+            const chartContainer = document.getElementById("weekRevenueChart");
+            const barsHtml = weekDays
+              .map((date, idx) => {
+                const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+                const revenue = dayMap[key] || 0;
+                const heightPct =
+                  revenue > 0 ? Math.max(10, (revenue / maxWeekRev) * 220) : 15;
+                const millions = (revenue / 1000000).toFixed(1);
+
+                return `
+                <div class="flex flex-col items-center gap-sm flex-1">
+                  <div class="w-full rounded-t-lg hover:bg-primary-container transition-colors relative group ${revenue > 0 ? "bg-primary" : "bg-outline-variant/30"}" style="height: ${heightPct}px">
+                    <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                      ${millions}M
+                    </div>
+                  </div>
+                  <span class="text-label-sm text-on-surface-variant">${dayNames[idx]}</span>
+                </div>
+              `;
+              })
+              .join("");
+            chartContainer.innerHTML = barsHtml;
+          }
+
+          // Render category chart
+          if (d.revenueByCategory && d.revenueByCategory.length > 0) {
+            const total = d.revenueByCategory.reduce(
+              (sum, cat) => sum + cat.revenue,
+              0
+            );
+            const colors = [
+              "#f8b432",
+              "#e07f3c",
+              "#6d6f24",
+              "#2f6f6f",
+              "#a36f27",
+            ];
+
+            const chartContainer = document.getElementById("categoryChart");
+            const segments = d.revenueByCategory.map((cat, idx) => {
+              const percentage = total > 0 ? (cat.revenue / total) * 100 : 0;
+              return `${colors[idx % colors.length]} ${percentage.toFixed(1)}%`;
+            });
+            chartContainer.style.background = `conic-gradient(${segments.join(", ")})`;
+            chartContainer.style.borderRadius = "9999px";
+            chartContainer.style.position = "relative";
+            chartContainer.style.overflow = "hidden";
+            chartContainer.innerHTML = `
+              <div class="absolute inset-12 rounded-full bg-white"></div>
+              <div class="absolute inset-0 flex items-center justify-center flex-col">
+                <span class="text-headline-md font-bold text-primary">${d.revenueByCategory[0] ? Math.round((d.revenueByCategory[0].revenue / total) * 100) : 0}%</span>
+                <span class="text-[10px] text-on-surface-variant uppercase tracking-widest">${d.revenueByCategory[0] ? d.revenueByCategory[0]._id : "Khác"}</span>
+              </div>
+            `;
+
+            const legendContainer = document.getElementById("categoryLegend");
+            legendContainer.innerHTML = d.revenueByCategory
+              .map((cat, idx) => {
+                const percentage =
+                  total > 0 ? Math.round((cat.revenue / total) * 100) : 0;
+                return `
+                  <div class="flex justify-between items-center text-label-sm">
+                    <div class="flex items-center gap-2">
+                      <div class="w-3 h-3 rounded-full" style="background-color: ${colors[idx % colors.length]}"></div>
+                      <span>${cat._id || "Khác"}</span>
+                    </div>
+                    <span class="font-bold">${percentage}%</span>
+                  </div>
+                `;
+              })
+              .join("");
+          }
+
+          // Month selector
+          const monthSelector = document.getElementById("monthSelector");
+          const monthDropdown = document.getElementById("monthDropdown");
+          if (monthSelector && monthDropdown) {
+            const currentYear = new Date().getFullYear();
+            const selectedMonth = new Date().getMonth() + 1;
+            document.getElementById("monthSelectorText").textContent =
+              `Tháng ${selectedMonth}/${currentYear}`;
+
+            const dropdownContent = monthDropdown.querySelector("div");
+            const months = Array.from({ length: 12 }, (_, i) => i + 1);
+
+            function renderMonthDropdown(activeMonth) {
+              dropdownContent.innerHTML = months
+                .map(
+                  (month) => `
+                    <div
+                      class="py-2 px-3 rounded-lg cursor-pointer text-label-sm transition-colors ${
+                        month === activeMonth
+                          ? "bg-primary text-on-primary font-bold"
+                          : "hover:bg-surface-container-high text-on-surface-variant"
+                      }"
+                      data-month="${month}"
+                    >
+                      Tháng ${month}/${currentYear}
+                    </div>
+                  `
+                )
+                .join("");
+
+              dropdownContent
+                .querySelectorAll("[data-month]")
+                .forEach((item) => {
+                  item.addEventListener("click", () => {
+                    const month = parseInt(item.getAttribute("data-month"));
+                    document.getElementById("monthSelectorText").textContent =
+                      `Tháng ${month}/${currentYear}`;
+                    monthDropdown.classList.add("hidden");
+                    renderMonthDropdown(month);
+                  });
+                });
+            }
+
+            renderMonthDropdown(selectedMonth);
+
+            monthSelector.addEventListener("click", (event) => {
+              event.stopPropagation();
+              monthDropdown.classList.toggle("hidden");
+            });
+
+            document.addEventListener("click", () => {
+              monthDropdown.classList.add("hidden");
+            });
           }
 
           // Render recent activities (using orders)
           if (recentList && d.recentOrders) {
-            recentList.innerHTML = d.recentOrders.map(o => `
+            recentList.innerHTML = d.recentOrders
+              .map(
+                (o) => `
             <div class="flex gap-md">
               <div class="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
               <div>
                 <p class="text-body-md text-on-surface">
-                  Đơn hàng <strong>#${o.orderNumber || o._id.substring(0,6)}</strong> vừa được cập nhật (${o.status})
+                  Đơn hàng <strong>#${o.orderNumber || o._id.substring(0, 6)}</strong> vừa được cập nhật (${o.status})
                 </p>
                 <span class="text-[12px] text-on-surface-variant">${timeSince(o.updatedAt || o.createdAt)}</span>
               </div>
             </div>
-            `).join("");
+            `
+              )
+              .join("");
           }
 
           // Setup Excel Export via Backend API
@@ -741,14 +911,18 @@
               try {
                 const token = localStorage.getItem("token");
                 exportBtn.disabled = true;
-                exportBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Đang tạo...';
+                exportBtn.innerHTML =
+                  '<span class="material-symbols-outlined animate-spin">sync</span> Đang tạo...';
 
-                const response = await fetch("/api/admin/reports/export/excel", {
-                  method: 'GET',
-                  headers: {
-                    'Authorization': `Bearer ${token}`
+                const response = await fetch(
+                  "/api/admin/reports/export/excel",
+                  {
+                    method: "GET",
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
                   }
-                });
+                );
 
                 if (!response.ok) {
                   throw new Error("Lỗi khi tải báo cáo");
@@ -756,18 +930,18 @@
 
                 // Convert response to blob
                 const blob = await response.blob();
-                
+
                 // Get filename from Content-Disposition header if possible
                 let filename = "Bao_Cao_Xam_Pet_Shop.xlsx";
-                const disposition = response.headers.get('Content-Disposition');
-                if (disposition && disposition.indexOf('filename=') !== -1) {
-                    filename = disposition.split('filename=')[1];
+                const disposition = response.headers.get("Content-Disposition");
+                if (disposition && disposition.indexOf("filename=") !== -1) {
+                  filename = disposition.split("filename=")[1];
                 }
 
                 // Create download link
                 const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.style.display = 'none';
+                const a = document.createElement("a");
+                a.style.display = "none";
                 a.href = url;
                 a.download = filename;
                 document.body.appendChild(a);
@@ -779,7 +953,8 @@
                 alert("Không thể tải báo cáo lúc này.");
               } finally {
                 exportBtn.disabled = false;
-                exportBtn.innerHTML = '<span class="material-symbols-outlined">download</span> Xuất báo cáo';
+                exportBtn.innerHTML =
+                  '<span class="material-symbols-outlined">download</span> Xuất báo cáo';
               }
             };
           }

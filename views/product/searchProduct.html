@@ -172,6 +172,20 @@
       #userAvatar:hover {
         transform: scale(1.08);
       }
+      /* ===== ANIMATIONS ===== */
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes slideInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes slideInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
+      @keyframes scaleUp { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+      main { animation: fadeIn 0.6s ease-out; }
+      .grid > * { animation: scaleUp 0.6s ease-out backwards; }
+      .grid > *:nth-child(1) { animation-delay: 0s; }
+      .grid > *:nth-child(2) { animation-delay: 0.1s; }
+      .grid > *:nth-child(3) { animation-delay: 0.2s; }
+      .grid > *:nth-child(4) { animation-delay: 0.3s; }
+      .grid > *:nth-child(n+5) { animation-delay: 0.4s; }
+      .rounded-\[24px\] { transition: all 0.3s ease; }
+      .rounded-\[24px\]:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); }
     </style>
   </head>
   <body
@@ -578,32 +592,66 @@
     </main>
 
     <!-- Footer -->
-    <footer class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto bg-surface-container-highest dark:bg-surface-container mt-xl rounded-[24px]">
+    <footer
+      class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto bg-surface-container-highest dark:bg-surface-container mt-xl rounded-[24px]"
+    >
       <div class="col-span-1 md:col-span-1">
-        <span class="font-headline-sm text-headline-sm text-on-surface">Xám Pet Shop</span>
+        <span class="font-headline-sm text-headline-sm text-on-surface"
+          >Xám Pet Shop</span
+        >
         <p class="mt-md text-on-surface-variant text-label-sm">
-          Cửa hàng chăm sóc thú cưng cao cấp, mang lại sự ấm áp và tin cậy cho người bạn bốn chân của bạn.
+          Cửa hàng chăm sóc thú cưng cao cấp, mang lại sự ấm áp và tin cậy cho
+          người bạn bốn chân của bạn.
         </p>
       </div>
       <div class="flex flex-col gap-sm">
         <span class="font-label-md text-label-md text-primary">Liên hệ</span>
-        <span class="text-on-surface-variant text-label-sm">Address: Bắc Từ Liêm, Hà Nội</span>
-        <span class="text-on-surface-variant text-label-sm">Phone: 038.339.2903</span>
-        <span class="text-on-surface-variant text-label-sm">Email: nampham050723@gmail.com</span>
+        <span class="text-on-surface-variant text-label-sm"
+          >Address: Bắc Từ Liêm, Hà Nội</span
+        >
+        <span class="text-on-surface-variant text-label-sm"
+          >Phone: 038.339.2903</span
+        >
+        <span class="text-on-surface-variant text-label-sm"
+          >Email: nampham050723@gmail.com</span
+        >
       </div>
       <div class="flex flex-col gap-sm">
         <span class="font-label-md text-label-md text-primary">Chính sách</span>
-        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity" href="#">Chính sách bảo mật</a>
-        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity" href="#">Điều khoản dịch vụ</a>
-        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity" href="#">Giao hàng &amp; Hoàn trả</a>
+        <a
+          class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+          href="#"
+          >Chính sách bảo mật</a
+        >
+        <a
+          class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+          href="#"
+          >Điều khoản dịch vụ</a
+        >
+        <a
+          class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+          href="#"
+          >Giao hàng &amp; Hoàn trả</a
+        >
       </div>
       <div class="flex flex-col gap-sm">
-        <span class="font-label-md text-label-md text-primary">Mạng xã hội</span>
-        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2" href="https://www.facebook.com/pdn.0507" target="_blank">
+        <span class="font-label-md text-label-md text-primary"
+          >Mạng xã hội</span
+        >
+        <a
+          class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
+          href="https://www.facebook.com/pdn.0507"
+          target="_blank"
+        >
           <span class="material-symbols-outlined text-sm">public</span> Facebook
         </a>
-        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2" href="https://www.instagram.com/dinhnam.ph" target="_blank">
-          <span class="material-symbols-outlined text-sm">camera_alt</span> Instagram
+        <a
+          class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
+          href="https://www.instagram.com/dinhnam.ph"
+          target="_blank"
+        >
+          <span class="material-symbols-outlined text-sm">camera_alt</span>
+          Instagram
         </a>
         <p class="mt-4 text-on-surface-variant text-[10px]">
           © 2026 Xám Pet Shop. All rights reserved.
@@ -732,18 +780,18 @@
             (p) =>
               p.name.toLowerCase().includes(q) ||
               (p.description && p.description.toLowerCase().includes(q)) ||
-              (p.brand && p.brand.toLowerCase().includes(q)),
+              (p.brand && p.brand.toLowerCase().includes(q))
           );
         }
         if (currentCategories.length > 0) {
           filtered = filtered.filter((p) =>
-            currentCategories.includes((p.category || "").toLowerCase()),
+            currentCategories.includes((p.category || "").toLowerCase())
           );
         }
         filtered = filtered.filter((p) => p.price <= currentMaxPrice);
         if (currentBrand) {
           filtered = filtered.filter((p) =>
-            (p.brand || "").toLowerCase().includes(currentBrand.toLowerCase()),
+            (p.brand || "").toLowerCase().includes(currentBrand.toLowerCase())
           );
         }
         if (currentSort === "price_asc")
@@ -830,7 +878,7 @@
       document.querySelectorAll(".category-filter").forEach((cb) => {
         cb.addEventListener("change", () => {
           currentCategories = Array.from(
-            document.querySelectorAll(".category-filter:checked"),
+            document.querySelectorAll(".category-filter:checked")
           ).map((c) => c.value);
           applyFilters();
         });
@@ -905,6 +953,23 @@
       initNav();
       updateCartBadge();
       loadProducts();
+      // ===== SCROLL ANIMATIONS =====
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -100px 0px",
+      };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+      document.querySelectorAll(".grid > *, .space-y-md > *").forEach((el) => {
+        el.style.opacity = "0";
+        observer.observe(el);
+      });
     </script>
   </body>
 </html>

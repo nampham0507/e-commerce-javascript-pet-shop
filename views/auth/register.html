@@ -150,6 +150,18 @@
         },
       };
     </script>
+    <style>
+      /* ===== ANIMATIONS ===== */
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes slideInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes slideInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
+      @keyframes scaleUp { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+      main { animation: fadeIn 0.6s ease-out; }
+      main > div { animation: slideInUp 0.6s ease-out; }
+      main > div h2 { animation: slideInLeft 0.6s ease-out; }
+      button { transition: all 0.3s ease; }
+      button:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(132, 84, 0, 0.15); }
+    </style>
   </head>
   <body
     class="bg-background text-on-background font-body-md min-h-screen flex flex-col"
@@ -362,14 +374,14 @@
             submitBtn.disabled = true;
 
             const fullName = document.querySelector(
-              'input[name="fullName"]',
+              'input[name="fullName"]'
             ).value;
             const email = document.querySelector('input[name="email"]').value;
             const password = document.querySelector(
-              'input[name="password"]',
+              'input[name="password"]'
             ).value;
             const confirmPassword = document.querySelector(
-              'input[name="confirmPassword"]',
+              'input[name="confirmPassword"]'
             ).value;
 
             console.log("Form values:", {
@@ -424,36 +436,77 @@
       </div>
     </main>
     <!-- Footer -->
-    <footer class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto bg-surface-container-highest dark:bg-surface-container mt-xl rounded-[24px]">
-      <div class="col-span-1 md:col-span-1">
-        <span class="font-headline-sm text-headline-sm text-on-surface">Xám Pet Shop</span>
-        <p class="mt-md text-on-surface-variant text-label-sm">
-          Cửa hàng chăm sóc thú cưng cao cấp, mang lại sự ấm áp và tin cậy cho người bạn bốn chân của bạn.
-        </p>
-      </div>
-      <div class="flex flex-col gap-sm">
-        <span class="font-label-md text-label-md text-primary">Liên hệ</span>
-        <span class="text-on-surface-variant text-label-sm">Address: Bắc Từ Liêm, Hà Nội</span>
-        <span class="text-on-surface-variant text-label-sm">Phone: 038.339.2903</span>
-        <span class="text-on-surface-variant text-label-sm">Email: nampham050723@gmail.com</span>
-      </div>
-      <div class="flex flex-col gap-sm">
-        <span class="font-label-md text-label-md text-primary">Chính sách</span>
-        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity" href="#">Chính sách bảo mật</a>
-        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity" href="#">Điều khoản dịch vụ</a>
-        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity" href="#">Giao hàng &amp; Hoàn trả</a>
-      </div>
-      <div class="flex flex-col gap-sm">
-        <span class="font-label-md text-label-md text-primary">Mạng xã hội</span>
-        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2" href="https://www.facebook.com/pdn.0507" target="_blank">
-          <span class="material-symbols-outlined text-sm">public</span> Facebook
-        </a>
-        <a class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2" href="https://www.instagram.com/dinhnam.ph" target="_blank">
-          <span class="material-symbols-outlined text-sm">camera_alt</span> Instagram
-        </a>
-        <p class="mt-4 text-on-surface-variant text-[10px]">
-          © 2026 Xám Pet Shop. All rights reserved.
-        </p>
+    <footer
+      class="w-full py-xl px-lg bg-surface-container-highest dark:bg-surface-container"
+    >
+      <div
+        class="grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto rounded-[24px] p-lg"
+      >
+        <div class="col-span-1 md:col-span-1">
+          <span class="font-headline-sm text-headline-sm text-on-surface"
+            >Xám Pet Shop</span
+          >
+          <p class="mt-md text-on-surface-variant text-label-sm">
+            Cửa hàng chăm sóc thú cưng cao cấp, mang lại sự ấm áp và tin cậy cho
+            người bạn bốn chân của bạn.
+          </p>
+        </div>
+        <div class="flex flex-col gap-sm">
+          <span class="font-label-md text-label-md text-primary">Liên hệ</span>
+          <span class="text-on-surface-variant text-label-sm"
+            >Address: Bắc Từ Liêm, Hà Nội</span
+          >
+          <span class="text-on-surface-variant text-label-sm"
+            >Phone: 038.339.2903</span
+          >
+          <span class="text-on-surface-variant text-label-sm"
+            >Email: nampham050723@gmail.com</span
+          >
+        </div>
+        <div class="flex flex-col gap-sm">
+          <span class="font-label-md text-label-md text-primary"
+            >Chính sách</span
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+            href="#"
+            >Chính sách bảo mật</a
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+            href="#"
+            >Điều khoản dịch vụ</a
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+            href="#"
+            >Giao hàng &amp; Hoàn trả</a
+          >
+        </div>
+        <div class="flex flex-col gap-sm">
+          <span class="font-label-md text-label-md text-primary"
+            >Mạng xã hội</span
+          >
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
+            href="https://www.facebook.com/pdn.0507"
+            target="_blank"
+          >
+            <span class="material-symbols-outlined text-sm">public</span>
+            Facebook
+          </a>
+          <a
+            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
+            href="https://www.instagram.com/dinhnam.ph"
+            target="_blank"
+          >
+            <span class="material-symbols-outlined text-sm">camera_alt</span>
+            Instagram
+          </a>
+          <p class="mt-4 text-on-surface-variant text-[10px]">
+            © 2026 Xám Pet Shop. All rights reserved.
+          </p>
+        </div>
       </div>
     </footer>
   </body>

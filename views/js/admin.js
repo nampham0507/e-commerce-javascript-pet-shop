@@ -101,10 +101,19 @@ export const getProductStats = async () => {
 // Order Management
 export const getAdminOrders = async (params = {}) => {
   try {
-    const query = new URLSearchParams(params).toString();
-    const response = await fetch(`${API_BASE_URL}/admin/orders?${query}`, {
-      headers: getAuthHeaders(),
+    const filteredParams = {};
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== "") {
+        filteredParams[key] = value;
+      }
     });
+    const query = new URLSearchParams(filteredParams).toString();
+    const response = await fetch(
+      `${API_BASE_URL}/admin/orders${query ? `?${query}` : ""}`,
+      {
+        headers: getAuthHeaders(),
+      }
+    );
     return await response.json();
   } catch (error) {
     return { success: false, message: error.message };

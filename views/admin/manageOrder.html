@@ -35,6 +35,17 @@
         background: #d6c3b0;
         border-radius: 10px;
       }
+      /* ===== ANIMATIONS ===== */
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes slideInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes scaleUp { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+      main { animation: fadeIn 0.6s ease-out; }
+      table tbody tr { animation: slideInUp 0.6s ease-out backwards; }
+      table tbody tr:nth-child(1) { animation-delay: 0s; }
+      table tbody tr:nth-child(2) { animation-delay: 0.1s; }
+      table tbody tr:nth-child(3) { animation-delay: 0.2s; }
+      table tbody tr:nth-child(4) { animation-delay: 0.3s; }
+      table tbody tr:nth-child(n+5) { animation-delay: 0.4s; }
     </style>
     <script id="tailwind-config">
       tailwind.config = {
@@ -340,6 +351,7 @@
               >search</span
             >
             <input
+              id="orderSearchInput"
               class="w-full pl-xl pr-md py-sm bg-surface-container-low border-none rounded-full focus:ring-2 focus:ring-primary-container font-body-md placeholder:text-outline text-on-surface"
               placeholder="Tìm kiếm theo mã đơn, tên khách..."
               type="text"
@@ -347,21 +359,29 @@
           </div>
           <div class="flex items-center gap-xs overflow-x-auto pb-xs">
             <button
-              class="px-lg py-xs bg-primary text-on-primary rounded-full text-label-sm shadow-sm"
+              id="filterAll"
+              onclick="window.filterOrders('')"
+              class="px-lg py-xs bg-primary text-on-primary rounded-full text-label-sm shadow-sm hover:shadow-md transition-all"
             >
               Tất cả
             </button>
             <button
+              id="filterPending"
+              onclick="window.filterOrders('pending')"
               class="px-lg py-xs bg-surface-container-high text-on-surface-variant hover:bg-primary-container/20 rounded-full text-label-sm transition-colors"
             >
               Đang xử lý
             </button>
             <button
+              id="filterShipped"
+              onclick="window.filterOrders('shipped')"
               class="px-lg py-xs bg-surface-container-high text-on-surface-variant hover:bg-primary-container/20 rounded-full text-label-sm transition-colors"
             >
               Đã giao
             </button>
             <button
+              id="filterCancelled"
+              onclick="window.filterOrders('cancelled')"
               class="px-lg py-xs bg-surface-container-high text-on-surface-variant hover:bg-primary-container/20 rounded-full text-label-sm transition-colors"
             >
               Đã hủy
@@ -458,7 +478,9 @@
             <h3 class="font-headline-sm text-headline-sm">
               Lịch sử đơn hàng mới nhất
             </h3>
-            <a class="text-primary font-label-md hover:underline" href="#"
+            <a
+              class="text-primary font-label-md hover:underline"
+              href="/admin/report"
               >Xem báo cáo chi tiết</a
             >
           </div>
@@ -672,12 +694,31 @@
             d.orders?.total?.toLocaleString("vi-VN") || "—";
           document.getElementById("statPendingOrders").textContent =
             d.orders?.pending || "—";
-          const revenue = d.orders?.revenue || 0;
+
+          // Get today's revenue from revenueByDay
+          const today = new Date();
+          const todayKey = {
+            year: today.getFullYear(),
+            month: today.getMonth() + 1,
+            day: today.getDate(),
+          };
+
+          let dailyRevenue = 0;
+          if (d.revenueByDay && Array.isArray(d.revenueByDay)) {
+            const todayData = d.revenueByDay.find(
+              (item) =>
+                item._id.year === todayKey.year &&
+                item._id.month === todayKey.month &&
+                item._id.day === todayKey.day
+            );
+            dailyRevenue = todayData?.revenue || 0;
+          }
+
           document.getElementById("statDailyRevenue").textContent =
             new Intl.NumberFormat("vi-VN", {
               style: "currency",
               currency: "VND",
-            }).format(revenue);
+            }).format(dailyRevenue);
         }
       })();
 
@@ -730,26 +771,37 @@
           .join("");
       }
 
+      let currentFilter = "";
       window.currentOrders = [];
 
-      window.loadOrders = async function (page = 1) {
+      window.loadOrders = async function (page = 1, status = "") {
         currentPage = page;
         const orderTableBody = document.getElementById("orderTableBody");
         const paginationInfo = document.getElementById("paginationInfo");
         const paginationControls =
           document.getElementById("paginationControls");
 
-        const result = await getAdminOrders({ page, limit: pageSize });
+        const queryStatus =
+          status !== undefined && status !== "" ? status : currentFilter;
+        const result = await getAdminOrders({
+          page,
+          limit: pageSize,
+          status: queryStatus,
+        });
         if (result.success) {
           const orders = result.orders;
           window.currentOrders = orders;
           const totalOrders =
+            result.pagination?.total ||
             result.total ||
             (orders.length < pageSize && page === 1
               ? orders.length
-              : page * pageSize + 1); // Mock total if not returned
+              : page * pageSize + 1);
           const totalPages =
-            result.totalPages || Math.ceil(totalOrders / pageSize) || 1;
+            result.pagination?.pages ||
+            result.totalPages ||
+            Math.ceil(totalOrders / pageSize) ||
+            1;
 
           if (page === 1) renderRecentHistory(orders);
 
@@ -867,6 +919,134 @@
       };
 
       window.loadOrders();
+
+      window.filterOrders = function (status) {
+        currentFilter = status;
+
+        // Update button styles
+        const buttons = {
+          "": "filterAll",
+          pending: "filterPending",
+          shipped: "filterShipped",
+          cancelled: "filterCancelled",
+        };
+
+        Object.entries(buttons).forEach(([key, btnId]) => {
+          const btn = document.getElementById(btnId);
+          if (btn) {
+            if (key === status) {
+              btn.className =
+                "px-lg py-xs bg-primary text-on-primary rounded-full text-label-sm shadow-sm hover:shadow-md transition-all";
+            } else {
+              btn.className =
+                "px-lg py-xs bg-surface-container-high text-on-surface-variant hover:bg-primary-container/20 rounded-full text-label-sm transition-colors";
+            }
+          }
+        });
+
+        currentPage = 1;
+        window.loadOrders(1, status);
+      };
+
+      // Search functionality
+      const searchInput = document.getElementById("orderSearchInput");
+      if (searchInput) {
+        searchInput.addEventListener("input", function () {
+          const searchTerm = this.value.toLowerCase();
+          if (window.currentOrders.length === 0) return;
+
+          const orderTableBody = document.getElementById("orderTableBody");
+          const filtered = window.currentOrders.filter((order) => {
+            const orderNumber = (order.orderNumber || "").toLowerCase();
+            const customerName = (
+              order.user?.fullName ||
+              order.user?.email ||
+              order.shippingAddress?.fullName ||
+              ""
+            ).toLowerCase();
+            return (
+              orderNumber.includes(searchTerm) ||
+              customerName.includes(searchTerm)
+            );
+          });
+
+          if (filtered.length === 0) {
+            orderTableBody.innerHTML =
+              '<tr><td colspan="6" class="px-lg py-md text-center text-outline-variant">Không tìm thấy đơn hàng</td></tr>';
+            return;
+          }
+
+          orderTableBody.innerHTML = filtered
+            .map((order) => {
+              const customerName =
+                order.user?.fullName ||
+                order.user?.email ||
+                order.shippingAddress?.fullName ||
+                "Khách ẩn danh";
+              const formattedPrice = new Intl.NumberFormat("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              }).format(order.totalPrice);
+              const statusMap = {
+                pending: {
+                  label: "Chờ xử lý",
+                  class: "bg-primary-container text-on-primary-container",
+                },
+                confirmed: {
+                  label: "Đã xác nhận",
+                  class: "bg-tertiary-container text-on-tertiary-container",
+                },
+                shipped: {
+                  label: "Đang giao",
+                  class: "bg-blue-100 text-blue-800",
+                },
+                delivered: {
+                  label: "Đã giao",
+                  class: "bg-green-100 text-green-800",
+                },
+                cancelled: {
+                  label: "Đã hủy",
+                  class: "bg-error-container text-on-error-container",
+                },
+              };
+              const statusInfo = statusMap[order.status] || {
+                label: order.status,
+                class: "bg-surface-variant text-on-surface-variant",
+              };
+
+              return `
+              <tr class="hover:bg-surface-container-low transition-colors">
+                <td class="px-lg py-md">
+                  <p class="font-label-md text-on-surface">${order.orderNumber}</p>
+                </td>
+                <td class="px-lg py-md">
+                  <p class="text-body-md text-on-surface">${customerName}</p>
+                </td>
+                <td class="px-lg py-md">
+                  <p class="text-body-md text-on-surface">${formattedPrice}</p>
+                </td>
+                <td class="px-lg py-md">
+                  <span class="px-2 py-1 rounded-full text-xs font-bold ${statusInfo.class}">${statusInfo.label}</span>
+                </td>
+                <td class="px-lg py-md text-center">
+                  <span class="text-label-sm text-on-surface-variant">${new Date(order.createdAt).toLocaleDateString("vi-VN")}</span>
+                </td>
+                <td class="px-lg py-md">
+                  <div class="flex gap-sm justify-end">
+                    <button onclick="window.openOrderDetail('${order._id}')" class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-high text-on-surface hover:text-primary transition-colors hover:bg-primary-container/20" title="Xem chi tiết">
+                      <span class="material-symbols-outlined text-[18px]">visibility</span>
+                    </button>
+                    <button onclick="window.deleteOrder('${order._id}')" class="w-8 h-8 flex items-center justify-center rounded-full bg-error-container text-on-error-container hover:bg-error/90 transition-colors" title="Xóa đơn">
+                      <span class="material-symbols-outlined text-[18px]">delete</span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            `;
+            })
+            .join("");
+        });
+      }
 
       window.openOrderDetail = function (orderId) {
         const order = window.currentOrders.find((o) => o._id === orderId);
