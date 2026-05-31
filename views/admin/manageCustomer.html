@@ -17,6 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../js/animations.css" />
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -234,11 +235,11 @@
       <header
         class="bg-surface/80 backdrop-blur-md sticky top-0 z-40 flex justify-between items-center px-lg py-md w-full shadow-sm"
       >
-        <h2 class="font-headline-md text-headline-md font-bold text-primary">
+        <h2 class="font-headline-md text-headline-md font-bold text-primary section-heading">
           Quản lý người dùng
         </h2>
         <div class="flex items-center gap-md">
-          <div class="relative group">
+          <div class="relative group reveal delay-1">
             <span
               class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant"
               >search</span
@@ -251,7 +252,7 @@
           </div>
           <button
             id="openCreateUserBtn"
-            class="bg-primary text-on-primary px-lg py-2 rounded-full font-label-md hover:scale-105 transition-transform active:scale-95"
+            class="bg-primary text-on-primary px-lg py-2 rounded-full font-label-md hover:scale-105 transition-transform active:scale-95 btn-ripple"
           >
             + Thêm mới
           </button>
@@ -262,7 +263,7 @@
         <!-- Statistics Bento Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl">
           <div
-            class="bg-white border border-outline-variant p-lg rounded-[24px] shadow-sm flex items-center gap-lg"
+            class="bg-white border border-outline-variant p-lg rounded-[24px] shadow-sm flex items-center gap-lg reveal delay-1"
           >
             <div
               class="w-12 h-12 rounded-full bg-primary-container/20 flex items-center justify-center text-primary"
@@ -281,7 +282,7 @@
             </div>
           </div>
           <div
-            class="bg-white border border-outline-variant p-lg rounded-[24px] shadow-sm flex items-center gap-lg"
+            class="bg-white border border-outline-variant p-lg rounded-[24px] shadow-sm flex items-center gap-lg reveal delay-2"
           >
             <div
               class="w-12 h-12 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary"
@@ -300,7 +301,7 @@
             </div>
           </div>
           <div
-            class="bg-white border border-outline-variant p-lg rounded-[24px] shadow-sm flex items-center gap-lg"
+            class="bg-white border border-outline-variant p-lg rounded-[24px] shadow-sm flex items-center gap-lg reveal delay-3"
           >
             <div
               class="w-12 h-12 rounded-full bg-error-container/20 flex items-center justify-center text-error"
@@ -321,7 +322,7 @@
         </div>
         <!-- Main Table Container -->
         <div
-          class="bg-white rounded-[24px] border border-outline-variant shadow-sm overflow-hidden"
+          class="bg-white rounded-[24px] border border-outline-variant shadow-sm overflow-hidden reveal"
         >
           <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
@@ -698,6 +699,11 @@
           renderUsers();
           updateStats();
         }
+
+        // Re-trigger scroll reveal and hover lift animations on dynamic customer records
+        if (window.XamAnimations) {
+          window.XamAnimations.init();
+        }
       }
 
       // Search functionality
@@ -855,5 +861,6 @@
         });
       }
     </script>
+    <script src="../js/animations.js"></script>
   </body>
 </html>

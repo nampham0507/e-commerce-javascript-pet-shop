@@ -13,6 +13,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../js/animations.css" />
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -313,10 +314,10 @@
     <main class="pt-32 pb-xl px-md max-w-container-max mx-auto min-h-screen">
       <!-- Search Hero — có tìm kiếm realtime -->
       <div class="mb-xl text-center">
-        <h1 class="font-headline-xl text-headline-xl text-primary mb-md">
+        <h1 class="font-headline-xl text-headline-xl text-primary mb-md section-heading reveal">
           Tìm kiếm sản phẩm
         </h1>
-        <div class="max-w-2xl mx-auto relative group">
+        <div class="max-w-2xl mx-auto relative group reveal delay-1">
           <input
             id="heroSearchInput"
             class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary-container rounded-full px-lg py-4 text-body-lg soft-shadow focus:ring-0 transition-all outline-none"
@@ -341,7 +342,7 @@
 
       <div class="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-lg">
         <!-- Filters -->
-        <aside class="space-y-xl">
+        <aside class="space-y-xl reveal-left delay-2">
           <!-- Category Filter -->
           <div
             class="bg-surface-container-low rounded-xl p-lg border border-outline-variant/30"
@@ -513,7 +514,7 @@
         </aside>
 
         <!-- Search Results -->
-        <section class="space-y-lg">
+        <section class="space-y-lg reveal-right delay-2">
           <!-- Sorting & View -->
           <div
             class="flex justify-between items-center bg-white/50 backdrop-blur-sm p-md rounded-xl border border-outline-variant/20"
@@ -546,6 +547,7 @@
           <div
             id="productsGrid"
             class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-gutter"
+            data-stagger
           >
             <div
               class="col-span-full text-center py-xl text-on-surface-variant"
@@ -800,6 +802,14 @@
           emptyState.classList.add("hidden");
           emptyState.classList.remove("flex");
           productsGrid.innerHTML = products.map(renderProductCard).join("");
+          
+          // Re-trigger animations on dynamic product cards
+          if (window.XamAnimations) {
+            window.XamAnimations.initStagger();
+            window.XamAnimations.initCardHover();
+            window.XamAnimations.initScrollReveal();
+          }
+          
           const keyword = currentSearch ? ` cho "${currentSearch}"` : "";
           searchResultCount.textContent = `Hiển thị ${products.length} sản phẩm${keyword}`;
         }
@@ -942,5 +952,6 @@
       updateCartBadge();
       loadProducts();
     </script>
+    <script src="../js/animations.js"></script>
   </body>
 </html>

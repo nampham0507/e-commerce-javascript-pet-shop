@@ -13,6 +13,7 @@
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Plus+Jakarta+Sans:wght@300..800&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../js/animations.css" />
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -350,11 +351,11 @@
       </nav>
 
       <div id="orderListView" class="hidden">
-        <h1 class="font-headline-lg text-headline-lg text-on-surface mb-lg">
+        <h1 class="font-headline-lg text-headline-lg text-on-surface mb-lg reveal section-heading">
           Danh sách đơn hàng của tôi
         </h1>
         <div
-          class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30 overflow-x-auto"
+          class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30 overflow-x-auto reveal delay-1"
         >
           <table class="w-full text-left">
             <thead
@@ -378,7 +379,7 @@
 
       <div
         id="orderHeaderDetail"
-        class="hidden bg-surface-container-lowest rounded-[24px] p-lg md:p-xl shadow-sm border border-outline-variant/30 mb-lg"
+        class="hidden bg-surface-container-lowest rounded-[24px] p-lg md:p-xl shadow-sm border border-outline-variant/30 mb-lg reveal"
       >
         <div
           class="flex flex-col md:flex-row justify-between gap-md items-start md:items-center"
@@ -403,7 +404,7 @@
             </p>
           </div>
           <div
-            class="flex items-center gap-sm bg-primary-container/10 px-lg py-sm rounded-full border border-primary-container/20"
+            class="flex items-center gap-sm bg-primary-container/10 px-lg py-sm rounded-full border border-primary-container/20 anim-scale-in"
           >
             <span
               class="w-2.5 h-2.5 bg-primary rounded-full animate-pulse"
@@ -419,7 +420,7 @@
 
       <div
         id="emptyState"
-        class="hidden bg-surface-container-lowest rounded-[24px] p-xl shadow-sm border border-outline-variant/30 text-center"
+        class="hidden bg-surface-container-lowest rounded-[24px] p-xl shadow-sm border border-outline-variant/30 text-center reveal"
       >
         <h2 class="font-headline-md text-headline-md mb-sm">
           Bạn chưa có đơn hàng nào
@@ -440,7 +441,7 @@
       >
         <div class="lg:col-span-2 space-y-lg">
           <div
-            class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30"
+            class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30 reveal-left delay-1"
           >
             <h2
               class="font-headline-md text-headline-md mb-lg flex items-center gap-sm"
@@ -463,7 +464,7 @@
           </div>
 
           <div
-            class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30 overflow-hidden"
+            class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30 overflow-hidden reveal-left delay-2"
           >
             <h2
               class="font-headline-md text-headline-md mb-lg flex items-center gap-sm"
@@ -477,7 +478,7 @@
 
         <div class="space-y-lg">
           <div
-            class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30"
+            class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30 reveal-right delay-1"
           >
             <h2 class="font-headline-md text-headline-md mb-lg">
               Chi tiết thanh toán
@@ -511,7 +512,7 @@
 
           <div
             id="cancelSection"
-            class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30 hidden"
+            class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30 hidden reveal-right"
           >
             <h2
               class="font-headline-md text-headline-md mb-lg flex items-center gap-sm"
@@ -554,7 +555,7 @@
           </div>
 
           <div
-            class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30"
+            class="bg-surface-container-lowest rounded-[24px] p-lg shadow-sm border border-outline-variant/30 reveal-right delay-2"
           >
             <h3 class="font-headline-md text-headline-md text-on-surface mb-xs">
               Cần hỗ trợ?
@@ -971,6 +972,11 @@
           document.getElementById("orderListView").classList.remove("hidden");
           renderOrderList(orders);
         }
+
+        // Re-trigger scroll reveal and other animations on newly revealed elements
+        if (window.XamAnimations) {
+          window.XamAnimations.init();
+        }
       }
 
       async function cancelOrder(e) {
@@ -1216,5 +1222,6 @@
           `<h2 class="font-headline-md text-headline-md mb-sm">Không thể tải đơn hàng</h2><p class="text-on-surface-variant mb-lg">${error.message}</p>`;
       });
     </script>
+    <script src="../js/animations.js"></script>
   </body>
 </html>

@@ -11,6 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../js/animations.css" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script id="tailwind-config">
       tailwind.config = {
@@ -212,7 +213,7 @@
       <!-- Header Section -->
       <header class="flex justify-between items-center w-full">
         <div>
-          <h2 class="font-headline-lg text-headline-lg text-primary">
+          <h2 class="font-headline-lg text-headline-lg text-primary section-heading reveal">
             Tổng Quan Quản Trị
           </h2>
           <p class="font-body-md text-on-surface-variant">
@@ -244,9 +245,9 @@
       </header>
 
       <!-- Stats Bento Grid -->
-      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg">
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg" data-stagger>
         <div
-          class="bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow hover:scale-[1.02] transition-transform duration-300"
+          class="stat-card bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow"
         >
           <div class="flex justify-between items-start mb-md">
             <div class="p-sm bg-secondary-container rounded-xl">
@@ -264,7 +265,7 @@
           </h3>
         </div>
         <div
-          class="bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow hover:scale-[1.02] transition-transform duration-300"
+          class="stat-card bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow"
         >
           <div class="flex justify-between items-start mb-md">
             <div class="p-sm bg-primary-container/20 rounded-xl">
@@ -281,7 +282,7 @@
           </h3>
         </div>
         <div
-          class="bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow hover:scale-[1.02] transition-transform duration-300"
+          class="stat-card bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow"
         >
           <div class="flex justify-between items-start mb-md">
             <div class="p-sm bg-tertiary-container/20 rounded-xl">
@@ -298,7 +299,7 @@
           </h3>
         </div>
         <div
-          class="bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow hover:scale-[1.02] transition-transform duration-300"
+          class="stat-card bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow"
         >
           <div class="flex justify-between items-start mb-md">
             <div class="p-sm bg-surface-container-highest rounded-xl">
@@ -321,7 +322,7 @@
       <section class="grid grid-cols-1 lg:grid-cols-3 gap-lg">
         <!-- Revenue Chart -->
         <div
-          class="lg:col-span-2 bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow"
+          class="lg:col-span-2 bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow reveal-left delay-1"
         >
           <div class="flex justify-between items-center mb-xl">
             <h3 class="font-headline-md text-headline-md">
@@ -363,7 +364,7 @@
         </div>
         <!-- Recent Activity -->
         <div
-          class="bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow"
+          class="bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow reveal-right delay-2"
         >
           <h3 class="font-headline-md text-headline-md mb-xl">
             Hoạt Động Gần Đây
@@ -613,8 +614,14 @@
             labelsContainer.innerHTML = "";
           }
         }
+        
+        // Re-trigger scroll reveal and other animations on dynamic dashboard elements
+        if (window.XamAnimations) {
+          window.XamAnimations.init();
+        }
       }
       loadDashboard();
     </script>
+    <script src="../js/animations.js"></script>
   </body>
 </html>

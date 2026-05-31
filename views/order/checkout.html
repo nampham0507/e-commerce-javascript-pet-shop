@@ -18,6 +18,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../js/animations.css" />
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -310,7 +311,7 @@
     <main
       class="max-w-container-max mx-auto px-margin-mobile md:px-lg pt-32 pb-xl"
     >
-      <div class="mb-xl">
+      <div class="mb-xl reveal section-heading">
         <h1 class="font-headline-lg text-headline-lg text-primary mb-xs">
           Thanh toán
         </h1>
@@ -322,7 +323,7 @@
         <!-- Left Column: Customer Form -->
         <div class="lg:col-span-7 space-y-lg">
           <section
-            class="bg-surface-container-lowest p-lg rounded-[32px] soft-shadow border border-outline-variant/30"
+            class="bg-surface-container-lowest p-lg rounded-[32px] soft-shadow border border-outline-variant/30 reveal"
           >
             <div class="flex items-center gap-sm mb-lg">
               <span
@@ -387,7 +388,7 @@
             </div>
           </section>
           <section
-            class="bg-surface-container-lowest p-lg rounded-[32px] soft-shadow border border-outline-variant/30"
+            class="bg-surface-container-lowest p-lg rounded-[32px] soft-shadow border border-outline-variant/30 reveal"
           >
             <div class="flex items-center gap-sm mb-lg">
               <span
@@ -456,7 +457,7 @@
         <div class="lg:col-span-5">
           <div class="sticky top-32 space-y-lg">
             <aside
-              class="bg-surface-container-lowest p-lg rounded-[32px] soft-shadow border border-outline-variant/30"
+              class="bg-surface-container-lowest p-lg rounded-[32px] soft-shadow border border-outline-variant/30 reveal-right delay-1"
             >
               <div class="flex items-center gap-sm mb-lg">
                 <span
@@ -505,7 +506,7 @@
               </div>
               <button
                 id="placeOrderBtn"
-                class="w-full mt-lg bg-primary text-on-primary font-label-md py-4 rounded-full hover:bg-primary-fixed-variant hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-sm"
+                class="w-full mt-lg bg-primary text-on-primary font-label-md py-4 rounded-full hover:bg-primary-fixed-variant hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-sm anim-pulse-glow btn-ripple"
               >
                 <span class="material-symbols-outlined" data-icon="lock"
                   >lock</span
@@ -890,5 +891,6 @@
       initNav();
       renderCheckoutSummary();
     </script>
+    <script src="../js/animations.js"></script>
   </body>
 </html>

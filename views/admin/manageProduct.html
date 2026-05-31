@@ -13,6 +13,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../js/animations.css" />
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -238,7 +239,7 @@
         class="flex flex-col md:flex-row justify-between items-start md:items-center mb-xl gap-md"
       >
         <div>
-          <h2 class="font-headline-lg text-headline-lg text-on-surface">
+          <h2 class="font-headline-lg text-headline-lg text-on-surface section-heading">
             Quản Lý Sản Phẩm
           </h2>
           <p class="text-on-surface-variant">
@@ -247,7 +248,7 @@
         </div>
         <button
           id="addProductBtn"
-          class="bg-primary-container text-on-primary-container font-label-md text-label-md px-lg py-3 rounded-full flex items-center gap-2 hover:scale-105 transition-transform shadow-md active:scale-95"
+          class="bg-primary-container text-on-primary-container font-label-md text-label-md px-lg py-3 rounded-full flex items-center gap-2 hover:scale-105 transition-transform shadow-md active:scale-95 btn-ripple"
         >
           <span class="material-symbols-outlined">add</span>
           Thêm Sản Phẩm
@@ -255,7 +256,7 @@
       </header>
       <!-- Filters and Search -->
       <div
-        class="bg-white rounded-[24px] p-md mb-lg border border-outline-variant soft-shadow flex flex-wrap items-center gap-md"
+        class="bg-white rounded-[24px] p-md mb-lg border border-outline-variant soft-shadow flex flex-wrap items-center gap-md reveal delay-1"
       >
         <div class="flex-1 min-w-[300px] relative">
           <span
@@ -287,7 +288,7 @@
       </div>
       <!-- Products Table -->
       <div
-        class="bg-white rounded-[24px] border border-outline-variant soft-shadow overflow-hidden"
+        class="bg-white rounded-[24px] border border-outline-variant soft-shadow overflow-hidden reveal"
       >
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse">
@@ -560,7 +561,7 @@
             <button
               type="submit"
               id="submitBtn"
-              class="flex-1 bg-primary text-on-primary font-label-md px-lg py-md rounded-full hover:scale-105 transition-transform shadow-md active:scale-95"
+              class="flex-1 bg-primary text-on-primary font-label-md px-lg py-md rounded-full hover:scale-105 transition-transform shadow-md active:scale-95 btn-ripple"
             >
               Lưu Sản Phẩm
             </button>
@@ -962,5 +963,6 @@
       // Initial load
       loadProducts();
     </script>
+    <script src="../js/animations.js"></script>
   </body>
 </html>

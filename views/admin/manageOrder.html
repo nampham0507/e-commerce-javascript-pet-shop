@@ -17,6 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../js/animations.css" />
     <style>
       .material-symbols-outlined {
         font-variation-settings:
@@ -248,7 +249,7 @@
       <!-- Header & Stats Row -->
       <header class="mb-xl flex justify-between items-end">
         <div>
-          <h2 class="font-headline-lg text-headline-lg text-on-surface">
+          <h2 class="font-headline-lg text-headline-lg text-on-surface section-heading reveal">
             Quản lý Đơn hàng
           </h2>
           <p class="text-on-surface-variant mt-xs">
@@ -330,7 +331,7 @@
       </div>
       <!-- Filter & Search Controls -->
       <div
-        class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm mb-lg flex flex-wrap items-center justify-between gap-md"
+        class="bg-surface-container-lowest p-md rounded-xl border border-outline-variant shadow-sm mb-lg flex flex-wrap items-center justify-between gap-md reveal delay-1"
       >
         <div class="flex items-center gap-md flex-1">
           <div class="relative w-full max-w-md">
@@ -396,7 +397,7 @@
       </div>
       <!-- Data Table Section -->
       <div
-        class="bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-sm overflow-hidden"
+        class="bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-sm overflow-hidden reveal delay-2"
       >
         <table class="w-full text-left border-collapse">
           <thead>
@@ -905,6 +906,11 @@
           orderTableBody.innerHTML =
             '<tr><td colspan="6" class="px-lg py-md text-center text-error">Lỗi khi tải dữ liệu.</td></tr>';
         }
+
+        // Re-trigger scroll reveal and other animations on newly loaded order table rows
+        if (window.XamAnimations) {
+          window.XamAnimations.init();
+        }
       };
 
       window.loadOrders();
@@ -1176,5 +1182,6 @@
         });
       }
     </script>
+    <script src="../js/animations.js"></script>
   </body>
 </html>

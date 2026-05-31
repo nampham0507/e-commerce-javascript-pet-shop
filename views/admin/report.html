@@ -18,6 +18,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../js/animations.css" />
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -231,7 +232,7 @@
     <main class="ml-64 p-xl">
       <header class="flex justify-between items-end mb-xl">
         <div>
-          <h2 class="font-headline-lg text-headline-lg text-on-surface">
+          <h2 class="font-headline-lg text-headline-lg text-on-surface section-heading reveal">
             Báo cáo &amp; Thống kê
           </h2>
           <p class="text-on-surface-variant">
@@ -256,7 +257,7 @@
           </div>
           <button
             id="exportReportBtn"
-            class="bg-primary text-white px-lg py-sm rounded-full font-label-md hover:scale-105 transition-transform flex items-center gap-2"
+            class="bg-primary text-white px-lg py-sm rounded-full font-label-md hover:scale-105 transition-transform flex items-center gap-2 anim-pulse-glow btn-ripple"
           >
             <span class="material-symbols-outlined">download</span>
             Xuất báo cáo
@@ -264,10 +265,10 @@
         </div>
       </header>
       <!-- Metrics Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl" data-stagger>
         <!-- Revenue Card -->
         <div
-          class="bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
+          class="stat-card bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
         >
           <div class="flex justify-between items-start mb-md">
             <div
@@ -291,7 +292,7 @@
         </div>
         <!-- Orders Card -->
         <div
-          class="bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
+          class="stat-card bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
         >
           <div class="flex justify-between items-start mb-md">
             <div
@@ -317,7 +318,7 @@
         </div>
         <!-- Top Products Metric -->
         <div
-          class="bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
+          class="stat-card bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
         >
           <div class="flex justify-between items-start mb-md">
             <div
@@ -346,7 +347,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-lg mb-xl">
         <!-- Revenue Bar Chart Placeholder -->
         <div
-          class="lg:col-span-2 bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
+          class="lg:col-span-2 bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow reveal-left delay-1"
         >
           <div class="flex justify-between items-center mb-xl">
             <h4 class="font-headline-md text-on-surface">
@@ -448,7 +449,7 @@
         </div>
         <!-- Category Pie Chart Placeholder -->
         <div
-          class="bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
+          class="bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow reveal-right delay-2"
         >
           <h4 class="font-headline-md text-on-surface mb-xl">
             Cơ cấu danh mục
@@ -465,7 +466,7 @@
       <div class="grid grid-cols-1 xl:grid-cols-5 gap-lg">
         <!-- Top Selling Table -->
         <div
-          class="xl:col-span-3 bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
+          class="xl:col-span-3 bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow reveal-left delay-3"
         >
           <div class="flex justify-between items-center mb-lg">
             <h4 class="font-headline-md text-on-surface">Sản phẩm bán chạy</h4>
@@ -507,7 +508,7 @@
         </div>
         <!-- Recent Activity List -->
         <div
-          class="xl:col-span-2 bg-surface-container-low p-lg rounded-[24px] border border-outline-variant"
+          class="xl:col-span-2 bg-surface-container-low p-lg rounded-[24px] border border-outline-variant reveal-right delay-3"
         >
           <h4 class="font-headline-md text-on-surface mb-lg">
             Hoạt động gần đây
@@ -949,8 +950,14 @@
             };
           }
         }
+        
+        // Re-trigger scroll reveal and other animations on newly loaded report dynamic components
+        if (window.XamAnimations) {
+          window.XamAnimations.init();
+        }
       }
       loadReportStats();
     </script>
+    <script src="../js/animations.js"></script>
   </body>
 </html>

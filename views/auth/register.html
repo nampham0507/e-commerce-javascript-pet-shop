@@ -17,6 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../js/animations.css" />
     <style>
       .material-symbols-outlined {
         font-variation-settings:
@@ -170,7 +171,7 @@
         ></div>
       </div>
       <div
-        class="w-full max-w-[520px] bg-surface-container-lowest rounded-[32px] p-lg md:p-xl border border-outline-variant/30 soft-shadow relative overflow-hidden"
+        class="w-full max-w-[520px] bg-surface-container-lowest rounded-[32px] p-lg md:p-xl border border-outline-variant/30 soft-shadow relative overflow-hidden reveal-scale"
       >
         <!-- Decorative Cat Ear Icon at top -->
         <div
@@ -183,8 +184,8 @@
         </div>
         <div class="text-center mb-xl">
           <div class="flex items-center justify-center gap-3 mb-md">
-            <img src="../images/logo.png" alt="Xám Pet Shop logo" class="w-12 h-12 object-contain" />
-            <h1 class="font-headline-lg text-headline-lg text-primary mb-xs">
+            <img src="../images/logo.png" alt="Xám Pet Shop logo" class="w-12 h-12 object-contain anim-float" />
+            <h1 class="font-headline-lg text-headline-lg text-primary mb-xs anim-fade-in-down">
               Tham gia Xám Pet Shop
             </h1>
           </div>
@@ -329,7 +330,7 @@
           ></div>
           <!-- Action Button -->
           <button
-            class="w-full bg-primary-container text-on-primary-container font-headline-md py-4 rounded-full shadow-lg hover:scale-[1.02] active:scale-95 transition-all duration-200 mt-lg disabled:opacity-50"
+            class="w-full bg-primary-container text-on-primary-container font-headline-md py-4 rounded-full shadow-lg hover:scale-[1.02] active:scale-95 transition-all duration-200 mt-lg disabled:opacity-50 anim-pulse-glow btn-ripple"
             type="submit"
             id="submitBtn"
           >
@@ -500,5 +501,6 @@
         </div>
       </div>
     </footer>
+  <script src="../js/animations.js"></script>
   </body>
 </html>

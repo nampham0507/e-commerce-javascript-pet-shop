@@ -16,6 +16,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../js/animations.css" />
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script id="tailwind-config">
@@ -325,7 +326,7 @@
         <span class="material-symbols-outlined text-[14px]">chevron_right</span>
         <span class="text-primary">Giỏ hàng</span>
       </div>
-      <h1 class="font-headline-xl text-headline-xl text-on-background mb-xl">
+      <h1 class="font-headline-xl text-headline-xl text-on-background mb-xl reveal section-heading">
         Giỏ hàng của bạn
       </h1>
       <div class="flex flex-col lg:grid lg:grid-cols-12 gap-xl">
@@ -352,7 +353,7 @@
 
         <aside class="lg:col-span-4">
           <div
-            class="bg-surface-container-low p-lg rounded-[32px] soft-shadow sticky top-32"
+            class="bg-surface-container-low p-lg rounded-[32px] soft-shadow sticky top-32 reveal-right delay-2"
           >
             <h2 class="font-headline-md text-headline-md text-on-surface mb-lg">
               Tóm tắt đơn hàng
@@ -392,7 +393,7 @@
             <a
               id="checkoutBtn"
               href="/order/checkout"
-              class="block w-full bg-primary-container text-on-primary-container font-headline-md py-lg rounded-full flex items-center justify-center gap-md hover:scale-[1.02] active:scale-95 transition-all shadow-md group"
+              class="block w-full bg-primary-container text-on-primary-container font-headline-md py-lg rounded-full flex items-center justify-center gap-md hover:scale-[1.02] active:scale-95 transition-all shadow-md group anim-pulse-glow btn-ripple"
             >
               Tiến hành thanh toán
               <span
@@ -697,5 +698,6 @@
       updateCartBadge();
       renderCartItems();
     </script>
+    <script src="../js/animations.js"></script>
   </body>
 </html>

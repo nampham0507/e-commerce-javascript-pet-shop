@@ -17,6 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../js/animations.css" />
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -242,16 +243,16 @@
     >
       <!-- Header Section -->
       <header class="mb-xl text-center md:text-left">
-        <h1 class="font-headline-xl text-headline-xl text-primary mb-sm">
+        <h1 class="font-headline-xl text-headline-xl text-primary mb-sm section-heading reveal">
           Danh Mục Sản Phẩm
         </h1>
-        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl reveal delay-1">
           Khám phá thế giới chăm sóc mèo chuyên nghiệp với các dòng sản phẩm cao
           cấp, được chọn lọc kỹ lưỡng dành riêng cho người bạn bốn chân của bạn.
         </p>
       </header>
       <!-- Categories Bento Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter" data-stagger>
         <!-- Category: Hạt mèo (Large Asymmetric) -->
         <div
           class="md:col-span-8 group category-card relative overflow-hidden rounded-[32px] bg-white shadow-sm border border-outline-variant h-[400px]"
@@ -391,7 +392,7 @@
       </div>
       <!-- Featured Section: Cozy Modern Atmosphere -->
       <section
-        class="mt-xl py-xl bg-surface-container rounded-[40px] px-lg overflow-hidden relative"
+        class="mt-xl py-xl bg-surface-container rounded-[40px] px-lg overflow-hidden relative reveal"
       >
         <div class="grid md:grid-cols-2 gap-xl items-center relative z-10">
           <div>
@@ -566,5 +567,6 @@
       logoutBtn.addEventListener("click", async () => { await logoutUser(); window.location.href = "/auth/login"; });
       initNav();
     </script>
+    <script src="../js/animations.js"></script>
   </body>
 </html>

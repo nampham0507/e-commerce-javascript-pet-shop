@@ -17,6 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../js/animations.css" />
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -347,7 +348,7 @@
           >
             <img
               id="detailImageMain"
-              class="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105"
+              class="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105 anim-float"
               src=""
             />
           </div>
@@ -363,7 +364,7 @@
           </nav>
           <h1
             id="detailName"
-            class="font-headline-xl text-headline-xl text-on-surface mb-xs"
+            class="font-headline-xl text-headline-xl text-on-surface mb-xs reveal"
           >
             Đang tải...
           </h1>
@@ -376,7 +377,7 @@
               ></span
             >
           </div>
-          <div class="text-headline-md text-primary font-bold mb-lg">
+          <div class="text-headline-md text-primary font-bold mb-lg anim-fade-in-up delay-2">
             <span id="detailPrice">...</span> VNĐ
           </div>
           <p
@@ -418,7 +419,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
               <button
                 id="addToCartBtn"
-                class="flex items-center justify-center gap-md py-4 rounded-full border-2 border-outline-variant text-primary font-bold hover:border-primary transition-all active:scale-95"
+                class="flex items-center justify-center gap-md py-4 rounded-full border-2 border-outline-variant text-primary font-bold hover:border-primary transition-all active:scale-95 anim-pulse-glow btn-ripple"
               >
                 <span class="material-symbols-outlined">shopping_basket</span>
                 Thêm vào giỏ
@@ -828,5 +829,6 @@
       updateCartBadge();
       loadProductDetail();
     </script>
+    <script src="../js/animations.js"></script>
   </body>
 </html>

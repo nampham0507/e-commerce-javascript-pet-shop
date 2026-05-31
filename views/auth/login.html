@@ -17,6 +17,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../js/animations.css" />
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -157,15 +158,15 @@
       <main class="w-full max-w-[440px]">
         <!-- Login Card -->
         <div
-          class="bg-surface-container-lowest rounded-[32px] p-xl tinted-shadow border border-outline-variant/30 relative overflow-hidden"
+          class="bg-surface-container-lowest rounded-[32px] p-xl tinted-shadow border border-outline-variant/30 relative overflow-hidden reveal-scale"
         >
           <!-- Brand Identity Anchor -->
           <div class="flex flex-col items-center mb-xl">
             <div class="mb-md flex items-center justify-center gap-3">
-            <img src="../images/logo.png" alt="Xám Pet Shop logo" class="w-12 h-12 object-contain" />
+            <img src="../images/logo.png" alt="Xám Pet Shop logo" class="w-12 h-12 object-contain anim-float" />
             <div class="text-left">
               <h1
-                class="font-headline-lg text-headline-lg text-primary tracking-tight"
+                class="font-headline-lg text-headline-lg text-primary tracking-tight anim-fade-in-down"
               >
                 Xám Pet Shop
               </h1>
@@ -265,7 +266,7 @@
             ></div>
             <!-- Submit Button -->
             <button
-              class="w-full py-md bg-primary-container text-on-primary-container font-headline-md text-headline-md rounded-full shadow-md hover:scale-[1.03] active:scale-95 transition-all duration-200 mt-md disabled:opacity-50"
+              class="w-full py-md bg-primary-container text-on-primary-container font-headline-md text-headline-md rounded-full shadow-md hover:scale-[1.03] active:scale-95 transition-all duration-200 mt-md disabled:opacity-50 anim-pulse-glow btn-ripple"
               type="submit"
               id="submitBtn"
             >
@@ -438,5 +439,6 @@
         </div>
       </div>
     </footer>
+  <script src="../js/animations.js"></script>
   </body>
 </html>
