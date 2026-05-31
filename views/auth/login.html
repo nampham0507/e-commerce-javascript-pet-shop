@@ -150,16 +150,6 @@
           "GRAD" 0,
           "opsz" 24;
       }
-      /* ===== ANIMATIONS ===== */
-      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-      @keyframes slideInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-      @keyframes slideInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
-      @keyframes scaleUp { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-      main { animation: fadeIn 0.6s ease-out; }
-      main > div { animation: slideInUp 0.6s ease-out; }
-      main > div h2 { animation: slideInLeft 0.6s ease-out; }
-      button { transition: all 0.3s ease; }
-      button:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(132, 84, 0, 0.15); }
     </style>
   </head>
   <body class="bg-[#f5f5f5] flex flex-col min-h-screen">
@@ -171,21 +161,19 @@
         >
           <!-- Brand Identity Anchor -->
           <div class="flex flex-col items-center mb-xl">
-            <div class="mb-md">
-              <span
-                class="material-symbols-outlined text-primary text-[48px]"
-                data-icon="pets"
-                >pets</span
+            <div class="mb-md flex items-center justify-center gap-3">
+            <img src="../images/logo.png" alt="Xám Pet Shop logo" class="w-12 h-12 object-contain" />
+            <div class="text-left">
+              <h1
+                class="font-headline-lg text-headline-lg text-primary tracking-tight"
               >
+                Xám Pet Shop
+              </h1>
+              <p class="font-body-md text-body-md text-on-surface-variant mt-xs">
+                Chào mừng bạn quay trở lại
+              </p>
             </div>
-            <h1
-              class="font-headline-lg text-headline-lg text-primary tracking-tight"
-            >
-              Xám Pet Shop
-            </h1>
-            <p class="font-body-md text-body-md text-on-surface-variant mt-xs">
-              Chào mừng bạn quay trở lại
-            </p>
+          </div>
           </div>
           <form class="space-y-lg" id="loginForm">
             <!-- Email Input Group -->

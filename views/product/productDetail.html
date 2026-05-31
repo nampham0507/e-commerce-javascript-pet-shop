@@ -185,20 +185,6 @@
       #userAvatar:hover {
         transform: scale(1.08);
       }
-      /* ===== ANIMATIONS ===== */
-      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-      @keyframes slideInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-      @keyframes slideInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
-      @keyframes scaleUp { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-      main { animation: fadeIn 0.6s ease-out; }
-      main > * { animation: slideInUp 0.6s ease-out; }
-      img { animation: scaleUp 0.6s ease-out 0.1s both; }
-      .space-y-md > * { animation: slideInUp 0.6s ease-out backwards; }
-      .space-y-md > *:nth-child(1) { animation-delay: 0.2s; }
-      .space-y-md > *:nth-child(2) { animation-delay: 0.3s; }
-      .space-y-md > *:nth-child(n+3) { animation-delay: 0.4s; }
-      button { transition: all 0.3s ease; }
-      button:hover { transform: translateY(-2px); }
     </style>
   </head>
   <body class="font-body-md text-body-md overflow-x-hidden">
@@ -209,9 +195,10 @@
       <div
         class="flex justify-between items-center px-lg py-md w-full max-w-container-max mx-auto"
       >
-        <div class="font-headline-md text-headline-md font-bold text-primary">
-          Xám Pet Shop
-        </div>
+        <a href="/" class="inline-flex items-center gap-3 font-headline-md text-headline-md font-bold text-primary">
+          <img src="../images/logo.png" alt="Xám Pet Shop logo" class="w-10 h-10 object-contain" />
+          <span>Xám Pet Shop</span>
+        </a>
         <nav class="hidden md:flex items-center gap-xl">
           <a
             class="text-on-surface-variant hover:text-primary transition-transform duration-200 hover:scale-105 font-body-md text-body-md"

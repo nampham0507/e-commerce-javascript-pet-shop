@@ -150,18 +150,6 @@
         },
       };
     </script>
-    <style>
-      /* ===== ANIMATIONS ===== */
-      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-      @keyframes slideInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-      @keyframes slideInLeft { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
-      @keyframes scaleUp { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-      main { animation: fadeIn 0.6s ease-out; }
-      main > div { animation: slideInUp 0.6s ease-out; }
-      main > div h2 { animation: slideInLeft 0.6s ease-out; }
-      button { transition: all 0.3s ease; }
-      button:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(132, 84, 0, 0.15); }
-    </style>
   </head>
   <body
     class="bg-background text-on-background font-body-md min-h-screen flex flex-col"
@@ -194,9 +182,12 @@
           >
         </div>
         <div class="text-center mb-xl">
-          <h1 class="font-headline-lg text-headline-lg text-primary mb-xs">
-            Tham gia Xám Pet Shop
-          </h1>
+          <div class="flex items-center justify-center gap-3 mb-md">
+            <img src="../images/logo.png" alt="Xám Pet Shop logo" class="w-12 h-12 object-contain" />
+            <h1 class="font-headline-lg text-headline-lg text-primary mb-xs">
+              Tham gia Xám Pet Shop
+            </h1>
+          </div>
           <p class="font-body-md text-on-surface-variant">
             Tạo tài khoản để nhận ưu đãi đặc biệt cho thú cưng của bạn.
           </p>
