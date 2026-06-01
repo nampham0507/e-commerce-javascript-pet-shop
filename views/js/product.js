@@ -1,6 +1,6 @@
 // Product API utility functions - Public and Admin
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "/api";
 
 // Get token from localStorage
 const getToken = () => localStorage.getItem("token");
@@ -44,7 +44,7 @@ export const getPublicProductById = async (productId) => {
 export const getProductsByCategory = async (category) => {
   try {
     const response = await fetch(
-      `${API_BASE_URL}/products/category/${category.toLowerCase()}`,
+      `${API_BASE_URL}/products/category/${category.toLowerCase()}`
     );
     const data = await response.json();
     return Array.isArray(data) ? { success: true, products: data } : data;
@@ -57,7 +57,7 @@ export const getProductsByCategory = async (category) => {
 export const searchProducts = async (keyword) => {
   try {
     const response = await fetch(
-      `${API_BASE_URL}/products/public?search=${encodeURIComponent(keyword)}`,
+      `${API_BASE_URL}/products/public?search=${encodeURIComponent(keyword)}`
     );
     const data = await response.json();
     return data;
@@ -104,7 +104,7 @@ export const updateProduct = async (productId, data) => {
         method: "PUT",
         headers: getAuthHeaders(),
         body: JSON.stringify(data),
-      },
+      }
     );
     return await response.json();
   } catch (error) {
@@ -120,7 +120,7 @@ export const deleteProduct = async (productId) => {
       {
         method: "DELETE",
         headers: getAuthHeaders(),
-      },
+      }
     );
     return await response.json();
   } catch (error) {

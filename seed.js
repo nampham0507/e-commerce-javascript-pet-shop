@@ -2,6 +2,7 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const bcryptjs = require("bcryptjs");
 const Product = require("./src/models/Product");
+const Brand = require("./src/models/Brand");
 const User = require("./src/models/User");
 
 const demoProducts = [
@@ -401,12 +402,21 @@ async function seedDatabase() {
 
     // Clear existing data
     await Product.deleteMany({});
+    await Brand.deleteMany({});
     await User.deleteMany({});
     console.log("✓ Cleared existing data");
 
     // Seed products
     const createdProducts = await Product.insertMany(demoProducts);
     console.log(`✓ Created ${createdProducts.length} demo products`);
+
+    const uniqueBrandNames = [
+      ...new Set(demoProducts.map((product) => product.brand).filter(Boolean)),
+    ];
+    const createdBrands = await Brand.insertMany(
+      uniqueBrandNames.map((name) => ({ name }))
+    );
+    console.log(`✓ Created ${createdBrands.length} demo brands`);
 
     // Hash passwords and seed users
     const usersWithHashedPasswords = await Promise.all(

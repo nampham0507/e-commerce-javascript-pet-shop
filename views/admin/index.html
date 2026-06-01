@@ -184,6 +184,13 @@
         </a>
         <a
           class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="/admin/manageBrand"
+        >
+          <span class="material-symbols-outlined">verified</span>
+          <span class="font-label-md text-label-md">Thương hiệu</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
           href="/admin/manageCustomer"
         >
           <span class="material-symbols-outlined">group</span>
@@ -213,7 +220,9 @@
       <!-- Header Section -->
       <header class="flex justify-between items-center w-full">
         <div>
-          <h2 class="font-headline-lg text-headline-lg text-primary section-heading reveal">
+          <h2
+            class="font-headline-lg text-headline-lg text-primary section-heading reveal"
+          >
             Tổng Quan Quản Trị
           </h2>
           <p class="font-body-md text-on-surface-variant">
@@ -245,7 +254,10 @@
       </header>
 
       <!-- Stats Bento Grid -->
-      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg" data-stagger>
+      <section
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg"
+        data-stagger
+      >
         <div
           class="stat-card bg-white p-lg rounded-[24px] border border-outline-variant/20 soft-shadow"
         >
@@ -614,7 +626,7 @@
             labelsContainer.innerHTML = "";
           }
         }
-        
+
         // Re-trigger scroll reveal and other animations on dynamic dashboard elements
         if (window.XamAnimations) {
           window.XamAnimations.init();

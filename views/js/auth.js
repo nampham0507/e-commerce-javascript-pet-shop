@@ -1,6 +1,6 @@
 // API utility functions for authentication
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "/api";
 
 // Store token in localStorage
 export const setToken = (token) => {

@@ -1,6 +1,6 @@
 // Admin API utility functions
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "/api";
 
 // Get token from localStorage
 const getToken = () => localStorage.getItem("token");
@@ -81,6 +81,110 @@ export const deleteProduct = async (productId) => {
         headers: getAuthHeaders(),
       }
     );
+    return await response.json();
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
+export const getAdminCategories = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/admin/categories`, {
+      headers: getAuthHeaders(),
+    });
+    return await response.json();
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
+export const createCategory = async (data) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/admin/categories`, {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
+export const updateCategory = async (categoryId, data) => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/admin/categories/${categoryId}`,
+      {
+        method: "PUT",
+        headers: getAuthHeaders(),
+        body: JSON.stringify(data),
+      }
+    );
+    return await response.json();
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
+export const deleteCategory = async (categoryId) => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/admin/categories/${categoryId}`,
+      {
+        method: "DELETE",
+        headers: getAuthHeaders(),
+      }
+    );
+    return await response.json();
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
+export const getAdminBrands = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/admin/brands`, {
+      headers: getAuthHeaders(),
+    });
+    return await response.json();
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
+export const createBrand = async (data) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/admin/brands`, {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
+export const updateBrand = async (brandId, data) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/admin/brands/${brandId}`, {
+      method: "PUT",
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
+export const deleteBrand = async (brandId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/admin/brands/${brandId}`, {
+      method: "DELETE",
+      headers: getAuthHeaders(),
+    });
     return await response.json();
   } catch (error) {
     return { success: false, message: error.message };

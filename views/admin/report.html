@@ -205,6 +205,13 @@
         </a>
         <a
           class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="/admin/manageBrand"
+        >
+          <span class="material-symbols-outlined">verified</span>
+          <span class="font-label-md text-label-md">Thương hiệu</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
           href="/admin/manageCustomer"
         >
           <span class="material-symbols-outlined">group</span>
@@ -232,7 +239,9 @@
     <main class="ml-64 p-xl">
       <header class="flex justify-between items-end mb-xl">
         <div>
-          <h2 class="font-headline-lg text-headline-lg text-on-surface section-heading reveal">
+          <h2
+            class="font-headline-lg text-headline-lg text-on-surface section-heading reveal"
+          >
             Báo cáo &amp; Thống kê
           </h2>
           <p class="text-on-surface-variant">
@@ -950,7 +959,7 @@
             };
           }
         }
-        
+
         // Re-trigger scroll reveal and other animations on newly loaded report dynamic components
         if (window.XamAnimations) {
           window.XamAnimations.init();

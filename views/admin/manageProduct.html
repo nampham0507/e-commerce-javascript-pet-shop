@@ -209,6 +209,13 @@
         </a>
         <a
           class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="/admin/manageBrand"
+        >
+          <span class="material-symbols-outlined">verified</span>
+          <span class="font-label-md text-label-md">Thương hiệu</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
           href="/admin/manageCustomer"
         >
           <span class="material-symbols-outlined">group</span>
@@ -242,9 +249,7 @@
           <h2 class="font-headline-lg text-headline-lg text-on-surface section-heading">
             Quản Lý Sản Phẩm
           </h2>
-          <p class="text-on-surface-variant">
-            Xem, thêm mới và điều chỉnh kho hàng của bạn.
-          </p>
+
         </div>
         <button
           id="addProductBtn"
@@ -367,7 +372,63 @@
             </button>
           </div>
         </div>
-      
+
+      <section class="grid xl:grid-cols-2 gap-lg mt-xl reveal delay-2">
+        <div class="bg-white rounded-[24px] border border-outline-variant soft-shadow overflow-hidden">
+          <div class="px-lg py-md border-b border-outline-variant bg-surface-container-low">
+            <div class="flex justify-between items-center gap-4">
+              <div>
+                <h3 class="font-headline-md text-headline-md text-on-surface">Quản lý danh mục</h3>
+                <p class="text-label-sm text-on-surface-variant">Thêm, sửa, xóa danh mục sản phẩm.</p>
+              </div>
+              <button id="addCategoryBtn" class="bg-primary-container text-on-primary-container px-lg py-3 rounded-full font-label-md hover:scale-105 transition-transform">Thêm danh mục</button>
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead class="bg-surface-container-low">
+                <tr>
+                  <th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Tên danh mục</th>
+                  <th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="categoriesTableBody" class="divide-y divide-outline-variant">
+                <tr>
+                  <td colspan="2" class="px-lg py-xl text-center text-on-surface-variant">Đang tải danh mục...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-[24px] border border-outline-variant soft-shadow overflow-hidden">
+          <div class="px-lg py-md border-b border-outline-variant bg-surface-container-low">
+            <div class="flex justify-between items-center gap-4">
+              <div>
+                <h3 class="font-headline-md text-headline-md text-on-surface">Quản lý thương hiệu</h3>
+                <p class="text-label-sm text-on-surface-variant">Thêm, sửa, xóa thương hiệu sản phẩm.</p>
+              </div>
+              <button id="addBrandBtn" class="bg-primary-container text-on-primary-container px-lg py-3 rounded-full font-label-md hover:scale-105 transition-transform">Thêm thương hiệu</button>
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead class="bg-surface-container-low">
+                <tr>
+                  <th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Tên thương hiệu</th>
+                  <th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="brandsTableBody" class="divide-y divide-outline-variant">
+                <tr>
+                  <td colspan="2" class="px-lg py-xl text-center text-on-surface-variant">Đang tải thương hiệu...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
       <footer class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto bg-surface-container-highest dark:bg-surface-container mt-xl rounded-[24px]">
         <div class="col-span-1 md:col-span-1">
           <span class="font-headline-sm text-headline-sm text-on-surface">Xám Pet Shop</span>
@@ -458,11 +519,6 @@
                 required
               >
                 <option value="">Chọn danh mục</option>
-                <option value="food">Thức ăn hạt</option>
-                <option value="pate">Pate & Súp</option>
-                <option value="snack">Snack & Bánh thưởng</option>
-                <option value="milk">Sữa mèo</option>
-                <option value="accessories">Phụ kiện</option>
               </select>
             </div>
 
@@ -504,9 +560,6 @@
               <label class="block font-label-md text-label-md text-on-surface mb-sm">Thương hiệu</label>
               <select id="productBrand" class="w-full bg-surface-container-low border-none rounded-full px-lg py-md focus:ring-2 focus:ring-primary-container outline-none">
                 <option value="">Chọn thương hiệu</option>
-                <option value="Royal Canin">Royal Canin</option>
-                <option value="Me-O">Me-O Premium</option>
-                <option value="Catsrang">Catsrang</option>
               </select>
             </div>
             <div>
@@ -576,12 +629,67 @@
         </form>
       </div>
     </div>
+
+    <!-- Modal for Add/Edit Category -->
+    <div id="categoryModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-lg">
+      <div class="bg-white rounded-[32px] w-full max-w-md shadow-xl overflow-hidden">
+        <div class="sticky top-0 bg-white px-xl py-lg border-b border-outline-variant flex items-center justify-between">
+          <h3 id="categoryModalTitle" class="font-headline-lg text-headline-lg text-on-surface">Thêm danh mục</h3>
+          <button id="closeCategoryModalBtn" class="p-2 text-on-surface-variant hover:text-on-surface transition-colors">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <form id="categoryForm" class="p-xl space-y-lg">
+          <input type="hidden" id="categoryId" />
+          <div>
+            <label class="block font-label-md text-label-md text-on-surface mb-sm">Tên danh mục</label>
+            <input id="categoryName" type="text" class="w-full bg-surface-container-low border-none rounded-full px-lg py-md focus:ring-2 focus:ring-primary-container outline-none" placeholder="Nhập tên danh mục" required />
+          </div>
+          <div class="flex gap-md pt-lg">
+            <button type="submit" class="flex-1 bg-primary text-on-primary font-label-md px-lg py-md rounded-full hover:scale-105 transition-transform shadow-md active:scale-95 btn-ripple">Lưu danh mục</button>
+            <button type="button" id="cancelCategoryBtn" class="flex-1 bg-surface-container-high text-on-surface font-label-md px-lg py-md rounded-full hover:bg-surface-container-highest transition-colors">Hủy</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal for Add/Edit Brand -->
+    <div id="brandModal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-lg">
+      <div class="bg-white rounded-[32px] w-full max-w-md shadow-xl overflow-hidden">
+        <div class="sticky top-0 bg-white px-xl py-lg border-b border-outline-variant flex items-center justify-between">
+          <h3 id="brandModalTitle" class="font-headline-lg text-headline-lg text-on-surface">Thêm thương hiệu</h3>
+          <button id="closeBrandModalBtn" class="p-2 text-on-surface-variant hover:text-on-surface transition-colors">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <form id="brandForm" class="p-xl space-y-lg">
+          <input type="hidden" id="brandId" />
+          <div>
+            <label class="block font-label-md text-label-md text-on-surface mb-sm">Tên thương hiệu</label>
+            <input id="brandName" type="text" class="w-full bg-surface-container-low border-none rounded-full px-lg py-md focus:ring-2 focus:ring-primary-container outline-none" placeholder="Nhập tên thương hiệu" required />
+          </div>
+          <div class="flex gap-md pt-lg">
+            <button type="submit" class="flex-1 bg-primary text-on-primary font-label-md px-lg py-md rounded-full hover:scale-105 transition-transform shadow-md active:scale-95 btn-ripple">Lưu thương hiệu</button>
+            <button type="button" id="cancelBrandBtn" class="flex-1 bg-surface-container-high text-on-surface font-label-md px-lg py-md rounded-full hover:bg-surface-container-highest transition-colors">Hủy</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     <script type="module">
       import {
         getAdminProducts,
         createProduct,
         updateProduct,
         deleteProduct,
+        getAdminCategories,
+        getAdminBrands,
+        createCategory,
+        updateCategory,
+        deleteCategory,
+        createBrand,
+        updateBrand,
+        deleteBrand,
       } from "../js/admin.js";
       import { logoutUser, getUserInfo, isAuthenticated } from "../js/auth.js";
 
@@ -603,6 +711,24 @@
         'input[placeholder*="Tìm kiếm"]',
       );
       const categorySelect = document.getElementById("tableCategoryFilter");
+      const categoriesTableBody = document.getElementById("categoriesTableBody");
+      const brandsTableBody = document.getElementById("brandsTableBody");
+      const addCategoryBtn = document.getElementById("addCategoryBtn");
+      const addBrandBtn = document.getElementById("addBrandBtn");
+      const categoryModal = document.getElementById("categoryModal");
+      const brandModal = document.getElementById("brandModal");
+      const closeCategoryModalBtn = document.getElementById("closeCategoryModalBtn");
+      const cancelCategoryBtn = document.getElementById("cancelCategoryBtn");
+      const categoryForm = document.getElementById("categoryForm");
+      const categoryModalTitle = document.getElementById("categoryModalTitle");
+      const categoryNameInput = document.getElementById("categoryName");
+      const categoryIdInput = document.getElementById("categoryId");
+      const closeBrandModalBtn = document.getElementById("closeBrandModalBtn");
+      const cancelBrandBtn = document.getElementById("cancelBrandBtn");
+      const brandForm = document.getElementById("brandForm");
+      const brandModalTitle = document.getElementById("brandModalTitle");
+      const brandNameInput = document.getElementById("brandName");
+      const brandIdInput = document.getElementById("brandId");
       const paginationContainer = document.getElementById(
         "paginationContainer",
       );
@@ -810,6 +936,222 @@
         });
       }
 
+      const categoryOptionsCache = new Map();
+      const brandOptionsCache = new Map();
+
+      const renderCategoryRow = (category) => `
+        <tr class="table-row-hover transition-colors">
+          <td class="px-lg py-md">${category.name}</td>
+          <td class="px-lg py-md text-right">
+            <div class="flex justify-end gap-2">
+              <button data-id="${category._id}" data-name="${category.name}" class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-primary-container/10 rounded-full edit-category-btn">
+                <span class="material-symbols-outlined">edit</span>
+              </button>
+              <button data-id="${category._id}" data-name="${category.name}" class="p-2 text-on-surface-variant hover:text-error transition-colors hover:bg-error-container/20 rounded-full delete-category-btn">
+                <span class="material-symbols-outlined">delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+
+      const renderBrandRow = (brand) => `
+        <tr class="table-row-hover transition-colors">
+          <td class="px-lg py-md">${brand.name}</td>
+          <td class="px-lg py-md text-right">
+            <div class="flex justify-end gap-2">
+              <button data-id="${brand._id}" data-name="${brand.name}" class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-primary-container/10 rounded-full edit-brand-btn">
+                <span class="material-symbols-outlined">edit</span>
+              </button>
+              <button data-id="${brand._id}" data-name="${brand.name}" class="p-2 text-on-surface-variant hover:text-error transition-colors hover:bg-error-container/20 rounded-full delete-brand-btn">
+                <span class="material-symbols-outlined">delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+
+      const populateCategorySelect = (categories) => {
+        const select = document.getElementById("productCategory");
+        if (!select) return;
+        select.innerHTML = `<option value="">Chọn danh mục</option>${categories
+          .map((cat) => `<option value="${cat.slug}">${cat.name}</option>`)
+          .join("")}`;
+      };
+
+      const populateBrandSelect = (brands) => {
+        const select = document.getElementById("productBrand");
+        if (!select) return;
+        select.innerHTML = `<option value="">Chọn thương hiệu</option>${brands
+          .map((brand) => `<option value="${brand.name}">${brand.name}</option>`)
+          .join("")}`;
+      };
+
+      const populateCategoryFilter = (categories) => {
+        categorySelect.innerHTML = `<option value="">Tất cả danh mục</option>${categories
+          .map((cat) => `<option value="${cat.slug}">${cat.name}</option>`)
+          .join("")}`;
+      };
+
+      const loadCategoriesAndBrands = async () => {
+        const [categoriesResult, brandsResult] = await Promise.all([
+          getAdminCategories(),
+          getAdminBrands(),
+        ]);
+
+        const categories = categoriesResult.success ? categoriesResult.categories : [];
+        const brands = brandsResult.success ? brandsResult.brands : [];
+
+        populateCategorySelect(categories);
+        populateCategoryFilter(categories);
+        populateBrandSelect(brands);
+
+        if (categories.length > 0) {
+          categoriesTableBody.innerHTML = categories
+            .map(renderCategoryRow)
+            .join("");
+        } else {
+          categoriesTableBody.innerHTML = `
+            <tr>
+              <td colspan="2" class="px-lg py-xl text-center text-on-surface-variant">Chưa có danh mục nào</td>
+            </tr>
+          `;
+        }
+
+        if (brands.length > 0) {
+          brandsTableBody.innerHTML = brands.map(renderBrandRow).join("");
+        } else {
+          brandsTableBody.innerHTML = `
+            <tr>
+              <td colspan="2" class="px-lg py-xl text-center text-on-surface-variant">Chưa có thương hiệu nào</td>
+            </tr>
+          `;
+        }
+
+        attachCategoryRowListeners();
+        attachBrandRowListeners();
+      };
+
+      const attachCategoryRowListeners = () => {
+        document.querySelectorAll(".edit-category-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            categoryIdInput.value = btn.dataset.id;
+            categoryNameInput.value = btn.dataset.name;
+            categoryModalTitle.textContent = "Chỉnh sửa danh mục";
+            categoryModal.classList.remove("hidden");
+          });
+        });
+        document.querySelectorAll(".delete-category-btn").forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            if (confirm(`Xóa danh mục "${btn.dataset.name}"?`)) {
+              const result = await deleteCategory(btn.dataset.id);
+              if (result.success) {
+                alert(result.message);
+                loadCategoriesAndBrands();
+              } else {
+                alert(result.message || "Không thể xóa danh mục");
+              }
+            }
+          });
+        });
+      };
+
+      const attachBrandRowListeners = () => {
+        document.querySelectorAll(".edit-brand-btn").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            brandIdInput.value = btn.dataset.id;
+            brandNameInput.value = btn.dataset.name;
+            brandModalTitle.textContent = "Chỉnh sửa thương hiệu";
+            brandModal.classList.remove("hidden");
+          });
+        });
+        document.querySelectorAll(".delete-brand-btn").forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            if (confirm(`Xóa thương hiệu "${btn.dataset.name}"?`)) {
+              const result = await deleteBrand(btn.dataset.id);
+              if (result.success) {
+                alert(result.message);
+                loadCategoriesAndBrands();
+              } else {
+                alert(result.message || "Không thể xóa thương hiệu");
+              }
+            }
+          });
+        });
+      };
+
+      const openCategoryModal = () => {
+        categoryIdInput.value = "";
+        categoryNameInput.value = "";
+        categoryModalTitle.textContent = "Thêm danh mục";
+        categoryModal.classList.remove("hidden");
+      };
+
+      const openBrandModal = () => {
+        brandIdInput.value = "";
+        brandNameInput.value = "";
+        brandModalTitle.textContent = "Thêm thương hiệu";
+        brandModal.classList.remove("hidden");
+      };
+
+      const closeCategoryModal = () => {
+        categoryModal.classList.add("hidden");
+        categoryForm.reset();
+      };
+
+      const closeBrandModal = () => {
+        brandModal.classList.add("hidden");
+        brandForm.reset();
+      };
+
+      categoryForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const payload = { name: categoryNameInput.value.trim() };
+        let result;
+        if (categoryIdInput.value) {
+          result = await updateCategory(categoryIdInput.value, payload);
+        } else {
+          result = await createCategory(payload);
+        }
+        if (result.success) {
+          alert(result.message);
+          closeCategoryModal();
+          loadCategoriesAndBrands();
+        } else {
+          alert(result.message || "Lỗi khi lưu danh mục");
+        }
+      });
+
+      brandForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const payload = { name: brandNameInput.value.trim() };
+        let result;
+        if (brandIdInput.value) {
+          result = await updateBrand(brandIdInput.value, payload);
+        } else {
+          result = await createBrand(payload);
+        }
+        if (result.success) {
+          alert(result.message);
+          closeBrandModal();
+          loadCategoriesAndBrands();
+        } else {
+          alert(result.message || "Lỗi khi lưu thương hiệu");
+        }
+      });
+
+      addCategoryBtn.addEventListener("click", openCategoryModal);
+      addBrandBtn.addEventListener("click", openBrandModal);
+      closeCategoryModalBtn.addEventListener("click", closeCategoryModal);
+      cancelCategoryBtn.addEventListener("click", closeCategoryModal);
+      closeBrandModalBtn.addEventListener("click", closeBrandModal);
+      cancelBrandBtn.addEventListener("click", closeBrandModal);
+
+      document.addEventListener("click", (event) => {
+        if (event.target === categoryModal) closeCategoryModal();
+        if (event.target === brandModal) closeBrandModal();
+      });
+
       // Open add/edit modal
       function openAddModal() {
         editingProductId = null;
@@ -962,6 +1304,7 @@
 
       // Initial load
       loadProducts();
+      loadCategoriesAndBrands();
     </script>
     <script src="../js/animations.js"></script>
   </body>

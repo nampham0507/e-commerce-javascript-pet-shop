@@ -167,7 +167,11 @@ exports.createOrder = async (req, res) => {
       }
 
       const qty = Math.floor(item.quantity);
-      products.push({ product: product._id, quantity: qty, price: product.price });
+      products.push({
+        product: product._id,
+        quantity: qty,
+        price: product.price,
+      });
       subtotal += product.price * qty;
     }
 

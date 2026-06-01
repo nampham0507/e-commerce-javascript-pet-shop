@@ -37,6 +37,7 @@ app.get("/api/test", (req, res) => {
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/auth", require("./routes/authRoutes")); // Also mount at /auth for direct access
 app.use("/api/products", require("./routes/productRoutes"));
+app.use("/api/categories", require("./routes/categoryRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/orders", require("./routes/orderRoutes"));
 app.use("/api/payments", require("./routes/vnpayRoutes"));
@@ -58,6 +59,10 @@ app.get("/admin/manageCustomer", (req, res) => {
 
 app.get("/admin/manageProduct", (req, res) => {
   res.sendFile(path.join(__dirname, "../views/admin/manageProduct.html"));
+});
+
+app.get("/admin/manageBrand", (req, res) => {
+  res.sendFile(path.join(__dirname, "../views/admin/manageBrand.html"));
 });
 
 app.get("/admin/manageOrder", (req, res) => {

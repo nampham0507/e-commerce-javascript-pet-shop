@@ -159,7 +159,10 @@ function buildPaymentUrl(req, amount, bankCode = "", transactionRef = "") {
     .map((key) => `${key}=${sortedParams[key]}`)
     .join("&");
 
-  sortedParams.vnp_SecureHash = buildSecureHash(signData, config.vnp_HashSecret);
+  sortedParams.vnp_SecureHash = buildSecureHash(
+    signData,
+    config.vnp_HashSecret
+  );
 
   const redirectUrl = `${config.vnp_Url}?${Object.keys(sortedParams)
     .map((key) => `${key}=${sortedParams[key]}`)

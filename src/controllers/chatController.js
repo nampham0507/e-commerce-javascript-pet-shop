@@ -18,12 +18,10 @@ exports.handleChat = async (req, res) => {
     const { message, history = [] } = req.body;
 
     if (!message) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "Nội dung tin nhắn không được để trống",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "Nội dung tin nhắn không được để trống",
+      });
     }
 
     // Build conversation history for Gemini

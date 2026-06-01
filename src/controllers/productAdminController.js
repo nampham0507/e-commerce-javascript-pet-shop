@@ -1,7 +1,13 @@
 const Product = require("../models/Product");
+const Category = require("../models/Category");
+
+const getValidCategorySlugs = async () => {
+  const categories = await Category.find({}, "slug");
+  return categories.map((cat) => cat.slug);
+};
 
 // Validate product data
-const validateProductData = (data) => {
+const validateProductData = async (data) => {
   const errors = [];
 
   if (!data.name || typeof data.name !== "string" || data.name.trim() === "") {
@@ -11,8 +17,11 @@ const validateProductData = (data) => {
   if (!data.category) {
     errors.push("Danh mục không hợp lệ");
   } else {
-    const validCategories = ["food", "pate", "snack", "milk", "accessories"];
-    if (!validCategories.includes(data.category)) {
+    const validCategories = await getValidCategorySlugs();
+    if (
+      validCategories.length > 0 &&
+      !validCategories.includes(data.category)
+    ) {
       errors.push("Danh mục không tồn tại");
     }
   }
@@ -135,7 +144,7 @@ exports.createProduct = async (req, res) => {
     const { name, description, category, price, quantity, image } = req.body;
 
     // Validate data
-    const errors = validateProductData({
+    const errors = await validateProductData({
       name,
       category,
       price,
@@ -199,7 +208,7 @@ exports.updateProduct = async (req, res) => {
     }
 
     // Validate data
-    const errors = validateProductData({
+    const errors = await validateProductData({
       name,
       category,
       price,
