@@ -579,7 +579,7 @@
       </div>
     </footer>
     <script type="module">
-      import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
+      import { isAuthenticated, getUserInfo, logoutUser, requireAuth } from "../js/auth.js";
       import { getCart, getCartTotal, clearCart } from "../js/cart.js";
 
       const guestNav = document.getElementById("guestNav");
@@ -888,6 +888,7 @@
         }
       });
 
+      requireAuth(); // Chuyển hướng ngay nếu chưa đăng nhập
       initNav();
       renderCheckoutSummary();
     </script>

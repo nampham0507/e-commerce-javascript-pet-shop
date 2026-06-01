@@ -83,6 +83,12 @@ export const syncCartFromBackend = async () => {
 // ── Thêm sản phẩm vào giỏ ───────────────────────────────────────────────────
 
 export const addToCart = (product, quantity = 1) => {
+  if (!isAuthenticated()) {
+    alert("Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng!");
+    window.location.href = "/auth/login";
+    return null;
+  }
+
   const cart = getCart();
   const existingItem = cart.find((item) => item._id === product._id);
   if (existingItem) {
@@ -98,17 +104,15 @@ export const addToCart = (product, quantity = 1) => {
   }
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  // Đồng bộ ngầm lên backend
-  if (isAuthenticated()) {
-    fetch(`${API_BASE_URL}/cart/add`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getToken()}`,
-      },
-      body: JSON.stringify({ productId: product._id, quantity }),
-    }).catch((err) => console.error("Lỗi đồng bộ thêm giỏ hàng:", err));
-  }
+  // Đồng bộ ngầm lên backend (luôn chạy vì đã check đăng nhập)
+  fetch(`${API_BASE_URL}/cart/add`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify({ productId: product._id, quantity }),
+  }).catch((err) => console.error("Lỗi đồng bộ thêm giỏ hàng:", err));
 
   return cart;
 };
