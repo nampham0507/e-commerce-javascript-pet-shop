@@ -8,7 +8,7 @@ const orderAdminController = require("../controllers/orderAdminController");
 const customerAdminController = require("../controllers/customerAdminController");
 const dashboardController = require("../controllers/dashboardController");
 const reportController = require("../controllers/reportController");
-const categoryAdminController = require("../controllers/categoryAdminController");
+const brandController = require("../controllers/brandController");
 
 // Middlewares
 const authMiddleware = require("../middlewares/auth");
@@ -96,25 +96,25 @@ router.get(
   "/brands",
   authMiddleware,
   adminMiddleware,
-  categoryAdminController.getBrandsAdmin
+  brandController.getBrandsAdmin
 );
 router.post(
   "/brands",
   authMiddleware,
   adminMiddleware,
-  categoryAdminController.createBrand
+  brandController.createBrand
 );
 router.put(
   "/brands/:brandId",
   authMiddleware,
   adminMiddleware,
-  categoryAdminController.updateBrand
+  brandController.updateBrand
 );
 router.delete(
   "/brands/:brandId",
   authMiddleware,
   adminMiddleware,
-  categoryAdminController.deleteBrand
+  brandController.deleteBrand
 );
 
 // ===== Quản lý đơn hàng =====

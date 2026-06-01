@@ -815,7 +815,7 @@
         }
 
         try {
-          const categoriesResponse = await fetch("/api/categories");
+          const categoriesResponse = await fetch("/api/brands/categories");
           const categoriesData = await categoriesResponse.json();
           if (categoriesData.success) {
             renderCategoryFilters(categoriesData.categories || []);
@@ -826,7 +826,7 @@
 
         let fetchedBrands = [];
         try {
-          const brandsResponse = await fetch("/api/categories/brands");
+          const brandsResponse = await fetch("/api/brands");
           const brandsData = await brandsResponse.json();
           if (brandsData.success && Array.isArray(brandsData.brands)) {
             fetchedBrands = brandsData.brands;
