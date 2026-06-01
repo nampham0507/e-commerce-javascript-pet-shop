@@ -54,6 +54,7 @@ exports.getAllUsers = async (req, res) => {
       query.$or = [
         { fullName: { $regex: search, $options: "i" } },
         { email: { $regex: search, $options: "i" } },
+        { phone: { $regex: search, $options: "i" } },
       ];
     }
 

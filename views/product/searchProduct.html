@@ -570,7 +570,7 @@
     <script type="module">
       import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
       import { getPublicProducts } from "../js/product.js";
-      import { addToCart, getCartItemCount, syncCartFromBackend } from "../js/cart.js";
+      import { addToCart, getCartItemCount } from "../js/cart.js";
 
       // ── Auth Nav ─────────────────────────────────────────────────────────────
       const guestNav = document.getElementById("guestNav");
@@ -815,7 +815,7 @@
         }
 
         try {
-          const categoriesResponse = await fetch("/api/brands/categories");
+          const categoriesResponse = await fetch("/api/categories");
           const categoriesData = await categoriesResponse.json();
           if (categoriesData.success) {
             renderCategoryFilters(categoriesData.categories || []);
@@ -826,7 +826,7 @@
 
         let fetchedBrands = [];
         try {
-          const brandsResponse = await fetch("/api/brands");
+          const brandsResponse = await fetch("/api/categories/brands");
           const brandsData = await brandsResponse.json();
           if (brandsData.success && Array.isArray(brandsData.brands)) {
             fetchedBrands = brandsData.brands;
@@ -953,16 +953,9 @@
         }
       });
 
-      async function initSearchPage() {
-        initNav();
-        if (isAuthenticated()) {
-          await syncCartFromBackend();
-        }
-        updateCartBadge();
-        loadProducts();
-      }
-
-      initSearchPage();
+      initNav();
+      updateCartBadge();
+      loadProducts();
     </script>
     <script src="../js/animations.js"></script>
   </body>

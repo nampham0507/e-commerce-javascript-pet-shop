@@ -37,12 +37,11 @@ app.get("/api/test", (req, res) => {
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/auth", require("./routes/authRoutes")); // Also mount at /auth for direct access
 app.use("/api/products", require("./routes/productRoutes"));
-app.use("/api/brands", require("./routes/brandRoutes"));
+app.use("/api/categories", require("./routes/categoryRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/orders", require("./routes/orderRoutes"));
 app.use("/api/payments", require("./routes/vnpayRoutes"));
 app.use("/api/chat", require("./routes/chatRoutes"));
-app.use("/api/cart", require("./routes/cartRoutes"));
 // app.use('/api/customers', require('./routes/customerRoutes'));
 
 // Routes - HTML Pages
@@ -100,6 +99,10 @@ app.get("/order/checkout", (req, res) => {
 
 app.get("/order/detail", (req, res) => {
   res.sendFile(path.join(__dirname, "../views/order/orderDetail.html"));
+});
+
+app.get("/homepage/categories", (req, res) => {
+  res.sendFile(path.join(__dirname, "../views/homepage/catagories.html"));
 });
 
 // Error handling middleware

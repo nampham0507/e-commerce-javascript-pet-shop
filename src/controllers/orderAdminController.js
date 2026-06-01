@@ -210,3 +210,95 @@ exports.deleteOrder = async (req, res) => {
     });
   }
 };
+
+function generateOrderNumber() {
+  const timestamp = Date.now();
+  const random = Math.random().toString(36).slice(2, 8).toUpperCase();
+  return `ORD-${timestamp}-${random}`;
+}
+
+// Create order (admin)
+exports.createOrderAdmin = async (req, res) => {
+  try {
+    const { userId, products, shippingAddress, paymentMethod } = req.body;
+    // Accept optional shippingFee from admin UI (default 30000)
+    let shippingFee = 30000;
+    if (typeof req.body.shippingFee !== 'undefined') {
+      const sf = Number(req.body.shippingFee);
+      shippingFee = isNaN(sf) ? 0 : sf;
+    }
+
+    if (!shippingAddress?.fullName || !shippingAddress?.phone || !shippingAddress?.address) {
+      return res.status(400).json({ success: false, message: "Thiếu thông tin giao hàng" });
+    }
+    if (!products || !Array.isArray(products) || products.length === 0) {
+      return res.status(400).json({ success: false, message: "Danh sách sản phẩm trống" });
+    }
+
+    let subtotal = 0;
+    const orderProducts = [];
+
+    for (const item of products) {
+      const product = await Product.findById(item.product);
+      if (!product) {
+        return res.status(404).json({ success: false, message: `Không tìm thấy sản phẩm ID: ${item.product}` });
+      }
+      const qty = parseInt(item.quantity, 10);
+      if (isNaN(qty) || qty <= 0) {
+        return res.status(400).json({ success: false, message: "Số lượng không hợp lệ" });
+      }
+      if (product.quantity < qty) {
+        return res.status(400).json({ success: false, message: `Sản phẩm "${product.name}" chỉ còn ${product.quantity} cái` });
+      }
+
+      orderProducts.push({
+        product: product._id,
+        quantity: qty,
+        price: product.price,
+      });
+      subtotal += product.price * qty;
+    }
+
+    const total = subtotal + shippingFee;
+
+    const orderData = {
+      orderNumber: generateOrderNumber(),
+      products: orderProducts,
+      totalPrice: total,
+      status: "pending",
+      shippingAddress: {
+        fullName: shippingAddress.fullName,
+        address: shippingAddress.address,
+        city: shippingAddress.city || "",
+        phone: shippingAddress.phone,
+      },
+      paymentMethod: paymentMethod || "cod",
+      paymentStatus: paymentMethod === "banking" ? "pending" : "unpaid",
+    };
+
+    if (userId) {
+      orderData.user = userId;
+    }
+
+    const order = await Order.create(orderData);
+
+    // Decrease inventory
+    for (const item of orderProducts) {
+      await Product.findByIdAndUpdate(item.product, {
+        $inc: { quantity: -item.quantity },
+      });
+    }
+
+    res.status(201).json({
+      success: true,
+      message: "Tạo đơn hàng thành công",
+      order,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Lỗi server",
+      error: error.message,
+    });
+  }
+};

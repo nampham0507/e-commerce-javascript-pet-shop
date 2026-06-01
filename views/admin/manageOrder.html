@@ -264,6 +264,7 @@
         </div>
         <div class="flex gap-md">
           <button
+            id="openCreateOrderBtn"
             class="flex items-center gap-xs px-lg py-sm bg-primary text-on-primary rounded-full hover:scale-105 transition-transform shadow-md font-label-md"
           >
             <span class="material-symbols-outlined text-[20px]" data-icon="add"
@@ -673,6 +674,9 @@
         deleteOrder,
         getOrderStats,
         getDashboardStats,
+        createAdminOrder,
+        getAllUsers,
+        getAdminProducts,
       } from "../js/admin.js";
       import { isAuthenticated, getUserInfo } from "../js/auth.js";
 
@@ -867,10 +871,10 @@
                        <option value="delivered" ${order.status === "delivered" ? "selected" : ""}>Đã giao</option>
                        <option value="cancelled" ${order.status === "cancelled" ? "selected" : ""}>Hủy</option>
                      </select>
-                     <button onclick="window.openOrderDetail('${order._id}')" class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-high text-on-surface hover:text-primary transition-colors hover:bg-primary-container/20" title="Xem chi tiết">
+                     <button type="button" onclick="window.openOrderDetail('${order._id}')" class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-high text-on-surface hover:text-primary transition-colors hover:bg-primary-container/20" title="Xem chi tiết">
                        <span class="material-symbols-outlined text-[18px]">visibility</span>
                      </button>
-                     <button onclick="window.deleteOrder('${order._id}')" class="w-8 h-8 flex items-center justify-center rounded-full bg-error-container text-on-error-container hover:bg-error/90 transition-colors" title="Xóa đơn">
+                     <button type="button" onclick="window.deleteOrder('${order._id}')" class="w-8 h-8 flex items-center justify-center rounded-full bg-error-container text-on-error-container hover:bg-error/90 transition-colors" title="Xóa đơn">
                        <span class="material-symbols-outlined text-[18px]">delete</span>
                      </button>
                    </div>
@@ -1034,10 +1038,10 @@
                 </td>
                 <td class="px-lg py-md">
                   <div class="flex gap-sm justify-end">
-                    <button onclick="window.openOrderDetail('${order._id}')" class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-high text-on-surface hover:text-primary transition-colors hover:bg-primary-container/20" title="Xem chi tiết">
+                    <button type="button" onclick="window.openOrderDetail('${order._id}')" class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-high text-on-surface hover:text-primary transition-colors hover:bg-primary-container/20" title="Xem chi tiết">
                       <span class="material-symbols-outlined text-[18px]">visibility</span>
                     </button>
-                    <button onclick="window.deleteOrder('${order._id}')" class="w-8 h-8 flex items-center justify-center rounded-full bg-error-container text-on-error-container hover:bg-error/90 transition-colors" title="Xóa đơn">
+                    <button type="button" onclick="window.deleteOrder('${order._id}')" class="w-8 h-8 flex items-center justify-center rounded-full bg-error-container text-on-error-container hover:bg-error/90 transition-colors" title="Xóa đơn">
                       <span class="material-symbols-outlined text-[18px]">delete</span>
                     </button>
                   </div>
@@ -1120,7 +1124,8 @@
             currency: "VND",
           }).format(order.totalPrice);
 
-        document.getElementById("orderDetailModal").classList.remove("hidden");
+        const modal = document.getElementById("orderDetailModal");
+        modal.classList.remove("hidden");
       };
 
       window.closeOrderDetail = function () {
@@ -1150,6 +1155,476 @@
           alert(result.message || "Không thể xóa đơn hàng");
         }
       };
+
+      // === Create Order Modal Logic ===
+      const createOrderModalHtml = `
+      <div id="createOrderModal" class="hidden fixed inset-0 z-[110] flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="document.getElementById('createOrderModal').classList.add('hidden')"></div>
+        <div class="relative bg-surface rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-auto flex flex-col shadow-2xl p-lg">
+          <div class="flex items-center justify-between mb-md">
+            <h3 class="font-headline-md text-headline-md">Tạo đơn hàng mới</h3>
+            <button id="closeCreateOrderBtn" class="p-xs hover:bg-surface-variant rounded-full">Đóng</button>
+          </div>
+          <form id="createOrderForm" class="space-y-md">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+              <div>
+                    <label class="text-label-sm">Khách hàng</label>
+                    <input id="orderUserSearch" placeholder="Tìm theo tên hoặc số điện thoại" class="w-full bg-surface-container-low rounded-full px-lg py-md mt-sm" autocomplete="off" />
+                    <div id="orderUserResults" class="hidden bg-surface rounded-md mt-sm max-h-40 overflow-auto border border-outline-variant"></div>
+                    <select id="orderUserSelect" class="hidden"></select>
+                    <div class="flex items-center gap-2 mt-sm">
+                      <input type="checkbox" id="guestOrderCheckbox" /> <label for="guestOrderCheckbox" class="text-label-sm">Khách vãng lai</label>
+                    </div>
+                  </div>
+              <div>
+                <label class="text-label-sm">Phương thức thanh toán</label>
+                <select id="orderPaymentMethod" class="w-full bg-surface-container-low border-none rounded-full px-lg py-md">
+                  <option value="cod">Tiền mặt/COD</option>
+                  <option value="banking">Chuyển khoản</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="text-label-sm">Sản phẩm</label>
+              <div id="orderProductsContainer" class="space-y-sm mt-sm"></div>
+              <div class="mt-sm"><button id="addOrderProductBtn" type="button" class="px-md py-xs bg-surface-container-high rounded-full">Thêm sản phẩm</button></div>
+            </div>
+
+            <div>
+              <label class="text-label-sm">Địa chỉ giao hàng</label>
+              <input id="orderShippingFullName" placeholder="Họ tên" class="w-full bg-surface-container-low rounded-full px-lg py-md mt-sm" />
+              <input id="orderShippingPhone" placeholder="Số điện thoại" class="w-full bg-surface-container-low rounded-full px-lg py-md mt-sm" />
+              <input id="orderShippingStreet" placeholder="Số nhà, tên đường" class="w-full bg-surface-container-low rounded-full px-lg py-md mt-sm" />
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-sm mt-sm">
+                <div class="relative">
+                  <input id="admin-province-input" class="w-full bg-surface-container-low border-none rounded-full px-lg py-md focus:ring-2 focus:ring-primary-container outline-none" placeholder="Tỉnh / Thành phố" type="text" autocomplete="off" />
+                  <div id="admin-province-dropdown" class="hidden absolute z-10 w-full mt-1 bg-surface-container-lowest border border-outline-variant/30 rounded-xl shadow-lg max-h-40 overflow-y-auto"></div>
+                </div>
+                <div class="relative">
+                  <input id="admin-district-input" class="w-full bg-surface-container-low border-none rounded-full px-lg py-md focus:ring-2 focus:ring-primary-container outline-none disabled:opacity-50" placeholder="Quận / Huyện" type="text" autocomplete="off" disabled />
+                  <div id="admin-district-dropdown" class="hidden absolute z-10 w-full mt-1 bg-surface-container-lowest border border-outline-variant/30 rounded-xl shadow-lg max-h-40 overflow-y-auto"></div>
+                </div>
+                <div class="relative">
+                  <input id="admin-ward-input" class="w-full bg-surface-container-low border-none rounded-full px-lg py-md focus:ring-2 focus:ring-primary-container outline-none disabled:opacity-50" placeholder="Phường / Xã" type="text" autocomplete="off" disabled />
+                  <div id="admin-ward-dropdown" class="hidden absolute z-10 w-full mt-1 bg-surface-container-lowest border border-outline-variant/30 rounded-xl shadow-lg max-h-40 overflow-y-auto"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-md">
+              <label class="flex items-center gap-2">
+                <input id="includeShippingCheckbox" type="checkbox" checked />
+                <span class="text-label-sm">Bao gồm phí ship 30.000₫</span>
+              </label>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="text-label-sm text-on-surface-variant">Tạm tính</p>
+                <p id="orderSubtotalDisplay" class="font-headline-md text-primary">0 ₫</p>
+                <p id="orderShippingFeeDisplay" class="text-label-sm text-on-surface-variant">Phí ship: 30.000₫</p>
+              </div>
+              <div class="flex gap-sm">
+                <button id="cancelCreateOrderBtn" type="button" class="px-lg py-sm bg-surface-container-high rounded-full">Hủy</button>
+                <button id="submitCreateOrderBtn" type="button" class="px-lg py-sm bg-primary text-on-primary rounded-full">Tạo đơn</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      `;
+
+      document.body.insertAdjacentHTML("beforeend", createOrderModalHtml);
+
+      const openCreateOrderBtn = document.getElementById("openCreateOrderBtn");
+      const createOrderModal = document.getElementById("createOrderModal");
+      const closeCreateOrderBtn = document.getElementById(
+        "closeCreateOrderBtn"
+      );
+      const cancelCreateOrderBtn = document.getElementById(
+        "cancelCreateOrderBtn"
+      );
+      const addOrderProductBtn = document.getElementById("addOrderProductBtn");
+      const orderProductsContainer = document.getElementById(
+        "orderProductsContainer"
+      );
+      const orderUserResults = document.getElementById("orderUserResults");
+      const orderUserSelect = document.getElementById("orderUserSelect");
+      const guestOrderCheckbox = document.getElementById("guestOrderCheckbox");
+      const includeShippingCheckbox = document.getElementById(
+        "includeShippingCheckbox"
+      );
+      const orderShippingFeeDisplay = document.getElementById(
+        "orderShippingFeeDisplay"
+      );
+      const orderSubtotalDisplay = document.getElementById(
+        "orderSubtotalDisplay"
+      );
+      let selectedUserId = null;
+      const submitCreateOrderBtn = document.getElementById(
+        "submitCreateOrderBtn"
+      );
+
+      let availableProducts = [];
+      let customersList = [];
+
+      function createProductRow(productList = []) {
+        const row = document.createElement("div");
+        row.className = "flex items-center gap-2";
+        row.innerHTML = `
+          <select class="order-product-select flex-1 bg-surface-container-low rounded-full px-lg py-md">
+            <option value="">Chọn sản phẩm</option>
+            ${productList.map((p) => `<option value="${p._id}" data-price="${p.price}">${p.name} (${new Intl.NumberFormat("vi-VN").format(p.price)}₫)</option>`).join("")}
+          </select>
+          <input type="number" min="1" value="1" class="order-product-qty w-28 bg-surface-container-low rounded-full px-lg py-md text-center" />
+          <button type="button" class="remove-order-product px-xs py-xs text-error-container">X</button>
+        `;
+        orderProductsContainer.appendChild(row);
+
+        row
+          .querySelector(".remove-order-product")
+          .addEventListener("click", () => {
+            row.remove();
+            recalcSubtotal();
+          });
+        row
+          .querySelector(".order-product-select")
+          .addEventListener("change", recalcSubtotal);
+        row
+          .querySelector(".order-product-qty")
+          .addEventListener("input", recalcSubtotal);
+        return row;
+      }
+
+      function recalcSubtotal() {
+        let subtotal = 0;
+        orderProductsContainer
+          .querySelectorAll(".order-product-select")
+          .forEach((sel) => {
+            const pid = sel.value;
+            const price = parseFloat(
+              sel.selectedOptions[0]?.dataset.price || 0
+            );
+            const qty = parseInt(
+              sel.parentElement.querySelector(".order-product-qty").value || 0,
+              10
+            );
+            if (pid && qty > 0) subtotal += price * qty;
+          });
+        const shippingIncluded = includeShippingCheckbox?.checked ?? true;
+        const shippingFee = shippingIncluded ? 30000 : 0;
+        orderShippingFeeDisplay.textContent = `Phí ship: ${new Intl.NumberFormat("vi-VN").format(shippingFee)}₫`;
+        orderSubtotalDisplay.textContent = new Intl.NumberFormat("vi-VN", {
+          style: "currency",
+          currency: "VND",
+        }).format(subtotal + shippingFee);
+      }
+
+      async function loadUsersAndProductsForCreate() {
+        // load users
+        orderUserSelect.innerHTML =
+          '<option value="">-- Chọn khách --</option>';
+        const usersRes = await getAllUsers({ limit: 200 });
+        customersList = [];
+        if (usersRes.success && Array.isArray(usersRes.customers)) {
+          customersList = usersRes.customers;
+        }
+        // populate select
+        function populateUserOptions(list) {
+          orderUserSelect.innerHTML =
+            '<option value="">-- Chọn khách --</option>';
+          orderUserResults.innerHTML = "";
+          list.forEach((u) => {
+            const name = u.fullName || u.email || u.phone || u._id;
+            const label = `${name}${u.phone ? " • " + u.phone : ""}`;
+            orderUserSelect.insertAdjacentHTML(
+              "beforeend",
+              `<option value="${u._id}">${label}</option>`
+            );
+            const item = document.createElement("div");
+            item.className =
+              "px-md py-sm hover:bg-surface-container-high cursor-pointer";
+            item.textContent = label;
+            item.dataset.id = u._id;
+            item.addEventListener("click", () => {
+              selectedUserId = u._id;
+              const searchInput = document.getElementById("orderUserSearch");
+              if (searchInput) searchInput.value = label;
+              orderUserResults.classList.add("hidden");
+            });
+            orderUserResults.appendChild(item);
+          });
+        }
+        populateUserOptions(customersList);
+
+        const userSearchInput = document.getElementById("orderUserSearch");
+        if (userSearchInput) {
+          userSearchInput.value = "";
+          userSearchInput.oninput = () => {
+            selectedUserId = null;
+            const q = userSearchInput.value.trim().toLowerCase();
+            if (!q) {
+              orderUserResults.classList.add("hidden");
+              return populateUserOptions(customersList);
+            }
+            const filtered = customersList.filter((u) => {
+              const name = (u.fullName || "").toLowerCase();
+              const phone = (u.phone || "").toLowerCase();
+              const email = (u.email || "").toLowerCase();
+              return name.includes(q) || phone.includes(q) || email.includes(q);
+            });
+            populateUserOptions(filtered);
+            if (filtered.length > 0)
+              orderUserResults.classList.remove("hidden");
+            else orderUserResults.classList.add("hidden");
+          };
+        }
+
+        // hide results when clicking outside
+        document.addEventListener("click", (e) => {
+          const target = e.target;
+          if (
+            !target.closest ||
+            (!target.closest("#orderUserSearch") &&
+              !target.closest("#orderUserResults"))
+          ) {
+            orderUserResults.classList.add("hidden");
+          }
+        });
+
+        // guest checkbox disables search
+        guestOrderCheckbox.addEventListener("change", () => {
+          if (guestOrderCheckbox.checked) {
+            userSearchInput.value = "";
+            selectedUserId = null;
+            orderUserResults.classList.add("hidden");
+            userSearchInput.disabled = true;
+          } else {
+            userSearchInput.disabled = false;
+          }
+        });
+
+        includeShippingCheckbox.addEventListener("change", recalcSubtotal);
+
+        // load products
+        const productsRes = await getAdminProducts({ limit: 200 });
+        availableProducts =
+          (productsRes.success ? productsRes.products || [] : []) || [];
+        // Reset product rows
+        orderProductsContainer.innerHTML = "";
+        createProductRow(availableProducts);
+        recalcSubtotal();
+      }
+
+      openCreateOrderBtn.addEventListener("click", async () => {
+        await loadUsersAndProductsForCreate();
+        createOrderModal.classList.remove("hidden");
+      });
+      closeCreateOrderBtn.addEventListener("click", () =>
+        createOrderModal.classList.add("hidden")
+      );
+      if (cancelCreateOrderBtn)
+        cancelCreateOrderBtn.addEventListener("click", () =>
+          createOrderModal.classList.add("hidden")
+        );
+      addOrderProductBtn.addEventListener("click", () =>
+        createProductRow(availableProducts)
+      );
+
+      // Admin address dropdowns: province / district / ward
+      const adminProvinceInput = document.getElementById(
+        "admin-province-input"
+      );
+      const adminDistrictInput = document.getElementById(
+        "admin-district-input"
+      );
+      const adminWardInput = document.getElementById("admin-ward-input");
+
+      let adminProvincesData = [];
+      let adminDistrictsData = [];
+      let adminWardsData = [];
+
+      function setupDropdown(input, dropdown, dataGetter, onSelect) {
+        function renderOptions() {
+          const list = dataGetter();
+          const val = input.value.trim().toLowerCase();
+          const filtered = val
+            ? list.filter((item) => item.name.toLowerCase().includes(val))
+            : list;
+          if (filtered.length === 0) {
+            dropdown.innerHTML =
+              '<div class="px-4 py-3 text-on-surface-variant text-sm">Không tìm thấy kết quả</div>';
+            return;
+          }
+          dropdown.innerHTML = filtered
+            .map(
+              (item) =>
+                `<div class="px-4 py-3 hover:bg-primary-container/20 cursor-pointer text-on-surface text-sm border-b border-outline-variant/10 last:border-0" data-value="${item.code}">${item.name}</div>`
+            )
+            .join("");
+        }
+
+        input.addEventListener("focus", () => {
+          input.select();
+          dropdown.classList.remove("hidden");
+          renderOptions();
+        });
+        input.addEventListener("input", () => {
+          dropdown.classList.remove("hidden");
+          renderOptions();
+        });
+
+        dropdown.addEventListener("mousedown", (e) => {
+          const div = e.target.closest("div[data-value]");
+          if (div) {
+            input.value = div.textContent;
+            input.dataset.code = div.getAttribute("data-value");
+            dropdown.classList.add("hidden");
+            if (onSelect) onSelect(input.dataset.code);
+          }
+        });
+
+        input.addEventListener("blur", () => {
+          dropdown.classList.add("hidden");
+          const list = dataGetter();
+          const selected = list.find((d) => d.code == input.dataset.code);
+          if (!selected || selected.name !== input.value) {
+            input.value = "";
+            input.dataset.code = "";
+            if (onSelect) onSelect("");
+          }
+        });
+      }
+
+      setupDropdown(
+        adminProvinceInput,
+        document.getElementById("admin-province-dropdown"),
+        () => adminProvincesData,
+        (pCode) => {
+          adminDistrictInput.value = "";
+          adminDistrictInput.dataset.code = "";
+          adminWardInput.value = "";
+          adminWardInput.dataset.code = "";
+          adminDistrictInput.disabled = true;
+          adminWardInput.disabled = true;
+          adminDistrictsData = [];
+          adminWardsData = [];
+          if (pCode) {
+            fetch(`https://provinces.open-api.vn/api/p/${pCode}?depth=2`)
+              .then((res) => res.json())
+              .then((pData) => {
+                adminDistrictsData = pData.districts || [];
+                adminDistrictInput.disabled = false;
+              });
+          }
+        }
+      );
+
+      setupDropdown(
+        adminDistrictInput,
+        document.getElementById("admin-district-dropdown"),
+        () => adminDistrictsData,
+        (dCode) => {
+          adminWardInput.value = "";
+          adminWardInput.dataset.code = "";
+          adminWardInput.disabled = true;
+          adminWardsData = [];
+          if (dCode) {
+            fetch(`https://provinces.open-api.vn/api/d/${dCode}?depth=2`)
+              .then((res) => res.json())
+              .then((dData) => {
+                adminWardsData = dData.wards || [];
+                adminWardInput.disabled = false;
+              });
+          }
+        }
+      );
+
+      setupDropdown(
+        adminWardInput,
+        document.getElementById("admin-ward-dropdown"),
+        () => adminWardsData,
+        () => {}
+      );
+
+      fetch("https://provinces.open-api.vn/api/p/")
+        .then((res) => res.json())
+        .then((data) => {
+          adminProvincesData = data || [];
+        });
+      submitCreateOrderBtn.addEventListener("click", async () => {
+        const fullName = document
+          .getElementById("orderShippingFullName")
+          .value.trim();
+        const phone = document
+          .getElementById("orderShippingPhone")
+          .value.trim();
+        const street = document
+          .getElementById("orderShippingStreet")
+          .value.trim();
+        const province = document
+          .getElementById("admin-province-input")
+          .value.trim();
+        const district = document
+          .getElementById("admin-district-input")
+          .value.trim();
+        const ward = document.getElementById("admin-ward-input").value.trim();
+        const address = [street, ward, district, province]
+          .filter(Boolean)
+          .join(", ");
+
+        const shipping = {
+          fullName,
+          phone,
+          address,
+          city: province || "",
+        };
+
+        if (!shipping.fullName || !shipping.phone || !shipping.address) {
+          alert(
+            "Vui lòng nhập đầy đủ thông tin giao hàng (số nhà, phường, quận, tỉnh)"
+          );
+          return;
+        }
+
+        const productRows = Array.from(
+          orderProductsContainer.querySelectorAll(".order-product-select")
+        );
+        const products = [];
+        for (const sel of productRows) {
+          const pid = sel.value;
+          const qty = parseInt(
+            sel.parentElement.querySelector(".order-product-qty").value || "0",
+            10
+          );
+          if (!pid || qty <= 0) continue;
+          products.push({ product: pid, quantity: qty });
+        }
+        if (products.length === 0) {
+          alert("Vui lòng chọn ít nhất một sản phẩm");
+          return;
+        }
+
+        const payload = {
+          userId: guestOrderCheckbox.checked ? null : selectedUserId || null,
+          products,
+          shippingAddress: shipping,
+          paymentMethod:
+            document.getElementById("orderPaymentMethod").value || "cod",
+          shippingFee: includeShippingCheckbox?.checked ? 30000 : 0,
+        };
+
+        const res = await createAdminOrder(payload);
+        if (res.success) {
+          alert("Tạo đơn hàng thành công");
+          createOrderModal.classList.add("hidden");
+          loadOrders();
+        } else {
+          console.error('createAdminOrder error:', res);
+          alert(res.message || `Không thể tạo đơn hàng (${res.status || 'unknown'})`);
+        }
+      });
     </script>
     <script type="module">
       // === THÊM VÀO SCRIPT HIỆN CÓ CỦA MỖI TRANG ADMIN ===

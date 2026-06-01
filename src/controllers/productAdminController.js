@@ -1,4 +1,10 @@
 const Product = require("../models/Product");
+const Category = require("../models/Category");
+
+const getValidCategorySlugs = async () => {
+  const categories = await Category.find({}, "slug");
+  return categories.map((cat) => cat.slug);
+};
 
 // Validate product data
 const validateProductData = async (data) => {
@@ -8,12 +14,16 @@ const validateProductData = async (data) => {
     errors.push("Tên sản phẩm không hợp lệ");
   }
 
-  if (
-    !data.category ||
-    typeof data.category !== "string" ||
-    data.category.trim() === ""
-  ) {
+  if (!data.category) {
     errors.push("Danh mục không hợp lệ");
+  } else {
+    const validCategories = await getValidCategorySlugs();
+    if (
+      validCategories.length > 0 &&
+      !validCategories.includes(data.category)
+    ) {
+      errors.push("Danh mục không tồn tại");
+    }
   }
 
   if (data.price === undefined || data.price === null) {

@@ -8,7 +8,7 @@ const orderAdminController = require("../controllers/orderAdminController");
 const customerAdminController = require("../controllers/customerAdminController");
 const dashboardController = require("../controllers/dashboardController");
 const reportController = require("../controllers/reportController");
-const brandController = require("../controllers/brandController");
+const categoryAdminController = require("../controllers/categoryAdminController");
 
 // Middlewares
 const authMiddleware = require("../middlewares/auth");
@@ -91,30 +91,56 @@ router.get(
   productAdminController.getProductStats
 );
 
+// ===== Quản lý danh mục =====
+router.get(
+  "/categories",
+  authMiddleware,
+  adminMiddleware,
+  categoryAdminController.getCategoriesAdmin
+);
+router.post(
+  "/categories",
+  authMiddleware,
+  adminMiddleware,
+  categoryAdminController.createCategory
+);
+router.put(
+  "/categories/:categoryId",
+  authMiddleware,
+  adminMiddleware,
+  categoryAdminController.updateCategory
+);
+router.delete(
+  "/categories/:categoryId",
+  authMiddleware,
+  adminMiddleware,
+  categoryAdminController.deleteCategory
+);
+
 // ===== Quản lý thương hiệu =====
 router.get(
   "/brands",
   authMiddleware,
   adminMiddleware,
-  brandController.getBrandsAdmin
+  categoryAdminController.getBrandsAdmin
 );
 router.post(
   "/brands",
   authMiddleware,
   adminMiddleware,
-  brandController.createBrand
+  categoryAdminController.createBrand
 );
 router.put(
   "/brands/:brandId",
   authMiddleware,
   adminMiddleware,
-  brandController.updateBrand
+  categoryAdminController.updateBrand
 );
 router.delete(
   "/brands/:brandId",
   authMiddleware,
   adminMiddleware,
-  brandController.deleteBrand
+  categoryAdminController.deleteBrand
 );
 
 // ===== Quản lý đơn hàng =====
@@ -123,6 +149,12 @@ router.get(
   authMiddleware,
   adminMiddleware,
   orderAdminController.getAllOrders
+);
+router.post(
+  "/orders",
+  authMiddleware,
+  adminMiddleware,
+  orderAdminController.createOrderAdmin
 );
 router.get(
   "/orders/:orderId",

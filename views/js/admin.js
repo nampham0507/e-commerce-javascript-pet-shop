@@ -260,6 +260,28 @@ export const deleteOrder = async (orderId) => {
   }
 };
 
+export const createAdminOrder = async (data) => {
+  try {
+    const url = (typeof window !== 'undefined' && window.location && window.location.origin) ? `${window.location.origin}${API_BASE_URL}/admin/orders` : `${API_BASE_URL}/admin/orders`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    const text = await response.text();
+    try {
+      const json = JSON.parse(text);
+      if (!response.ok) return { success: false, status: response.status, message: json.message || text, body: json };
+      return json;
+    } catch (e) {
+      // Non-JSON response
+      return { success: response.ok, status: response.status, message: text };
+    }
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
 export const getOrderStats = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/admin/orders/stats/all`, {
