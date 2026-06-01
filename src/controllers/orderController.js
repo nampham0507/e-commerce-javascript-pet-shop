@@ -1,5 +1,7 @@
 const Order = require("../models/Order");
 const Product = require("../models/Product");
+const Cart = require("../models/Cart");
+const CartItem = require("../models/CartItem");
 
 // =============================================
 // Helper Functions
@@ -208,6 +210,12 @@ exports.createOrder = async (req, res) => {
       await Product.findByIdAndUpdate(item.product, {
         $inc: { quantity: -item.quantity },
       });
+    }
+
+    // Làm sạch giỏ hàng backend nếu có
+    const userCart = await Cart.findOne({ user: req.userId });
+    if (userCart) {
+      await CartItem.deleteMany({ cart: userCart._id });
     }
 
     return res.json({

@@ -570,7 +570,7 @@
     <script type="module">
       import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
       import { getPublicProducts } from "../js/product.js";
-      import { addToCart, getCartItemCount } from "../js/cart.js";
+      import { addToCart, getCartItemCount, syncCartFromBackend } from "../js/cart.js";
 
       // ── Auth Nav ─────────────────────────────────────────────────────────────
       const guestNav = document.getElementById("guestNav");
@@ -953,9 +953,16 @@
         }
       });
 
-      initNav();
-      updateCartBadge();
-      loadProducts();
+      async function initSearchPage() {
+        initNav();
+        if (isAuthenticated()) {
+          await syncCartFromBackend();
+        }
+        updateCartBadge();
+        loadProducts();
+      }
+
+      initSearchPage();
     </script>
     <script src="../js/animations.js"></script>
   </body>

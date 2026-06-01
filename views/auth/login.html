@@ -319,6 +319,7 @@
         >
           <script type="module">
             import { loginUser } from "../js/auth.js";
+            import { mergeLocalCartToBackend } from "../js/cart.js";
 
             const loginForm = document.getElementById("loginForm");
             const errorDiv = document.getElementById("errorMessage");
@@ -340,6 +341,13 @@
                 successDiv.textContent =
                   "Đăng nhập thành công! Đang chuyển hướng...";
                 successDiv.classList.remove("hidden");
+                
+                try {
+                  await mergeLocalCartToBackend();
+                } catch(e) {
+                  console.error("Lỗi đồng bộ giỏ hàng khi đăng nhập:", e);
+                }
+
                 setTimeout(() => {
                   window.location.href = "/";
                 }, 1500);

@@ -350,6 +350,7 @@
         </form>
         <script type="module">
           import { registerUser } from "../js/auth.js";
+          import { mergeLocalCartToBackend } from "../js/cart.js";
 
           const registerForm = document.getElementById("registerForm");
           const errorDiv = document.getElementById("errorMessage");
@@ -398,6 +399,13 @@
               successDiv.textContent =
                 "Đăng ký thành công! Đang chuyển hướng...";
               successDiv.classList.remove("hidden");
+
+              try {
+                await mergeLocalCartToBackend();
+              } catch(e) {
+                console.error("Lỗi đồng bộ giỏ hàng khi đăng ký:", e);
+              }
+
               setTimeout(() => {
                 window.location.href = "/";
               }, 1500);

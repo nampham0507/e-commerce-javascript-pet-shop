@@ -91,32 +91,6 @@ router.get(
   productAdminController.getProductStats
 );
 
-// ===== Quản lý danh mục =====
-router.get(
-  "/categories",
-  authMiddleware,
-  adminMiddleware,
-  categoryAdminController.getCategoriesAdmin
-);
-router.post(
-  "/categories",
-  authMiddleware,
-  adminMiddleware,
-  categoryAdminController.createCategory
-);
-router.put(
-  "/categories/:categoryId",
-  authMiddleware,
-  adminMiddleware,
-  categoryAdminController.updateCategory
-);
-router.delete(
-  "/categories/:categoryId",
-  authMiddleware,
-  adminMiddleware,
-  categoryAdminController.deleteCategory
-);
-
 // ===== Quản lý thương hiệu =====
 router.get(
   "/brands",

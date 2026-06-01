@@ -568,7 +568,7 @@
     </footer>
     <script type="module">
       import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
-      import { addToCart, getCartItemCount } from "../js/cart.js";
+      import { addToCart, getCartItemCount, syncCartFromBackend } from "../js/cart.js";
 
       const guestNav = document.getElementById("guestNav");
       const userNav = document.getElementById("userNav");
@@ -825,9 +825,16 @@
         window.location.href = "/order/checkout";
       });
 
-      initNav();
-      updateCartBadge();
-      loadProductDetail();
+      async function initPage() {
+        initNav();
+        if (isAuthenticated()) {
+          await syncCartFromBackend();
+        }
+        updateCartBadge();
+        loadProductDetail();
+      }
+
+      initPage();
     </script>
     <script src="../js/animations.js"></script>
   </body>

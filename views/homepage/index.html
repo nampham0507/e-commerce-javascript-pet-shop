@@ -895,7 +895,7 @@
     <script type="module">
       import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
       import { getPublicProducts } from "../js/product.js";
-      import { addToCart, getCartItemCount } from "../js/cart.js";
+      import { addToCart, getCartItemCount, syncCartFromBackend } from "../js/cart.js";
 
       const guestNav = document.getElementById("guestNav");
       const userNav = document.getElementById("userNav");
@@ -1209,9 +1209,16 @@
         }
       });
 
-      initNav();
-      updateCartBadge();
-      loadProducts();
+      async function initHomepage() {
+        initNav();
+        if (isAuthenticated()) {
+          await syncCartFromBackend();
+        }
+        updateCartBadge();
+        loadProducts();
+      }
+
+      initHomepage();
 
       // ========== SCROLL REVEAL ==========
       const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-scale');

@@ -498,11 +498,10 @@
     <script type="module">
       import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
       import {
-        getCart,
-        removeFromCart,
         updateCartQuantity,
         getCartTotal,
         getCartItemCount,
+        syncCartFromBackend,
       } from "../js/cart.js";
 
       const guestNav = document.getElementById("guestNav");
@@ -694,9 +693,16 @@
         }
       });
 
-      initNav();
-      updateCartBadge();
-      renderCartItems();
+      async function initCartPage() {
+        initNav();
+        if (isAuthenticated()) {
+          await syncCartFromBackend();
+        }
+        updateCartBadge();
+        renderCartItems();
+      }
+
+      initCartPage();
     </script>
     <script src="../js/animations.js"></script>
   </body>

@@ -42,6 +42,7 @@ app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/orders", require("./routes/orderRoutes"));
 app.use("/api/payments", require("./routes/vnpayRoutes"));
 app.use("/api/chat", require("./routes/chatRoutes"));
+app.use("/api/cart", require("./routes/cartRoutes"));
 // app.use('/api/customers', require('./routes/customerRoutes'));
 
 // Routes - HTML Pages
@@ -99,10 +100,6 @@ app.get("/order/checkout", (req, res) => {
 
 app.get("/order/detail", (req, res) => {
   res.sendFile(path.join(__dirname, "../views/order/orderDetail.html"));
-});
-
-app.get("/homepage/categories", (req, res) => {
-  res.sendFile(path.join(__dirname, "../views/homepage/catagories.html"));
 });
 
 // Error handling middleware
