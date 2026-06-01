@@ -115,15 +115,19 @@ export const addToCart = (product, quantity = 1) => {
 
 // ── Xóa sản phẩm khỏi giỏ ───────────────────────────────────────────────────
 
-export const removeFromCart = (productId) => {
+export const removeFromCart = async (productId) => {
   const cart = getCart().filter((item) => item._id !== productId);
   localStorage.setItem("cart", JSON.stringify(cart));
 
   if (isAuthenticated()) {
-    fetch(`${API_BASE_URL}/cart/item/${productId}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${getToken()}` },
-    }).catch((err) => console.error("Lỗi đồng bộ xóa giỏ hàng:", err));
+    try {
+      await fetch(`${API_BASE_URL}/cart/item/${productId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${getToken()}` },
+      });
+    } catch (err) {
+      console.error("Lỗi đồng bộ xóa giỏ hàng:", err);
+    }
   }
 
   return cart;
@@ -131,7 +135,7 @@ export const removeFromCart = (productId) => {
 
 // ── Cập nhật số lượng ────────────────────────────────────────────────────────
 
-export const updateCartQuantity = (productId, quantity) => {
+export const updateCartQuantity = async (productId, quantity) => {
   const cart = getCart();
   const item = cart.find((item) => item._id === productId);
   if (item) {
@@ -142,14 +146,18 @@ export const updateCartQuantity = (productId, quantity) => {
     localStorage.setItem("cart", JSON.stringify(cart));
 
     if (isAuthenticated()) {
-      fetch(`${API_BASE_URL}/cart/item/${productId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getToken()}`,
-        },
-        body: JSON.stringify({ quantity }),
-      }).catch((err) => console.error("Lỗi đồng bộ cập nhật số lượng:", err));
+      try {
+        await fetch(`${API_BASE_URL}/cart/item/${productId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getToken()}`,
+          },
+          body: JSON.stringify({ quantity }),
+        });
+      } catch (err) {
+        console.error("Lỗi đồng bộ cập nhật số lượng:", err);
+      }
     }
   }
   return getCart();

@@ -631,8 +631,8 @@
         cartItemsContainer
           .querySelectorAll("[data-remove-id]")
           .forEach((button) => {
-            button.addEventListener("click", () => {
-              removeFromCart(button.dataset.removeId);
+            button.addEventListener("click", async () => {
+              await removeFromCart(button.dataset.removeId);
               renderCartItems();
               updateCartBadge();
             });
@@ -641,14 +641,14 @@
         cartItemsContainer
           .querySelectorAll("[data-decrease-id]")
           .forEach((button) => {
-            button.addEventListener("click", () => {
+            button.addEventListener("click", async () => {
               const currentItem = getCart().find(
                 (item) => item._id === button.dataset.decreaseId
               );
               const nextQty = currentItem
                 ? Math.max(1, currentItem.quantity - 1)
                 : 1;
-              updateCartQuantity(button.dataset.decreaseId, nextQty);
+              await updateCartQuantity(button.dataset.decreaseId, nextQty);
               renderCartItems();
               updateCartBadge();
             });
@@ -657,12 +657,12 @@
         cartItemsContainer
           .querySelectorAll("[data-increase-id]")
           .forEach((button) => {
-            button.addEventListener("click", () => {
+            button.addEventListener("click", async () => {
               const currentItem = getCart().find(
                 (item) => item._id === button.dataset.increaseId
               );
               const nextQty = currentItem ? currentItem.quantity + 1 : 1;
-              updateCartQuantity(button.dataset.increaseId, nextQty);
+              await updateCartQuantity(button.dataset.increaseId, nextQty);
               renderCartItems();
               updateCartBadge();
             });
