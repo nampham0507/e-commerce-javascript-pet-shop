@@ -50,6 +50,12 @@ router.put(
   adminMiddleware,
   adminController.updateUserRole
 );
+router.put(
+  "/users/:userId",
+  authMiddleware,
+  adminMiddleware,
+  adminController.updateUser
+);
 router.delete(
   "/delete-user/:userId",
   authMiddleware,

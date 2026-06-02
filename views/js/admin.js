@@ -390,6 +390,19 @@ export const updateUserRole = async (userId, role) => {
   }
 };
 
+export const updateUserDetails = async (userId, data) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/admin/users/${userId}`, {
+      method: "PUT",
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
 export const deleteUser = async (userId) => {
   try {
     const response = await fetch(

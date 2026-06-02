@@ -126,6 +126,53 @@ exports.updateUserRole = async (req, res) => {
   }
 };
 
+// Update user details (admin only)
+exports.updateUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { fullName, email, phone, role } = req.body;
+
+    const updateData = {};
+    if (fullName !== undefined) updateData.fullName = fullName;
+    if (email !== undefined) updateData.email = email;
+    if (phone !== undefined) updateData.phone = phone;
+    if (role !== undefined) {
+      if (!["customer", "admin"].includes(role)) {
+        return res.status(400).json({
+          success: false,
+          message: "Role không hợp lệ",
+        });
+      }
+      updateData.role = role;
+    }
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      updateData,
+      { new: true }
+    ).select("-password");
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User không tìm thấy",
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Cập nhật thông tin thành công",
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Lỗi server",
+      error: error.message,
+    });
+  }
+};
+
 // Delete user (admin only)
 exports.deleteUser = async (req, res) => {
   try {

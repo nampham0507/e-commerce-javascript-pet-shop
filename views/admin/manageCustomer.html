@@ -474,6 +474,7 @@
         updateUserRole,
         deleteUser,
         createUser,
+        updateUserDetails,
       } from "../js/admin.js";
       import { isAuthenticated, getUserInfo } from "../js/auth.js";
 
@@ -540,6 +541,9 @@
               </select>
             </td>
             <td class="px-lg py-md text-right">
+              <button class="edit-btn text-on-surface-variant hover:text-primary transition-colors p-2 mr-2" data-user-id="${user._id}" title="Sửa người dùng">
+                <span class="material-symbols-outlined">edit</span>
+              </button>
               <button class="delete-btn text-on-surface-variant hover:text-error transition-colors p-2" data-user-id="${user._id}" title="Xóa người dùng">
                 <span class="material-symbols-outlined">delete</span>
               </button>
@@ -610,6 +614,10 @@
           select.addEventListener("change", handleRoleChange);
           // Apply styling based on role
           updateRoleSelectStyle(select);
+        });
+
+        document.querySelectorAll(".edit-btn").forEach((btn) => {
+          btn.addEventListener("click", handleEditUser);
         });
 
         document.querySelectorAll(".delete-btn").forEach((btn) => {
@@ -798,6 +806,7 @@
       function showCreateModal() {
         createUserModal.classList.remove("hidden");
       }
+
       function hideCreateModal() {
         createUserModal.classList.add("hidden");
       }
@@ -830,6 +839,82 @@
               (result.message ||
                 (result.errors && result.errors.map((e) => e.msg).join(", ")))
           );
+        }
+      });
+
+      // --- Edit user modal handling ---
+      const editModalHtml = `
+        <div id="editUserModal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 hidden">
+          <div class="bg-white rounded-xl p-lg w-full max-w-md">
+            <h3 class="font-headline-md mb-md">Sửa thông tin người dùng</h3>
+            <form id="editUserForm" class="space-y-md">
+              <input type="hidden" id="editUserId" />
+              <div>
+                <label class="font-label-sm">Họ và tên</label>
+                <input id="editFullName" required class="w-full mt-2 p-3 border rounded" />
+              </div>
+              <div>
+                <label class="font-label-sm">Email</label>
+                <input id="editEmail" type="email" required class="w-full mt-2 p-3 border rounded" />
+              </div>
+              <div>
+                <label class="font-label-sm">Số điện thoại</label>
+                <input id="editPhone" type="text" class="w-full mt-2 p-3 border rounded" />
+              </div>
+              <div>
+                <label class="font-label-sm">Vai trò</label>
+                <select id="editRole" class="w-full mt-2 p-3 border rounded">
+                  <option value="customer">Customer</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+              <div class="flex justify-end gap-sm mt-md">
+                <button type="button" id="closeEditModal" class="px-4 py-2 rounded border">Hủy</button>
+                <button type="submit" class="px-4 py-2 rounded bg-primary text-on-primary">Lưu</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      `;
+      document.body.insertAdjacentHTML("beforeend", editModalHtml);
+
+      const editUserModal = document.getElementById("editUserModal");
+      const editUserForm = document.getElementById("editUserForm");
+      const closeEditModal = document.getElementById("closeEditModal");
+
+      closeEditModal.addEventListener("click", () => {
+        editUserModal.classList.add("hidden");
+      });
+
+      function handleEditUser(e) {
+        const userId = e.currentTarget.dataset.userId;
+        const user = allUsers.find((u) => u._id === userId);
+        if (!user) return;
+
+        document.getElementById("editUserId").value = user._id;
+        document.getElementById("editFullName").value = user.fullName || "";
+        document.getElementById("editEmail").value = user.email || "";
+        document.getElementById("editPhone").value = user.phone || "";
+        document.getElementById("editRole").value = user.role || "customer";
+
+        editUserModal.classList.remove("hidden");
+      }
+
+      editUserForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const userId = document.getElementById("editUserId").value;
+        const fullName = document.getElementById("editFullName").value;
+        const email = document.getElementById("editEmail").value;
+        const phone = document.getElementById("editPhone").value;
+        const role = document.getElementById("editRole").value;
+
+        const result = await updateUserDetails(userId, { fullName, email, phone, role });
+        if (result.success) {
+          alert("Cập nhật thông tin thành công");
+          editUserModal.classList.add("hidden");
+          loadUsers();
+        } else {
+          alert("Lỗi: " + result.message);
         }
       });
     </script>
