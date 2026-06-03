@@ -102,7 +102,7 @@ app.get("/order/detail", (req, res) => {
 });
 
 app.get("/homepage/categories", (req, res) => {
-  res.sendFile(path.join(__dirname, "../views/homepage/catagories.html"));
+  res.sendFile(path.join(__dirname, "../views/homepage/categories.html"));
 });
 
 // Error handling middleware
