@@ -11,3 +11,6 @@ GOOGLE_OAUTH_SETUP.md
 .eslintrc.json
 .prettierignore
 vnpay_nodejs
+download_images.js
+test_brands.js
+update_products.js

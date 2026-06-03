@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 
 <html class="light" lang="vi">
   <head>
@@ -163,18 +163,24 @@
           <!-- Brand Identity Anchor -->
           <div class="flex flex-col items-center mb-xl">
             <div class="mb-md flex items-center justify-center gap-3">
-            <img src="../images/logo.png" alt="Xám Pet Shop logo" class="w-12 h-12 object-contain anim-float" />
-            <div class="text-left">
-              <h1
-                class="font-headline-lg text-headline-lg text-primary tracking-tight anim-fade-in-down"
-              >
-                Xám Pet Shop
-              </h1>
-              <p class="font-body-md text-body-md text-on-surface-variant mt-xs">
-                Chào mừng bạn quay trở lại
-              </p>
+              <img
+                src="../images/logo.png"
+                alt="Xám Pet Shop logo"
+                class="w-12 h-12 object-contain anim-float"
+              />
+              <div class="text-left">
+                <h1
+                  class="font-headline-lg text-headline-lg text-primary tracking-tight anim-fade-in-down"
+                >
+                  Xám Pet Shop
+                </h1>
+                <p
+                  class="font-body-md text-body-md text-on-surface-variant mt-xs"
+                >
+                  Chào mừng bạn quay trở lại
+                </p>
+              </div>
             </div>
-          </div>
           </div>
           <form class="space-y-lg" id="loginForm">
             <!-- Email Input Group -->
@@ -196,7 +202,7 @@
                   class="w-full pl-[48px] pr-md py-md bg-surface-container-low border-none rounded-xl font-body-md text-body-md focus:ring-2 focus:ring-primary-container focus:bg-surface-container-lowest transition-all duration-300"
                   id="email"
                   name="email"
-                  placeholder="nampham050723@gmail.com"
+                  placeholder="example@gmail.com"
                   type="email"
                   required
                 />
@@ -341,10 +347,10 @@
                 successDiv.textContent =
                   "Đăng nhập thành công! Đang chuyển hướng...";
                 successDiv.classList.remove("hidden");
-                
+
                 try {
                   await mergeLocalCartToBackend();
-                } catch(e) {
+                } catch (e) {
                   console.error("Lỗi đồng bộ giỏ hàng khi đăng nhập:", e);
                 }
 
@@ -446,7 +452,13 @@
           </p>
         </div>
       </div>
+      <div class="flex flex-col gap-sm">
+        <span class="font-label-md text-label-md text-primary">Bản đồ</span>
+        <div class="w-full h-32 rounded-lg overflow-hidden border border-outline-variant/30">
+          <iframe src="https://maps.google.com/maps?q=273%20%C4%91%C6%B0%E1%BB%9Dng%20C%E1%BB%95%20Nhu%E1%BA%BF%2C%20B%E1%BA%AFc%20T%E1%BB%AB%20Li%C3%AAm%2C%20H%C3%A0%20N%E1%BB%99i&t=&z=14&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
     </footer>
-  <script src="../js/animations.js"></script>
+    <script src="../js/animations.js"></script>
   </body>
 </html>
