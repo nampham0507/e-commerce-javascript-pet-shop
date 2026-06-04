@@ -1218,10 +1218,11 @@
         const imgInput = document.getElementById("productImage");
         const imgFileText = document.getElementById("currentImageText");
         
-        if (product.image && product.image.startsWith("/uploads/")) {
+        if (product.image && product.image.includes("uploads/")) {
           imgInput.value = ""; 
           if (imgFileText) {
-             imgFileText.textContent = `Ảnh hiện tại: ${product.image.replace("/uploads/", "")}`;
+             const fileName = product.image.split('/').pop();
+             imgFileText.textContent = `Ảnh hiện tại: ${fileName}`;
              imgFileText.classList.remove("hidden");
           }
         } else {
