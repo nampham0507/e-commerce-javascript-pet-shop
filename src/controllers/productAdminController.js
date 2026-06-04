@@ -279,7 +279,7 @@ exports.deleteProduct = async (req, res) => {
     if (product.image && product.image.startsWith("/uploads/")) {
       const fs = require("fs");
       const path = require("path");
-      const imagePath = path.join(__dirname, "../../views", product.image);
+      const imagePath = path.join(__dirname, "../views", product.image);
       if (fs.existsSync(imagePath)) {
         try {
           fs.unlinkSync(imagePath);

@@ -4,6 +4,7 @@ const bcryptjs = require("bcryptjs");
 const Product = require("./src/models/Product");
 const Brand = require("./src/models/Brand");
 const User = require("./src/models/User");
+const Review = require("./src/models/Review");
 
 const demoProducts = [
   {
@@ -12,7 +13,7 @@ const demoProducts = [
     category: "food",
     price: 350000,
     quantity: 25,
-    image: "https://via.placeholder.com/300?text=Royal+Canin",
+    image: "../uploads/royal_canin_feline_adult_1780378370693.png",
     brand: "Royal Canin",
     weight: "2kg",
     lifeStage: "Adult",
@@ -24,7 +25,7 @@ const demoProducts = [
     category: "food",
     price: 250000,
     quantity: 30,
-    image: "https://via.placeholder.com/300?text=Me-O+Premium",
+    image: "../uploads/meo_premium_cat_food_1780378391329.png",
     brand: "Me-O",
     weight: "1.2kg",
     lifeStage: "Adult",
@@ -36,7 +37,7 @@ const demoProducts = [
     category: "pate",
     price: 35000,
     quantity: 50,
-    image: "https://via.placeholder.com/300?text=Pate+Gourmet",
+    image: "../uploads/gourmet_gold_pate_1780378474959.png",
     brand: "Gourmet",
     weight: "85g",
     lifeStage: "Adult",
@@ -48,7 +49,7 @@ const demoProducts = [
     category: "pate",
     price: 28000,
     quantity: 40,
-    image: "https://via.placeholder.com/300?text=Catsrang+Tuna",
+    image: "../uploads/catsrang_tuna_pate_1780378492411.png",
     brand: "Catsrang",
     weight: "80g",
     lifeStage: "Adult",
@@ -60,7 +61,7 @@ const demoProducts = [
     category: "snack",
     price: 120000,
     quantity: 20,
-    image: "https://via.placeholder.com/300?text=Salmon+Snack",
+    image: "../uploads/salmon_freeze_dried_1780378512128.png",
     brand: "Pet Love",
     weight: "100g",
     lifeStage: "All",
@@ -72,7 +73,7 @@ const demoProducts = [
     category: "snack",
     price: 45000,
     quantity: 35,
-    image: "https://via.placeholder.com/300?text=Crispy+Bites",
+    image: "../uploads/crispy_bites_chicken_1780535352826.png",
     brand: "Pet Joy",
     weight: "60g",
     lifeStage: "Adult",
@@ -84,7 +85,7 @@ const demoProducts = [
     category: "milk",
     price: 85000,
     quantity: 15,
-    image: "https://via.placeholder.com/300?text=Cat+Milk",
+    image: "../uploads/beaphar_cat_milk_1780535372124.png",
     brand: "Pet Care",
     weight: "400ml",
     lifeStage: "Kitten",
@@ -96,7 +97,7 @@ const demoProducts = [
     category: "milk",
     price: 150000,
     quantity: 10,
-    image: "https://via.placeholder.com/300?text=Goat+Milk",
+    image: "../uploads/sua_goat_milk_premium_1780537481940.jpg",
     brand: "Premium Pet",
     weight: "500ml",
     lifeStage: "All",
@@ -108,7 +109,7 @@ const demoProducts = [
     category: "accessories",
     price: 180000,
     quantity: 12,
-    image: "https://via.placeholder.com/300?text=Cat+Litter",
+    image: "../uploads/bentonite_cat_litter_1780535386342.png",
     brand: "Clean Paws",
     weight: "5kg",
     lifeStage: "All",
@@ -120,7 +121,7 @@ const demoProducts = [
     category: "accessories",
     price: 890000,
     quantity: 5,
-    image: "https://via.placeholder.com/300?text=Cat+Tree",
+    image: "../uploads/cat_tree_5_tier_1780535397792.png",
     brand: "Pet Furniture",
     weight: "15kg",
     lifeStage: "All",
@@ -132,7 +133,7 @@ const demoProducts = [
     category: "accessories",
     price: 65000,
     quantity: 25,
-    image: "https://via.placeholder.com/300?text=Interactive+Toy",
+    image: "../uploads/squeaky_mouse_toy_1780535411925.png",
     brand: "Fun Pets",
     weight: "50g",
     lifeStage: "All",
@@ -144,7 +145,7 @@ const demoProducts = [
     category: "accessories",
     price: 1200000,
     quantity: 3,
-    image: "https://via.placeholder.com/300?text=GPS+Collar",
+    image: "../uploads/gps_cat_collar_1780535424066.png",
     brand: "Tech Pet",
     weight: "80g",
     lifeStage: "Adult",
@@ -156,7 +157,7 @@ const demoProducts = [
     category: "accessories",
     price: 280000,
     quantity: 18,
-    image: "https://via.placeholder.com/300?text=Stainless+Bowl",
+    image: "../uploads/khay_an_inox_cao_cap_1780537482364.jpg",
     brand: "Pet Home",
     weight: "500g",
     lifeStage: "All",
@@ -168,7 +169,7 @@ const demoProducts = [
     category: "accessories",
     price: 95000,
     quantity: 22,
-    image: "https://via.placeholder.com/300?text=Pet+Brush",
+    image: "../uploads/ban_chai_long_chuyen_dung_1780537482482.jpg",
     brand: "Grooming Pro",
     weight: "200g",
     lifeStage: "All",
@@ -180,7 +181,7 @@ const demoProducts = [
     category: "accessories",
     price: 120000,
     quantity: 16,
-    image: "https://via.placeholder.com/300?text=Pet+Towel",
+    image: "../uploads/khan_tam_meo_sieu_tham_1780537507782.jpg",
     brand: "Cozy Pet",
     weight: "300g",
     lifeStage: "All",
@@ -192,7 +193,7 @@ const demoProducts = [
     category: "accessories",
     price: 450000,
     quantity: 8,
-    image: "https://via.placeholder.com/300?text=Pet+Carrier",
+    image: "../uploads/tui_van_chuyen_meo_1780537483481.jpg",
     brand: "Travel Pet",
     weight: "600g",
     lifeStage: "All",
@@ -204,7 +205,7 @@ const demoProducts = [
     category: "food",
     price: 75000,
     quantity: 14,
-    image: "https://via.placeholder.com/300?text=Dewormer",
+    image: "../uploads/thuoc_tay_giun_an_toan_1780537483788.jpg",
     brand: "Vet Care",
     weight: "10ml",
     lifeStage: "All",
@@ -216,7 +217,7 @@ const demoProducts = [
     category: "food",
     price: 180000,
     quantity: 11,
-    image: "https://via.placeholder.com/300?text=Vitamin+Complex",
+    image: "../uploads/vitamin_tong_hop_a_z_1780537483899.jpg",
     brand: "Pet Health",
     weight: "100g",
     lifeStage: "All",
@@ -228,7 +229,7 @@ const demoProducts = [
     category: "food",
     price: 220000,
     quantity: 9,
-    image: "https://via.placeholder.com/300?text=Fish+Oil",
+    image: "../uploads/dau_gio_ho_tro_tieu_hoa_1780537484065.jpg",
     brand: "Premium Care",
     weight: "250ml",
     lifeStage: "Adult",
@@ -240,7 +241,7 @@ const demoProducts = [
     category: "accessories",
     price: 650000,
     quantity: 6,
-    image: "https://via.placeholder.com/300?text=Water+Fountain",
+    image: "../uploads/ban_nuoc_uong_tu_dong_1780537484198.jpg",
     brand: "Pet Tech",
     weight: "800g",
     lifeStage: "All",
@@ -428,6 +429,33 @@ async function seedDatabase() {
 
     const createdUsers = await User.insertMany(usersWithHashedPasswords);
     console.log(`✓ Created ${createdUsers.length} demo users`);
+
+    // Seed reviews
+    await Review.deleteMany({});
+    const customers = createdUsers.filter(u => u.role === "customer");
+    const reviewsToCreate = [];
+    for (const product of createdProducts) {
+      // Create 1-3 random reviews per product
+      const numReviews = Math.floor(Math.random() * 3) + 1;
+      for (let i = 0; i < numReviews; i++) {
+        reviewsToCreate.push({
+          product: product._id,
+          user: customers[i % customers.length]._id,
+          rating: Math.floor(Math.random() * 2) + 4, // 4 or 5 stars
+          comment: "Sản phẩm tuyệt vời! Bé mèo nhà mình rất thích.",
+        });
+      }
+    }
+    await Review.insertMany(reviewsToCreate);
+    console.log(`✓ Created ${reviewsToCreate.length} demo reviews`);
+
+    // Update product ratings based on generated reviews
+    for (const product of createdProducts) {
+      const productReviews = reviewsToCreate.filter(r => r.product.equals(product._id));
+      const avg = productReviews.reduce((sum, r) => sum + r.rating, 0) / productReviews.length;
+      await Product.findByIdAndUpdate(product._id, { rating: Math.round(avg * 10) / 10 });
+    }
+    console.log(`✓ Updated product average ratings`);
 
     console.log("\n✓ Database seeded successfully!");
     console.log("\n Admin accounts:");

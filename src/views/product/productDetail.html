@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 
 <html class="light" lang="vi">
   <head>
@@ -441,52 +441,33 @@
       </div>
       <!-- Tabs Content Section -->
       <section class="mb-xl">
-        <div
-          class="flex border-b border-outline-variant mb-lg overflow-x-auto scrollbar-hide"
-        >
-          <button
-            class="px-xl py-4 font-headline-md text-headline-md active-tab whitespace-nowrap"
-          >
+        <div class="flex border-b border-outline-variant mb-lg overflow-x-auto scrollbar-hide">
+          <button id="tabDesc" class="px-xl py-4 font-headline-md text-headline-md active-tab whitespace-nowrap" onclick="switchTab('desc')">
             Mô tả chi tiết
           </button>
-          <button
-            class="px-xl py-4 font-headline-md text-headline-md text-outline hover:text-primary transition-colors whitespace-nowrap"
-          >
-            Đánh giá
+          <button id="tabReview" class="px-xl py-4 font-headline-md text-headline-md text-outline hover:text-primary transition-colors whitespace-nowrap" onclick="switchTab('review')">
+            Đánh giá <span id="reviewCountTab" class="text-label-sm ml-1"></span>
           </button>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-xl">
+
+        <!-- Tab: Mô tả -->
+        <div id="panelDesc" class="grid grid-cols-1 md:grid-cols-3 gap-xl">
           <div class="md:col-span-2 space-y-lg">
-            <p
-              id="detailLongDesc"
-              class="text-body-lg text-on-surface-variant leading-relaxed"
-            >
-              ...
-            </p>
+            <p id="detailLongDesc" class="text-body-lg text-on-surface-variant leading-relaxed">...</p>
             <ul id="detailIngredientsList" class="space-y-md mt-md"></ul>
           </div>
-          <div
-            class="bg-surface-container-low rounded-[24px] p-lg border border-outline-variant h-fit"
-          >
-            <h4 class="font-headline-md text-headline-md mb-md text-on-surface">
-              Thông số kĩ thuật
-            </h4>
+          <div class="bg-surface-container-low rounded-[24px] p-lg border border-outline-variant h-fit">
+            <h4 class="font-headline-md text-headline-md mb-md text-on-surface">Thông số kĩ thuật</h4>
             <div class="space-y-md">
-              <div
-                class="flex justify-between border-b border-outline-variant/30 pb-2"
-              >
+              <div class="flex justify-between border-b border-outline-variant/30 pb-2">
                 <span class="text-outline">Trọng lượng</span>
                 <span id="detailWeight" class="font-bold">...</span>
               </div>
-              <div
-                class="flex justify-between border-b border-outline-variant/30 pb-2"
-              >
+              <div class="flex justify-between border-b border-outline-variant/30 pb-2">
                 <span class="text-outline">Giai đoạn sống</span>
                 <span id="detailLifeStage" class="font-bold">...</span>
               </div>
-              <div
-                class="flex justify-between border-b border-outline-variant/30 pb-2"
-              >
+              <div class="flex justify-between border-b border-outline-variant/30 pb-2">
                 <span class="text-outline">Hương vị</span>
                 <span id="detailFlavor" class="font-bold">...</span>
               </div>
@@ -495,6 +476,47 @@
                 <span id="detailOrigin" class="font-bold">...</span>
               </div>
             </div>
+          </div>
+        </div>
+
+        <!-- Tab: Đánh giá -->
+        <div id="panelReview" class="hidden space-y-xl">
+          <!-- Tổng quan rating -->
+          <div class="flex flex-col md:flex-row gap-xl items-start md:items-center bg-surface-container-low rounded-[24px] p-xl border border-outline-variant">
+            <div class="text-center min-w-[120px]">
+              <div id="avgRatingDisplay" class="font-headline-xl text-headline-xl text-primary font-bold">—</div>
+              <div id="avgStarsDisplay" class="flex justify-center gap-0.5 my-1"></div>
+              <div id="totalReviewsDisplay" class="text-label-sm text-on-surface-variant">0 đánh giá</div>
+            </div>
+            <div class="flex-1 space-y-2 w-full" id="ratingBars">
+              <!-- filled by JS -->
+            </div>
+          </div>
+
+          <!-- Form viết đánh giá -->
+          <div id="reviewFormSection" class="bg-surface-container-low rounded-[24px] p-xl border border-outline-variant">
+            <h4 class="font-headline-md text-headline-md mb-lg text-on-surface">Viết đánh giá của bạn</h4>
+            <div id="reviewLoginPrompt" class="hidden text-on-surface-variant text-body-md">
+              <a href="/auth/login" class="text-primary font-bold hover:underline">Đăng nhập</a> để viết đánh giá.
+            </div>
+            <form id="reviewForm" class="hidden space-y-md">
+              <div class="flex items-center gap-sm">
+                <span class="text-on-surface-variant text-label-md">Số sao:</span>
+                <div id="starPicker" class="flex gap-1 cursor-pointer">
+                </div>
+                <input type="hidden" id="selectedRating" value="0">
+              </div>
+              <textarea id="reviewComment" rows="3" placeholder="Chia sẻ trải nghiệm của bạn về sản phẩm này..."
+                class="w-full border border-outline-variant rounded-xl px-md py-3 text-body-md focus:outline-none focus:border-primary bg-surface resize-none"></textarea>
+              <button type="submit" class="bg-primary-container text-on-primary-container px-xl py-3 rounded-full font-label-md hover:scale-105 transition-transform active:scale-95">
+                Gửi đánh giá
+              </button>
+            </form>
+          </div>
+
+          <!-- Danh sách đánh giá -->
+          <div id="reviewList" class="space-y-md">
+            <div class="text-on-surface-variant text-center py-xl">Đang tải đánh giá...</div>
           </div>
         </div>
       </section>
@@ -574,7 +596,7 @@
     </footer>
     <script type="module">
       import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
-      import { addToCart, getCartItemCount, syncCartFromBackend } from "../js/cart.js";
+      import { addToCart, getCartItemCount, syncCartFromBackend } from "../js/cart.js?v=1780539375686";
 
       const guestNav = document.getElementById("guestNav");
       const userNav = document.getElementById("userNav");
@@ -785,6 +807,10 @@
               `;
             });
           }
+          
+          // Khởi tạo phần đánh giá
+          initReviewForm(product._id);
+          loadReviews();
         } catch (error) {
           console.error(error);
           document.getElementById("detailName").textContent =
@@ -802,21 +828,23 @@
         updateQuantityControls();
       });
 
-      addToCartBtn?.addEventListener("click", () => {
+      addToCartBtn?.addEventListener("click", async () => {
         if (!currentProduct) {
           showToast("Không thể thêm sản phẩm vào giỏ hàng");
           return;
         }
 
-        addToCart(currentProduct, currentQuantity);
-        updateCartBadge();
-        showToast(`Đã thêm ${currentQuantity} sản phẩm vào giỏ hàng`);
+        const result = await addToCart(currentProduct, currentQuantity);
+        if (result) {
+          updateCartBadge();
+          showToast(`Đã thêm ${currentQuantity} sản phẩm vào giỏ hàng`);
+        }
       });
 
       const placeOrderNowBtn = document.getElementById("placeOrderNowBtn");
-      placeOrderNowBtn?.addEventListener("click", () => {
+      placeOrderNowBtn?.addEventListener("click", async () => {
         if (!currentProduct) {
-          showToast("Không thể đặt hàng sản phẩm này");
+          showToast("Không thể đặt hàng");
           return;
         }
 
@@ -826,9 +854,11 @@
         }
 
         // Add to cart then redirect to checkout
-        addToCart(currentProduct, currentQuantity);
-        updateCartBadge();
-        window.location.href = "/order/checkout";
+        const result = await addToCart(currentProduct, currentQuantity);
+        if (result) {
+          updateCartBadge();
+          window.location.href = "/order/checkout";
+        }
       });
 
       async function initPage() {
@@ -838,6 +868,391 @@
         }
         updateCartBadge();
         loadProductDetail();
+      }
+
+      // ── Tab switching ─────────────────────────────────────────────────────────
+      function switchTab(tab) {
+        const panelDesc = document.getElementById("panelDesc");
+        const panelReview = document.getElementById("panelReview");
+        const tabDesc = document.getElementById("tabDesc");
+        const tabReview = document.getElementById("tabReview");
+        if (tab === "desc") {
+          panelDesc.classList.remove("hidden");
+          panelReview.classList.add("hidden");
+          tabDesc.classList.add("active-tab");
+          tabDesc.classList.remove("text-outline");
+          tabReview.classList.remove("active-tab");
+          tabReview.classList.add("text-outline");
+        } else {
+          panelDesc.classList.add("hidden");
+          panelReview.classList.remove("hidden");
+          tabReview.classList.add("active-tab");
+          tabReview.classList.remove("text-outline");
+          tabDesc.classList.remove("active-tab");
+          tabDesc.classList.add("text-outline");
+          if (!reviewsLoaded) loadReviews();
+        }
+      }
+      window.switchTab = switchTab;
+
+      // ── Review system ─────────────────────────────────────────────────────────
+      let reviewsLoaded = false;
+      let currentProductId = null;
+
+      function renderStars(avg, container) {
+        container.innerHTML = "";
+        for (let i = 1; i <= 5; i++) {
+          const s = document.createElement("span");
+          s.className = "material-symbols-outlined text-yellow-400 text-[18px]";
+          const fill = avg >= i ? 1 : avg >= i - 0.5 ? 0 : 0;
+          s.style.fontVariationSettings = `'FILL' ${avg >= i ? 1 : 0}`;
+          s.textContent = "star";
+          container.appendChild(s);
+        }
+      }
+
+      function renderRatingBars(reviews) {
+        const bars = document.getElementById("ratingBars");
+        if (!bars) return;
+        const counts = [5, 4, 3, 2, 1].map(s => ({
+          star: s,
+          count: reviews.filter(r => r.rating === s).length
+        }));
+        const max = Math.max(...counts.map(c => c.count), 1);
+        bars.innerHTML = counts.map(c => `
+          <div class="flex items-center gap-sm">
+            <span class="text-label-sm w-4 text-on-surface-variant">${c.star}</span>
+            <span class="material-symbols-outlined text-yellow-400 text-[14px]" style="font-variation-settings:'FILL' 1">star</span>
+            <div class="flex-1 bg-outline-variant/30 rounded-full h-2 overflow-hidden">
+              <div class="bg-yellow-400 h-2 rounded-full transition-all" style="width:${(c.count/max)*100}%"></div>
+            </div>
+            <span class="text-label-sm w-4 text-on-surface-variant">${c.count}</span>
+          </div>
+        `).join("");
+      }
+
+      function renderReviewList(reviews) {
+        const list = document.getElementById("reviewList");
+        if (!list) return;
+        if (reviews.length === 0) {
+          list.innerHTML = `<div class="text-on-surface-variant text-center py-xl">Chưa có đánh giá nào. Hãy là người đầu tiên!</div>`;
+          return;
+        }
+        // Lấy thông tin user hiện tại từ localStorage
+        const me = isAuthenticated() ? getUserInfo() : null;
+        const myId = me?.id || me?._id || null;
+
+        list.innerHTML = reviews.map(r => {
+          const stars = [1,2,3,4,5].map(i =>
+            `<span class="material-symbols-outlined text-yellow-400 text-[16px]" style="font-variation-settings:'FILL' ${r.rating >= i ? 1 : 0}">star</span>`
+          ).join("");
+          const date = new Date(r.createdAt).toLocaleDateString("vi-VN");
+
+          // Lấy tên: ưu tiên từ DB, fallback sang info trong localStorage nếu cùng userId
+          const reviewUserId = r.user?._id || r.user;
+          const isMyReview = myId && (String(reviewUserId) === String(myId));
+          const displayName = r.user?.fullName || (isMyReview && me?.fullName) || "Khách hàng";
+          const avatarLetter = displayName.charAt(0).toUpperCase();
+
+          const deleteBtn = isMyReview ? `
+            <button onclick="deleteReview()" title="Xóa đánh giá của tôi"
+              class="ml-2 flex items-center gap-1 text-error text-label-sm hover:opacity-70 transition-opacity">
+              <span class="material-symbols-outlined text-[16px]">delete</span>
+              Xóa
+            </button>` : "";
+
+          const isAdmin = me?.role === "admin";
+
+          let adminSection = "";
+          if (r.adminReply) {
+            const replyDate = r.adminReplyAt ? new Date(r.adminReplyAt).toLocaleDateString("vi-VN") : "";
+            adminSection += `
+              <div class="mt-md p-md bg-primary-container/20 rounded-xl border border-primary/20 relative">
+                <div class="flex items-center gap-xs text-primary font-label-md mb-xs">
+                  <span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
+                  Phản hồi từ Cửa hàng
+                  ${replyDate ? `<span class="text-label-sm text-on-surface-variant font-normal ml-sm">${replyDate}</span>` : ""}
+                </div>
+                <p class="text-body-md text-on-surface">${r.adminReply}</p>
+              </div>
+            `;
+          }
+
+          if (isAdmin) {
+            adminSection += `
+              <div class="mt-sm border-t border-outline-variant/30 pt-sm">
+                <textarea id="admin-reply-${r._id}" class="w-full text-body-sm p-sm border border-outline-variant rounded-lg focus:outline-primary bg-surface resize-none" rows="2" placeholder="Nhập phản hồi của Admin...">${r.adminReply || ""}</textarea>
+                <div class="flex items-center gap-sm mt-xs">
+                  <button onclick="submitAdminReply('${r._id}')" class="text-label-sm bg-primary text-on-primary px-sm py-1 rounded-md hover:opacity-90">
+                    ${r.adminReply ? "Cập nhật phản hồi" : "Trả lời"}
+                  </button>
+                  ${r.adminReply ? `<button onclick="deleteAdminReply('${r._id}')" class="text-label-sm bg-error text-on-error px-sm py-1 rounded-md hover:opacity-90">Xóa phản hồi</button>` : ""}
+                </div>
+              </div>
+            `;
+          }
+
+          return `
+            <div class="bg-surface-container-lowest rounded-[20px] p-lg border border-outline-variant/30">
+              <div class="flex items-center gap-sm mb-sm">
+                <div class="w-9 h-9 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-label-md">
+                  ${avatarLetter}
+                </div>
+                <div>
+                  <div class="font-label-md text-on-surface">${displayName}</div>
+                  <div class="text-label-sm text-on-surface-variant">${date}</div>
+                </div>
+                <div class="ml-auto flex items-center gap-sm">${stars}${deleteBtn}</div>
+              </div>
+              ${r.comment ? `<p class="text-body-md text-on-surface-variant mt-sm">${r.comment}</p>` : ""}
+              ${adminSection}
+            </div>
+          `;
+        }).join("");
+      }
+
+      // ── Admin Reply ─────────────────────────────────────────────────────────
+      async function submitAdminReply(reviewId) {
+        if (!currentProductId) return;
+        const replyText = document.getElementById(`admin-reply-${reviewId}`).value.trim();
+        if (!replyText) {
+          alert("Vui lòng nhập nội dung phản hồi!");
+          return;
+        }
+        const token = localStorage.getItem("token");
+        try {
+          const res = await fetch(`/api/reviews/${currentProductId}/${reviewId}/reply`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ adminReply: replyText }),
+          });
+          const data = await res.json();
+          if (data.success) {
+            updateAvgDisplay(data.reviews);
+            renderRatingBars(data.reviews);
+            renderReviewList(data.reviews);
+            prefillMyReview(data.reviews);
+          } else {
+            alert(data.message || "Lỗi gửi phản hồi");
+          }
+        } catch (err) {
+          alert("Lỗi kết nối, vui lòng thử lại!");
+        }
+      }
+      window.submitAdminReply = submitAdminReply;
+
+      async function deleteAdminReply(reviewId) {
+        if (!currentProductId) return;
+        if (!confirm("Bạn có chắc muốn xóa phản hồi này?")) return;
+        const token = localStorage.getItem("token");
+        try {
+          const res = await fetch(`/api/reviews/${currentProductId}/${reviewId}/reply`, {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const data = await res.json();
+          if (data.success) {
+            updateAvgDisplay(data.reviews);
+            renderRatingBars(data.reviews);
+            renderReviewList(data.reviews);
+            prefillMyReview(data.reviews);
+          } else {
+            alert(data.message || "Lỗi xóa phản hồi");
+          }
+        } catch (err) {
+          alert("Lỗi kết nối, vui lòng thử lại!");
+        }
+      }
+      window.deleteAdminReply = deleteAdminReply;
+
+      // ── Delete review ─────────────────────────────────────────────────────────
+      async function deleteReview() {
+        if (!currentProductId) return;
+        if (!confirm("Bạn có chắc muốn xóa đánh giá của mình không?")) return;
+        const token = localStorage.getItem("token");
+        try {
+          const res = await fetch(`/api/reviews/${currentProductId}`, {
+            method: "DELETE",
+            headers: { Authorization: `Bearer ${token}` },
+          });
+
+          // Xử lý token hết hạn
+          if (res.status === 401) {
+            const errData = await res.json();
+            handleAuthError(errData.message || "Phiên đăng nhập đã hết hạn.");
+            return;
+          }
+
+          const data = await res.json();
+          if (data.success) {
+            reviewsLoaded = false;
+            await loadReviews();
+          } else {
+            alert(data.message || "Lỗi xóa đánh giá");
+          }
+        } catch (err) {
+          alert("Lỗi kết nối, vui lòng thử lại!");
+        }
+      }
+      window.deleteReview = deleteReview;
+
+      function updateAvgDisplay(reviews) {
+        const avg = reviews.length === 0 ? 0 : reviews.reduce((s, r) => s + r.rating, 0) / reviews.length;
+        const avgEl = document.getElementById("avgRatingDisplay");
+        const starsEl = document.getElementById("avgStarsDisplay");
+        const totalEl = document.getElementById("totalReviewsDisplay");
+        const tab = document.getElementById("reviewCountTab");
+        if (avgEl) avgEl.textContent = reviews.length === 0 ? "—" : avg.toFixed(1);
+        if (starsEl) renderStars(avg, starsEl);
+        if (totalEl) totalEl.textContent = `${reviews.length} đánh giá`;
+        if (tab) tab.textContent = reviews.length > 0 ? `(${reviews.length})` : "";
+      }
+
+      // Hàm pre-fill form nếu user đã có đánh giá
+      function prefillMyReview(reviews) {
+        if (!isAuthenticated()) return;
+        const me = getUserInfo();
+        const myId = me?.id || me?._id;
+        if (!myId) return;
+        const myReview = reviews.find(r => {
+          const uid = r.user?._id || r.user;
+          return String(uid) === String(myId);
+        });
+        const submitBtn = document.querySelector("#reviewForm button[type='submit']");
+        const commentEl = document.getElementById("reviewComment");
+        const ratingEl = document.getElementById("selectedRating");
+        const formTitle = document.querySelector("#reviewFormSection h4");
+        if (myReview) {
+          // Đã có đánh giá: điền lại dữ liệu cũ
+          if (ratingEl) ratingEl.value = myReview.rating;
+          if (commentEl) commentEl.value = myReview.comment || "";
+          if (submitBtn) submitBtn.textContent = "Cập nhật đánh giá";
+          if (formTitle) formTitle.textContent = "Chỉnh sửa đánh giá của bạn";
+          initStarPicker(myReview.rating); // Tô màu sao đã chọn
+        } else {
+          // Chưa có đánh giá: reset về mặc định
+          if (ratingEl) ratingEl.value = "0";
+          if (commentEl) commentEl.value = "";
+          if (submitBtn) submitBtn.textContent = "Gửi đánh giá";
+          if (formTitle) formTitle.textContent = "Viết đánh giá của bạn";
+          initStarPicker(0);
+        }
+      }
+
+      async function loadReviews() {
+        if (!currentProductId) return;
+        reviewsLoaded = true;
+        try {
+          const res = await fetch(`/api/reviews/${currentProductId}`);
+          const data = await res.json();
+          if (data.success) {
+            updateAvgDisplay(data.reviews);
+            renderRatingBars(data.reviews);
+            renderReviewList(data.reviews);
+            prefillMyReview(data.reviews); // Pre-fill nếu đã đánh giá trước
+          }
+        } catch (e) {
+          console.error("Lỗi tải đánh giá:", e);
+        }
+      }
+
+      // ── Star picker ───────────────────────────────────────────────────────────
+      function initStarPicker(initialRating = 0) {
+        const picker = document.getElementById("starPicker");
+        if (!picker) return;
+        picker.innerHTML = [1,2,3,4,5].map(i =>
+          `<span class="material-symbols-outlined text-[32px] transition-colors star-btn ${i <= initialRating ? 'text-yellow-400' : 'text-outline-variant'}" data-val="${i}" style="font-variation-settings:'FILL' ${i <= initialRating ? 1 : 0}">star</span>`
+        ).join("");
+        const stars = picker.querySelectorAll(".star-btn");
+        stars.forEach(star => {
+          star.addEventListener("mouseover", () => {
+            const val = parseInt(star.dataset.val);
+            stars.forEach((s, idx) => {
+              s.style.fontVariationSettings = `'FILL' ${idx < val ? 1 : 0}`;
+              s.classList.toggle("text-yellow-400", idx < val);
+              s.classList.toggle("text-outline-variant", idx >= val);
+            });
+          });
+          star.addEventListener("mouseleave", () => {
+            const selected = parseInt(document.getElementById("selectedRating").value);
+            stars.forEach((s, idx) => {
+              s.style.fontVariationSettings = `'FILL' ${idx < selected ? 1 : 0}`;
+              s.classList.toggle("text-yellow-400", idx < selected);
+              s.classList.toggle("text-outline-variant", idx >= selected);
+            });
+          });
+          star.addEventListener("click", () => {
+            const val = parseInt(star.dataset.val);
+            document.getElementById("selectedRating").value = val;
+            stars.forEach((s, idx) => {
+              s.style.fontVariationSettings = `'FILL' ${idx < val ? 1 : 0}`;
+              s.classList.toggle("text-yellow-400", idx < val);
+              s.classList.toggle("text-outline-variant", idx >= val);
+            });
+          });
+        });
+      }
+
+      // ── Init review form ──────────────────────────────────────────────────────
+      function initReviewForm(productId) {
+        currentProductId = productId;
+        const form = document.getElementById("reviewForm");
+        const loginPrompt = document.getElementById("reviewLoginPrompt");
+        if (isAuthenticated()) {
+          form?.classList.remove("hidden");
+          loginPrompt?.classList.add("hidden");
+          initStarPicker();
+        } else {
+          form?.classList.add("hidden");
+          loginPrompt?.classList.remove("hidden");
+        }
+
+        // Dùng onsubmit thay vì addEventListener để tránh gắn nhiều handler
+        if (form) {
+          form.onsubmit = async (e) => {
+            e.preventDefault();
+            const rating = parseInt(document.getElementById("selectedRating").value);
+            const comment = document.getElementById("reviewComment").value.trim();
+            if (!rating) { alert("Vui lòng chọn số sao!"); return; }
+            const token = localStorage.getItem("token");
+            if (!token) { alert("Vui lòng đăng nhập để đánh giá!"); return; }
+
+            const submitBtn = form.querySelector("button[type='submit']");
+            const originalText = submitBtn?.textContent;
+            if (submitBtn) { submitBtn.textContent = "Đang gửi..."; submitBtn.disabled = true; }
+
+            try {
+              const res = await fetch(`/api/reviews/${productId}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                body: JSON.stringify({ rating, comment }),
+              });
+
+              // Xử lý token hết hạn / tài khoản không tồn tại
+              if (res.status === 401) {
+                const errData = await res.json();
+                handleAuthError(errData.message || "Phiên đăng nhập đã hết hạn.");
+                return;
+              }
+
+              const data = await res.json();
+              if (data.success) {
+                updateAvgDisplay(data.reviews);
+                renderRatingBars(data.reviews);
+                renderReviewList(data.reviews);
+                prefillMyReview(data.reviews); // Cập nhật lại form sau khi submit
+                switchTab("review");
+              } else {
+                alert(data.message || "Lỗi gửi đánh giá");
+              }
+            } catch (err) {
+              console.error("Review submit error:", err);
+              alert("Lỗi kết nối, vui lòng thử lại!");
+            } finally {
+              if (submitBtn) { submitBtn.textContent = originalText; submitBtn.disabled = false; }
+            }
+          };
+        }
       }
 
       initPage();

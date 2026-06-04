@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html class="light" lang="vi">
   <head>
     <meta charset="utf-8" />
@@ -901,7 +901,7 @@
     <script type="module">
       import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
       import { getPublicProducts } from "../js/product.js";
-      import { addToCart, getCartItemCount, syncCartFromBackend } from "../js/cart.js";
+      import { addToCart, getCartItemCount, syncCartFromBackend } from "../js/cart.js?v=1780539375683";
 
       const guestNav = document.getElementById("guestNav");
       const userNav = document.getElementById("userNav");
@@ -1001,7 +1001,7 @@
                   class="material-symbols-outlined text-primary text-[16px]"
                   style="font-variation-settings: 'FILL' 1"
                 >star</span>
-                <span class="font-label-sm text-on-surface">${product.rating || "4.5"}</span>
+                <span class="font-label-sm text-on-surface">${product.rating > 0 ? product.rating.toFixed(1) : "Chưa có"}</span>
               </div>
               <a href="/product/detail?id=${product._id}" class="hover:underline">
                 <h4 class="font-headline-md text-headline-md text-on-surface mb-xs">
@@ -1063,8 +1063,8 @@
 
         // Add event listeners to add-to-cart buttons
         document.querySelectorAll("[data-product-id]").forEach((btn) => {
-          btn.addEventListener("click", () => {
-            addToCart(
+          btn.addEventListener("click", async () => {
+            const result = await addToCart(
               {
                 _id: btn.dataset.productId,
                 name: btn.dataset.productName,
@@ -1073,8 +1073,10 @@
               },
               1
             );
-            updateCartBadge();
-            showToast(`Đã thêm "${btn.dataset.productName}" vào giỏ hàng`);
+            if (result) {
+              updateCartBadge();
+              showToast(`Đã thêm "${btn.dataset.productName}" vào giỏ hàng`);
+            }
           });
         });
       }

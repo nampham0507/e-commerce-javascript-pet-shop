@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 
 <html lang="vi">
   <head>
@@ -586,7 +586,7 @@
     </footer>
     <script type="module">
       import { isAuthenticated, getUserInfo, logoutUser, requireAuth } from "../js/auth.js";
-      import { getCart, getCartTotal, clearCart } from "../js/cart.js";
+      import { getCart, getCartTotal, clearCart } from "../js/cart.js?v=1780539375684";
 
       const guestNav = document.getElementById("guestNav");
       const userNav = document.getElementById("userNav");
@@ -828,7 +828,6 @@
           throw new Error(data.message || "Không thể tạo liên kết thanh toán.");
         }
 
-        clearCart();
         window.location.href = data.redirectUrl;
       }
 

@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html class="light" lang="vi">
   <head>
     <meta charset="utf-8" />
@@ -576,7 +576,7 @@
     <script type="module">
       import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
       import { getPublicProducts } from "../js/product.js";
-      import { addToCart, getCartItemCount } from "../js/cart.js";
+      import { addToCart, getCartItemCount } from "../js/cart.js?v=1780539375687";
 
       // ── Auth Nav ─────────────────────────────────────────────────────────────
       const guestNav = document.getElementById("guestNav");
@@ -946,15 +946,17 @@
       }
 
       // Add to cart click handler (Event delegation)
-      productsGrid.addEventListener("click", (e) => {
+      productsGrid.addEventListener("click", async (e) => {
         const btn = e.target.closest("[data-add-id]");
         if (btn) {
           const productId = btn.dataset.addId;
           const product = allProducts.find((p) => p._id === productId);
           if (product) {
-            addToCart(product, 1);
-            updateCartBadge();
-            showToast(`Đã thêm "${product.name}" vào giỏ hàng`);
+            const result = await addToCart(product, 1);
+            if (result) {
+              updateCartBadge();
+              showToast(`Đã thêm "${product.name}" vào giỏ hàng`);
+            }
           }
         }
       });

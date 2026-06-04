@@ -2,6 +2,7 @@ const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 const Order = require("../models/Order");
+const Product = require("../models/Product");
 
 // =============================================
 // Helper Functions
@@ -126,9 +127,12 @@ function verifySecureHash(params, secretKey) {
 /**
  * Xây dựng URL thanh toán VNPAY
  */
-function buildPaymentUrl(req, amount, bankCode = "", transactionRef = "") {
+function buildPaymentUrl(req, amount, bankCode = "", orderNumber = "") {
   const config = loadVnpayConfig();
-  const orderId = transactionRef || createOrderId();
+  // VNPay chỉ chấp nhận TxnRef là alphanumeric, xóa ký tự đặc biệt
+  const txnRef = orderNumber
+    ? orderNumber.replace(/[^a-zA-Z0-9]/g, "")
+    : createOrderId();
   const createDate = createDateValue();
   const locale = req.body?.language || "vn";
 
@@ -138,8 +142,8 @@ function buildPaymentUrl(req, amount, bankCode = "", transactionRef = "") {
     vnp_TmnCode: config.vnp_TmnCode,
     vnp_Locale: locale,
     vnp_CurrCode: "VND",
-    vnp_TxnRef: orderId,
-    vnp_OrderInfo: `Thanh toan don hang ${orderId}`,
+    vnp_TxnRef: txnRef,
+    vnp_OrderInfo: `Thanh toan don hang ${txnRef}`,
     vnp_OrderType: "other",
     vnp_Amount: Math.round(Number(amount) * 100),
     vnp_ReturnUrl:
@@ -168,7 +172,7 @@ function buildPaymentUrl(req, amount, bankCode = "", transactionRef = "") {
     .map((key) => `${key}=${sortedParams[key]}`)
     .join("&")}`;
 
-  return { redirectUrl, orderId };
+  return { redirectUrl, txnRef };
 }
 
 // =============================================
@@ -179,7 +183,7 @@ function buildPaymentUrl(req, amount, bankCode = "", transactionRef = "") {
  * Tạo URL thanh toán VNPAY
  * POST /api/payments/vnpay/create
  */
-exports.createPayment = (req, res) => {
+exports.createPayment = async (req, res) => {
   try {
     const amount = Number(req.body?.amount);
 
@@ -190,14 +194,22 @@ exports.createPayment = (req, res) => {
       });
     }
 
-    const { redirectUrl, orderId } = buildPaymentUrl(
+    const { redirectUrl, txnRef } = buildPaymentUrl(
       req,
       amount,
       req.body?.bankCode || "",
       req.body?.orderId || ""
     );
 
-    return res.json({ success: true, redirectUrl, orderId });
+    // Lưu txnRef vào đơn hàng để sau vnpayReturn tìm được
+    if (req.body?.orderId) {
+      await Order.findOneAndUpdate(
+        { orderNumber: req.body.orderId },
+        { paymentTransactionRef: txnRef }
+      );
+    }
+
+    return res.json({ success: true, redirectUrl, orderId: txnRef });
   } catch (error) {
     return res.status(500).json({
       success: false,
@@ -221,16 +233,30 @@ exports.vnpayReturn = async (req, res) => {
 
     // Cập nhật trạng thái thanh toán trong database
     if (transactionRef) {
-      await Order.findOneAndUpdate(
-        { orderNumber: transactionRef },
-        {
-          paymentStatus: isSuccess ? "paid" : "failed",
-          status: isSuccess ? "confirmed" : "pending",
-          paymentTransactionRef: transactionRef,
-          updatedAt: new Date(),
-        },
-        { new: true }
-      );
+      // Decode transactionRef phòng trường hợp URL encoding
+      const decodedRef = decodeURIComponent(transactionRef);
+
+      // Tìm đơn hàng theo paymentTransactionRef (đã lưu lúc tạo link VNPay)
+      const order = await Order.findOne({ paymentTransactionRef: decodedRef });
+
+      if (order) {
+        if (isSuccess) {
+          order.paymentStatus = "paid";
+          order.status = "confirmed";
+          order.updatedAt = new Date();
+          await order.save();
+        } else {
+          // Hủy thanh toán -> hoàn trả tồn kho rồi xóa đơn
+          if (order.products && order.products.length > 0) {
+            for (const item of order.products) {
+              await Product.findByIdAndUpdate(item.product, {
+                $inc: { quantity: item.quantity },
+              });
+            }
+          }
+          await Order.findByIdAndDelete(order._id);
+        }
+      }
     }
 
     // Render trang kết quả thanh toán
