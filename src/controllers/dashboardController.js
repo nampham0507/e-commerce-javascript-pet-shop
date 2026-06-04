@@ -96,9 +96,11 @@ exports.getDashboardStats = async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(5);
 
-    // Top selling products
-    const topProductsRaw = await Order.aggregate([
+    // Top selling products (use $lookup to avoid null product refs)
+    const topProducts = await Order.aggregate([
+      { $match: { status: { $ne: "cancelled" } } },
       { $unwind: "$products" },
+      { $match: { "products.product": { $ne: null } } },
       {
         $group: {
           _id: "$products.product",
@@ -109,12 +111,26 @@ exports.getDashboardStats = async (req, res) => {
         },
       },
       { $sort: { sold: -1 } },
-      { $limit: 3 },
+      { $limit: 5 },
+      {
+        $lookup: {
+          from: "products",
+          localField: "_id",
+          foreignField: "_id",
+          as: "productInfo",
+        },
+      },
+      { $unwind: { path: "$productInfo", preserveNullAndEmpty: true } },
+      {
+        $project: {
+          sold: 1,
+          revenue: 1,
+          name: { $ifNull: ["$productInfo.name", "Sản phẩm đã xóa"] },
+          category: { $ifNull: ["$productInfo.category", "Khác"] },
+          image: { $ifNull: ["$productInfo.image", ""] },
+        },
+      },
     ]);
-    const topProducts = await Product.populate(topProductsRaw, {
-      path: "_id",
-      select: "name category image",
-    });
 
     res.json({
       success: true,

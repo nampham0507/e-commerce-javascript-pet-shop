@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 
 <html class="light" lang="vi">
   <head>
@@ -713,24 +713,36 @@
               d.products?.total > 0 ? "Sẵn sàng" : "Hết hàng";
 
           // Render top products
-          if (topProductsBody && d.topProducts) {
+          if (topProductsBody && d.topProducts && d.topProducts.length > 0) {
             topProductsBody.innerHTML = d.topProducts
               .map(
-                (p) => `
-                <tr>
+                (p) => {
+                  const imgSrc = p.image
+                    ? (p.image.startsWith('/') ? p.image : p.image)
+                    : '';
+                  const imgTag = imgSrc
+                    ? `<img class="w-12 h-12 rounded-xl object-cover bg-surface-container" src="${imgSrc}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div style="display:none" class="w-12 h-12 rounded-xl bg-primary-container flex items-center justify-center text-primary text-xl">🐾</div>`
+                    : `<div class="w-12 h-12 rounded-xl bg-primary-container flex items-center justify-center text-primary text-xl">🐾</div>`;
+                  return `
+                <tr class="hover:bg-surface-container-low/50 transition-colors">
                   <td class="py-md flex items-center gap-md">
-                    <img class="w-12 h-12 rounded-xl object-cover bg-surface-container" src="${p._id?.image || ""}" />
+                    ${imgTag}
                     <div>
-                      <div class="font-label-md text-on-surface">${p._id?.name || "Sản phẩm"}</div>
-                      <div class="text-[12px] text-on-surface-variant">Danh mục: ${p._id?.category || "Khác"}</div>
+                      <div class="font-label-md text-on-surface">${p.name || 'Sản phẩm'}</div>
+                      <div class="text-[12px] text-on-surface-variant">Danh mục: ${p.category || 'Khác'}</div>
                     </div>
                   </td>
-                  <td class="py-md text-center font-body-md">${p.sold.toLocaleString("vi-VN")}</td>
-                  <td class="py-md text-right font-bold text-primary">${p.revenue.toLocaleString("vi-VN")}₫</td>
+                  <td class="py-md text-center font-body-md">${p.sold.toLocaleString('vi-VN')}</td>
+                  <td class="py-md text-right font-bold text-primary">${p.revenue.toLocaleString('vi-VN')}₫</td>
                 </tr>
-            `
+              `;
+                }
               )
-              .join("");
+              .join('');
+          } else if (topProductsBody) {
+            topProductsBody.innerHTML = `
+              <tr><td colspan="3" class="py-xl text-center text-on-surface-variant">Chưa có dữ liệu đơn hàng</td></tr>
+            `;
           }
 
           // Render weekly revenue chart
