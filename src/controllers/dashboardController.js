@@ -120,7 +120,11 @@ exports.getDashboardStats = async (req, res) => {
           as: "productInfo",
         },
       },
-      { $unwind: { path: "$productInfo", preserveNullAndEmpty: true } },
+      {
+        $addFields: {
+          productInfo: { $arrayElemAt: ["$productInfo", 0] },
+        },
+      },
       {
         $project: {
           sold: 1,
