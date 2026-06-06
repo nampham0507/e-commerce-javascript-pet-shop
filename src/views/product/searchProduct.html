@@ -3,6 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
     <title>Tìm kiếm sản phẩm - Xám Pet Shop</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
@@ -653,6 +657,10 @@
 
       const renderCategoryFilters = (categories) => {
         if (!categoryFilters) return;
+        if (!categories || categories.length === 0) {
+          categoryFilters.innerHTML = '<div class="text-on-surface-variant text-sm">Chưa có danh mục nào</div>';
+          return;
+        }
         categoryFilters.innerHTML = categories
           .map(
             (category) => `
@@ -660,7 +668,7 @@
                 <input
                   class="rounded border-outline-variant text-primary focus:ring-primary-container w-5 h-5 category-filter"
                   type="checkbox"
-                  value="${category.slug}"
+                  value="${category.name}"
                 />
                 <span class="text-body-md group-hover:text-primary transition-colors">${category.name}</span>
               </label>
@@ -768,7 +776,9 @@
         }
         if (currentCategories.length > 0) {
           filtered = filtered.filter((p) =>
-            currentCategories.includes((p.category || "").toLowerCase())
+            currentCategories.some(
+              (c) => c.toLowerCase() === (p.category || "").toLowerCase()
+            )
           );
         }
         filtered = filtered.filter((p) => p.price <= currentMaxPrice);

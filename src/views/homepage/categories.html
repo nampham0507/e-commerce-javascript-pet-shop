@@ -4,6 +4,10 @@
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"
@@ -206,13 +210,14 @@
           >
         </nav>
         <div class="flex items-center gap-md">
-          <div
+          <a
+            href="/cart"
             class="relative group cursor-pointer p-sm rounded-full hover:bg-surface-container transition-colors"
           >
             <span class="material-symbols-outlined text-on-surface-variant"
               >shopping_cart</span
             >
-          </div>
+          </a>
           <!-- GUEST: hiển thị khi chưa đăng nhập -->
           <div id="guestNav" class="hidden sm:flex items-center gap-sm">
             <a
@@ -322,15 +327,16 @@
       <!-- Categories Bento Grid -->
       <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter" data-stagger>
         <!-- Category: Hạt mèo (Large Asymmetric) -->
-        <div
-          class="md:col-span-8 group category-card relative overflow-hidden rounded-[32px] bg-white shadow-sm border border-outline-variant h-[400px]"
+        <a
+          href="/product?q=hạt+mèo"
+          class="md:col-span-8 group category-card relative overflow-hidden rounded-[32px] bg-white shadow-sm border border-outline-variant h-[400px] block cursor-pointer"
         >
           <div
             class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10"
           ></div>
           <img
             class="category-image absolute inset-0 w-full h-full object-cover transition-transform duration-700"
-            data-alt="Premium dry cat food kibbles shown in high-key, soft lighting. A beautiful fluffy grey cat is partially visible in a cozy domestic setting with pastel grey and light orange tones. The atmosphere is serene, clean, and high-end, matching a soft minimalist luxury pet brand aesthetic."
+            alt="Hạt mèo cao cấp"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7MvxW6edxaBTenuacppKslzN1ZzqVKYh7l14Tg-BgrjXSwDD1rC0Udgf2oc177CUXLqJBh0MZrhyMEIBICd2b0oICKz6xqGCJ8yMhnFVTyhWbQ0Xn1DoW1gQPf-IqWsclWH2nIXsTx_oH4xV-mKsLxv0-Ef-T_LWUAdRL46jyhIz6Bxz_T7FIM7F6tKgVEOi9_PEQCJWDbyPabPE_hQaVLmpz0n90YcKzHqyd1xOkCrUVHICzsfqS-5IdkEjBHdnDf5VWCorF8J0"
           />
           <div class="absolute bottom-0 left-0 p-xl z-20 w-full">
@@ -345,24 +351,25 @@
               Dinh dưỡng cân bằng giúp bộ lông mềm mượt và hệ tiêu hóa khỏe
               mạnh.
             </p>
-            <button
-              class="px-lg py-md bg-white text-primary font-bold rounded-full flex items-center gap-sm hover:scale-105 active:scale-95 transition-all"
+            <span
+              class="px-lg py-md bg-white text-primary font-bold rounded-full inline-flex items-center gap-sm hover:scale-105 active:scale-95 transition-all"
             >
               Xem chi tiết
               <span class="material-symbols-outlined">arrow_forward</span>
-            </button>
+            </span>
           </div>
-        </div>
+        </a>
         <!-- Category: Pate mèo (Medium) -->
-        <div
-          class="md:col-span-4 group category-card relative overflow-hidden rounded-[32px] bg-white shadow-sm border border-outline-variant h-[400px]"
+        <a
+          href="/product?q=pate"
+          class="md:col-span-4 group category-card relative overflow-hidden rounded-[32px] bg-white shadow-sm border border-outline-variant h-[400px] block cursor-pointer"
         >
           <div
             class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"
           ></div>
           <img
             class="category-image absolute inset-0 w-full h-full object-cover transition-transform duration-700"
-            data-alt="Close-up of premium wet cat food or pate in a minimalist ceramic bowl. The lighting is warm and natural, suggesting a cozy morning in a modern home. The background features soft grey textures and a hint of warm orange, aligning with a premium minimalist feline care brand."
+            alt="Pate mèo"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvqgpVX2NhqJuMnABEhwRHdJGbVyTp1vMv5ZEJNbxr5s_SF0vpCBzE_57-f3JFt9HKjn3eYIJP18iKnpKFLYNY3wD7qEXLqMKlcLlHKOa_M6UhzMSEQBMCtvPc-TzpDeuY0lyx6FytYmCsPv13_xyKz69niWnmVG8muFx6UQwmcxshCt6CQOiQe_Mh5oQv1KpNUcDxxb5NdXqF5L0f4QLLvqOOGwb1HxHX1kjnUDM7OQAPzKOEN3c_tkoDpdItkfMEfYwjLoQsQhk"
           />
           <div class="absolute bottom-0 left-0 p-xl z-20">
@@ -372,23 +379,24 @@
             <p class="font-body-md text-white/90 mb-lg">
               Đậm đà hương vị thịt thật, cung cấp độ ẩm cần thiết mỗi ngày.
             </p>
-            <button
-              class="px-lg py-md bg-primary-container text-white font-bold rounded-full hover:scale-105 active:scale-95 transition-all"
+            <span
+              class="px-lg py-md bg-primary-container text-white font-bold rounded-full inline-block hover:scale-105 active:scale-95 transition-all"
             >
               Khám phá
-            </button>
+            </span>
           </div>
-        </div>
+        </a>
         <!-- Category: Snack mèo (Medium) -->
-        <div
-          class="md:col-span-4 group category-card relative overflow-hidden rounded-[32px] bg-white shadow-sm border border-outline-variant h-[350px]"
+        <a
+          href="/product?q=snack+mèo"
+          class="md:col-span-4 group category-card relative overflow-hidden rounded-[32px] bg-white shadow-sm border border-outline-variant h-[350px] block cursor-pointer"
         >
           <div
             class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"
           ></div>
           <img
             class="category-image absolute inset-0 w-full h-full object-cover transition-transform duration-700"
-            data-alt="A playful kitten reaching for a treat, captured in soft high-key lighting. The environment is minimalist and airy, using a palette of creams and soft oranges. The focus is sharp on the kitten's joyful expression, conveying a sense of happiness and quality care."
+            alt="Snack mèo"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp3v-idD14wfQ6fKtWKUNR7spQpDsjGksksAj4_bH19yrlA-g8_In9JmQ5cDizZhHVPs0papPdSVsy1lpYlZ_-wAIpaFgJh-GtBv6Rip3q_GaJk5M7TbAKZ7x2Mc1lxbc2fwoECgkkJrCOMhuVBTDOW-fosAOSOy05KWM_lFLKdDiKB6zQTR2WOt5KLptczLUTNowyhuQWu5uKC2vUL75TBVwhDMC73AzbwbGvUlbXeXM_qtAc3284gOtQssrojeE3E6VY-JZ9AXQ"
           />
           <div class="absolute bottom-0 left-0 p-xl z-20">
@@ -398,23 +406,24 @@
             <p class="font-body-md text-white/90 mb-lg">
               Phần thưởng tuyệt vời cho những giây phút vui đùa.
             </p>
-            <button
-              class="w-12 h-12 bg-white text-primary rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+            <span
+              class="w-12 h-12 bg-white text-primary rounded-full inline-flex items-center justify-center hover:scale-110 transition-transform"
             >
-              <span class="material-symbols-outlined">add</span>
-            </button>
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </span>
           </div>
-        </div>
+        </a>
         <!-- Category: Sữa mèo (Medium) -->
-        <div
-          class="md:col-span-4 group category-card relative overflow-hidden rounded-[32px] bg-white shadow-sm border border-outline-variant h-[350px]"
+        <a
+          href="/product?q=sữa+mèo"
+          class="md:col-span-4 group category-card relative overflow-hidden rounded-[32px] bg-white shadow-sm border border-outline-variant h-[350px] block cursor-pointer"
         >
           <div
             class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"
           ></div>
           <img
             class="category-image absolute inset-0 w-full h-full object-cover transition-transform duration-700"
-            data-alt="A small white kitten drinking milk from a minimalist saucer. The scene is bathed in soft, diffused light, highlighting a clean and pure aesthetic. The color scheme is dominated by white and pastel grey with subtle orange accents, creating a calm and nurturing atmosphere for pet owners."
+            alt="Sữa mèo"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5NwgZCI4kOdgWvyU5J3yqW6Js1keAONUpMx9lB7CZSjXbC7pZpzW38iDW5vvaXqlF2LfHYFcXp_BsRfkUMp8vf-8NWCAOLgNgXFc9aSTKqsj6hU5dI_1em6Chw30osujjbyA85w7Rh4wEdad5nGiAWO6WwEk2p5KjfnuwuQ8SAGlw99o7KHDdG75hnv68ae7iyKeKT-vVN5INa5wZgRJ972bHHI4q_wHZMBrAgOzk8eoSIjToVpb7NsbZdtxAIY7uijVQJtJVy5g"
           />
           <div class="absolute bottom-0 left-0 p-xl z-20">
@@ -424,23 +433,24 @@
             <p class="font-body-md text-white/90 mb-lg">
               Công thức chuyên biệt dễ tiêu hóa cho mèo mọi lứa tuổi.
             </p>
-            <button
-              class="px-lg py-md border-2 border-white text-white font-bold rounded-full hover:bg-white hover:text-primary transition-all"
+            <span
+              class="px-lg py-md border-2 border-white text-white font-bold rounded-full inline-block hover:bg-white hover:text-primary transition-all"
             >
               Xem ngay
-            </button>
+            </span>
           </div>
-        </div>
+        </a>
         <!-- Category: Phụ kiện ăn uống (Medium) -->
-        <div
-          class="md:col-span-4 group category-card relative overflow-hidden rounded-[32px] bg-white shadow-sm border border-outline-variant h-[350px]"
+        <a
+          href="/product?q=phụ+kiện"
+          class="md:col-span-4 group category-card relative overflow-hidden rounded-[32px] bg-white shadow-sm border border-outline-variant h-[350px] block cursor-pointer"
         >
           <div
             class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10"
           ></div>
           <img
             class="category-image absolute inset-0 w-full h-full object-cover transition-transform duration-700"
-            data-alt="A collection of minimalist ceramic cat bowls and wooden feeding stands. The setting is a bright, modern interior with soft lighting and clean lines. The products are arranged elegantly, showcasing a high-end lifestyle for cats with a focus on both aesthetics and functionality."
+            alt="Phụ kiện ăn uống"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuALhH6ES1D0a5sRrXmk-L7HV8_iMPhW310jpeT83fXFB9Vcf5FB_-hKQR_d2vu9TrczAtNXwW1mT7iQOb-soUziDbmAyHECE8L-iZEwdtfRpY8d3mcfWk5mobWkJ8--tZN8AYBqX56sqauxppdaXA2hnhQmVkmA2KfqpyatrE7ZWgl89x3owbXWCZ4VRwLoWVu3Je6asDX_Kfdy-1v-zryGn3cwZ-HK84FuzOxGbLdCZp6YBe-wcITPv1RvC2Sa5FyBSVvKq83JCOs"
           />
           <div class="absolute bottom-0 left-0 p-xl z-20">
@@ -450,13 +460,13 @@
             <p class="font-body-md text-white/90 mb-lg">
               Nâng tầm bữa ăn với bát sứ cao cấp và máy lọc nước.
             </p>
-            <button
-              class="px-lg py-md bg-white/20 backdrop-blur-md text-white font-bold rounded-full hover:bg-white hover:text-primary transition-all"
+            <span
+              class="px-lg py-md bg-white/20 backdrop-blur-md text-white font-bold rounded-full inline-block hover:bg-white hover:text-primary transition-all"
             >
               Bộ sưu tập
-            </button>
+            </span>
           </div>
-        </div>
+        </a>
       </div>
       <!-- Featured Section: Cozy Modern Atmosphere -->
       <section

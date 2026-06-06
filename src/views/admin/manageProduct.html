@@ -4,6 +4,10 @@
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
@@ -225,6 +229,13 @@
         </a>
         <a
           class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="/admin/manageCategory"
+        >
+          <span class="material-symbols-outlined">category</span>
+          <span class="font-label-md text-label-md">Danh mục</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
           href="/admin/manageBrand"
         >
           <span class="material-symbols-outlined">verified</span>
@@ -295,11 +306,6 @@
           class="bg-surface-container-low border-none rounded-full py-3 px-lg focus:ring-2 focus:ring-primary-container font-label-md text-label-md text-on-surface-variant"
         >
           <option value="">Tất cả danh mục</option>
-          <option value="food">Thức ăn hạt</option>
-          <option value="pate">Pate & Súp</option>
-          <option value="snack">Snack & Bánh thưởng</option>
-          <option value="milk">Sữa mèo</option>
-          <option value="accessories">Phụ kiện</option>
         </select>
         <button
           class="p-3 bg-surface-container-low rounded-full text-on-surface-variant hover:bg-secondary-container transition-colors"
@@ -480,11 +486,26 @@
                 Thương Hiệu *
               </label>
               <select
-                id="productCategory"
+                id="productBrand"
                 class="w-full bg-surface-container-low border-none rounded-full px-lg py-md focus:ring-2 focus:ring-primary-container outline-none"
                 required
               >
                 <option value="">Chọn thương hiệu</option>
+              </select>
+            </div>
+
+            <div>
+              <label
+                class="block font-label-md text-label-md text-on-surface mb-sm"
+              >
+                Danh Mục *
+              </label>
+              <select
+                id="productCategory"
+                class="w-full bg-surface-container-low border-none rounded-full px-lg py-md focus:ring-2 focus:ring-primary-container outline-none"
+                required
+              >
+                <option value="">Chọn danh mục</option>
               </select>
             </div>
 
@@ -929,32 +950,40 @@
         </tr>
       `;
 
-      let categorySelectInstance = null;
       let brandSelectInstance = null;
+      let categorySelectInstance = null;
+
+      const populateBrandSelect = (brands) => {
+        const select = document.getElementById("productBrand");
+        if (!select) return;
+        if (brandSelectInstance) brandSelectInstance.destroy();
+        select.innerHTML = `<option value="">Chọn thương hiệu</option>${brands
+          .map((item) => `<option value="${item.name}">${item.name}</option>`)
+          .join("")}`;
+        brandSelectInstance = new TomSelect("#productBrand", {
+          create: false,
+          sortField: { field: "text", direction: "asc" },
+          placeholder: "Tìm kiếm thương hiệu...",
+        });
+      };
 
       const populateCategorySelect = (categories) => {
         const select = document.getElementById("productCategory");
         if (!select) return;
-        if (categorySelectInstance) {
-          categorySelectInstance.destroy();
-        }
-        select.innerHTML = `<option value="">Chọn thương hiệu</option>${categories
+        if (categorySelectInstance) categorySelectInstance.destroy();
+        select.innerHTML = `<option value="">Chọn danh mục</option>${categories
           .map((item) => `<option value="${item.name}">${item.name}</option>`)
           .join("")}`;
         categorySelectInstance = new TomSelect("#productCategory", {
           create: false,
           sortField: { field: "text", direction: "asc" },
-          placeholder: "Tìm kiếm thương hiệu..."
+          placeholder: "Tìm kiếm danh mục...",
         });
-      };
-
-      const populateBrandSelect = (brands) => {
-        // Field removed
       };
 
       const populateCategoryFilter = (categories) => {
         categorySelect.innerHTML = `<option value="">Tất cả danh mục</option>${categories
-          .map((cat) => `<option value="${cat.slug}">${cat.name}</option>`)
+          .map((cat) => `<option value="${cat.name}">${cat.name}</option>`)
           .join("")}`;
       };
 
@@ -963,11 +992,11 @@
           getAdminCategories(),
           getAdminBrands(),
         ]);
-
+        const categories = categoriesResult.success ? categoriesResult.categories : [];
         const brands = brandsResult.success ? brandsResult.brands : [];
-
-        populateCategorySelect(brands);
-        populateCategoryFilter(brands);
+        populateBrandSelect(brands);
+        populateCategorySelect(categories);
+        populateCategoryFilter(categories);
       };
 
       const attachCategoryRowListeners = () => {
@@ -1108,11 +1137,17 @@
 
         document.getElementById("productId").value = product._id;
         document.getElementById("productName").value = product.name;
-        
-        if (categorySelectInstance) {
-          categorySelectInstance.setValue(product.category || product.brand || "");
+
+        if (brandSelectInstance) {
+          brandSelectInstance.setValue(product.brand || "");
         } else {
-          document.getElementById("productCategory").value = product.category || product.brand || "";
+          document.getElementById("productBrand").value = product.brand || "";
+        }
+
+        if (categorySelectInstance) {
+          categorySelectInstance.setValue(product.category || "");
+        } else {
+          document.getElementById("productCategory").value = product.category || "";
         }
 
         document.getElementById("productPrice").value = product.price;
@@ -1161,9 +1196,9 @@
         const formData = new FormData();
         formData.append("name", document.getElementById("productName").value);
         formData.append("category", document.getElementById("productCategory").value);
+        formData.append("brand", document.getElementById("productBrand").value);
         formData.append("price", document.getElementById("productPrice").value);
         formData.append("quantity", document.getElementById("productQuantity").value);
-        formData.append("brand", document.getElementById("productCategory").value); // Save brand from the category dropdown as well
         formData.append("weight", document.getElementById("productWeight").value);
         formData.append("lifeStage", document.getElementById("productLifeStage").value);
         formData.append("flavor", document.getElementById("productFlavor").value);

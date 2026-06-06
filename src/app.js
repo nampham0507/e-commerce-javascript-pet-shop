@@ -67,6 +67,10 @@ app.get("/admin/manageBrand", (req, res) => {
   res.sendFile(path.join(__dirname, "views/admin/manageBrand.html"));
 });
 
+app.get("/admin/manageCategory", (req, res) => {
+  res.sendFile(path.join(__dirname, "views/admin/manageCategory.html"));
+});
+
 app.get("/admin/manageOrder", (req, res) => {
   res.sendFile(path.join(__dirname, "views/admin/manageOrder.html"));
 });

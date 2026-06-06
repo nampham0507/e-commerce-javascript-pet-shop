@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 
 <html class="light" lang="vi">
   <head>
@@ -206,21 +206,21 @@
           <span class="font-label-md text-label-md">Products</span>
         </a>
         <a
-          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
-          href="/admin/manageCategory"
-        >
-          <span class="material-symbols-outlined">category</span>
-          <span class="font-label-md text-label-md">Danh mục</span>
-        </a>
-        <a
           class="bg-primary-container text-on-primary-container rounded-xl mx-2 px-4 py-3 flex items-center gap-3 shadow-sm"
-          href="/admin/manageBrand"
+          href="/admin/manageCategory"
         >
           <span
             class="material-symbols-outlined"
             style="font-variation-settings: &quot;FILL&quot; 1"
-            >verified</span
+            >category</span
           >
+          <span class="font-label-md text-label-md">Danh mục</span>
+        </a>
+        <a
+          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors"
+          href="/admin/manageBrand"
+        >
+          <span class="material-symbols-outlined">verified</span>
           <span class="font-label-md text-label-md">Thương hiệu</span>
         </a>
         <a
@@ -256,15 +256,15 @@
           <h2
             class="font-headline-lg text-headline-lg text-on-surface section-heading"
           >
-            Quản Lý Thương Hiệu
+            Quản Lý Danh Mục
           </h2>
         </div>
         <button
-          id="addBrandBtn"
+          id="addCategoryBtn"
           class="bg-primary-container text-on-primary-container font-label-md text-label-md px-lg py-3 rounded-full flex items-center gap-2 hover:scale-105 transition-transform shadow-md active:scale-95 btn-ripple"
         >
           <span class="material-symbols-outlined">add</span>
-          Thêm Thương Hiệu
+          Thêm Danh Mục
         </button>
       </header>
 
@@ -277,9 +277,9 @@
             >search</span
           >
           <input
-            id="searchBrandInput"
+            id="searchCategoryInput"
             class="w-full bg-surface-container-low border-none rounded-full py-3 pl-12 pr-4 focus:ring-2 focus:ring-primary-container font-body-md text-body-md"
-            placeholder="Tìm kiếm thương hiệu theo tên..."
+            placeholder="Tìm kiếm danh mục theo tên..."
             type="text"
           />
         </div>
@@ -295,7 +295,12 @@
                 <th
                   class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
                 >
-                  Thương hiệu
+                  Danh mục
+                </th>
+                <th
+                  class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                >
+                  Slug
                 </th>
                 <th
                   class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right"
@@ -304,13 +309,13 @@
                 </th>
               </tr>
             </thead>
-            <tbody id="brandsTableBody" class="divide-y divide-outline-variant">
+            <tbody id="categoriesTableBody" class="divide-y divide-outline-variant">
               <tr>
                 <td
-                  colspan="2"
+                  colspan="3"
                   class="px-lg py-xl text-center text-on-surface-variant"
                 >
-                  Đang tải thương hiệu...
+                  Đang tải danh mục...
                 </td>
               </tr>
             </tbody>
@@ -392,17 +397,17 @@
             © 2026 Xám Pet Shop. All rights reserved.
           </p>
         </div>
-      <div class="flex flex-col gap-sm">
-        <span class="font-label-md text-label-md text-primary">Bản đồ</span>
-        <div class="w-full h-32 rounded-lg overflow-hidden border border-outline-variant/30">
-          <iframe src="https://maps.google.com/maps?q=273%20%C4%91%C6%B0%E1%BB%9Dng%20C%E1%BB%95%20Nhu%E1%BA%BF%2C%20B%E1%BA%AFc%20T%E1%BB%AB%20Li%C3%AAm%2C%20H%C3%A0%20N%E1%BB%99i&t=&z=14&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="flex flex-col gap-sm">
+          <span class="font-label-md text-label-md text-primary">Bản đồ</span>
+          <div class="w-full h-32 rounded-lg overflow-hidden border border-outline-variant/30">
+            <iframe src="https://maps.google.com/maps?q=273%20%C4%91%C6%B0%E1%BB%9Dng%20C%E1%BB%95%20Nhu%E1%BA%BF%2C%20B%E1%BA%AFc%20T%E1%BB%AB%20Li%C3%AAm%2C%20H%C3%A0%20N%E1%BB%99i&t=&z=14&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
     </main>
 
     <div
-      id="brandModal"
+      id="categoryModal"
       class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-lg"
     >
       <div
@@ -412,31 +417,43 @@
           class="sticky top-0 bg-white px-xl py-lg border-b border-outline-variant flex items-center justify-between"
         >
           <h3
-            id="brandModalTitle"
+            id="categoryModalTitle"
             class="font-headline-lg text-headline-lg text-on-surface"
           >
-            Thêm thương hiệu
+            Thêm danh mục
           </h3>
           <button
-            id="closeBrandModalBtn"
+            id="closeCategoryModalBtn"
             class="p-2 text-on-surface-variant hover:text-on-surface transition-colors"
           >
             <span class="material-symbols-outlined">close</span>
           </button>
         </div>
-        <form id="brandForm" class="p-xl space-y-lg">
-          <input type="hidden" id="brandId" />
+        <form id="categoryForm" class="p-xl space-y-lg">
+          <input type="hidden" id="categoryId" />
           <div>
             <label
               class="block font-label-md text-label-md text-on-surface mb-sm"
-              >Tên thương hiệu</label
+              >Tên danh mục</label
             >
             <input
-              id="brandName"
+              id="categoryName"
               type="text"
               class="w-full bg-surface-container-low border-none rounded-full px-lg py-md focus:ring-2 focus:ring-primary-container outline-none text-body-md"
-              placeholder="Nhập tên thương hiệu"
+              placeholder="Nhập tên danh mục"
               required
+            />
+          </div>
+          <div>
+            <label
+              class="block font-label-md text-label-md text-on-surface mb-sm"
+              >Mô tả (tuỳ chọn)</label
+            >
+            <input
+              id="categoryDescription"
+              type="text"
+              class="w-full bg-surface-container-low border-none rounded-full px-lg py-md focus:ring-2 focus:ring-primary-container outline-none text-body-md"
+              placeholder="Mô tả ngắn về danh mục"
             />
           </div>
           <div class="flex gap-md pt-lg">
@@ -448,7 +465,7 @@
             </button>
             <button
               type="button"
-              id="cancelBrandBtn"
+              id="cancelCategoryBtn"
               class="flex-1 bg-surface-container-high text-on-surface font-label-md px-lg py-md rounded-full hover:bg-surface-container-highest transition-colors text-body-md"
             >
               Hủy
@@ -461,36 +478,37 @@
     <script type="module">
       import { logoutUser, getUserInfo, isAuthenticated } from "../js/auth.js";
       import {
-        getAdminBrands,
-        getAdminProducts,
-        createBrand,
-        updateBrand,
-        deleteBrand,
+        getAdminCategories,
+        createCategory,
+        updateCategory,
+        deleteCategory,
       } from "../js/admin.js";
 
       if (!isAuthenticated() || getUserInfo()?.role !== "admin") {
         window.location.href = "/auth/login";
       }
 
-      const brandsTableBody = document.getElementById("brandsTableBody");
-      const addBrandBtn = document.getElementById("addBrandBtn");
-      const brandModal = document.getElementById("brandModal");
-      const closeBrandModalBtn = document.getElementById("closeBrandModalBtn");
-      const cancelBrandBtn = document.getElementById("cancelBrandBtn");
-      const brandForm = document.getElementById("brandForm");
-      const brandModalTitle = document.getElementById("brandModalTitle");
-      const brandNameInput = document.getElementById("brandName");
-      const brandIdInput = document.getElementById("brandId");
+      const categoriesTableBody = document.getElementById("categoriesTableBody");
+      const addCategoryBtn = document.getElementById("addCategoryBtn");
+      const categoryModal = document.getElementById("categoryModal");
+      const closeCategoryModalBtn = document.getElementById("closeCategoryModalBtn");
+      const cancelCategoryBtn = document.getElementById("cancelCategoryBtn");
+      const categoryForm = document.getElementById("categoryForm");
+      const categoryModalTitle = document.getElementById("categoryModalTitle");
+      const categoryNameInput = document.getElementById("categoryName");
+      const categoryDescriptionInput = document.getElementById("categoryDescription");
+      const categoryIdInput = document.getElementById("categoryId");
 
-      const renderBrandRow = (brand) => `
+      const renderCategoryRow = (category) => `
         <tr class="table-row-hover transition-colors">
-          <td class="px-lg py-md text-body-md text-on-surface font-medium">${brand.name}</td>
+          <td class="px-lg py-md text-body-md text-on-surface font-medium">${category.name}</td>
+          <td class="px-lg py-md text-label-sm text-on-surface-variant">${category.slug || ""}</td>
           <td class="px-lg py-md text-right">
             <div class="flex justify-end gap-2">
-              <button data-id="${brand._id}" data-name="${brand.name}" class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-primary-container/10 rounded-full edit-brand-btn">
+              <button data-id="${category._id}" data-name="${category.name}" data-desc="${category.description || ""}" class="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-primary-container/10 rounded-full edit-category-btn">
                 <span class="material-symbols-outlined">edit</span>
               </button>
-              <button data-id="${brand._id}" data-name="${brand.name}" class="p-2 text-on-surface-variant hover:text-error transition-colors hover:bg-error-container/20 rounded-full delete-brand-btn">
+              <button data-id="${category._id}" data-name="${category.name}" class="p-2 text-on-surface-variant hover:text-error transition-colors hover:bg-error-container/20 rounded-full delete-category-btn">
                 <span class="material-symbols-outlined">delete</span>
               </button>
             </div>
@@ -498,30 +516,28 @@
         </tr>
       `;
 
-      let allBrands = [];
-      let filteredBrands = [];
-      let currentBrandPage = 1;
-      const brandsPerPage = 10;
+      let allCategories = [];
+      let filteredCategories = [];
+      let currentCategoryPage = 1;
+      const categoriesPerPage = 10;
 
-      const renderBrands = () => {
+      const renderCategories = () => {
         const totalPages =
-          Math.ceil(filteredBrands.length / brandsPerPage) || 1;
-        if (currentBrandPage > totalPages) currentBrandPage = totalPages;
-        if (currentBrandPage < 1) currentBrandPage = 1;
+          Math.ceil(filteredCategories.length / categoriesPerPage) || 1;
+        if (currentCategoryPage > totalPages) currentCategoryPage = totalPages;
+        if (currentCategoryPage < 1) currentCategoryPage = 1;
 
-        const start = (currentBrandPage - 1) * brandsPerPage;
-        const end = start + brandsPerPage;
-        const paginatedBrands = filteredBrands.slice(start, end);
+        const start = (currentCategoryPage - 1) * categoriesPerPage;
+        const end = start + categoriesPerPage;
+        const paginated = filteredCategories.slice(start, end);
 
-        if (paginatedBrands.length > 0) {
-          brandsTableBody.innerHTML = paginatedBrands
-            .map(renderBrandRow)
-            .join("");
-          attachBrandListeners();
+        if (paginated.length > 0) {
+          categoriesTableBody.innerHTML = paginated.map(renderCategoryRow).join("");
+          attachCategoryListeners();
         } else {
-          brandsTableBody.innerHTML = `
+          categoriesTableBody.innerHTML = `
             <tr>
-              <td colspan="2" class="px-lg py-xl text-center text-on-surface-variant">Không tìm thấy thương hiệu nào</td>
+              <td colspan="3" class="px-lg py-xl text-center text-on-surface-variant">Không tìm thấy danh mục nào</td>
             </tr>
           `;
         }
@@ -529,94 +545,75 @@
       };
 
       const renderPagination = (totalPages) => {
-        const paginationContainer =
-          document.getElementById("paginationControls");
+        const paginationContainer = document.getElementById("paginationControls");
         if (!paginationContainer) return;
 
         paginationContainer.innerHTML = `
-          <span class="text-label-sm text-on-surface-variant mr-4">Trang ${currentBrandPage} / ${totalPages}</span>
-          <button id="prevBrandPage" class="p-2 rounded-full hover:bg-surface-container-highest text-on-surface-variant disabled:opacity-30" ${currentBrandPage <= 1 ? "disabled" : ""}>
+          <span class="text-label-sm text-on-surface-variant mr-4">Trang ${currentCategoryPage} / ${totalPages}</span>
+          <button id="prevCategoryPage" class="p-2 rounded-full hover:bg-surface-container-highest text-on-surface-variant disabled:opacity-30" ${currentCategoryPage <= 1 ? "disabled" : ""}>
             <span class="material-symbols-outlined">chevron_left</span>
           </button>
-          <button id="nextBrandPage" class="p-2 rounded-full hover:bg-surface-container-highest text-on-surface-variant disabled:opacity-30" ${currentBrandPage >= totalPages ? "disabled" : ""}>
+          <button id="nextCategoryPage" class="p-2 rounded-full hover:bg-surface-container-highest text-on-surface-variant disabled:opacity-30" ${currentCategoryPage >= totalPages ? "disabled" : ""}>
             <span class="material-symbols-outlined">chevron_right</span>
           </button>
         `;
 
-        const prevBtn = document.getElementById("prevBrandPage");
-        const nextBtn = document.getElementById("nextBrandPage");
-
-        if (prevBtn) {
-          prevBtn.addEventListener("click", () => {
-            if (currentBrandPage > 1) {
-              currentBrandPage--;
-              renderBrands();
-            }
-          });
-        }
-        if (nextBtn) {
-          nextBtn.addEventListener("click", () => {
-            if (currentBrandPage < totalPages) {
-              currentBrandPage++;
-              renderBrands();
-            }
-          });
-        }
+        document.getElementById("prevCategoryPage")?.addEventListener("click", () => {
+          if (currentCategoryPage > 1) { currentCategoryPage--; renderCategories(); }
+        });
+        document.getElementById("nextCategoryPage")?.addEventListener("click", () => {
+          if (currentCategoryPage < totalPages) { currentCategoryPage++; renderCategories(); }
+        });
       };
 
-      const searchBrandInput = document.getElementById("searchBrandInput");
+      const searchCategoryInput = document.getElementById("searchCategoryInput");
 
       const applySearch = () => {
-        const searchTerm = searchBrandInput
-          ? searchBrandInput.value.toLowerCase().trim()
+        const searchTerm = searchCategoryInput
+          ? searchCategoryInput.value.toLowerCase().trim()
           : "";
-        if (searchTerm) {
-          filteredBrands = allBrands.filter((brand) =>
-            brand.name.toLowerCase().includes(searchTerm)
-          );
-        } else {
-          filteredBrands = [...allBrands];
-        }
-        currentBrandPage = 1;
-        renderBrands();
+        filteredCategories = searchTerm
+          ? allCategories.filter((c) => c.name.toLowerCase().includes(searchTerm))
+          : [...allCategories];
+        currentCategoryPage = 1;
+        renderCategories();
       };
 
-      if (searchBrandInput) {
-        searchBrandInput.addEventListener("input", applySearch);
-      }
+      searchCategoryInput?.addEventListener("input", applySearch);
 
-      const loadBrands = async () => {
-        const response = await getAdminBrands();
+      const loadCategories = async () => {
+        const response = await getAdminCategories();
         if (response.success) {
-          allBrands = response.brands || [];
+          allCategories = response.categories || [];
           applySearch();
         } else {
-          brandsTableBody.innerHTML = `
+          categoriesTableBody.innerHTML = `
             <tr>
-              <td colspan="2" class="px-lg py-xl text-center text-error">${response.message || "Lỗi tải thương hiệu"}</td>
+              <td colspan="3" class="px-lg py-xl text-center text-error">${response.message || "Lỗi tải danh mục"}</td>
             </tr>
           `;
         }
       };
 
-      const attachBrandListeners = () => {
-        document.querySelectorAll(".edit-brand-btn").forEach((btn) => {
+      const attachCategoryListeners = () => {
+        document.querySelectorAll(".edit-category-btn").forEach((btn) => {
           btn.addEventListener("click", () => {
-            brandIdInput.value = btn.dataset.id;
-            brandNameInput.value = btn.dataset.name;
-            brandModalTitle.textContent = "Chỉnh sửa thương hiệu";
-            brandModal.classList.remove("hidden");
+            categoryIdInput.value = btn.dataset.id;
+            categoryNameInput.value = btn.dataset.name;
+            categoryDescriptionInput.value = btn.dataset.desc || "";
+            categoryModalTitle.textContent = "Chỉnh sửa danh mục";
+            categoryModal.classList.remove("hidden");
           });
         });
-        document.querySelectorAll(".delete-brand-btn").forEach((btn) => {
+        document.querySelectorAll(".delete-category-btn").forEach((btn) => {
           btn.addEventListener("click", async () => {
-            if (confirm(`Xóa thương hiệu "${btn.dataset.name}"?`)) {
-              const result = await deleteBrand(btn.dataset.id);
+            if (confirm(`Xóa danh mục "${btn.dataset.name}"?`)) {
+              const result = await deleteCategory(btn.dataset.id);
               if (result.success) {
                 alert(result.message);
-                await loadBrands();
+                await loadCategories();
               } else {
-                alert(result.message || "Không thể xóa thương hiệu");
+                alert(result.message || "Không thể xóa danh mục");
               }
             }
           });
@@ -624,37 +621,41 @@
       };
 
       const closeModal = () => {
-        brandModal.classList.add("hidden");
-        brandForm.reset();
+        categoryModal.classList.add("hidden");
+        categoryForm.reset();
       };
 
-      addBrandBtn.addEventListener("click", () => {
-        brandIdInput.value = "";
-        brandNameInput.value = "";
-        brandModalTitle.textContent = "Thêm thương hiệu";
-        brandModal.classList.remove("hidden");
+      addCategoryBtn.addEventListener("click", () => {
+        categoryIdInput.value = "";
+        categoryNameInput.value = "";
+        categoryDescriptionInput.value = "";
+        categoryModalTitle.textContent = "Thêm danh mục";
+        categoryModal.classList.remove("hidden");
       });
-      closeBrandModalBtn.addEventListener("click", closeModal);
-      cancelBrandBtn.addEventListener("click", closeModal);
-      brandModal.addEventListener("click", (event) => {
-        if (event.target === brandModal) closeModal();
+      closeCategoryModalBtn.addEventListener("click", closeModal);
+      cancelCategoryBtn.addEventListener("click", closeModal);
+      categoryModal.addEventListener("click", (event) => {
+        if (event.target === categoryModal) closeModal();
       });
 
-      brandForm.addEventListener("submit", async (event) => {
+      categoryForm.addEventListener("submit", async (event) => {
         event.preventDefault();
-        const payload = { name: brandNameInput.value.trim() };
+        const payload = {
+          name: categoryNameInput.value.trim(),
+          description: categoryDescriptionInput.value.trim(),
+        };
         let result;
-        if (brandIdInput.value) {
-          result = await updateBrand(brandIdInput.value, payload);
+        if (categoryIdInput.value) {
+          result = await updateCategory(categoryIdInput.value, payload);
         } else {
-          result = await createBrand(payload);
+          result = await createCategory(payload);
         }
         if (result.success) {
           alert(result.message);
           closeModal();
-          await loadBrands();
+          await loadCategories();
         } else {
-          alert(result.message || "Lỗi khi lưu thương hiệu");
+          alert(result.message || "Lỗi khi lưu danh mục");
         }
       });
 
@@ -680,7 +681,7 @@
         });
       }
 
-      loadBrands();
+      loadCategories();
     </script>
     <script src="../js/animations.js"></script>
   </body>
