@@ -389,62 +389,6 @@
           </div>
         </div>
 
-      <section class="grid xl:grid-cols-2 gap-lg mt-xl reveal delay-2">
-        <div class="bg-white rounded-[24px] border border-outline-variant soft-shadow overflow-hidden">
-          <div class="px-lg py-md border-b border-outline-variant bg-surface-container-low">
-            <div class="flex justify-between items-center gap-4">
-              <div>
-                <h3 class="font-headline-md text-headline-md text-on-surface">Quản lý danh mục</h3>
-                <p class="text-label-sm text-on-surface-variant">Thêm, sửa, xóa danh mục sản phẩm.</p>
-              </div>
-              <button id="addCategoryBtn" class="bg-primary-container text-on-primary-container px-lg py-3 rounded-full font-label-md hover:scale-105 transition-transform">Thêm danh mục</button>
-            </div>
-          </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
-              <thead class="bg-surface-container-low">
-                <tr>
-                  <th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Tên danh mục</th>
-                  <th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Thao tác</th>
-                </tr>
-              </thead>
-              <tbody id="categoriesTableBody" class="divide-y divide-outline-variant">
-                <tr>
-                  <td colspan="2" class="px-lg py-xl text-center text-on-surface-variant">Đang tải danh mục...</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-[24px] border border-outline-variant soft-shadow overflow-hidden">
-          <div class="px-lg py-md border-b border-outline-variant bg-surface-container-low">
-            <div class="flex justify-between items-center gap-4">
-              <div>
-                <h3 class="font-headline-md text-headline-md text-on-surface">Quản lý thương hiệu</h3>
-                <p class="text-label-sm text-on-surface-variant">Thêm, sửa, xóa thương hiệu sản phẩm.</p>
-              </div>
-              <button id="addBrandBtn" class="bg-primary-container text-on-primary-container px-lg py-3 rounded-full font-label-md hover:scale-105 transition-transform">Thêm thương hiệu</button>
-            </div>
-          </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
-              <thead class="bg-surface-container-low">
-                <tr>
-                  <th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Tên thương hiệu</th>
-                  <th class="px-lg py-md font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right">Thao tác</th>
-                </tr>
-              </thead>
-              <tbody id="brandsTableBody" class="divide-y divide-outline-variant">
-                <tr>
-                  <td colspan="2" class="px-lg py-xl text-center text-on-surface-variant">Đang tải thương hiệu...</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
       <footer class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-5 gap-lg max-w-container-max mx-auto bg-surface-container-highest dark:bg-surface-container mt-xl rounded-[24px]">
         <div class="col-span-1 md:col-span-1">
           <span class="font-headline-sm text-headline-sm text-on-surface">Xám Pet Shop</span>
@@ -729,10 +673,6 @@
         'input[placeholder*="Tìm kiếm"]',
       );
       const categorySelect = document.getElementById("tableCategoryFilter");
-      const categoriesTableBody = document.getElementById("categoriesTableBody");
-      const brandsTableBody = document.getElementById("brandsTableBody");
-      const addCategoryBtn = document.getElementById("addCategoryBtn");
-      const addBrandBtn = document.getElementById("addBrandBtn");
       const categoryModal = document.getElementById("categoryModal");
       const brandModal = document.getElementById("brandModal");
       const closeCategoryModalBtn = document.getElementById("closeCategoryModalBtn");
@@ -1024,37 +964,10 @@
           getAdminBrands(),
         ]);
 
-        const categories = categoriesResult.success ? categoriesResult.categories : [];
         const brands = brandsResult.success ? brandsResult.brands : [];
 
-        populateCategorySelect(brands); // Use brands for the productCategory field
-        populateCategoryFilter(brands); // Use brands for the filter too
-        // populateBrandSelect removed
-
-        if (categories.length > 0) {
-          categoriesTableBody.innerHTML = categories
-            .map(renderCategoryRow)
-            .join("");
-        } else {
-          categoriesTableBody.innerHTML = `
-            <tr>
-              <td colspan="2" class="px-lg py-xl text-center text-on-surface-variant">Chưa có danh mục nào</td>
-            </tr>
-          `;
-        }
-
-        if (brands.length > 0) {
-          brandsTableBody.innerHTML = brands.map(renderBrandRow).join("");
-        } else {
-          brandsTableBody.innerHTML = `
-            <tr>
-              <td colspan="2" class="px-lg py-xl text-center text-on-surface-variant">Chưa có thương hiệu nào</td>
-            </tr>
-          `;
-        }
-
-        attachCategoryRowListeners();
-        attachBrandRowListeners();
+        populateCategorySelect(brands);
+        populateCategoryFilter(brands);
       };
 
       const attachCategoryRowListeners = () => {
@@ -1165,12 +1078,10 @@
         }
       });
 
-      addCategoryBtn.addEventListener("click", openCategoryModal);
-      addBrandBtn.addEventListener("click", openBrandModal);
-      closeCategoryModalBtn.addEventListener("click", closeCategoryModal);
-      cancelCategoryBtn.addEventListener("click", closeCategoryModal);
-      closeBrandModalBtn.addEventListener("click", closeBrandModal);
-      cancelBrandBtn.addEventListener("click", closeBrandModal);
+      document.getElementById("closeCategoryModalBtn")?.addEventListener("click", closeCategoryModal);
+      document.getElementById("cancelCategoryBtn")?.addEventListener("click", closeCategoryModal);
+      document.getElementById("closeBrandModalBtn")?.addEventListener("click", closeBrandModal);
+      document.getElementById("cancelBrandBtn")?.addEventListener("click", closeBrandModal);
 
       document.addEventListener("click", (event) => {
         if (event.target === categoryModal) closeCategoryModal();

@@ -1,17 +1,11 @@
 <!doctype html>
-
 <html class="light" lang="vi">
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&amp;family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
       rel="stylesheet"
     />
     <link
@@ -145,18 +139,37 @@
           "GRAD" 0,
           "opsz" 24;
       }
-      .chart-bar {
-        transition: height 0.3s ease;
-      }
       .soft-shadow {
         box-shadow: 0 4px 20px -2px rgba(132, 84, 0, 0.08);
+      }
+      .preset-btn {
+        transition: all 0.15s ease;
+      }
+      .preset-btn.active {
+        background-color: #845400;
+        color: #ffffff;
+      }
+      .progress-bar-track {
+        background: #f3e6da;
+        border-radius: 999px;
+        height: 6px;
+        overflow: hidden;
+      }
+      .progress-bar-fill {
+        height: 100%;
+        background: #845400;
+        border-radius: 999px;
+        transition: width 0.5s ease;
+      }
+      input[type="date"] {
+        color-scheme: light;
       }
     </style>
   </head>
   <body class="bg-background text-on-surface font-body-md min-h-screen">
     <!-- SideNavBar -->
     <aside
-      class="flex flex-col h-screen fixed left-0 top-0 border-r border-outline-variant bg-surface-container-low dark:bg-surface-container-lowest w-64 shadow-md z-50"
+      class="flex flex-col h-screen fixed left-0 top-0 border-r border-outline-variant bg-surface-container-low w-64 shadow-md z-50"
     >
       <div class="px-lg py-xl">
         <h1 class="font-headline-sm text-headline-sm text-primary">
@@ -235,49 +248,105 @@
         </button>
       </div>
     </aside>
+
     <!-- Main Content -->
     <main class="ml-64 p-xl">
-      <header class="flex justify-between items-end mb-xl">
-        <div>
-          <h2
-            class="font-headline-lg text-headline-lg text-on-surface section-heading reveal"
-          >
-            Báo cáo &amp; Thống kê
-          </h2>
-          <p class="text-on-surface-variant">
-            Phân tích chi tiết hoạt động kinh doanh của Xám Pet Shop
-          </p>
-        </div>
-        <div class="flex gap-md">
-          <div class="relative">
-            <button
-              id="monthSelector"
-              class="bg-white border-2 border-outline-variant px-lg py-sm rounded-full font-label-md text-on-surface-variant hover:border-primary transition-all flex items-center gap-2"
-            >
-              <span class="material-symbols-outlined">calendar_today</span>
-              <span id="monthSelectorText">Tháng này</span>
-            </button>
-            <div
-              id="monthDropdown"
-              class="absolute top-full mt-2 left-0 bg-white border border-outline-variant rounded-xl shadow-lg hidden z-50 min-w-[200px]"
-            >
-              <div class="p-md max-h-80 overflow-y-auto"></div>
-            </div>
+      <!-- Header -->
+      <header class="mb-xl">
+        <!-- Title row -->
+        <div class="flex justify-between items-start mb-lg">
+          <div>
+            <h2 class="font-headline-lg text-headline-lg text-on-surface">
+              Báo cáo &amp; Thống kê
+            </h2>
+            <p class="text-on-surface-variant mt-xs">
+              Phân tích chi tiết hoạt động kinh doanh của Xám Pet Shop
+            </p>
           </div>
           <button
             id="exportReportBtn"
-            class="bg-primary text-white px-lg py-sm rounded-full font-label-md hover:scale-105 transition-transform flex items-center gap-2 anim-pulse-glow btn-ripple"
+            class="bg-primary text-white px-lg py-sm rounded-full font-label-md hover:scale-105 transition-transform flex items-center gap-2 flex-shrink-0 ml-lg"
           >
-            <span class="material-symbols-outlined">download</span>
+            <span class="material-symbols-outlined text-base">download</span>
             Xuất báo cáo
           </button>
         </div>
-      </header>
-      <!-- Metrics Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-lg mb-xl" data-stagger>
-        <!-- Revenue Card -->
+        <!-- Filter bar -->
         <div
-          class="stat-card bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
+          class="bg-white border border-outline-variant rounded-[16px] px-lg py-md flex flex-wrap items-center gap-sm soft-shadow"
+        >
+          <!-- Preset buttons -->
+          <div class="flex items-center gap-xs">
+            <button
+              id="preset7"
+              class="preset-btn px-md py-xs rounded-full font-label-sm border border-outline-variant text-on-surface-variant hover:border-primary transition-all"
+              onclick="setPreset('7')"
+            >
+              7 ngày
+            </button>
+            <button
+              id="preset30"
+              class="preset-btn px-md py-xs rounded-full font-label-sm border border-outline-variant text-on-surface-variant hover:border-primary transition-all"
+              onclick="setPreset('30')"
+            >
+              30 ngày
+            </button>
+            <button
+              id="presetMonth"
+              class="preset-btn px-md py-xs rounded-full font-label-sm border border-outline-variant text-on-surface-variant hover:border-primary transition-all"
+              onclick="setPreset('month')"
+            >
+              Tháng này
+            </button>
+            <button
+              id="presetYear"
+              class="preset-btn px-md py-xs rounded-full font-label-sm border border-outline-variant text-on-surface-variant hover:border-primary transition-all"
+              onclick="setPreset('year')"
+            >
+              Năm nay
+            </button>
+          </div>
+          <!-- Divider -->
+          <div class="h-6 w-px bg-outline-variant/60 mx-xs flex-shrink-0"></div>
+          <!-- Date inputs + Apply -->
+          <div class="flex items-center gap-sm flex-wrap">
+            <span
+              class="material-symbols-outlined text-on-surface-variant text-lg"
+              >calendar_today</span
+            >
+            <input
+              type="date"
+              id="dateFrom"
+              class="text-label-sm text-on-surface bg-transparent border-none outline-none cursor-pointer"
+            />
+            <span class="text-on-surface-variant font-label-sm">—</span>
+            <input
+              type="date"
+              id="dateTo"
+              class="text-label-sm text-on-surface bg-transparent border-none outline-none cursor-pointer"
+            />
+            <button
+              id="applyDateBtn"
+              class="bg-primary text-on-primary px-md py-xs rounded-full font-label-sm hover:opacity-90 transition-opacity flex-shrink-0"
+            >
+              Áp dụng
+            </button>
+          </div>
+          <!-- Loading indicator -->
+          <div id="filterLoading" class="hidden ml-auto">
+            <span
+              class="material-symbols-outlined animate-spin text-primary text-lg"
+              >sync</span
+            >
+          </div>
+        </div>
+      </header>
+
+      <!-- KPI Cards (4) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-lg mb-xl">
+        <!-- Doanh thu -->
+        <div
+          class="bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
         >
           <div class="flex justify-between items-start mb-md">
             <div
@@ -286,22 +355,22 @@
               <span class="material-symbols-outlined text-3xl">payments</span>
             </div>
             <span
-              id="reportRevenueGrowth"
-              class="text-green-600 font-label-sm bg-green-100 px-sm py-xs rounded-full"
+              id="kpiRevenueGrowth"
+              class="text-label-sm px-sm py-xs rounded-full bg-surface-container-high text-on-surface-variant"
               >--</span
             >
           </div>
           <p class="text-on-surface-variant font-label-md">Doanh thu</p>
           <h3
-            id="reportRevenue"
+            id="kpiRevenue"
             class="text-headline-md font-headline-md text-primary mt-xs"
           >
             Đang tải...
           </h3>
         </div>
-        <!-- Orders Card -->
+        <!-- Tổng đơn hàng -->
         <div
-          class="stat-card bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
+          class="bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
         >
           <div class="flex justify-between items-start mb-md">
             <div
@@ -312,173 +381,199 @@
               >
             </div>
             <span
-              id="reportOrdersGrowth"
-              class="text-green-600 font-label-sm bg-green-100 px-sm py-xs rounded-full"
+              id="kpiOrdersGrowth"
+              class="text-label-sm px-sm py-xs rounded-full bg-surface-container-high text-on-surface-variant"
               >--</span
             >
           </div>
           <p class="text-on-surface-variant font-label-md">Tổng đơn hàng</p>
           <h3
-            id="reportOrders"
+            id="kpiOrders"
             class="text-headline-md font-headline-md text-on-surface mt-xs"
           >
             Đang tải...
           </h3>
         </div>
-        <!-- Top Products Metric -->
+        <!-- Giá trị TB/đơn -->
         <div
-          class="stat-card bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
+          class="bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
         >
           <div class="flex justify-between items-start mb-md">
             <div
               class="w-12 h-12 bg-tertiary-container/20 rounded-xl flex items-center justify-center text-tertiary"
             >
-              <span class="material-symbols-outlined text-3xl">pets</span>
+              <span class="material-symbols-outlined text-3xl"
+                >receipt_long</span
+              >
             </div>
             <span
-              id="reportProductsStatus"
-              class="text-primary font-label-sm bg-primary-container/20 px-sm py-xs rounded-full"
-              >Live</span
+              class="text-label-sm px-sm py-xs rounded-full bg-surface-container-high text-on-surface-variant"
+              >TB/đơn</span
             >
           </div>
-          <p class="text-on-surface-variant font-label-md">
-            Sản phẩm trong kho
-          </p>
+          <p class="text-on-surface-variant font-label-md">Giá trị TB/đơn</p>
           <h3
-            id="reportProducts"
+            id="kpiAvg"
+            class="text-headline-md font-headline-md text-on-surface mt-xs"
+          >
+            Đang tải...
+          </h3>
+        </div>
+        <!-- Sản phẩm đã bán -->
+        <div
+          class="bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
+        >
+          <div class="flex justify-between items-start mb-md">
+            <div
+              class="w-12 h-12 bg-primary-container/30 rounded-xl flex items-center justify-center text-primary"
+            >
+              <span class="material-symbols-outlined text-3xl"
+                >inventory_2</span
+              >
+            </div>
+            <span
+              class="text-label-sm px-sm py-xs rounded-full bg-primary-container/20 text-primary"
+              >SP bán</span
+            >
+          </div>
+          <p class="text-on-surface-variant font-label-md">Sản phẩm đã bán</p>
+          <h3
+            id="kpiItems"
             class="text-headline-md font-headline-md text-on-surface mt-xs"
           >
             Đang tải...
           </h3>
         </div>
       </div>
+
       <!-- Charts Section -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-lg mb-xl">
-        <!-- Revenue Bar Chart Placeholder -->
+        <!-- Daily Revenue Bar Chart -->
         <div
-          class="lg:col-span-2 bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow reveal-left delay-1"
+          class="lg:col-span-2 bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
         >
           <div class="flex justify-between items-center mb-xl">
-            <h4 class="font-headline-md text-on-surface">
-              Biểu đồ doanh thu hàng tuần
-            </h4>
-            <span class="text-on-surface-variant font-label-sm"
+            <h4 class="font-headline-md text-on-surface">Biểu đồ doanh thu</h4>
+            <span id="chartLabel" class="text-on-surface-variant font-label-sm"
               >Đơn vị: Triệu VNĐ</span
             >
           </div>
-          <div
-            class="h-64 flex items-end justify-between gap-md px-md"
-            id="weekRevenueChart"
-          >
-            <div class="flex flex-col items-center gap-sm flex-1">
+          <div class="overflow-x-auto">
+            <div
+              id="dailyRevenueChart"
+              class="h-56 flex items-end gap-1 min-w-full px-md"
+              style="min-height: 224px"
+            >
               <div
-                class="w-full bg-outline-variant/30 rounded-t-lg h-[40%] hover:bg-primary-container transition-colors relative group"
+                class="flex items-center justify-center w-full text-on-surface-variant"
               >
-                <div
-                  class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                <span class="material-symbols-outlined animate-spin mr-2"
+                  >sync</span
                 >
-                  12M
-                </div>
+                Đang tải...
               </div>
-              <span class="text-label-sm text-on-surface-variant">Thứ 2</span>
-            </div>
-            <div class="flex flex-col items-center gap-sm flex-1">
-              <div
-                class="w-full bg-outline-variant/30 rounded-t-lg h-[65%] hover:bg-primary-container transition-colors relative group"
-              >
-                <div
-                  class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  18M
-                </div>
-              </div>
-              <span class="text-label-sm text-on-surface-variant">Thứ 3</span>
-            </div>
-            <div class="flex flex-col items-center gap-sm flex-1">
-              <div
-                class="w-full bg-primary rounded-t-lg h-[85%] hover:opacity-80 transition-opacity relative group"
-              >
-                <div
-                  class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  25M
-                </div>
-              </div>
-              <span class="text-label-sm text-on-surface-variant">Thứ 4</span>
-            </div>
-            <div class="flex flex-col items-center gap-sm flex-1">
-              <div
-                class="w-full bg-outline-variant/30 rounded-t-lg h-[55%] hover:bg-primary-container transition-colors relative group"
-              >
-                <div
-                  class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  15M
-                </div>
-              </div>
-              <span class="text-label-sm text-on-surface-variant">Thứ 5</span>
-            </div>
-            <div class="flex flex-col items-center gap-sm flex-1">
-              <div
-                class="w-full bg-outline-variant/30 rounded-t-lg h-[75%] hover:bg-primary-container transition-colors relative group"
-              >
-                <div
-                  class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  21M
-                </div>
-              </div>
-              <span class="text-label-sm text-on-surface-variant">Thứ 6</span>
-            </div>
-            <div class="flex flex-col items-center gap-sm flex-1">
-              <div
-                class="w-full bg-outline-variant/30 rounded-t-lg h-[95%] hover:bg-primary-container transition-colors relative group"
-              >
-                <div
-                  class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  28M
-                </div>
-              </div>
-              <span class="text-label-sm text-on-surface-variant">Thứ 7</span>
-            </div>
-            <div class="flex flex-col items-center gap-sm flex-1">
-              <div
-                class="w-full bg-outline-variant/30 rounded-t-lg h-[90%] hover:bg-primary-container transition-colors relative group"
-              >
-                <div
-                  class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  26M
-                </div>
-              </div>
-              <span class="text-label-sm text-on-surface-variant">CN</span>
             </div>
           </div>
+          <div
+            id="chartXLabels"
+            class="flex gap-1 px-md mt-sm overflow-x-auto"
+          ></div>
         </div>
-        <!-- Category Pie Chart Placeholder -->
+        <!-- Category Pie Chart -->
         <div
-          class="bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow reveal-right delay-2"
+          class="bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
         >
           <h4 class="font-headline-md text-on-surface mb-xl">
             Cơ cấu danh mục
           </h4>
-          <div class="relative w-48 h-48 mx-auto mb-lg" id="categoryChart">
-            <div class="flex items-center justify-center h-full">
-              <span class="text-on-surface-variant">Đang tải...</span>
+          <div class="relative w-44 h-44 mx-auto mb-lg" id="categoryChart">
+            <div
+              class="flex items-center justify-center h-full text-on-surface-variant text-label-sm"
+            >
+              Đang tải...
             </div>
           </div>
           <div class="space-y-sm" id="categoryLegend"></div>
         </div>
       </div>
-      <!-- Asymmetric Layout: Top Products Table & Recent Activity -->
-      <div class="grid grid-cols-1 xl:grid-cols-5 gap-lg">
-        <!-- Top Selling Table -->
+
+      <!-- Daily Revenue Table -->
+      <div
+        class="bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow mb-xl"
+      >
+        <div class="flex justify-between items-center mb-lg">
+          <h4 class="font-headline-md text-on-surface">Doanh thu theo ngày</h4>
+          <button
+            id="toggleDailyTable"
+            class="text-on-surface-variant hover:text-primary flex items-center gap-1 font-label-sm transition-colors"
+          >
+            <span id="toggleIcon" class="material-symbols-outlined"
+              >expand_more</span
+            >
+            <span id="toggleLabel">Thu gọn</span>
+          </button>
+        </div>
+        <div id="dailyTableWrapper">
+          <div class="overflow-x-auto max-h-72 overflow-y-auto">
+            <table class="w-full text-left">
+              <thead class="sticky top-0 bg-white">
+                <tr
+                  class="border-b border-outline-variant text-on-surface-variant text-label-sm"
+                >
+                  <th class="pb-md font-bold uppercase tracking-wider pr-lg">
+                    Ngày
+                  </th>
+                  <th
+                    class="pb-md font-bold uppercase tracking-wider text-center"
+                  >
+                    Số đơn hàng
+                  </th>
+                  <th
+                    class="pb-md font-bold uppercase tracking-wider text-right"
+                  >
+                    Doanh thu
+                  </th>
+                  <th
+                    class="pb-md font-bold uppercase tracking-wider text-right"
+                  >
+                    % Ngày cao nhất
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                id="dailyTableBody"
+                class="divide-y divide-outline-variant/50"
+              >
+                <tr>
+                  <td
+                    colspan="4"
+                    class="py-xl text-center text-on-surface-variant"
+                  >
+                    Đang tải...
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr
+                  id="dailyTableFooter"
+                  class="border-t-2 border-outline-variant font-bold text-on-surface bg-surface-container-low/50"
+                ></tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Products + Recent Activity -->
+      <div class="grid grid-cols-1 xl:grid-cols-5 gap-lg mb-xl">
+        <!-- Top 10 Products -->
         <div
-          class="xl:col-span-3 bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow reveal-left delay-3"
+          class="xl:col-span-3 bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow"
         >
           <div class="flex justify-between items-center mb-lg">
-            <h4 class="font-headline-md text-on-surface">Sản phẩm bán chạy</h4>
+            <h4 class="font-headline-md text-on-surface">
+              Top 10 sản phẩm bán chạy
+            </h4>
             <a
               class="text-primary font-label-md hover:underline"
               href="/admin/manageProduct"
@@ -491,6 +586,9 @@
                 <tr
                   class="border-b border-outline-variant text-on-surface-variant text-label-sm"
                 >
+                  <th class="pb-md font-bold uppercase tracking-wider w-8">
+                    #
+                  </th>
                   <th class="pb-md font-bold uppercase tracking-wider">
                     Sản phẩm
                   </th>
@@ -504,26 +602,45 @@
                   >
                     Doanh thu
                   </th>
+                  <th
+                    class="pb-md font-bold uppercase tracking-wider text-right w-28"
+                  >
+                    % Tổng
+                  </th>
                 </tr>
               </thead>
               <tbody
                 id="topProductsTableBody"
-                class="divide-y divide-outline-variant"
+                class="divide-y divide-outline-variant/50"
               >
-                <!-- Data will be loaded here -->
+                <tr>
+                  <td
+                    colspan="5"
+                    class="py-xl text-center text-on-surface-variant"
+                  >
+                    Đang tải...
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <!-- Recent Activity List -->
+        <!-- Recent Activity -->
         <div
-          class="xl:col-span-2 bg-surface-container-low p-lg rounded-[24px] border border-outline-variant reveal-right delay-3"
+          class="xl:col-span-2 bg-surface-container-low p-lg rounded-[24px] border border-outline-variant"
         >
           <h4 class="font-headline-md text-on-surface mb-lg">
             Hoạt động gần đây
           </h4>
           <div id="recentActivitiesList" class="space-y-md">
-            <!-- Data will be loaded here -->
+            <div
+              class="flex items-center justify-center py-lg text-on-surface-variant"
+            >
+              <span class="material-symbols-outlined animate-spin mr-2"
+                >sync</span
+              >
+              Đang tải...
+            </div>
           </div>
           <button
             onclick="window.location.href = '/admin/manageOrder'"
@@ -533,9 +650,46 @@
           </button>
         </div>
       </div>
+
+      <!-- Low Stock Alerts -->
+      <div
+        class="bg-white p-lg rounded-[24px] border border-outline-variant soft-shadow mb-xl"
+      >
+        <div class="flex justify-between items-center mb-lg">
+          <div class="flex items-center gap-md">
+            <span class="material-symbols-outlined text-error">warning</span>
+            <h4 class="font-headline-md text-on-surface">
+              Cảnh báo tồn kho thấp
+            </h4>
+            <span
+              id="lowStockBadge"
+              class="hidden bg-error text-on-error text-label-sm px-sm py-xs rounded-full min-w-[24px] text-center"
+              >0</span
+            >
+          </div>
+          <a
+            href="/admin/manageProduct"
+            class="text-primary font-label-md hover:underline flex items-center gap-1"
+          >
+            <span class="material-symbols-outlined text-base">open_in_new</span>
+            Quản lý kho
+          </a>
+        </div>
+        <div id="lowStockContent">
+          <div
+            class="flex items-center justify-center py-lg text-on-surface-variant"
+          >
+            <span class="material-symbols-outlined animate-spin mr-2"
+              >sync</span
+            >
+            Đang tải...
+          </div>
+        </div>
+      </div>
+
       <!-- Footer -->
       <footer
-        class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-5 gap-lg bg-surface-container-highest dark:bg-surface-container mt-xl rounded-[24px]"
+        class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-5 gap-lg bg-surface-container-highest mt-xl rounded-[24px]"
       >
         <div class="col-span-1 md:col-span-1">
           <span class="font-headline-sm text-headline-sm text-on-surface"
@@ -602,30 +756,35 @@
             © 2026 Xám Pet Shop. All rights reserved.
           </p>
         </div>
-      <div class="flex flex-col gap-sm">
-        <span class="font-label-md text-label-md text-primary">Bản đồ</span>
-        <div class="w-full h-32 rounded-lg overflow-hidden border border-outline-variant/30">
-          <iframe src="https://maps.google.com/maps?q=273%20%C4%91%C6%B0%E1%BB%9Dng%20C%E1%BB%95%20Nhu%E1%BA%BF%2C%20B%E1%BA%AFc%20T%E1%BB%AB%20Li%C3%AAm%2C%20H%C3%A0%20N%E1%BB%99i&t=&z=14&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="flex flex-col gap-sm">
+          <span class="font-label-md text-label-md text-primary">Bản đồ</span>
+          <div
+            class="w-full h-32 rounded-lg overflow-hidden border border-outline-variant/30"
+          >
+            <iframe
+              src="https://maps.google.com/maps?q=273%20%C4%91%C6%B0%E1%BB%9Dng%20C%E1%BB%95%20Nhu%E1%BA%BF%2C%20B%E1%BA%AFc%20T%E1%BB%AB%20Li%C3%AAm%2C%20H%C3%A0%20N%E1%BB%99i&t=&z=14&ie=UTF8&iwloc=&output=embed"
+              width="100%"
+              height="100%"
+              style="border: 0"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
         </div>
-      </div>
-    </footer>
+      </footer>
     </main>
+
     <script type="module">
-      // === THÊM VÀO SCRIPT HIỆN CÓ CỦA MỖI TRANG ADMIN ===
       import { logoutUser, getUserInfo, isAuthenticated } from "../js/auth.js";
-      import { getDashboardStats } from "../js/admin.js";
+      import { getDashboardStats, getReportStats } from "../js/admin.js";
 
-      // Kiểm tra auth
-      if (!isAuthenticated()) {
-        window.location.href = "/auth/login";
-      }
-
+      // Auth guard
+      if (!isAuthenticated()) window.location.href = "/auth/login";
       const userInfo = getUserInfo();
-      if (userInfo && userInfo.role !== "admin") {
-        window.location.href = "/";
-      }
+      if (userInfo && userInfo.role !== "admin") window.location.href = "/";
 
-      // Hiện tên admin trên sidebar
+      // Admin display
       if (userInfo) {
         const nameEl = document.getElementById("adminDisplayName");
         const avatarEl = document.getElementById("adminAvatarSidebar");
@@ -636,354 +795,640 @@
             .toUpperCase();
       }
 
-      // Xử lý đăng xuất
-      const logoutBtn = document.getElementById("logoutBtn");
-      if (logoutBtn) {
-        logoutBtn.addEventListener("click", async (e) => {
+      // Logout
+      document
+        .getElementById("logoutBtn")
+        ?.addEventListener("click", async (e) => {
           e.preventDefault();
           if (confirm("Bạn có chắc chắn muốn đăng xuất?")) {
             await logoutUser();
             window.location.href = "/auth/login";
           }
         });
+
+      // ── Date range state ──
+      let dateRange = { from: "", to: "" };
+      let activePreset = "month";
+
+      function toDateStr(d) {
+        return d.toISOString().slice(0, 10);
       }
 
-      // Utils
+      function initDateRange() {
+        const now = new Date();
+        const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+        dateRange.from = toDateStr(firstDay);
+        dateRange.to = toDateStr(now);
+        document.getElementById("dateFrom").value = dateRange.from;
+        document.getElementById("dateTo").value = dateRange.to;
+        highlightPreset("presetMonth");
+      }
+
+      function highlightPreset(id) {
+        ["preset7", "preset30", "presetMonth", "presetYear"].forEach(
+          (btnId) => {
+            const btn = document.getElementById(btnId);
+            if (!btn) return;
+            if (btnId === id) {
+              btn.classList.add("active");
+            } else {
+              btn.classList.remove("active");
+            }
+          }
+        );
+      }
+
+      window.setPreset = function (preset) {
+        const now = new Date();
+        let from;
+        let presetId = "";
+
+        if (preset === "7") {
+          from = new Date(now);
+          from.setDate(from.getDate() - 6);
+          presetId = "preset7";
+        } else if (preset === "30") {
+          from = new Date(now);
+          from.setDate(from.getDate() - 29);
+          presetId = "preset30";
+        } else if (preset === "month") {
+          from = new Date(now.getFullYear(), now.getMonth(), 1);
+          presetId = "presetMonth";
+        } else if (preset === "year") {
+          from = new Date(now.getFullYear(), 0, 1);
+          presetId = "presetYear";
+        }
+
+        dateRange.from = toDateStr(from);
+        dateRange.to = toDateStr(now);
+        document.getElementById("dateFrom").value = dateRange.from;
+        document.getElementById("dateTo").value = dateRange.to;
+        activePreset = preset;
+        highlightPreset(presetId);
+        loadReportStats();
+      };
+
+      document.getElementById("applyDateBtn")?.addEventListener("click", () => {
+        const from = document.getElementById("dateFrom").value;
+        const to = document.getElementById("dateTo").value;
+        if (!from || !to) return;
+        if (from > to) {
+          alert("Ngày bắt đầu phải nhỏ hơn ngày kết thúc.");
+          return;
+        }
+        dateRange.from = from;
+        dateRange.to = to;
+        activePreset = "";
+        highlightPreset("");
+        loadReportStats();
+      });
+
+      // ── Toggle daily table ──
+      let dailyTableVisible = true;
+      document
+        .getElementById("toggleDailyTable")
+        ?.addEventListener("click", () => {
+          dailyTableVisible = !dailyTableVisible;
+          const wrapper = document.getElementById("dailyTableWrapper");
+          const icon = document.getElementById("toggleIcon");
+          const label = document.getElementById("toggleLabel");
+          if (wrapper) wrapper.style.display = dailyTableVisible ? "" : "none";
+          if (icon)
+            icon.textContent = dailyTableVisible
+              ? "expand_less"
+              : "expand_more";
+          if (label)
+            label.textContent = dailyTableVisible ? "Thu gọn" : "Mở rộng";
+        });
+
+      // ── Formatters ──
+      function fmtCurrency(v) {
+        return Number(v || 0).toLocaleString("vi-VN") + "₫";
+      }
+      function fmtDate(dateStr) {
+        const d = new Date(dateStr + "T00:00:00");
+        return d.toLocaleDateString("vi-VN", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        });
+      }
       function timeSince(date) {
-        const seconds = Math.floor((new Date() - new Date(date)) / 1000);
-        let interval = seconds / 31536000;
-        if (interval > 1) return Math.floor(interval) + " năm trước";
-        interval = seconds / 2592000;
-        if (interval > 1) return Math.floor(interval) + " tháng trước";
-        interval = seconds / 86400;
-        if (interval > 1) return Math.floor(interval) + " ngày trước";
-        interval = seconds / 3600;
-        if (interval > 1) return Math.floor(interval) + " giờ trước";
-        interval = seconds / 60;
-        if (interval > 1) return Math.floor(interval) + " phút trước";
-        return Math.floor(seconds) + " giây trước";
+        const sec = Math.floor((new Date() - new Date(date)) / 1000);
+        if (sec / 31536000 > 1)
+          return Math.floor(sec / 31536000) + " năm trước";
+        if (sec / 2592000 > 1)
+          return Math.floor(sec / 2592000) + " tháng trước";
+        if (sec / 86400 > 1) return Math.floor(sec / 86400) + " ngày trước";
+        if (sec / 3600 > 1) return Math.floor(sec / 3600) + " giờ trước";
+        if (sec / 60 > 1) return Math.floor(sec / 60) + " phút trước";
+        return Math.floor(sec) + " giây trước";
       }
 
-      // Load dữ liệu báo cáo
+      // ── Growth badge ──
+      function growthBadge(current, prev) {
+        if (!prev || prev === 0)
+          return {
+            text: "Mới",
+            cls: "bg-surface-container-high text-on-surface-variant",
+          };
+        const pct = ((current - prev) / prev) * 100;
+        const sign = pct >= 0 ? "+" : "";
+        const cls =
+          pct >= 0 ? "bg-green-100 text-green-700" : "bg-red-100 text-red-600";
+        return { text: `${sign}${pct.toFixed(1)}%`, cls };
+      }
+
+      // ── Chart aggregation ──
+      function buildChartData(dailyRevenue, from, to) {
+        const dateFrom = new Date(from + "T00:00:00");
+        const dateTo = new Date(to + "T00:00:00");
+        const days = Math.round((dateTo - dateFrom) / 86400000) + 1;
+
+        const revenueMap = {};
+        dailyRevenue.forEach((d) => {
+          revenueMap[d._id] = { revenue: d.revenue, count: d.count };
+        });
+
+        if (days <= 31) {
+          // Daily
+          const bars = [];
+          for (let i = 0; i < days; i++) {
+            const d = new Date(dateFrom);
+            d.setDate(d.getDate() + i);
+            const key = toDateStr(d);
+            bars.push({
+              label: d.getDate() + "/" + (d.getMonth() + 1),
+              revenue: revenueMap[key]?.revenue || 0,
+              count: revenueMap[key]?.count || 0,
+            });
+          }
+          return bars;
+        } else if (days <= 90) {
+          // Weekly
+          const weeks = {};
+          dailyRevenue.forEach((d) => {
+            const date = new Date(d._id + "T00:00:00");
+            const weekStart = new Date(date);
+            weekStart.setDate(date.getDate() - date.getDay() + 1);
+            const wKey = toDateStr(weekStart);
+            if (!weeks[wKey]) weeks[wKey] = { revenue: 0, count: 0 };
+            weeks[wKey].revenue += d.revenue;
+            weeks[wKey].count += d.count;
+          });
+          return Object.keys(weeks)
+            .sort()
+            .map((k) => {
+              const d = new Date(k + "T00:00:00");
+              return {
+                label: d.getDate() + "/" + (d.getMonth() + 1),
+                revenue: weeks[k].revenue,
+                count: weeks[k].count,
+              };
+            });
+        } else {
+          // Monthly
+          const months = {};
+          dailyRevenue.forEach((d) => {
+            const mKey = d._id.slice(0, 7);
+            if (!months[mKey]) months[mKey] = { revenue: 0, count: 0 };
+            months[mKey].revenue += d.revenue;
+            months[mKey].count += d.count;
+          });
+          return Object.keys(months)
+            .sort()
+            .map((k) => {
+              const [y, m] = k.split("-");
+              return {
+                label: `T${parseInt(m)}/${y.slice(2)}`,
+                revenue: months[k].revenue,
+                count: months[k].count,
+              };
+            });
+        }
+      }
+
+      // ── Renderers ──
+      function renderKPIs(data) {
+        document.getElementById("kpiRevenue").textContent = fmtCurrency(
+          data.totalRevenue
+        );
+        document.getElementById("kpiOrders").textContent =
+          (data.orderCount || 0).toLocaleString("vi-VN") + " đơn";
+        document.getElementById("kpiAvg").textContent = fmtCurrency(
+          data.avgOrderValue
+        );
+        document.getElementById("kpiItems").textContent =
+          (data.totalItemsSold || 0).toLocaleString("vi-VN") + " SP";
+
+        const revBadge = growthBadge(data.totalRevenue, data.prevRevenue);
+        const ordBadge = growthBadge(data.orderCount, data.prevOrderCount);
+
+        const revEl = document.getElementById("kpiRevenueGrowth");
+        if (revEl) {
+          revEl.textContent = revBadge.text;
+          revEl.className = `text-label-sm px-sm py-xs rounded-full ${revBadge.cls}`;
+        }
+
+        const ordEl = document.getElementById("kpiOrdersGrowth");
+        if (ordEl) {
+          ordEl.textContent = ordBadge.text;
+          ordEl.className = `text-label-sm px-sm py-xs rounded-full ${ordBadge.cls}`;
+        }
+      }
+
+      function renderDailyChart(dailyRevenue) {
+        const chartEl = document.getElementById("dailyRevenueChart");
+        const labelsEl = document.getElementById("chartXLabels");
+        if (!chartEl) return;
+
+        const bars = buildChartData(dailyRevenue, dateRange.from, dateRange.to);
+        if (!bars.length) {
+          chartEl.innerHTML = `<div class="flex items-center justify-center w-full text-on-surface-variant text-label-sm">Không có dữ liệu trong khoảng thời gian này</div>`;
+          if (labelsEl) labelsEl.innerHTML = "";
+          return;
+        }
+
+        const maxRev = Math.max(...bars.map((b) => b.revenue)) || 1;
+        const CHART_H = 200;
+
+        chartEl.innerHTML = bars
+          .map((b) => {
+            const h =
+              b.revenue > 0 ? Math.max(6, (b.revenue / maxRev) * CHART_H) : 4;
+            const millions = (b.revenue / 1_000_000).toFixed(2);
+            const cls =
+              b.revenue > 0
+                ? "bg-primary hover:opacity-80"
+                : "bg-outline-variant/30";
+            return `
+              <div class="flex flex-col items-center gap-1 flex-1 min-w-[20px] group relative">
+                <div class="absolute -top-9 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                  ${b.label}: ${millions}M₫ (${b.count} đơn)
+                </div>
+                <div class="${cls} w-full rounded-t-lg transition-colors" style="height:${h}px"></div>
+              </div>`;
+          })
+          .join("");
+
+        if (labelsEl) {
+          const showEvery = bars.length > 20 ? Math.ceil(bars.length / 10) : 1;
+          labelsEl.innerHTML = bars
+            .map(
+              (b, i) =>
+                `<span class="text-[10px] text-on-surface-variant flex-1 min-w-[20px] text-center truncate">${i % showEvery === 0 ? b.label : ""}</span>`
+            )
+            .join("");
+        }
+      }
+
+      function renderCategoryPie(revenueByCategory) {
+        if (!revenueByCategory || !revenueByCategory.length) return;
+        const total = revenueByCategory.reduce((s, c) => s + c.revenue, 0);
+        if (!total) return;
+
+        const colors = [
+          "#f8b432",
+          "#e07f3c",
+          "#6d6f24",
+          "#2f6f6f",
+          "#a36f27",
+          "#845400",
+          "#625f4e",
+        ];
+        const chartEl = document.getElementById("categoryChart");
+        const legendEl = document.getElementById("categoryLegend");
+
+        const segments = revenueByCategory.map((c, i) => {
+          const pct = (c.revenue / total) * 100;
+          return `${colors[i % colors.length]} ${pct.toFixed(1)}%`;
+        });
+
+        if (chartEl) {
+          chartEl.style.background = `conic-gradient(${segments.join(", ")})`;
+          chartEl.style.borderRadius = "9999px";
+          chartEl.style.overflow = "hidden";
+          chartEl.innerHTML = `
+            <div class="absolute inset-10 rounded-full bg-white flex flex-col items-center justify-center">
+              <span class="text-headline-md font-bold text-primary">${Math.round((revenueByCategory[0].revenue / total) * 100)}%</span>
+              <span class="text-[9px] text-on-surface-variant uppercase tracking-wider text-center px-1">${revenueByCategory[0]._id || "Khác"}</span>
+            </div>`;
+        }
+
+        if (legendEl) {
+          legendEl.innerHTML = revenueByCategory
+            .map((c, i) => {
+              const pct = Math.round((c.revenue / total) * 100);
+              return `<div class="flex justify-between items-center text-label-sm">
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full flex-shrink-0" style="background:${colors[i % colors.length]}"></div>
+                <span class="truncate max-w-[120px]">${c._id || "Khác"}</span>
+              </div>
+              <span class="font-bold ml-2">${pct}%</span>
+            </div>`;
+            })
+            .join("");
+        }
+      }
+
+      function renderDailyTable(dailyRevenue) {
+        const tbody = document.getElementById("dailyTableBody");
+        const tfoot = document.getElementById("dailyTableFooter");
+        if (!tbody) return;
+
+        if (!dailyRevenue || !dailyRevenue.length) {
+          tbody.innerHTML = `<tr><td colspan="4" class="py-xl text-center text-on-surface-variant">Không có dữ liệu trong khoảng thời gian này</td></tr>`;
+          if (tfoot) tfoot.innerHTML = "";
+          return;
+        }
+
+        const sorted = [...dailyRevenue].sort((a, b) =>
+          b._id.localeCompare(a._id)
+        );
+        const maxRev = Math.max(...sorted.map((d) => d.revenue)) || 1;
+        const totalRev = sorted.reduce((s, d) => s + d.revenue, 0);
+        const totalOrders = sorted.reduce((s, d) => s + d.count, 0);
+
+        tbody.innerHTML = sorted
+          .map((d, idx) => {
+            const pct = maxRev > 0 ? Math.round((d.revenue / maxRev) * 100) : 0;
+            const rowBg = idx % 2 === 0 ? "" : "bg-surface-container-low/30";
+            return `<tr class="${rowBg} hover:bg-surface-container-low transition-colors">
+            <td class="py-sm pr-lg font-label-md text-on-surface">${fmtDate(d._id)}</td>
+            <td class="py-sm text-center font-body-md">${d.count.toLocaleString("vi-VN")} đơn</td>
+            <td class="py-sm text-right font-bold text-primary">${fmtCurrency(d.revenue)}</td>
+            <td class="py-sm text-right">
+              <div class="flex items-center justify-end gap-sm">
+                <div class="progress-bar-track w-20">
+                  <div class="progress-bar-fill" style="width:${pct}%"></div>
+                </div>
+                <span class="text-label-sm text-on-surface-variant w-8 text-right">${pct}%</span>
+              </div>
+            </td>
+          </tr>`;
+          })
+          .join("");
+
+        if (tfoot) {
+          tfoot.innerHTML = `
+            <td class="py-sm pr-lg">Tổng cộng</td>
+            <td class="py-sm text-center">${totalOrders.toLocaleString("vi-VN")} đơn</td>
+            <td class="py-sm text-right">${fmtCurrency(totalRev)}</td>
+            <td></td>`;
+        }
+      }
+
+      function renderTopProducts(topProducts) {
+        const tbody = document.getElementById("topProductsTableBody");
+        if (!tbody) return;
+
+        if (!topProducts || !topProducts.length) {
+          tbody.innerHTML = `<tr><td colspan="5" class="py-xl text-center text-on-surface-variant">Chưa có dữ liệu đơn hàng</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = topProducts
+          .map((p, idx) => {
+            const rank = idx + 1;
+            const rankCls =
+              rank === 1
+                ? "text-yellow-600 font-bold"
+                : rank === 2
+                  ? "text-gray-500 font-bold"
+                  : rank === 3
+                    ? "text-orange-600 font-bold"
+                    : "text-on-surface-variant";
+            const imgTag = p.image
+              ? `<img class="w-10 h-10 rounded-lg object-cover bg-surface-container flex-shrink-0" src="${p.image}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div style="display:none" class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-primary flex-shrink-0">🐾</div>`
+              : `<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center text-primary flex-shrink-0">🐾</div>`;
+
+            return `<tr class="hover:bg-surface-container-low/50 transition-colors">
+            <td class="py-sm font-bold ${rankCls} text-center">${rank}</td>
+            <td class="py-sm">
+              <div class="flex items-center gap-sm">
+                ${imgTag}
+                <div class="min-w-0">
+                  <div class="font-label-md text-on-surface truncate max-w-[180px]">${p.name}</div>
+                  <div class="text-[11px] text-on-surface-variant">${p.category}</div>
+                </div>
+              </div>
+            </td>
+            <td class="py-sm text-center font-body-md">${(p.totalQty || 0).toLocaleString("vi-VN")}</td>
+            <td class="py-sm text-right font-bold text-primary text-label-md">${fmtCurrency(p.totalRevenue)}</td>
+            <td class="py-sm">
+              <div class="flex flex-col items-end gap-1">
+                <span class="text-label-sm text-on-surface-variant">${p.pct}%</span>
+                <div class="progress-bar-track w-20">
+                  <div class="progress-bar-fill" style="width:${p.pct}%"></div>
+                </div>
+              </div>
+            </td>
+          </tr>`;
+          })
+          .join("");
+      }
+
+      function renderLowStock(lowStock) {
+        const container = document.getElementById("lowStockContent");
+        const badge = document.getElementById("lowStockBadge");
+        if (!container) return;
+
+        if (badge) {
+          if (lowStock && lowStock.length > 0) {
+            badge.textContent = lowStock.length;
+            badge.classList.remove("hidden");
+          } else {
+            badge.classList.add("hidden");
+          }
+        }
+
+        if (!lowStock || !lowStock.length) {
+          container.innerHTML = `
+            <div class="flex flex-col items-center justify-center py-xl gap-md text-on-surface-variant">
+              <span class="material-symbols-outlined text-5xl text-green-500">check_circle</span>
+              <p class="font-label-md">Tất cả sản phẩm đang có đủ hàng trong kho!</p>
+            </div>`;
+          return;
+        }
+
+        const rows = lowStock
+          .map((p, idx) => {
+            let statusBadge = "";
+            if (p.quantity <= 0) {
+              statusBadge = `<span class="bg-error/10 text-error text-label-sm px-sm py-xs rounded-full">Hết hàng</span>`;
+            } else if (p.quantity <= 4) {
+              statusBadge = `<span class="bg-orange-100 text-orange-700 text-label-sm px-sm py-xs rounded-full">Cần nhập gấp</span>`;
+            } else {
+              statusBadge = `<span class="bg-yellow-100 text-yellow-700 text-label-sm px-sm py-xs rounded-full">Cần nhập</span>`;
+            }
+
+            const stockCls =
+              p.quantity <= 0
+                ? "text-error font-bold"
+                : p.quantity <= 4
+                  ? "text-orange-600 font-bold"
+                  : "text-yellow-600 font-bold";
+            const rowBg = idx % 2 === 0 ? "" : "bg-surface-container-low/30";
+
+            return `<tr class="${rowBg} hover:bg-surface-container-low transition-colors">
+            <td class="py-sm pr-lg font-label-md text-on-surface">${p.name}</td>
+            <td class="py-sm text-on-surface-variant">${p.category || "—"}</td>
+            <td class="py-sm text-center ${stockCls}">${p.quantity.toLocaleString("vi-VN")} SP</td>
+            <td class="py-sm">${statusBadge}</td>
+          </tr>`;
+          })
+          .join("");
+
+        container.innerHTML = `
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead>
+                <tr class="border-b border-outline-variant text-on-surface-variant text-label-sm">
+                  <th class="pb-md font-bold uppercase tracking-wider pr-lg">Sản phẩm</th>
+                  <th class="pb-md font-bold uppercase tracking-wider">Danh mục</th>
+                  <th class="pb-md font-bold uppercase tracking-wider text-center">Tồn kho</th>
+                  <th class="pb-md font-bold uppercase tracking-wider">Trạng thái</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-outline-variant/50">${rows}</tbody>
+            </table>
+          </div>`;
+      }
+
+      function renderRecentActivities(recentOrders) {
+        const listEl = document.getElementById("recentActivitiesList");
+        if (!listEl || !recentOrders || !recentOrders.length) {
+          if (listEl)
+            listEl.innerHTML = `<p class="text-on-surface-variant text-label-sm text-center py-lg">Chưa có hoạt động gần đây</p>`;
+          return;
+        }
+        listEl.innerHTML = recentOrders
+          .map(
+            (o) => `
+          <div class="flex gap-md">
+            <div class="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
+            <div>
+              <p class="text-body-md text-on-surface">
+                Đơn hàng <strong>#${o.orderNumber || o._id?.toString().slice(-6)}</strong> — ${o.status}
+              </p>
+              <span class="text-[12px] text-on-surface-variant">${timeSince(o.updatedAt || o.createdAt)}</span>
+            </div>
+          </div>`
+          )
+          .join("");
+      }
+
+      // ── Error state renderer ──
+      function showErrorState(msg) {
+        const errHtml = `<tr><td colspan="5" class="py-xl text-center text-error font-label-md">${msg}</td></tr>`;
+        const errHtml3 = `<tr><td colspan="4" class="py-xl text-center text-error font-label-md">${msg}</td></tr>`;
+        const errDiv = `<div class="flex flex-col items-center justify-center py-xl gap-md text-error"><span class="material-symbols-outlined text-4xl">error</span><p class="font-label-md">${msg}</p></div>`;
+
+        ["kpiRevenue", "kpiOrders", "kpiAvg", "kpiItems"].forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.textContent = "--";
+            el.className = el.className.replace(
+              "text-primary",
+              "text-on-surface-variant"
+            );
+          }
+        });
+        const chartEl = document.getElementById("dailyRevenueChart");
+        if (chartEl)
+          chartEl.innerHTML = `<div class="flex items-center justify-center w-full text-error text-label-sm gap-2"><span class="material-symbols-outlined">error</span>${msg}</div>`;
+        const tbody = document.getElementById("topProductsTableBody");
+        if (tbody) tbody.innerHTML = errHtml;
+        const dtbody = document.getElementById("dailyTableBody");
+        if (dtbody) dtbody.innerHTML = errHtml3;
+        const lowStockEl = document.getElementById("lowStockContent");
+        if (lowStockEl) lowStockEl.innerHTML = errDiv;
+      }
+
+      // ── Main loaders ──
       async function loadReportStats() {
+        // Show loading state
+        const loadingEl = document.getElementById("filterLoading");
+        if (loadingEl) loadingEl.classList.remove("hidden");
+        ["kpiRevenue", "kpiOrders", "kpiAvg", "kpiItems"].forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = "Đang tải...";
+        });
+
+        try {
+          const result = await getReportStats(dateRange);
+          if (!result.success) {
+            showErrorState(
+              result.message || "Không tải được dữ liệu. Vui lòng thử lại."
+            );
+            return;
+          }
+          const d = result.data;
+          renderKPIs(d);
+          renderDailyChart(d.dailyRevenue);
+          renderCategoryPie(d.revenueByCategory);
+          renderDailyTable(d.dailyRevenue);
+          renderTopProducts(d.topProducts);
+          renderLowStock(d.lowStock);
+          if (window.XamAnimations) window.XamAnimations.init();
+        } catch (err) {
+          console.error("loadReportStats error:", err);
+          showErrorState("Lỗi kết nối. Vui lòng kiểm tra server.");
+        } finally {
+          if (loadingEl) loadingEl.classList.add("hidden");
+        }
+      }
+
+      async function loadRecentActivities() {
         const result = await getDashboardStats();
         if (result.success) {
-          const d = result.dashboard;
-          const revEl = document.getElementById("reportRevenue");
-          const ordEl = document.getElementById("reportOrders");
-          const prdEl = document.getElementById("reportProducts");
-
-          const revGrowthEl = document.getElementById("reportRevenueGrowth");
-          const ordGrowthEl = document.getElementById("reportOrdersGrowth");
-          const prdStatusEl = document.getElementById("reportProductsStatus");
-
-          const topProductsBody = document.getElementById(
-            "topProductsTableBody"
-          );
-          const recentList = document.getElementById("recentActivitiesList");
-
-          if (revEl)
-            revEl.textContent =
-              (d.orders?.revenue || 0).toLocaleString("vi-VN") + "₫";
-          if (ordEl)
-            ordEl.textContent =
-              (d.orders?.total || 0).toLocaleString("vi-VN") + " đơn";
-          if (prdEl)
-            prdEl.textContent =
-              (d.products?.total || 0).toLocaleString("vi-VN") + " SP";
-
-          // Calculate revenue growth if possible
-          if (revGrowthEl && d.revenueByMonth && d.revenueByMonth.length >= 2) {
-            const current = d.revenueByMonth[0].revenue || 0;
-            const prev = d.revenueByMonth[1].revenue || 1;
-            const growth = ((current - prev) / prev) * 100;
-            revGrowthEl.textContent =
-              (growth > 0 ? "+" : "") + growth.toFixed(1) + "%";
-            revGrowthEl.className =
-              growth >= 0
-                ? "text-green-600 font-label-sm bg-green-100 px-sm py-xs rounded-full"
-                : "text-red-600 font-label-sm bg-red-100 px-sm py-xs rounded-full";
-          } else if (revGrowthEl) {
-            revGrowthEl.textContent = "+0%";
-          }
-
-          if (ordGrowthEl) ordGrowthEl.textContent = "Mới";
-          if (prdStatusEl)
-            prdStatusEl.textContent =
-              d.products?.total > 0 ? "Sẵn sàng" : "Hết hàng";
-
-          // Render top products
-          if (topProductsBody && d.topProducts && d.topProducts.length > 0) {
-            topProductsBody.innerHTML = d.topProducts
-              .map(
-                (p) => {
-                  const imgSrc = p.image
-                    ? (p.image.startsWith('/') ? p.image : p.image)
-                    : '';
-                  const imgTag = imgSrc
-                    ? `<img class="w-12 h-12 rounded-xl object-cover bg-surface-container" src="${imgSrc}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div style="display:none" class="w-12 h-12 rounded-xl bg-primary-container flex items-center justify-center text-primary text-xl">🐾</div>`
-                    : `<div class="w-12 h-12 rounded-xl bg-primary-container flex items-center justify-center text-primary text-xl">🐾</div>`;
-                  return `
-                <tr class="hover:bg-surface-container-low/50 transition-colors">
-                  <td class="py-md flex items-center gap-md">
-                    ${imgTag}
-                    <div>
-                      <div class="font-label-md text-on-surface">${p.name || 'Sản phẩm'}</div>
-                      <div class="text-[12px] text-on-surface-variant">Danh mục: ${p.category || 'Khác'}</div>
-                    </div>
-                  </td>
-                  <td class="py-md text-center font-body-md">${p.sold.toLocaleString('vi-VN')}</td>
-                  <td class="py-md text-right font-bold text-primary">${p.revenue.toLocaleString('vi-VN')}₫</td>
-                </tr>
-              `;
-                }
-              )
-              .join('');
-          } else if (topProductsBody) {
-            topProductsBody.innerHTML = `
-              <tr><td colspan="3" class="py-xl text-center text-on-surface-variant">Chưa có dữ liệu đơn hàng</td></tr>
-            `;
-          }
-
-          // Render weekly revenue chart
-          if (d.revenueByDay) {
-            const dayNames = ["T2", "T3", "T4", "T5", "T6", "T7", "CN"];
-            const dayMap = {};
-            d.revenueByDay.forEach((item) => {
-              const key = `${item._id.year}-${String(item._id.month).padStart(2, "0")}-${String(item._id.day).padStart(2, "0")}`;
-              dayMap[key] = item.revenue;
-            });
-
-            const today = new Date();
-            const currentDayOfWeek = today.getDay();
-            const daysToMonday =
-              currentDayOfWeek === 0 ? 6 : currentDayOfWeek - 1;
-            const monday = new Date(today);
-            monday.setDate(monday.getDate() - daysToMonday);
-            monday.setHours(0, 0, 0, 0);
-
-            const weekDays = [];
-            for (let i = 0; i < 7; i++) {
-              const date = new Date(monday);
-              date.setDate(date.getDate() + i);
-              weekDays.push(date);
-            }
-
-            const weekRevs = weekDays.map((date) => {
-              const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-              return dayMap[key] || 0;
-            });
-            const maxWeekRev = Math.max(...weekRevs) || 1;
-
-            const chartContainer = document.getElementById("weekRevenueChart");
-            const barsHtml = weekDays
-              .map((date, idx) => {
-                const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-                const revenue = dayMap[key] || 0;
-                const heightPct =
-                  revenue > 0 ? Math.max(10, (revenue / maxWeekRev) * 220) : 15;
-                const millions = (revenue / 1000000).toFixed(1);
-
-                return `
-                <div class="flex flex-col items-center gap-sm flex-1">
-                  <div class="w-full rounded-t-lg hover:bg-primary-container transition-colors relative group ${revenue > 0 ? "bg-primary" : "bg-outline-variant/30"}" style="height: ${heightPct}px">
-                    <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                      ${millions}M
-                    </div>
-                  </div>
-                  <span class="text-label-sm text-on-surface-variant">${dayNames[idx]}</span>
-                </div>
-              `;
-              })
-              .join("");
-            chartContainer.innerHTML = barsHtml;
-          }
-
-          // Render category chart
-          if (d.revenueByCategory && d.revenueByCategory.length > 0) {
-            const total = d.revenueByCategory.reduce(
-              (sum, cat) => sum + cat.revenue,
-              0
-            );
-            const colors = [
-              "#f8b432",
-              "#e07f3c",
-              "#6d6f24",
-              "#2f6f6f",
-              "#a36f27",
-            ];
-
-            const chartContainer = document.getElementById("categoryChart");
-            const segments = d.revenueByCategory.map((cat, idx) => {
-              const percentage = total > 0 ? (cat.revenue / total) * 100 : 0;
-              return `${colors[idx % colors.length]} ${percentage.toFixed(1)}%`;
-            });
-            chartContainer.style.background = `conic-gradient(${segments.join(", ")})`;
-            chartContainer.style.borderRadius = "9999px";
-            chartContainer.style.position = "relative";
-            chartContainer.style.overflow = "hidden";
-            chartContainer.innerHTML = `
-              <div class="absolute inset-12 rounded-full bg-white"></div>
-              <div class="absolute inset-0 flex items-center justify-center flex-col">
-                <span class="text-headline-md font-bold text-primary">${d.revenueByCategory[0] ? Math.round((d.revenueByCategory[0].revenue / total) * 100) : 0}%</span>
-                <span class="text-[10px] text-on-surface-variant uppercase tracking-widest">${d.revenueByCategory[0] ? d.revenueByCategory[0]._id : "Khác"}</span>
-              </div>
-            `;
-
-            const legendContainer = document.getElementById("categoryLegend");
-            legendContainer.innerHTML = d.revenueByCategory
-              .map((cat, idx) => {
-                const percentage =
-                  total > 0 ? Math.round((cat.revenue / total) * 100) : 0;
-                return `
-                  <div class="flex justify-between items-center text-label-sm">
-                    <div class="flex items-center gap-2">
-                      <div class="w-3 h-3 rounded-full" style="background-color: ${colors[idx % colors.length]}"></div>
-                      <span>${cat._id || "Khác"}</span>
-                    </div>
-                    <span class="font-bold">${percentage}%</span>
-                  </div>
-                `;
-              })
-              .join("");
-          }
-
-          // Month selector
-          const monthSelector = document.getElementById("monthSelector");
-          const monthDropdown = document.getElementById("monthDropdown");
-          if (monthSelector && monthDropdown) {
-            const currentYear = new Date().getFullYear();
-            const selectedMonth = new Date().getMonth() + 1;
-            document.getElementById("monthSelectorText").textContent =
-              `Tháng ${selectedMonth}/${currentYear}`;
-
-            const dropdownContent = monthDropdown.querySelector("div");
-            const months = Array.from({ length: 12 }, (_, i) => i + 1);
-
-            function renderMonthDropdown(activeMonth) {
-              dropdownContent.innerHTML = months
-                .map(
-                  (month) => `
-                    <div
-                      class="py-2 px-3 rounded-lg cursor-pointer text-label-sm transition-colors ${
-                        month === activeMonth
-                          ? "bg-primary text-on-primary font-bold"
-                          : "hover:bg-surface-container-high text-on-surface-variant"
-                      }"
-                      data-month="${month}"
-                    >
-                      Tháng ${month}/${currentYear}
-                    </div>
-                  `
-                )
-                .join("");
-
-              dropdownContent
-                .querySelectorAll("[data-month]")
-                .forEach((item) => {
-                  item.addEventListener("click", () => {
-                    const month = parseInt(item.getAttribute("data-month"));
-                    document.getElementById("monthSelectorText").textContent =
-                      `Tháng ${month}/${currentYear}`;
-                    monthDropdown.classList.add("hidden");
-                    renderMonthDropdown(month);
-                  });
-                });
-            }
-
-            renderMonthDropdown(selectedMonth);
-
-            monthSelector.addEventListener("click", (event) => {
-              event.stopPropagation();
-              monthDropdown.classList.toggle("hidden");
-            });
-
-            document.addEventListener("click", () => {
-              monthDropdown.classList.add("hidden");
-            });
-          }
-
-          // Render recent activities (using orders)
-          if (recentList && d.recentOrders) {
-            recentList.innerHTML = d.recentOrders
-              .map(
-                (o) => `
-            <div class="flex gap-md">
-              <div class="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
-              <div>
-                <p class="text-body-md text-on-surface">
-                  Đơn hàng <strong>#${o.orderNumber || o._id.substring(0, 6)}</strong> vừa được cập nhật (${o.status})
-                </p>
-                <span class="text-[12px] text-on-surface-variant">${timeSince(o.updatedAt || o.createdAt)}</span>
-              </div>
-            </div>
-            `
-              )
-              .join("");
-          }
-
-          // Setup Excel Export via Backend API
-          const exportBtn = document.getElementById("exportReportBtn");
-          if (exportBtn) {
-            exportBtn.onclick = async () => {
-              try {
-                const token = localStorage.getItem("token");
-                exportBtn.disabled = true;
-                exportBtn.innerHTML =
-                  '<span class="material-symbols-outlined animate-spin">sync</span> Đang tạo...';
-
-                const response = await fetch(
-                  "/api/admin/reports/export/excel",
-                  {
-                    method: "GET",
-                    headers: {
-                      Authorization: `Bearer ${token}`,
-                    },
-                  }
-                );
-
-                if (!response.ok) {
-                  throw new Error("Lỗi khi tải báo cáo");
-                }
-
-                // Convert response to blob
-                const blob = await response.blob();
-
-                // Get filename from Content-Disposition header if possible
-                let filename = "Bao_Cao_Xam_Pet_Shop.xlsx";
-                const disposition = response.headers.get("Content-Disposition");
-                if (disposition && disposition.indexOf("filename=") !== -1) {
-                  filename = disposition.split("filename=")[1];
-                }
-
-                // Create download link
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.style.display = "none";
-                a.href = url;
-                a.download = filename;
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
-              } catch (error) {
-                console.error("Export error:", error);
-                alert("Không thể tải báo cáo lúc này.");
-              } finally {
-                exportBtn.disabled = false;
-                exportBtn.innerHTML =
-                  '<span class="material-symbols-outlined">download</span> Xuất báo cáo';
-              }
-            };
-          }
-        }
-
-        // Re-trigger scroll reveal and other animations on newly loaded report dynamic components
-        if (window.XamAnimations) {
-          window.XamAnimations.init();
+          renderRecentActivities(result.dashboard?.recentOrders);
         }
       }
+
+      // ── Export ──
+      document
+        .getElementById("exportReportBtn")
+        ?.addEventListener("click", async () => {
+          const btn = document.getElementById("exportReportBtn");
+          try {
+            const token = localStorage.getItem("token");
+            btn.disabled = true;
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-base">sync</span> Đang tạo...`;
+
+            const response = await fetch("/api/admin/reports/export/excel", {
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            if (!response.ok) throw new Error("Lỗi khi tải báo cáo");
+
+            const blob = await response.blob();
+            let filename = "Bao_Cao_Xam_Pet_Shop.xlsx";
+            const disp = response.headers.get("Content-Disposition");
+            if (disp && disp.includes("filename="))
+              filename = disp.split("filename=")[1];
+
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.style.display = "none";
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+          } catch (err) {
+            console.error("Export error:", err);
+            alert("Không thể tải báo cáo lúc này.");
+          } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<span class="material-symbols-outlined text-base">download</span> Xuất báo cáo`;
+          }
+        });
+
+      // ── Init ──
+      initDateRange();
       loadReportStats();
+      loadRecentActivities();
     </script>
     <script src="../js/animations.js"></script>
   </body>

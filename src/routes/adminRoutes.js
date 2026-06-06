@@ -23,6 +23,14 @@ router.get(
   dashboardController.getDashboardStats
 );
 
+// ===== Thống kê báo cáo =====
+router.get(
+  "/reports/stats",
+  authMiddleware,
+  adminMiddleware,
+  reportController.getReportStats
+);
+
 // ===== Xuất báo cáo Excel =====
 router.get(
   "/reports/export/excel",

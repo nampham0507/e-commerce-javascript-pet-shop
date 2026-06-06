@@ -220,12 +220,14 @@
         <div class="flex items-center gap-md">
           <div class="relative hidden lg:block">
             <span
-              class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline"
+              id="navSearchBtn"
+              class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline cursor-pointer"
               >search</span
             >
             <input
+              id="navSearchInput"
               class="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-body-md focus:ring-2 focus:ring-primary-container w-64"
-              placeholder="Search cat treats..."
+              placeholder="Tìm kiếm sản phẩm..."
               type="text"
             />
           </div>
@@ -1256,6 +1258,16 @@
       }
 
       initPage();
+
+      // Nav search bar
+      const navSearchInput = document.getElementById("navSearchInput");
+      const navSearchBtn = document.getElementById("navSearchBtn");
+      function doNavSearch() {
+        const q = navSearchInput?.value.trim();
+        if (q) window.location.href = `/product?q=${encodeURIComponent(q)}`;
+      }
+      navSearchInput?.addEventListener("keydown", (e) => { if (e.key === "Enter") doNavSearch(); });
+      navSearchBtn?.addEventListener("click", doNavSearch);
     </script>
     <script src="../js/animations.js"></script>
   </body>

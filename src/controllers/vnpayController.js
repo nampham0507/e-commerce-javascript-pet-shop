@@ -14,7 +14,7 @@ const Product = require("../models/Product");
 function loadVnpayConfig() {
   const configPath = path.resolve(
     __dirname,
-    "../../vnpay_nodejs/config/default.json"
+    "../vnpay_nodejs/config/default.json"
   );
   return JSON.parse(fs.readFileSync(configPath, "utf8"));
 }

@@ -16,6 +16,20 @@ const getAuthHeaders = (isFormData = false) => {
   return headers;
 };
 
+// Report Stats API (date-range filtered)
+export const getReportStats = async (params = {}) => {
+  try {
+    const query = new URLSearchParams(params).toString();
+    const response = await fetch(
+      `${API_BASE_URL}/admin/reports/stats${query ? `?${query}` : ""}`,
+      { headers: getAuthHeaders() }
+    );
+    return await response.json();
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
 // Dashboard API
 export const getDashboardStats = async () => {
   try {

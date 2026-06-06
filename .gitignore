@@ -10,4 +10,5 @@ ADMIN_API.md
 GOOGLE_OAUTH_SETUP.md
 .eslintrc.json
 .prettierignore
-vnpay_nodejs
+src/vnpay_nodejs
+.claude
