@@ -600,8 +600,9 @@
               </div>
               <div id="orderChatMessages">
                 <div class="ochat-msg bot">
-                  Xin chào! Mình là trợ lý của Xám Pet Shop. Bạn cần hỗ trợ gì
-                  về đơn hàng ạ? 🐾
+                  Xin chào Anh/Chị 👋 Em là trợ lý AI của XamPet Shop. Anh/Chị
+                  vui lòng cung cấp mã đơn hàng để Shop kiểm tra và hỗ trợ nhanh
+                  nhất nhé.
                 </div>
               </div>
               <div
@@ -1173,7 +1174,8 @@
               orderChatHistory = orderChatHistory.slice(-10);
           } else {
             addOChatMsg(
-              "Rất tiếc, mình đang gặp lỗi kỹ thuật. Bạn thử lại sau nhé!",
+              data.message ||
+                "Rất tiếc, mình đang gặp lỗi kỹ thuật. Bạn thử lại sau nhé!",
               "bot"
             );
           }

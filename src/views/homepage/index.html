@@ -868,8 +868,10 @@
         <!-- Messages -->
         <div id="chatMessages">
           <div class="chat-msg bot">
-            Meo meo! Xin chào, mình là trợ lý của Xám Pet Shop. Mình có thể giúp
-            gì cho bạn hôm nay?
+            Xin chào Anh/Chị 👋 Em là trợ lý AI của XamPet Shop. Em có thể hỗ
+            trợ tìm kiếm sản phẩm, tư vấn thức ăn cho thú cưng, hướng dẫn đặt
+            hàng, kiểm tra đơn hàng và giải đáp câu hỏi về sản phẩm. Anh/Chị
+            cần Shop hỗ trợ gì ạ?
           </div>
         </div>
 
@@ -1196,7 +1198,8 @@
             }
           } else {
             addMessageToUI(
-              "Rất tiếc, mình đang gặp lỗi kỹ thuật. Bạn vui lòng thử lại sau nhé!",
+              data.message ||
+                "Rất tiếc, mình đang gặp lỗi kỹ thuật. Bạn vui lòng thử lại sau nhé!",
               "bot"
             );
           }
