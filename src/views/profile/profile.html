@@ -1,0 +1,1127 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    <title>Hồ sơ của tôi - Xám Pet Shop</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Plus+Jakarta+Sans:wght@300..800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../js/animations.css" />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#845400",
+              "primary-container": "#ffb347",
+              "on-primary-container": "#704700",
+              "on-primary": "#ffffff",
+              secondary: "#625f4e",
+              "secondary-container": "#e8e3cd",
+              background: "#fff8f4",
+              surface: "#fff8f4",
+              "surface-container": "#f9ecdf",
+              "surface-container-low": "#fff1e5",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-high": "#f3e6da",
+              "surface-container-highest": "#eee0d4",
+              "on-surface": "#211a13",
+              "on-surface-variant": "#524535",
+              outline: "#847463",
+              "outline-variant": "#d6c3b0",
+              error: "#ba1a1a",
+              "error-container": "#ffdad6",
+              "on-error-container": "#93000a",
+              tertiary: "#006780",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              lg: "24px",
+              xs: "4px",
+              xl: "40px",
+              "margin-mobile": "16px",
+              "container-max": "1200px",
+              unit: "4px",
+              gutter: "24px",
+              sm: "8px",
+              md: "16px",
+            },
+            fontFamily: {
+              "label-md": ["Plus Jakarta Sans"],
+              "headline-lg": ["Quicksand"],
+              "headline-md": ["Quicksand"],
+              "body-md": ["Plus Jakarta Sans"],
+              "label-sm": ["Plus Jakarta Sans"],
+            },
+            fontSize: {
+              "label-md": [
+                "14px",
+                {
+                  lineHeight: "20px",
+                  letterSpacing: "0.01em",
+                  fontWeight: "600",
+                },
+              ],
+              "headline-lg": [
+                "32px",
+                { lineHeight: "40px", fontWeight: "700" },
+              ],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-sm": ["12px", { lineHeight: "16px", fontWeight: "700" }],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      #userMenu {
+        display: none;
+      }
+      #userMenu.open {
+        display: block;
+      }
+      #userAvatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 9999px;
+        background: #ffb347;
+        color: #704700;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-surface">
+    <header
+      class="fixed top-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-md shadow-sm"
+    >
+      <div
+        class="max-w-container-max mx-auto px-lg py-md flex justify-between items-center"
+      >
+        <div class="flex items-center gap-xl">
+          <a class="font-bold text-primary text-headline-md" href="/"
+            >Xám Pet Shop</a
+          >
+          <nav class="hidden md:flex gap-lg">
+            <a class="text-on-surface-variant hover:text-primary" href="/"
+              >Trang chủ</a
+            >
+            <a
+              class="text-on-surface-variant hover:text-primary"
+              href="/product"
+              >Sản phẩm</a
+            >
+            <a
+              class="text-on-surface-variant hover:text-primary"
+              href="/homepage/categories"
+              >Danh mục</a
+            >
+          </nav>
+        </div>
+        <div class="flex items-center gap-md">
+          <a href="/cart" class="p-2 hover:scale-105 text-on-surface-variant">
+            <span class="material-symbols-outlined">shopping_cart</span>
+          </a>
+          <div id="guestNav" class="hidden sm:flex items-center gap-sm">
+            <a
+              href="/auth/login"
+              class="text-on-surface-variant hover:text-primary px-md py-sm"
+              >Đăng nhập</a
+            >
+            <a
+              href="/auth/register"
+              class="bg-primary-container text-on-primary-container px-lg py-sm rounded-full"
+              >Đăng ký</a
+            >
+          </div>
+          <div id="userNav" class="hidden items-center gap-sm relative">
+            <a
+              id="adminLink"
+              href="/admin"
+              class="hidden items-center gap-xs px-md py-1 bg-primary text-on-primary rounded-full text-label-sm"
+              >Admin</a
+            >
+            <div class="relative">
+              <button id="userAvatarBtn" class="flex items-center gap-sm group">
+                <div id="userAvatar">A</div>
+                <span
+                  id="userName"
+                  class="hidden sm:block max-w-[120px] truncate"
+                ></span>
+                <span
+                  class="material-symbols-outlined text-[18px]"
+                  id="chevronIcon"
+                  >expand_more</span
+                >
+              </button>
+              <div
+                id="userMenu"
+                class="absolute right-0 top-full mt-2 w-52 bg-surface-container-lowest rounded-2xl shadow-lg border border-outline-variant/30 overflow-hidden z-50"
+              >
+                <div class="px-lg py-md border-b border-outline-variant/20">
+                  <p class="font-label-md" id="menuUserName"></p>
+                  <p
+                    class="text-label-sm text-on-surface-variant"
+                    id="menuUserEmail"
+                  ></p>
+                </div>
+                <div class="py-sm">
+                  <a
+                    href="/profile"
+                    class="flex items-center gap-sm px-lg py-sm text-primary font-bold bg-primary-container/10"
+                    ><span class="material-symbols-outlined">account_circle</span>
+                    Hồ sơ của tôi</a
+                  >
+                  <a
+                    href="/order/detail"
+                    class="flex items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary"
+                    ><span class="material-symbols-outlined">receipt_long</span>
+                    Đơn hàng của tôi</a
+                  >
+                  <a
+                    id="menuAdminLink"
+                    href="/admin"
+                    class="hidden items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary"
+                    ><span class="material-symbols-outlined"
+                      >admin_panel_settings</span
+                    >
+                    Trang Admin</a
+                  >
+                  <button
+                    id="logoutBtn"
+                    class="w-full flex items-center gap-sm px-lg py-sm text-error hover:bg-error-container/20"
+                  >
+                    <span class="material-symbols-outlined">logout</span> Đăng
+                    xuất
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main
+      class="mt-24 mb-xl max-w-container-max mx-auto px-margin-mobile md:px-lg min-h-screen"
+    >
+      <nav
+        class="flex items-center gap-xs text-on-surface-variant mb-xl text-label-sm"
+      >
+        <a class="hover:text-primary" href="/">Home</a>
+        <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+        <span class="text-primary font-bold">Hồ sơ của tôi</span>
+      </nav>
+
+      <h1
+        class="font-headline-lg text-headline-lg text-on-surface mb-lg reveal section-heading"
+      >
+        Hồ sơ của tôi
+      </h1>
+
+      <!-- Loading indicator -->
+      <div id="profileLoading" class="flex items-center justify-center py-xl">
+        <div
+          class="w-10 h-10 border-4 border-primary-container border-t-primary rounded-full animate-spin"
+        ></div>
+      </div>
+
+      <div id="profileContent" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-lg">
+        <!-- Profile Information -->
+        <div
+          class="lg:col-span-2 bg-surface-container-lowest rounded-[24px] p-lg md:p-xl shadow-sm border border-outline-variant/30 reveal-left delay-1"
+        >
+          <h2
+            class="font-headline-md text-headline-md mb-lg flex items-center gap-sm"
+          >
+            <span class="material-symbols-outlined text-primary"
+              >person</span
+            >
+            Thông tin cá nhân
+          </h2>
+
+          <form id="profileForm" class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+            <!-- Full Name -->
+            <div class="space-y-xs">
+              <label
+                class="block text-label-md text-on-surface-variant"
+                for="fullNameInput"
+                >Họ và tên <span class="text-error">*</span></label
+              >
+              <input
+                id="fullNameInput"
+                name="fullName"
+                type="text"
+                placeholder="Nhập họ và tên"
+                class="w-full bg-surface-container-low border-none rounded-xl px-md py-3 focus:ring-2 focus:ring-primary-container transition-all outline-none"
+              />
+              <p id="fullNameError" class="hidden text-error text-label-sm"></p>
+            </div>
+
+            <!-- Email (read-only) -->
+            <div class="space-y-xs">
+              <label
+                class="block text-label-md text-on-surface-variant"
+                for="emailDisplay"
+                >Email</label
+              >
+              <input
+                id="emailDisplay"
+                type="email"
+                disabled
+                class="w-full bg-surface-container border-none rounded-xl px-md py-3 text-on-surface-variant cursor-not-allowed outline-none"
+              />
+            </div>
+
+            <!-- Phone -->
+            <div class="space-y-xs">
+              <label
+                class="block text-label-md text-on-surface-variant"
+                for="phoneInput"
+                >Số điện thoại</label
+              >
+              <div class="relative">
+                <input
+                  id="phoneInput"
+                  name="phone"
+                  type="tel"
+                  placeholder="Ví dụ: 0912345678"
+                  class="w-full bg-surface-container-low border-none rounded-xl px-md py-3 pr-12 focus:ring-2 focus:ring-primary-container transition-all outline-none"
+                />
+                <button
+                  type="button"
+                  id="deletePhoneBtn"
+                  data-field="phone"
+                  title="Xóa số điện thoại"
+                  class="hidden absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full items-center justify-center text-on-surface-variant hover:text-error hover:bg-error-container/20 transition-colors"
+                >
+                  <span class="material-symbols-outlined text-[18px]"
+                    >delete</span
+                  >
+                </button>
+              </div>
+              <p id="phoneError" class="hidden text-error text-label-sm"></p>
+            </div>
+
+            <!-- Gender -->
+            <div class="space-y-xs">
+              <label
+                class="block text-label-md text-on-surface-variant"
+                for="genderSelect"
+                >Giới tính</label
+              >
+              <div class="relative">
+                <select
+                  id="genderSelect"
+                  name="gender"
+                  class="w-full bg-surface-container-low border-none rounded-xl px-md py-3 pr-12 focus:ring-2 focus:ring-primary-container transition-all outline-none appearance-none"
+                >
+                  <option value="">-- Chọn giới tính --</option>
+                  <option value="male">Nam</option>
+                  <option value="female">Nữ</option>
+                  <option value="other">Khác</option>
+                </select>
+                <button
+                  type="button"
+                  id="deleteGenderBtn"
+                  data-field="gender"
+                  title="Xóa giới tính"
+                  class="hidden absolute right-8 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full items-center justify-center text-on-surface-variant hover:text-error hover:bg-error-container/20 transition-colors"
+                >
+                  <span class="material-symbols-outlined text-[18px]"
+                    >delete</span
+                  >
+                </button>
+              </div>
+              <p id="genderError" class="hidden text-error text-label-sm"></p>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="space-y-xs">
+              <label
+                class="block text-label-md text-on-surface-variant"
+                for="dobInput"
+                >Ngày sinh</label
+              >
+              <div class="relative">
+                <input
+                  id="dobInput"
+                  name="dateOfBirth"
+                  type="date"
+                  class="w-full bg-surface-container-low border-none rounded-xl px-md py-3 pr-12 focus:ring-2 focus:ring-primary-container transition-all outline-none"
+                />
+                <button
+                  type="button"
+                  id="deleteDobBtn"
+                  data-field="dateOfBirth"
+                  title="Xóa ngày sinh"
+                  class="hidden absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full items-center justify-center text-on-surface-variant hover:text-error hover:bg-error-container/20 transition-colors"
+                >
+                  <span class="material-symbols-outlined text-[18px]"
+                    >delete</span
+                  >
+                </button>
+              </div>
+              <p id="dobError" class="hidden text-error text-label-sm"></p>
+            </div>
+
+            <!-- Account Creation Date (read-only) -->
+            <div class="space-y-xs">
+              <label class="block text-label-md text-on-surface-variant"
+                >Ngày tạo tài khoản</label
+              >
+              <input
+                id="createdAtDisplay"
+                type="text"
+                disabled
+                class="w-full bg-surface-container border-none rounded-xl px-md py-3 text-on-surface-variant cursor-not-allowed outline-none"
+              />
+            </div>
+
+            <!-- Address -->
+            <div class="md:col-span-2 space-y-xs">
+              <label
+                class="block text-label-md text-on-surface-variant"
+                for="addressInput"
+                >Địa chỉ</label
+              >
+              <div class="relative">
+                <textarea
+                  id="addressInput"
+                  name="address"
+                  rows="3"
+                  placeholder="Nhập địa chỉ của bạn"
+                  class="w-full bg-surface-container-low border-none rounded-xl px-md py-3 pr-12 focus:ring-2 focus:ring-primary-container transition-all outline-none resize-none"
+                ></textarea>
+                <button
+                  type="button"
+                  id="deleteAddressBtn"
+                  data-field="address"
+                  title="Xóa địa chỉ"
+                  class="hidden absolute right-2 top-2 w-8 h-8 rounded-full items-center justify-center text-on-surface-variant hover:text-error hover:bg-error-container/20 transition-colors"
+                >
+                  <span class="material-symbols-outlined text-[18px]"
+                    >delete</span
+                  >
+                </button>
+              </div>
+              <p id="addressError" class="hidden text-error text-label-sm"></p>
+            </div>
+
+            <!-- Submit -->
+            <div class="md:col-span-2 flex justify-end">
+              <button
+                type="submit"
+                id="saveProfileBtn"
+                class="w-full md:w-auto bg-primary text-on-primary px-xl py-3 rounded-full font-bold hover:scale-[1.02] active:scale-95 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-sm"
+              >
+                <span class="material-symbols-outlined text-[18px]"
+                  >save</span
+                >
+                <span id="saveProfileBtnText">Lưu thay đổi</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Change Password -->
+        <div
+          class="bg-surface-container-lowest rounded-[24px] p-lg md:p-xl shadow-sm border border-outline-variant/30 reveal-right delay-1 h-fit"
+        >
+          <h2
+            class="font-headline-md text-headline-md mb-lg flex items-center gap-sm"
+          >
+            <span class="material-symbols-outlined text-primary">lock</span>
+            Đổi mật khẩu
+          </h2>
+
+          <form id="changePasswordForm" class="space-y-lg">
+            <!-- Current Password -->
+            <div class="space-y-xs">
+              <label
+                class="block text-label-md text-on-surface-variant"
+                for="currentPasswordInput"
+                >Mật khẩu hiện tại</label
+              >
+              <div class="relative">
+                <input
+                  id="currentPasswordInput"
+                  type="password"
+                  autocomplete="current-password"
+                  class="w-full bg-surface-container-low border-none rounded-xl px-md py-3 pr-12 focus:ring-2 focus:ring-primary-container transition-all outline-none"
+                />
+                <button
+                  type="button"
+                  data-toggle="currentPasswordInput"
+                  class="toggle-password-btn absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors"
+                >
+                  <span class="material-symbols-outlined text-[18px]"
+                    >visibility</span
+                  >
+                </button>
+              </div>
+              <p
+                id="currentPasswordError"
+                class="hidden text-error text-label-sm"
+              ></p>
+            </div>
+
+            <!-- New Password -->
+            <div class="space-y-xs">
+              <label
+                class="block text-label-md text-on-surface-variant"
+                for="newPasswordInput"
+                >Mật khẩu mới</label
+              >
+              <div class="relative">
+                <input
+                  id="newPasswordInput"
+                  type="password"
+                  autocomplete="new-password"
+                  class="w-full bg-surface-container-low border-none rounded-xl px-md py-3 pr-12 focus:ring-2 focus:ring-primary-container transition-all outline-none"
+                />
+                <button
+                  type="button"
+                  data-toggle="newPasswordInput"
+                  class="toggle-password-btn absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors"
+                >
+                  <span class="material-symbols-outlined text-[18px]"
+                    >visibility</span
+                  >
+                </button>
+              </div>
+              <p class="text-label-sm text-on-surface-variant">
+                Tối thiểu 8 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc
+                biệt.
+              </p>
+              <p
+                id="newPasswordError"
+                class="hidden text-error text-label-sm"
+              ></p>
+            </div>
+
+            <!-- Confirm New Password -->
+            <div class="space-y-xs">
+              <label
+                class="block text-label-md text-on-surface-variant"
+                for="confirmNewPasswordInput"
+                >Xác nhận mật khẩu mới</label
+              >
+              <div class="relative">
+                <input
+                  id="confirmNewPasswordInput"
+                  type="password"
+                  autocomplete="new-password"
+                  class="w-full bg-surface-container-low border-none rounded-xl px-md py-3 pr-12 focus:ring-2 focus:ring-primary-container transition-all outline-none"
+                />
+                <button
+                  type="button"
+                  data-toggle="confirmNewPasswordInput"
+                  class="toggle-password-btn absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors"
+                >
+                  <span class="material-symbols-outlined text-[18px]"
+                    >visibility</span
+                  >
+                </button>
+              </div>
+              <p
+                id="confirmNewPasswordError"
+                class="hidden text-error text-label-sm"
+              ></p>
+            </div>
+
+            <button
+              type="submit"
+              id="changePasswordBtn"
+              class="w-full bg-primary text-on-primary py-3 rounded-full font-bold hover:scale-[1.02] active:scale-95 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-sm"
+            >
+              <span class="material-symbols-outlined text-[18px]">key</span>
+              <span id="changePasswordBtnText">Đổi mật khẩu</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <!-- Delete Field Confirmation Modal -->
+    <div
+      id="deleteFieldOverlay"
+      class="hidden fixed inset-0 bg-black/40 z-[100] items-center justify-center p-md"
+    >
+      <div
+        id="deleteFieldModal"
+        class="bg-surface-container-lowest rounded-[24px] max-w-md w-full p-xl shadow-lg modal-enter"
+      >
+        <div class="flex items-center gap-sm mb-md">
+          <span class="material-symbols-outlined text-error text-[32px]"
+            >warning</span
+          >
+          <h2 class="font-headline-md text-headline-md text-on-surface">
+            Xác nhận xóa thông tin
+          </h2>
+        </div>
+        <p id="deleteFieldMessage" class="text-on-surface-variant mb-lg"></p>
+        <div class="flex gap-md">
+          <button
+            id="cancelDeleteFieldBtn"
+            class="flex-1 border-2 border-outline-variant py-3 rounded-full font-bold hover:bg-surface-container transition-all"
+          >
+            Hủy
+          </button>
+          <button
+            id="confirmDeleteFieldBtn"
+            class="flex-1 bg-error text-white py-3 rounded-full font-bold hover:opacity-90 transition-all"
+          >
+            Xóa
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <footer
+      class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-5 gap-lg max-w-container-max mx-auto bg-surface-container-highest dark:bg-surface-container mt-xl rounded-[24px]"
+    >
+      <div class="col-span-1 md:col-span-1">
+        <span class="font-headline-sm text-headline-sm text-on-surface"
+          >Xám Pet Shop</span
+        >
+        <p class="mt-md text-on-surface-variant text-label-sm">
+          Cửa hàng chăm sóc thú cưng cao cấp, mang lại sự ấm áp và tin cậy cho
+          người bạn bốn chân của bạn.
+        </p>
+      </div>
+      <div class="flex flex-col gap-sm">
+        <span class="font-label-md text-label-md text-primary">Liên hệ</span>
+        <span class="text-on-surface-variant text-label-sm"
+          >Address: Bắc Từ Liêm, Hà Nội</span
+        >
+        <span class="text-on-surface-variant text-label-sm"
+          >Phone: 038.339.2903</span
+        >
+        <span class="text-on-surface-variant text-label-sm"
+          >Email: nampham050723@gmail.com</span
+        >
+      </div>
+      <div class="flex flex-col gap-sm">
+        <span class="font-label-md text-label-md text-primary">Chính sách</span>
+        <a
+          class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+          href="#"
+          >Chính sách bảo mật</a
+        >
+        <a
+          class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+          href="#"
+          >Điều khoản dịch vụ</a
+        >
+        <a
+          class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
+          href="#"
+          >Giao hàng &amp; Hoàn trả</a
+        >
+      </div>
+      <div class="flex flex-col gap-sm">
+        <span class="font-label-md text-label-md text-primary"
+          >Mạng xã hội</span
+        >
+        <a
+          class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
+          href="https://www.facebook.com/pdn.0507"
+          target="_blank"
+        >
+          <span class="material-symbols-outlined text-sm">public</span> Facebook
+        </a>
+        <a
+          class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
+          href="https://www.instagram.com/dinhnam.ph"
+          target="_blank"
+        >
+          <span class="material-symbols-outlined text-sm">camera_alt</span>
+          Instagram
+        </a>
+        <p class="mt-4 text-on-surface-variant text-[10px]">
+          © 2026 Xám Pet Shop. All rights reserved.
+        </p>
+      </div>
+      <div class="flex flex-col gap-sm">
+        <span class="font-label-md text-label-md text-primary">Bản đồ</span>
+        <div class="w-full h-32 rounded-lg overflow-hidden border border-outline-variant/30">
+          <iframe src="https://maps.google.com/maps?q=273%20%C4%91%C6%B0%E1%BB%9Dng%20C%E1%BB%95%20Nhu%E1%BA%BF%2C%20B%E1%BA%AFc%20T%E1%BB%AB%20Li%C3%AAm%2C%20H%C3%A0%20N%E1%BB%99i&t=&z=14&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module">
+      import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
+      import {
+        getProfile,
+        updateProfile,
+        deleteProfileFields,
+        changePassword,
+        VN_PHONE_REGEX,
+        STRONG_PASSWORD_REGEX,
+        FIELD_LABELS,
+      } from "../js/profile.js";
+
+      const guestNav = document.getElementById("guestNav");
+      const userNav = document.getElementById("userNav");
+      const userAvatar = document.getElementById("userAvatar");
+      const userName = document.getElementById("userName");
+      const menuUserName = document.getElementById("menuUserName");
+      const menuUserEmail = document.getElementById("menuUserEmail");
+      const adminLink = document.getElementById("adminLink");
+      const menuAdminLink = document.getElementById("menuAdminLink");
+      const userMenu = document.getElementById("userMenu");
+      const chevronIcon = document.getElementById("chevronIcon");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const userAvatarBtn = document.getElementById("userAvatarBtn");
+
+      const profileLoading = document.getElementById("profileLoading");
+      const profileContent = document.getElementById("profileContent");
+      const profileForm = document.getElementById("profileForm");
+      const fullNameInput = document.getElementById("fullNameInput");
+      const emailDisplay = document.getElementById("emailDisplay");
+      const phoneInput = document.getElementById("phoneInput");
+      const genderSelect = document.getElementById("genderSelect");
+      const dobInput = document.getElementById("dobInput");
+      const addressInput = document.getElementById("addressInput");
+      const createdAtDisplay = document.getElementById("createdAtDisplay");
+      const saveProfileBtn = document.getElementById("saveProfileBtn");
+      const saveProfileBtnText = document.getElementById("saveProfileBtnText");
+
+      const deletePhoneBtn = document.getElementById("deletePhoneBtn");
+      const deleteGenderBtn = document.getElementById("deleteGenderBtn");
+      const deleteDobBtn = document.getElementById("deleteDobBtn");
+      const deleteAddressBtn = document.getElementById("deleteAddressBtn");
+
+      const deleteFieldOverlay = document.getElementById("deleteFieldOverlay");
+      const deleteFieldMessage = document.getElementById("deleteFieldMessage");
+      const confirmDeleteFieldBtn = document.getElementById(
+        "confirmDeleteFieldBtn"
+      );
+      const cancelDeleteFieldBtn = document.getElementById(
+        "cancelDeleteFieldBtn"
+      );
+
+      const changePasswordForm = document.getElementById("changePasswordForm");
+      const currentPasswordInput = document.getElementById(
+        "currentPasswordInput"
+      );
+      const newPasswordInput = document.getElementById("newPasswordInput");
+      const confirmNewPasswordInput = document.getElementById(
+        "confirmNewPasswordInput"
+      );
+      const changePasswordBtn = document.getElementById("changePasswordBtn");
+      const changePasswordBtnText = document.getElementById(
+        "changePasswordBtnText"
+      );
+
+      let pendingDeleteField = null;
+
+      // ===== Toast notifications =====
+      function showToast(message, type = "success") {
+        const toast = document.createElement("div");
+        const typeClass =
+          type === "success"
+            ? "bg-primary text-on-primary"
+            : "bg-error text-white";
+        toast.className = `fixed bottom-5 right-5 z-[110] rounded-xl px-lg py-3 shadow-lg text-label-md flex items-center gap-sm toast-anim ${typeClass}`;
+        const icon = type === "success" ? "check_circle" : "error";
+        toast.innerHTML = `<span class="material-symbols-outlined text-[18px]">${icon}</span><span>${message}</span>`;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+          toast.classList.remove("toast-anim");
+          toast.classList.add("toast-exit");
+          setTimeout(() => toast.remove(), 300);
+        }, 2500);
+      }
+
+      // ===== Field error helpers =====
+      function setFieldError(id, message) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (message) {
+          el.textContent = message;
+          el.classList.remove("hidden");
+        } else {
+          el.textContent = "";
+          el.classList.add("hidden");
+        }
+      }
+
+      function clearFormErrors(form) {
+        form
+          .querySelectorAll("p[id$='Error']")
+          .forEach((el) => {
+            el.textContent = "";
+            el.classList.add("hidden");
+          });
+      }
+
+      // ===== Nav (header dropdown) =====
+      function initNav() {
+        if (isAuthenticated()) {
+          const user = getUserInfo();
+          if (!user) return;
+          guestNav.style.display = "none";
+          userNav.style.display = "flex";
+          userAvatar.textContent = (user.fullName || user.email || "U")
+            .charAt(0)
+            .toUpperCase();
+          userName.textContent = user.fullName || user.email;
+          menuUserName.textContent = user.fullName || user.email;
+          menuUserEmail.textContent = user.email || "";
+          if (user.role === "admin") {
+            adminLink.style.display = "flex";
+            menuAdminLink.style.display = "flex";
+          }
+        } else {
+          window.location.href = "/auth/login";
+        }
+      }
+
+      userAvatarBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isOpen = userMenu.classList.toggle("open");
+        chevronIcon.textContent = isOpen ? "expand_less" : "expand_more";
+      });
+
+      document.addEventListener("click", () => {
+        userMenu.classList.remove("open");
+        chevronIcon.textContent = "expand_more";
+      });
+
+      logoutBtn.addEventListener("click", async () => {
+        await logoutUser();
+        window.location.href = "/auth/login";
+      });
+
+      // ===== Show/hide delete buttons based on field value =====
+      function toggleDeleteButton(btn, hasValue) {
+        if (hasValue) {
+          btn.classList.remove("hidden");
+          btn.classList.add("flex");
+        } else {
+          btn.classList.add("hidden");
+          btn.classList.remove("flex");
+        }
+      }
+
+      // ===== Load profile =====
+      async function loadProfile() {
+        profileLoading.classList.remove("hidden");
+        profileContent.classList.add("hidden");
+
+        try {
+          const data = await getProfile();
+          if (!data.success) {
+            throw new Error(data.message || "Không thể tải hồ sơ của bạn.");
+          }
+
+          const user = data.user;
+          fullNameInput.value = user.fullName || "";
+          emailDisplay.value = user.email || "";
+          phoneInput.value = user.phone || "";
+          genderSelect.value = user.gender || "";
+          dobInput.value = user.dateOfBirth
+            ? new Date(user.dateOfBirth).toISOString().split("T")[0]
+            : "";
+          addressInput.value = user.address || "";
+          createdAtDisplay.value = user.createdAt
+            ? new Date(user.createdAt).toLocaleDateString("vi-VN", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })
+            : "—";
+
+          toggleDeleteButton(deletePhoneBtn, !!user.phone);
+          toggleDeleteButton(deleteGenderBtn, !!user.gender);
+          toggleDeleteButton(deleteDobBtn, !!user.dateOfBirth);
+          toggleDeleteButton(deleteAddressBtn, !!user.address);
+
+          profileLoading.classList.add("hidden");
+          profileContent.classList.remove("hidden");
+          profileContent.classList.add("grid");
+
+          if (window.XamAnimations) {
+            window.XamAnimations.init();
+          }
+        } catch (error) {
+          console.error("Load profile error:", error);
+          profileLoading.classList.add("hidden");
+          showToast(error.message || "Không thể tải hồ sơ của bạn.", "error");
+        }
+      }
+
+      // ===== Client-side validation =====
+      function validateProfileForm() {
+        clearFormErrors(profileForm);
+        let valid = true;
+
+        const fullName = fullNameInput.value.trim();
+        if (!fullName || fullName.length < 2 || fullName.length > 100) {
+          setFieldError(
+            "fullNameError",
+            "Họ tên phải từ 2-100 ký tự và không được để trống"
+          );
+          valid = false;
+        }
+
+        const phone = phoneInput.value.trim();
+        if (phone && !VN_PHONE_REGEX.test(phone)) {
+          setFieldError("phoneError", "Số điện thoại không hợp lệ");
+          valid = false;
+        }
+
+        const dob = dobInput.value;
+        if (dob) {
+          const dobDate = new Date(dob);
+          const now = new Date();
+          if (dobDate > now) {
+            setFieldError("dobError", "Ngày sinh không được ở tương lai");
+            valid = false;
+          } else {
+            const age = (now - dobDate) / (1000 * 60 * 60 * 24 * 365.25);
+            if (age > 120) {
+              setFieldError("dobError", "Ngày sinh không hợp lệ");
+              valid = false;
+            }
+          }
+        }
+
+        const address = addressInput.value.trim();
+        if (address.length > 250) {
+          setFieldError("addressError", "Địa chỉ tối đa 250 ký tự");
+          valid = false;
+        }
+
+        return valid;
+      }
+
+      // ===== Save profile =====
+      profileForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (!validateProfileForm()) return;
+
+        saveProfileBtn.disabled = true;
+        saveProfileBtnText.textContent = "Đang lưu...";
+
+        try {
+          const payload = {
+            fullName: fullNameInput.value.trim(),
+            phone: phoneInput.value.trim(),
+            gender: genderSelect.value,
+            dateOfBirth: dobInput.value || "",
+            address: addressInput.value.trim(),
+          };
+
+          const data = await updateProfile(payload);
+
+          if (!data.success) {
+            if (data.errors) {
+              data.errors.forEach((err) => {
+                const fieldId = `${err.path}Error`;
+                setFieldError(fieldId, err.msg);
+              });
+            }
+            showToast(data.message || "Cập nhật hồ sơ thất bại", "error");
+            return;
+          }
+
+          showToast("Cập nhật hồ sơ thành công", "success");
+          await loadProfile();
+        } catch (error) {
+          console.error("Update profile error:", error);
+          showToast("Có lỗi xảy ra, vui lòng thử lại.", "error");
+        } finally {
+          saveProfileBtn.disabled = false;
+          saveProfileBtnText.textContent = "Lưu thay đổi";
+        }
+      });
+
+      // ===== Delete optional field =====
+      function openDeleteModal(field) {
+        pendingDeleteField = field;
+        deleteFieldMessage.textContent = `Bạn có chắc muốn xóa thông tin "${FIELD_LABELS[field]}" không? Hành động này không thể hoàn tác.`;
+        deleteFieldOverlay.classList.remove("hidden");
+        deleteFieldOverlay.classList.add("flex");
+      }
+
+      function closeDeleteModal() {
+        pendingDeleteField = null;
+        deleteFieldOverlay.classList.add("hidden");
+        deleteFieldOverlay.classList.remove("flex");
+      }
+
+      [deletePhoneBtn, deleteGenderBtn, deleteDobBtn, deleteAddressBtn].forEach(
+        (btn) => {
+          btn.addEventListener("click", () => openDeleteModal(btn.dataset.field));
+        }
+      );
+
+      cancelDeleteFieldBtn.addEventListener("click", closeDeleteModal);
+      deleteFieldOverlay.addEventListener("click", (e) => {
+        if (e.target === deleteFieldOverlay) closeDeleteModal();
+      });
+
+      confirmDeleteFieldBtn.addEventListener("click", async () => {
+        if (!pendingDeleteField) return;
+        const field = pendingDeleteField;
+
+        confirmDeleteFieldBtn.disabled = true;
+        try {
+          const data = await deleteProfileFields([field]);
+          if (!data.success) {
+            showToast(data.message || "Xóa thông tin thất bại", "error");
+            return;
+          }
+          showToast("Đã xóa thông tin thành công", "success");
+          closeDeleteModal();
+          await loadProfile();
+        } catch (error) {
+          console.error("Delete field error:", error);
+          showToast("Có lỗi xảy ra, vui lòng thử lại.", "error");
+        } finally {
+          confirmDeleteFieldBtn.disabled = false;
+        }
+      });
+
+      // ===== Password show/hide toggles =====
+      document.querySelectorAll(".toggle-password-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const input = document.getElementById(btn.dataset.toggle);
+          const icon = btn.querySelector(".material-symbols-outlined");
+          if (input.type === "password") {
+            input.type = "text";
+            icon.textContent = "visibility_off";
+          } else {
+            input.type = "password";
+            icon.textContent = "visibility";
+          }
+        });
+      });
+
+      // ===== Change password =====
+      function validatePasswordForm() {
+        clearFormErrors(changePasswordForm);
+        let valid = true;
+
+        const currentPassword = currentPasswordInput.value;
+        const newPassword = newPasswordInput.value;
+        const confirmNewPassword = confirmNewPasswordInput.value;
+
+        if (!currentPassword) {
+          setFieldError(
+            "currentPasswordError",
+            "Vui lòng nhập mật khẩu hiện tại"
+          );
+          valid = false;
+        }
+
+        if (!STRONG_PASSWORD_REGEX.test(newPassword)) {
+          setFieldError(
+            "newPasswordError",
+            "Mật khẩu mới phải có ít nhất 8 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt"
+          );
+          valid = false;
+        }
+
+        if (confirmNewPassword !== newPassword) {
+          setFieldError("confirmNewPasswordError", "Mật khẩu xác nhận không khớp");
+          valid = false;
+        }
+
+        if (
+          currentPassword &&
+          newPassword &&
+          currentPassword === newPassword
+        ) {
+          setFieldError(
+            "newPasswordError",
+            "Mật khẩu mới phải khác mật khẩu hiện tại"
+          );
+          valid = false;
+        }
+
+        return valid;
+      }
+
+      changePasswordForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (!validatePasswordForm()) return;
+
+        changePasswordBtn.disabled = true;
+        changePasswordBtnText.textContent = "Đang xử lý...";
+
+        try {
+          const data = await changePassword({
+            currentPassword: currentPasswordInput.value,
+            newPassword: newPasswordInput.value,
+            confirmNewPassword: confirmNewPasswordInput.value,
+          });
+
+          if (!data.success) {
+            if (data.errors) {
+              data.errors.forEach((err) => {
+                const fieldId = `${err.path}Error`;
+                setFieldError(fieldId, err.msg);
+              });
+            } else if (data.message) {
+              if (data.message.includes("hiện tại")) {
+                setFieldError("currentPasswordError", data.message);
+              } else {
+                showToast(data.message, "error");
+              }
+            }
+            return;
+          }
+
+          showToast("Đổi mật khẩu thành công", "success");
+          changePasswordForm.reset();
+        } catch (error) {
+          console.error("Change password error:", error);
+          showToast("Có lỗi xảy ra, vui lòng thử lại.", "error");
+        } finally {
+          changePasswordBtn.disabled = false;
+          changePasswordBtnText.textContent = "Đổi mật khẩu";
+        }
+      });
+
+      initNav();
+      loadProfile();
+    </script>
+    <script src="../js/animations.js"></script>
+  </body>
+</html>

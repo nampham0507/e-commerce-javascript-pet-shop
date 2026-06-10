@@ -27,8 +27,17 @@ const userSchema = new mongoose.Schema({
     default: "customer",
   },
   phone: String,
+  gender: {
+    type: String,
+    enum: ["male", "female", "other"],
+  },
+  dateOfBirth: Date,
   address: String,
   createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
     type: Date,
     default: Date.now,
   },
@@ -36,6 +45,8 @@ const userSchema = new mongoose.Schema({
 
 // Hash password before saving (only if password is provided)
 userSchema.pre("save", async function (next) {
+  this.updatedAt = Date.now();
+
   if (!this.isModified("password") || !this.password) return next();
 
   try {

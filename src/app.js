@@ -41,6 +41,7 @@ app.use("/api/categories", require("./routes/categoryRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
 app.use("/api/orders", require("./routes/orderRoutes"));
 app.use("/api/cart", require("./routes/cartRoutes"));
+app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/reviews", require("./routes/reviewRoutes"));
 app.use("/api/payments", require("./routes/vnpayRoutes"));
 app.use("/api/chat", require("./routes/chatRoutes"));
@@ -109,6 +110,10 @@ app.get("/order/detail", (req, res) => {
 
 app.get("/homepage/categories", (req, res) => {
   res.sendFile(path.join(__dirname, "views/homepage/categories.html"));
+});
+
+app.get("/profile", (req, res) => {
+  res.sendFile(path.join(__dirname, "views/profile/profile.html"));
 });
 
 // Error handling middleware
