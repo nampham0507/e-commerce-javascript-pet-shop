@@ -316,20 +316,62 @@
               </div>
             </div>
           </div>
+
+          <!-- Mobile menu toggle -->
+          <button
+            id="mobileMenuBtn"
+            class="md:hidden inline-flex items-center justify-center p-2 text-on-surface-variant hover:text-primary transition-colors"
+            aria-label="Mở menu"
+            aria-expanded="false"
+          >
+            <span class="material-symbols-outlined" id="mobileMenuIcon">menu</span>
+          </button>
         </div>
+      </div>
+
+      <!-- Mobile nav panel -->
+      <div
+        id="mobileNav"
+        class="md:hidden grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out bg-surface/95 backdrop-blur-md"
+      >
+        <nav class="overflow-hidden flex flex-col px-lg py-sm gap-1">
+          <a href="/" class="flex items-center gap-sm px-md py-sm rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-body-md text-body-md">
+            <span class="material-symbols-outlined text-[20px]">home</span>
+            Trang chủ
+          </a>
+          <a href="/product" class="flex items-center gap-sm px-md py-sm rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-body-md text-body-md">
+            <span class="material-symbols-outlined text-[20px]">storefront</span>
+            Sản phẩm
+          </a>
+          <a href="/homepage/categories" class="flex items-center gap-sm px-md py-sm rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-body-md text-body-md">
+            <span class="material-symbols-outlined text-[20px]">category</span>
+            Danh mục
+          </a>
+          <a href="/cart" class="flex items-center gap-sm px-md py-sm rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-body-md text-body-md">
+            <span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+            Giỏ hàng
+          </a>
+          <div id="mobileGuestNav" class="hidden flex-col gap-sm pt-sm mt-sm border-t border-outline-variant/20">
+            <a href="/auth/login" class="flex items-center justify-center px-md py-sm rounded-xl text-primary font-label-md border border-primary/30 hover:bg-primary-container/10 transition-colors">Đăng nhập</a>
+            <a href="/auth/register" class="flex items-center justify-center px-md py-sm rounded-xl bg-primary-container text-on-primary-container font-label-md hover:scale-[1.02] transition-transform">Đăng ký</a>
+          </div>
+        </nav>
       </div>
     </nav>
     <!-- Main Content -->
     <main
       class="max-w-container-max mx-auto px-margin-mobile md:px-lg pt-32 pb-xl"
     >
-      <div class="mb-xl reveal section-heading">
-        <h1 class="font-headline-lg text-headline-lg text-primary mb-xs">
-          Thanh toán
-        </h1>
-        <p class="text-on-surface-variant font-body-md">
-          Vui lòng điền thông tin để hoàn tất đơn hàng của bạn.
-        </p>
+      <div class="relative overflow-hidden rounded-[24px] mb-xl px-md py-lg">
+        <div class="gradient-mesh"></div>
+        <div class="relative z-10 reveal section-heading">
+          <h1 class="font-headline-lg text-headline-lg text-primary mb-xs">
+            Thanh toán
+          </h1>
+          <p class="text-on-surface-variant font-body-md">
+            Vui lòng điền thông tin để hoàn tất đơn hàng của bạn.
+          </p>
+        </div>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
         <!-- Left Column: Customer Form -->
@@ -518,7 +560,7 @@
               </div>
               <button
                 id="placeOrderBtn"
-                class="w-full mt-lg bg-primary text-on-primary font-label-md py-4 rounded-full hover:bg-primary-fixed-variant hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-sm anim-pulse-glow btn-ripple"
+                class="btn-shine w-full mt-lg bg-primary text-on-primary font-label-md py-4 rounded-full hover:bg-primary-fixed-variant hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-sm anim-pulse-glow btn-ripple"
               >
                 <span class="material-symbols-outlined" data-icon="lock"
                   >lock</span
@@ -612,6 +654,7 @@
       const chevronIcon = document.getElementById("chevronIcon");
       const logoutBtn = document.getElementById("logoutBtn");
       const userAvatarBtn = document.getElementById("userAvatarBtn");
+      const mobileGuestNav = document.getElementById("mobileGuestNav");
 
       function initNav() {
         if (isAuthenticated()) {
@@ -631,9 +674,13 @@
             adminLink.style.display = "flex";
             menuAdminLink.style.display = "flex";
           }
+          mobileGuestNav.classList.add("hidden");
+          mobileGuestNav.classList.remove("flex");
         } else {
           guestNav.style.display = "";
           userNav.style.display = "none";
+          mobileGuestNav.classList.remove("hidden");
+          mobileGuestNav.classList.add("flex");
         }
       }
       userAvatarBtn.addEventListener("click", (e) => {
@@ -764,7 +811,7 @@
           .map(
             (item) => `
           <div class="flex gap-md group">
-            <div class="w-20 h-20 bg-surface-container-low rounded-2xl flex-shrink-0 p-2 overflow-hidden border border-outline-variant/20">
+            <div class="img-zoom w-20 h-20 bg-surface-container-low rounded-2xl flex-shrink-0 p-2 overflow-hidden border border-outline-variant/20">
               <img class="w-full h-full object-cover rounded-xl" src="${item.image || "https://via.placeholder.com/96?text=No+Image"}" alt="${item.name}">
             </div>
             <div class="flex-grow flex flex-col justify-between py-1">
@@ -908,6 +955,17 @@
       requireAuth(); // Chuyển hướng ngay nếu chưa đăng nhập
       initNav();
       renderCheckoutSummary();
+
+      // Mobile nav toggle
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileMenuIcon = document.getElementById("mobileMenuIcon");
+      const mobileNav = document.getElementById("mobileNav");
+      mobileMenuBtn.addEventListener("click", () => {
+        const isOpen = mobileNav.classList.toggle("grid-rows-[1fr]");
+        mobileNav.classList.toggle("grid-rows-[0fr]", !isOpen);
+        mobileMenuIcon.textContent = isOpen ? "close" : "menu";
+        mobileMenuBtn.setAttribute("aria-expanded", String(isOpen));
+      });
     </script>
     <script src="../js/animations.js"></script>
   </body>

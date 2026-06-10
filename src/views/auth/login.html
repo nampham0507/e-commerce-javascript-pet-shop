@@ -158,8 +158,9 @@
     </style>
   </head>
   <body class="bg-[#f5f5f5] flex flex-col min-h-screen">
-    <div class="flex items-center justify-center flex-1 p-md">
-      <main class="w-full max-w-[440px]">
+    <div class="relative overflow-hidden flex items-center justify-center flex-1 p-md">
+      <div class="gradient-mesh"></div>
+      <main class="relative z-10 w-full max-w-[440px]">
         <!-- Login Card -->
         <div
           class="bg-surface-container-lowest rounded-[32px] p-xl tinted-shadow border border-outline-variant/30 relative overflow-hidden reveal-scale"
@@ -276,7 +277,7 @@
             ></div>
             <!-- Submit Button -->
             <button
-              class="w-full py-md bg-primary-container text-on-primary-container font-headline-md text-headline-md rounded-full shadow-md hover:scale-[1.03] active:scale-95 transition-all duration-200 mt-md disabled:opacity-50 anim-pulse-glow btn-ripple"
+              class="btn-shine w-full py-md bg-primary-container text-on-primary-container font-headline-md text-headline-md rounded-full shadow-md hover:scale-[1.03] active:scale-95 transition-all duration-200 mt-md disabled:opacity-50 anim-pulse-glow btn-ripple"
               type="submit"
               id="submitBtn"
             >
@@ -295,7 +296,7 @@
             <!-- Google Login Button -->
             <a
               href="/auth/google"
-              class="w-full py-md bg-white border-2 border-outline-variant text-on-surface font-headline-md text-headline-md rounded-full shadow-md hover:scale-[1.03] active:scale-95 transition-all duration-200 flex items-center justify-center gap-md"
+              class="btn-shine w-full py-md bg-white border-2 border-outline-variant text-on-surface font-headline-md text-headline-md rounded-full shadow-md hover:scale-[1.03] active:scale-95 transition-all duration-200 flex items-center justify-center gap-md"
             >
               <svg class="w-5 h-5" viewBox="0 0 24 24">
                 <image

@@ -65,6 +65,64 @@
     });
   }
 
+  // ── 3D tilt-on-hover for .tilt-card elements ───────────────────────
+  const TILT_MAX_DEG = 7;
+  function handleTiltMove(e) {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const rotateX = ((cy - y) / cy) * TILT_MAX_DEG;
+    const rotateY = ((x - cx) / cx) * TILT_MAX_DEG;
+    card.style.transform = `perspective(900px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-6px)`;
+  }
+  function handleTiltLeave(e) {
+    e.currentTarget.style.transform = '';
+  }
+  function initTilt(root = document) {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+    if (reduceMotion || isCoarsePointer) return;
+    root.querySelectorAll('.tilt-card').forEach((card) => {
+      if (card.dataset.tiltBound) return;
+      card.dataset.tiltBound = 'true';
+      card.addEventListener('mousemove', handleTiltMove);
+      card.addEventListener('mouseleave', handleTiltLeave);
+    });
+  }
+
+  // ── Parallax scroll for [data-parallax] elements ───────────────────
+  function initParallax() {
+    const els = document.querySelectorAll('[data-parallax]');
+    if (!els.length) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let ticking = false;
+    function update() {
+      const scrollY = window.scrollY;
+      els.forEach((el) => {
+        const speed = parseFloat(el.dataset.parallax) || 0.15;
+        const offset = el.closest('section')?.offsetTop ?? 0;
+        const delta = (scrollY - offset) * speed;
+        el.style.transform = `translate3d(0, ${delta.toFixed(2)}px, 0)`;
+      });
+      ticking = false;
+    }
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(update);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+    update();
+  }
+
   // ── Init all ──────────────────────────────────────────────────────
   function init() {
     initStagger();
@@ -72,6 +130,8 @@
     initNavbarScroll();
     initPageEntrance();
     initCardHover();
+    initTilt();
+    initParallax();
   }
 
   // ── Expose global interface ───────────────────────────────────────
@@ -82,6 +142,8 @@
     initPageEntrance,
     initCardHover,
     initStagger,
+    initTilt,
+    initParallax,
     init
   };
 

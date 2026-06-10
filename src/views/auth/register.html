@@ -177,16 +177,17 @@
       <div
         class="w-full max-w-[520px] bg-surface-container-lowest rounded-[32px] p-lg md:p-xl border border-outline-variant/30 soft-shadow relative overflow-hidden reveal-scale"
       >
+        <div class="gradient-mesh"></div>
         <!-- Decorative Cat Ear Icon at top -->
         <div
-          class="absolute top-0 right-12 w-16 h-8 bg-primary-container rounded-b-full flex items-center justify-center"
+          class="absolute z-10 top-0 right-12 w-16 h-8 bg-primary-container rounded-b-full flex items-center justify-center"
         >
           <span
             class="material-symbols-outlined text-on-primary-container text-md"
             >pets</span
           >
         </div>
-        <div class="text-center mb-xl">
+        <div class="relative z-10 text-center mb-xl">
           <div class="flex items-center justify-center gap-3 mb-md">
             <img src="../images/logo.png" alt="Xám Pet Shop logo" class="w-12 h-12 object-contain anim-float" />
             <h1 class="font-headline-lg text-headline-lg text-primary mb-xs anim-fade-in-down">
@@ -197,7 +198,7 @@
             Tạo tài khoản để nhận ưu đãi đặc biệt cho thú cưng của bạn.
           </p>
         </div>
-        <form class="space-y-md" id="registerForm">
+        <form class="relative z-10 space-y-md" id="registerForm">
           <!-- Full Name -->
           <div class="space-y-xs group">
             <label class="font-label-md text-on-surface-variant px-unit"
@@ -334,7 +335,7 @@
           ></div>
           <!-- Action Button -->
           <button
-            class="w-full bg-primary-container text-on-primary-container font-headline-md py-4 rounded-full shadow-lg hover:scale-[1.02] active:scale-95 transition-all duration-200 mt-lg disabled:opacity-50 anim-pulse-glow btn-ripple"
+            class="btn-shine w-full bg-primary-container text-on-primary-container font-headline-md py-4 rounded-full shadow-lg hover:scale-[1.02] active:scale-95 transition-all duration-200 mt-lg disabled:opacity-50 anim-pulse-glow btn-ripple"
             type="submit"
             id="submitBtn"
           >
@@ -424,13 +425,15 @@
       <!-- Visual Anchor Image (Side) - Hidden on Small Screens -->
       <div class="hidden xl:block ml-xl max-w-sm">
         <div
-          class="bg-surface-container-high rounded-[40px] p-md rotate-3 border border-outline-variant/20 soft-shadow"
+          class="bg-surface-container-high rounded-[40px] p-md rotate-3 border border-outline-variant/20 soft-shadow tilt-card"
         >
-          <img
-            class="rounded-[32px] w-full h-auto object-cover"
-            data-alt="A close-up, high-quality photograph of a grey British Shorthair cat looking curiously into the camera. The background is a soft, blurred cream interior that complements the minimalist pet shop aesthetic. The lighting is bright and warm, emphasizing the soft texture of the fur and the cat's gentle expression. The overall mood is cozy, professional, and high-end, aligning with the soft minimalist brand identity."
-            src="../images/register.jpg"
-          />
+          <div class="img-zoom rounded-[32px] overflow-hidden">
+            <img
+              class="w-full h-auto object-cover"
+              data-alt="A close-up, high-quality photograph of a grey British Shorthair cat looking curiously into the camera. The background is a soft, blurred cream interior that complements the minimalist pet shop aesthetic. The lighting is bright and warm, emphasizing the soft texture of the fur and the cat's gentle expression. The overall mood is cozy, professional, and high-end, aligning with the soft minimalist brand identity."
+              src="../images/register.jpg"
+            />
+          </div>
           <div class="p-md text-center">
             <p class="font-headline-md text-primary italic">
               "Chào mừng bạn đến với Xám Pet Shop!"

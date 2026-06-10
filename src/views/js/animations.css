@@ -201,3 +201,143 @@ tbody tr:hover {
 .toast-exit {
   animation: fadeInDown 0.3s ease reverse both;
 }
+
+/* =============================================
+   PREMIUM DESIGN SYSTEM ADD-ONS
+   ============================================= */
+
+/* ── 3D tilt-on-hover cards ─────────────────── */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(.22,1,.36,1), box-shadow 0.45s ease;
+  will-change: transform;
+}
+.tilt-card .tilt-layer {
+  transform: translateZ(24px);
+  transition: transform 0.45s cubic-bezier(.22,1,.36,1);
+}
+
+/* ── Animated gradient mesh blobs (decorative bg) ── */
+@keyframes blob-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(50px, -40px) scale(1.12); }
+}
+@keyframes blob-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-40px, 35px) scale(1.08); }
+}
+.gradient-mesh {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.gradient-mesh::before,
+.gradient-mesh::after {
+  content: '';
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  opacity: 0.35;
+  will-change: transform;
+}
+.gradient-mesh::before {
+  width: 420px;
+  height: 420px;
+  top: -120px;
+  left: -100px;
+  background: radial-gradient(circle, #ffb347 0%, transparent 70%);
+  animation: blob-float-1 16s ease-in-out infinite;
+}
+.gradient-mesh::after {
+  width: 460px;
+  height: 460px;
+  bottom: -140px;
+  right: -120px;
+  background: radial-gradient(circle, #845400 0%, transparent 70%);
+  animation: blob-float-2 20s ease-in-out infinite;
+}
+
+/* ── Button shine sweep ──────────────────────── */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.btn-shine::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(115deg, transparent, rgba(255,255,255,0.55), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.65s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+.btn-shine:hover::before {
+  left: 130%;
+}
+
+/* ── Parallax helper ─────────────────────────── */
+[data-parallax] {
+  will-change: transform;
+}
+
+/* ── Image zoom on hover (product galleries) ─── */
+.img-zoom {
+  overflow: hidden;
+}
+.img-zoom img {
+  transition: transform 0.6s cubic-bezier(.22,1,.36,1);
+}
+.img-zoom:hover img {
+  transform: scale(1.08);
+}
+
+/* ── Glassmorphism surface ────────────────────── */
+.glass-surface {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* ── Premium gradient border wrap ─────────────── */
+.gradient-border {
+  position: relative;
+  isolation: isolate;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: linear-gradient(135deg, #ffb347, #845400, #ffddb6, #e07b00);
+  background-size: 300% 300%;
+  animation: gradient-x 4s ease infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+/* ── Reduced motion: disable heavy effects ────── */
+@media (prefers-reduced-motion: reduce) {
+  .tilt-card,
+  .tilt-card .tilt-layer,
+  [data-parallax],
+  .gradient-mesh::before,
+  .gradient-mesh::after,
+  .anim-float,
+  .anim-gradient-txt,
+  .anim-pulse-glow {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}

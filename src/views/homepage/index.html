@@ -16,6 +16,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../js/animations.css" />
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -627,15 +628,57 @@
               </div>
             </div>
           </div>
+
+          <!-- Mobile menu toggle -->
+          <button
+            id="mobileMenuBtn"
+            class="md:hidden inline-flex items-center justify-center p-2 text-on-surface-variant hover:text-primary transition-colors"
+            aria-label="Mở menu"
+            aria-expanded="false"
+          >
+            <span class="material-symbols-outlined" id="mobileMenuIcon">menu</span>
+          </button>
         </div>
+      </div>
+
+      <!-- Mobile nav panel -->
+      <div
+        id="mobileNav"
+        class="md:hidden grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out bg-surface/95 backdrop-blur-md"
+      >
+        <nav class="overflow-hidden flex flex-col px-lg py-sm gap-1">
+          <a href="/" class="flex items-center gap-sm px-md py-sm rounded-xl text-primary font-bold bg-primary-container/15 font-body-md text-body-md">
+            <span class="material-symbols-outlined text-[20px]">home</span>
+            Trang chủ
+          </a>
+          <a href="/product" class="flex items-center gap-sm px-md py-sm rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-body-md text-body-md">
+            <span class="material-symbols-outlined text-[20px]">storefront</span>
+            Sản phẩm
+          </a>
+          <a href="/homepage/categories" class="flex items-center gap-sm px-md py-sm rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-body-md text-body-md">
+            <span class="material-symbols-outlined text-[20px]">category</span>
+            Danh mục
+          </a>
+          <a href="/cart" class="flex items-center gap-sm px-md py-sm rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-body-md text-body-md">
+            <span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+            Giỏ hàng
+          </a>
+          <div id="mobileGuestNav" class="hidden flex-col gap-sm pt-sm mt-sm border-t border-outline-variant/20">
+            <a href="/auth/login" class="flex items-center justify-center px-md py-sm rounded-xl text-primary font-label-md border border-primary/30 hover:bg-primary-container/10 transition-colors">Đăng nhập</a>
+            <a href="/auth/register" class="flex items-center justify-center px-md py-sm rounded-xl bg-primary-container text-on-primary-container font-label-md hover:scale-[1.02] transition-transform">Đăng ký</a>
+          </div>
+        </nav>
       </div>
     </header>
 
     <main class="pt-[72px]">
       <!-- Hero Banner -->
       <section
-        class="relative w-full h-[500px] md:h-[600px] flex items-center overflow-hidden"
+        class="relative w-full h-[560px] md:h-[640px] flex items-center overflow-hidden"
       >
+        <!-- Animated gradient mesh blobs -->
+        <div class="gradient-mesh"></div>
+
         <!-- Particle canvas -->
         <canvas id="particleCanvas"></canvas>
 
@@ -644,6 +687,7 @@
             alt="Happy cat"
             class="w-full h-full object-cover object-center hero-image"
             src="../images/xam.png"
+            data-parallax="0.18"
           />
           <div
             class="absolute inset-0 bg-gradient-to-r from-background/95 via-background/60 to-background/10"
@@ -662,11 +706,18 @@
             <p class="hero-subtitle font-body-lg text-body-lg text-on-surface-variant mb-xl">
               Chăm sóc boss bằng những bữa ăn giàu dinh dưỡng từ Xám Pet Shop.
             </p>
-            <a
-              href="/product"
-              class="hero-cta inline-block bg-primary-container text-on-primary-container px-xl py-md rounded-full font-headline-md text-headline-md hover:scale-105 transition-all shadow-md active:scale-95 cta-pulse"
-              >🛒 Mua ngay</a
-            >
+            <div class="hero-cta flex flex-wrap items-center gap-md">
+              <a
+                href="/product"
+                class="btn-shine inline-block bg-primary-container text-on-primary-container px-xl py-md rounded-full font-headline-md text-headline-md hover:scale-105 transition-all shadow-md active:scale-95 cta-pulse"
+                >🛒 Mua ngay</a
+              >
+              <a
+                href="/homepage/categories"
+                class="btn-shine inline-flex items-center gap-2 border-2 border-primary/30 text-primary px-xl py-md rounded-full font-headline-md text-headline-md hover:scale-105 hover:border-primary transition-all active:scale-95 bg-white/40 backdrop-blur-sm"
+                >Khám phá danh mục <span class="material-symbols-outlined">arrow_outward</span></a
+              >
+            </div>
           </div>
         </div>
       </section>
@@ -680,7 +731,7 @@
           <div class="h-[2px] flex-grow mx-lg bg-gradient-to-r from-primary/30 to-transparent"></div>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-5 gap-lg">
-          <div class="cat-card reveal stagger-1 group bg-white rounded-[24px] p-lg border border-outline-variant/20 shadow-sm text-center">
+          <div class="cat-card tilt-card reveal stagger-1 group bg-white rounded-[24px] p-lg border border-outline-variant/20 shadow-sm text-center">
             <div class="w-24 h-24 mx-auto mb-md bg-gradient-to-br from-surface-container-low to-primary-container/20 rounded-full flex items-center justify-center p-4 shadow-inner">
               <img alt="Dry Food" class="cat-img w-full h-full object-contain"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqEESuCo-RmnGSk6VCM0A4bap9JjQwtLIeD3LDUW-NhrJUQmbKu83ehCbxd--QaI-xp3Lf5RoCYaanrOTe5iGZjCFcFPwVqnxBahpC1wD1ulqDDoZncjOuNP_j5YNEezhrRq0HUZTxF0DoNomNYdu7KK0ycmLR9niqOUI8-Vv6FnlhIaa4IZsJA1QmlcV8aIKqFGdpH4drTFRCnD2Lh-IyS6SlR-lK8bNW-yi_qFE_nWVEkbUXeLMb0sCmc9r_N-EOXpUUbh5kfkk" />
@@ -688,7 +739,7 @@
             <h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Hạt</h3>
             <a href="/product?category=food" class="text-primary font-label-md hover:underline transition-all group-hover:font-bold">Xem thêm →</a>
           </div>
-          <div class="cat-card reveal stagger-2 group bg-white rounded-[24px] p-lg border border-outline-variant/20 shadow-sm text-center">
+          <div class="cat-card tilt-card reveal stagger-2 group bg-white rounded-[24px] p-lg border border-outline-variant/20 shadow-sm text-center">
             <div class="w-24 h-24 mx-auto mb-md bg-gradient-to-br from-surface-container-low to-primary-container/20 rounded-full flex items-center justify-center p-4 shadow-inner">
               <img alt="Wet Food" class="cat-img w-full h-full object-contain"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBbpDoskxV57SOX7_A7_RclqC7LjfY_eZes-G_qXNSZV2FWnhc7NcRXJq6XYT_Vhaek1kn-MfKHPB8jgaej4IbPuLOyHF4dY7NaUhQwXbeTPQjZN6EKOCoEKwK4BZgTJ3TXCCKQsWUhtFk6P4eCxBQdgb6UhrxpR35hwGRPp0Afd0Gu0gLM-uL7zCC3pCXW6O03eefCNiLkUArrS0kQeDTyOtDcKpavXHREn8eQfJTc4XuQ-lujZ9qshZXQRGzEMvxwsOidRArxCE" />
@@ -696,7 +747,7 @@
             <h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Pate</h3>
             <a href="/product?category=pate" class="text-primary font-label-md hover:underline transition-all group-hover:font-bold">Xem thêm →</a>
           </div>
-          <div class="cat-card reveal stagger-3 group bg-white rounded-[24px] p-lg border border-outline-variant/20 shadow-sm text-center">
+          <div class="cat-card tilt-card reveal stagger-3 group bg-white rounded-[24px] p-lg border border-outline-variant/20 shadow-sm text-center">
             <div class="w-24 h-24 mx-auto mb-md bg-gradient-to-br from-surface-container-low to-primary-container/20 rounded-full flex items-center justify-center p-4 shadow-inner">
               <img alt="Treats" class="cat-img w-full h-full object-contain"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7_sM87T81uxy0iQFhjcxoe83OHSdWmN8x39r6iyF-z0OCDkwhs4hNnESZ7kpCfklYRmcy0OJVjiWkuy6sTXIvhB_ibTzgdJ2Xs9JMsXqdq-AdXy1RISG0PiiM2_3rxN2ausiVu9551CbNvRLeZv7L_qJPsiasvi9ddoLsScvj44SlU6rbD5JNRxyRBT8C48_xzaEwEJNc5v9nIpL-wI3WFH0otrUU2VKMocoWVt6b393gmhgAwtqwoMwl62Se4URr5A0x6k4OXmM" />
@@ -704,7 +755,7 @@
             <h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Snack</h3>
             <a href="/product?category=snack" class="text-primary font-label-md hover:underline transition-all group-hover:font-bold">Xem thêm →</a>
           </div>
-          <div class="cat-card reveal stagger-4 group bg-white rounded-[24px] p-lg border border-outline-variant/20 shadow-sm text-center">
+          <div class="cat-card tilt-card reveal stagger-4 group bg-white rounded-[24px] p-lg border border-outline-variant/20 shadow-sm text-center">
             <div class="w-24 h-24 mx-auto mb-md bg-gradient-to-br from-surface-container-low to-primary-container/20 rounded-full flex items-center justify-center p-4 shadow-inner">
               <img alt="Milk" class="cat-img w-full h-full object-contain"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPvMLJXgj4k5st9t5lFZnxra_9H8Grkpprrl_ar_p95jXXK5HNMwL7wjef9WkJQ_htZXBKvc6poYQcSkiLajWqXUjNXwuFYgS7Iv58KUSslnZ8od5Eu9BHwVehfGlzcFGWRu2-aMLaPV5daNSmQunboUeOqqeSdEjTi3GEUF9E3JG4o8gZFVkEfwaHY0jfNYEVqqsPXZ3ySAD4TcS2lNNxh8ebygsZsSL6n-NaSIf4yk62DryJprGQ5XFTw0S7xIiWisL-ruvwqno" />
@@ -712,7 +763,7 @@
             <h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Sữa</h3>
             <a href="/product?category=milk" class="text-primary font-label-md hover:underline transition-all group-hover:font-bold">Xem thêm →</a>
           </div>
-          <div class="cat-card reveal stagger-5 group bg-white rounded-[24px] p-lg border border-outline-variant/20 shadow-sm text-center">
+          <div class="cat-card tilt-card reveal stagger-5 group bg-white rounded-[24px] p-lg border border-outline-variant/20 shadow-sm text-center">
             <div class="w-24 h-24 mx-auto mb-md bg-gradient-to-br from-surface-container-low to-primary-container/20 rounded-full flex items-center justify-center p-4 shadow-inner">
               <img alt="Accessories" class="cat-img w-full h-full object-contain"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1qulHfNnMgniPDCQcQY1HGvURPzNXMFW1iU8toDHkTrxMj0tCWT_XAmZkfk2ODIUIYwTwJqW39zbGF0tdPdPlnMc-1htFSXEsOg68qQJ8rHPBl1JsIXoYKrJ2LZqWhqNjI6tUqfBDn_QxJhfLa68IYXMdxEwm_3DcMfuK6w09w5Cpn0v_lFByr-gxCT-VE2yeNI4B-GmdqCkZsRLRzhBnNGQrKUvfCcev5lvkVUgECGytQyWWxrS9mZjhEOuJtCq_7-v1pEiq-os" />
@@ -769,7 +820,7 @@
                 type="email"
               />
               <button
-                class="bg-primary text-on-primary px-xl py-md rounded-full font-label-md shadow-md hover:scale-105 transition-all active:scale-95 cta-pulse"
+                class="btn-shine bg-primary text-on-primary px-xl py-md rounded-full font-label-md shadow-md hover:scale-105 transition-all active:scale-95 cta-pulse"
               >
                 Đăng ký ngay ✉️
               </button>
@@ -932,6 +983,8 @@
       const userAvatarBtn = document.getElementById("userAvatarBtn");
       const productsContainer = document.getElementById("productsContainer");
 
+      const mobileGuestNav = document.getElementById("mobileGuestNav");
+
       function initNav() {
         if (isAuthenticated()) {
           const user = getUserInfo();
@@ -958,9 +1011,13 @@
             adminLink.style.display = "flex";
             menuAdminLink.style.display = "flex";
           }
+          mobileGuestNav.classList.add("hidden");
+          mobileGuestNav.classList.remove("flex");
         } else {
           guestNav.style.display = "";
           userNav.style.display = "none";
+          mobileGuestNav.classList.remove("hidden");
+          mobileGuestNav.classList.add("flex");
         }
       }
 
@@ -1001,11 +1058,11 @@
       // Render product card HTML
       function renderProductCard(product) {
         return `
-          <div class="bg-white rounded-[24px] border border-outline-variant/30 overflow-hidden shadow-sm hover:shadow-lg transition-all group flex flex-col">
-            <a href="/product/detail?id=${product._id}" class="relative p-lg h-64 flex items-center justify-center bg-white cursor-pointer">
+          <div class="tilt-card bg-white rounded-[24px] border border-outline-variant/30 overflow-hidden shadow-sm hover:shadow-2xl transition-all group flex flex-col">
+            <a href="/product/detail?id=${product._id}" class="img-zoom relative p-lg h-64 flex items-center justify-center bg-white cursor-pointer">
               <img
                 alt="${product.name}"
-                class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                class="max-w-full max-h-full object-contain"
                 src="${product.image || "https://via.placeholder.com/256?text=No+Image"}"
               />
               ${product.quantity < 10 ? '<div class="absolute top-md right-md"><span class="bg-error/20 text-error px-sm py-1 rounded-full font-label-sm">Sắp hết hàng</span></div>' : ""}
@@ -1076,6 +1133,9 @@
             '<div class="text-center py-xl col-span-full"><p class="text-error">Lỗi tải sản phẩm</p></div>';
         }
 
+        // Re-init 3D tilt for newly rendered cards
+        if (window.XamAnimations) window.XamAnimations.initTilt(productsContainer);
+
         // Add event listeners to add-to-cart buttons
         document.querySelectorAll("[data-product-id]").forEach((btn) => {
           btn.addEventListener("click", async () => {
@@ -1095,6 +1155,17 @@
           });
         });
       }
+
+      // Mobile nav toggle
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileMenuIcon = document.getElementById("mobileMenuIcon");
+      const mobileNav = document.getElementById("mobileNav");
+      mobileMenuBtn.addEventListener("click", () => {
+        const isOpen = mobileNav.classList.toggle("grid-rows-[1fr]");
+        mobileNav.classList.toggle("grid-rows-[0fr]", !isOpen);
+        mobileMenuIcon.textContent = isOpen ? "close" : "menu";
+        mobileMenuBtn.setAttribute("aria-expanded", String(isOpen));
+      });
 
       // Toggle dropdown
       userAvatarBtn.addEventListener("click", (e) => {
@@ -1323,5 +1394,6 @@
         }
       }, { passive: true });
     </script>
+    <script src="../js/animations.js"></script>
   </body>
 </html>

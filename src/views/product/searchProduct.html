@@ -324,19 +324,59 @@
               </div>
             </div>
           </div>
+
+          <!-- Mobile menu toggle -->
+          <button
+            id="mobileMenuBtn"
+            class="md:hidden inline-flex items-center justify-center p-2 text-on-surface-variant hover:text-primary transition-colors"
+            aria-label="Mở menu"
+            aria-expanded="false"
+          >
+            <span class="material-symbols-outlined" id="mobileMenuIcon">menu</span>
+          </button>
         </div>
+      </div>
+
+      <!-- Mobile nav panel -->
+      <div
+        id="mobileNav"
+        class="md:hidden grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out bg-surface/95 backdrop-blur-md"
+      >
+        <nav class="overflow-hidden flex flex-col px-lg py-sm gap-1">
+          <a href="/" class="flex items-center gap-sm px-md py-sm rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-body-md text-body-md">
+            <span class="material-symbols-outlined text-[20px]">home</span>
+            Trang chủ
+          </a>
+          <a href="/product" class="flex items-center gap-sm px-md py-sm rounded-xl text-primary font-bold bg-primary-container/15 font-body-md text-body-md">
+            <span class="material-symbols-outlined text-[20px]">storefront</span>
+            Sản phẩm
+          </a>
+          <a href="/homepage/categories" class="flex items-center gap-sm px-md py-sm rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-body-md text-body-md">
+            <span class="material-symbols-outlined text-[20px]">category</span>
+            Danh mục
+          </a>
+          <a href="/cart" class="flex items-center gap-sm px-md py-sm rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-body-md text-body-md">
+            <span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+            Giỏ hàng
+          </a>
+          <div id="mobileGuestNav" class="hidden flex-col gap-sm pt-sm mt-sm border-t border-outline-variant/20">
+            <a href="/auth/login" class="flex items-center justify-center px-md py-sm rounded-xl text-primary font-label-md border border-primary/30 hover:bg-primary-container/10 transition-colors">Đăng nhập</a>
+            <a href="/auth/register" class="flex items-center justify-center px-md py-sm rounded-xl bg-primary-container text-on-primary-container font-label-md hover:scale-[1.02] transition-transform">Đăng ký</a>
+          </div>
+        </nav>
       </div>
     </header>
 
     <main class="pt-32 pb-xl px-md max-w-container-max mx-auto min-h-screen">
       <!-- Search Hero — có tìm kiếm realtime -->
-      <div class="mb-xl text-center">
+      <div class="relative overflow-hidden rounded-[32px] mb-xl text-center py-xl">
+        <div class="gradient-mesh"></div>
         <h1
-          class="font-headline-xl text-headline-xl text-primary mb-md section-heading reveal"
+          class="relative z-10 font-headline-xl text-headline-xl text-primary mb-md section-heading reveal"
         >
           Tìm kiếm sản phẩm
         </h1>
-        <div class="max-w-2xl mx-auto relative group reveal delay-1">
+        <div class="relative z-10 max-w-2xl mx-auto group reveal delay-1">
           <input
             id="heroSearchInput"
             class="w-full bg-surface-container-lowest border-2 border-outline-variant focus:border-primary-container rounded-full px-lg py-4 text-body-lg soft-shadow focus:ring-0 transition-all outline-none"
@@ -346,14 +386,14 @@
           />
           <button
             id="heroSearchBtn"
-            class="absolute right-2 top-1/2 -translate-y-1/2 bg-primary-container text-on-primary-container h-12 w-12 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
+            class="btn-shine absolute right-2 top-1/2 -translate-y-1/2 bg-primary-container text-on-primary-container h-12 w-12 rounded-full flex items-center justify-center hover:scale-110 transition-transform"
           >
             <span class="material-symbols-outlined">search</span>
           </button>
         </div>
         <p
           id="searchResultCount"
-          class="mt-4 text-on-surface-variant font-label-md"
+          class="relative z-10 mt-4 text-on-surface-variant font-label-md"
         >
           Đang tải sản phẩm...
         </p>
@@ -604,6 +644,7 @@
       const chevronIcon = document.getElementById("chevronIcon");
       const logoutBtn = document.getElementById("logoutBtn");
       const userAvatarBtn = document.getElementById("userAvatarBtn");
+      const mobileGuestNav = document.getElementById("mobileGuestNav");
 
       function initNav() {
         if (isAuthenticated()) {
@@ -623,9 +664,13 @@
             adminLink.style.display = "flex";
             menuAdminLink.style.display = "flex";
           }
+          mobileGuestNav.classList.add("hidden");
+          mobileGuestNav.classList.remove("flex");
         } else {
           guestNav.style.display = "";
           userNav.style.display = "none";
+          mobileGuestNav.classList.remove("hidden");
+          mobileGuestNav.classList.add("flex");
         }
       }
 
@@ -745,10 +790,10 @@
 
       function renderProductCard(product) {
         return `
-          <div class="bg-white rounded-[24px] border border-outline-variant/40 overflow-hidden card-hover transition-all duration-300 group">
-            <a href="/product/detail?id=${product._id}" class="relative aspect-square p-lg bg-white flex items-center justify-center block">
+          <div class="tilt-card bg-white rounded-[24px] border border-outline-variant/40 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 group">
+            <a href="/product/detail?id=${product._id}" class="img-zoom relative aspect-square p-lg bg-white flex items-center justify-center block">
               <img
-                class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
+                class="w-full h-full object-contain"
                 src="${product.image || "https://via.placeholder.com/256?text=No+Image"}"
                 alt="${product.name}"
               />
@@ -763,7 +808,7 @@
               <p class="text-on-surface-variant text-label-sm line-clamp-2">${product.description || ""}</p>
               <div class="flex justify-between items-center pt-4">
                 <span class="text-primary font-bold text-headline-md">${formatPrice(product.price)}</span>
-                <button data-add-id="${product._id}" class="bg-primary-container text-on-primary-container p-3 rounded-full hover:scale-110 transition-transform active:scale-95">
+                <button data-add-id="${product._id}" class="btn-shine bg-primary-container text-on-primary-container p-3 rounded-full hover:scale-110 transition-transform active:scale-95">
                   <span class="material-symbols-outlined">add_shopping_cart</span>
                 </button>
               </div>
@@ -820,6 +865,7 @@
             window.XamAnimations.initStagger();
             window.XamAnimations.initCardHover();
             window.XamAnimations.initScrollReveal();
+            window.XamAnimations.initTilt(productsGrid);
           }
 
           const keyword = currentSearch ? ` cho "${currentSearch}"` : "";
@@ -978,6 +1024,17 @@
             }
           }
         }
+      });
+
+      // Mobile nav toggle
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const mobileMenuIcon = document.getElementById("mobileMenuIcon");
+      const mobileNav = document.getElementById("mobileNav");
+      mobileMenuBtn.addEventListener("click", () => {
+        const isOpen = mobileNav.classList.toggle("grid-rows-[1fr]");
+        mobileNav.classList.toggle("grid-rows-[0fr]", !isOpen);
+        mobileMenuIcon.textContent = isOpen ? "close" : "menu";
+        mobileMenuBtn.setAttribute("aria-expanded", String(isOpen));
       });
 
       initNav();
