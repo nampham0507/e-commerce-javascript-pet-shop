@@ -2,26 +2,8 @@
 
 <html class="light" lang="vi">
   <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../js/animations.css" />
+    <%- include('../partials/head-meta') %>
+    <title>Đăng nhập - Xám Pet Shop</title>
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -169,7 +151,7 @@
           <div class="flex flex-col items-center mb-xl">
             <div class="mb-md flex items-center justify-center gap-3">
               <img
-                src="../images/logo.png"
+                src="/images/logo.png"
                 alt="Xám Pet Shop logo"
                 class="w-12 h-12 object-contain anim-float"
               />
@@ -329,8 +311,8 @@
           class="mt-lg flex justify-center items-center gap-md opacity-40 grayscale hover:grayscale-0 transition-all duration-500"
         >
           <script type="module">
-            import { loginUser } from "../js/auth.js";
-            import { mergeLocalCartToBackend } from "../js/cart.js?v=1780539375677";
+            import { loginUser } from "/js/auth.js";
+            import { mergeLocalCartToBackend } from "/js/cart.js?v=1780539375677";
 
             const loginForm = document.getElementById("loginForm");
             const errorDiv = document.getElementById("errorMessage");
@@ -384,86 +366,7 @@
         </div>
       </main>
     </div>
-    <!-- Footer -->
-    <footer
-      class="w-full py-xl px-lg bg-surface-container-highest dark:bg-surface-container"
-    >
-      <div
-        class="grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto rounded-[24px] p-lg"
-      >
-        <div class="col-span-1 md:col-span-1">
-          <span class="font-headline-sm text-headline-sm text-on-surface"
-            >Xám Pet Shop</span
-          >
-          <p class="mt-md text-on-surface-variant text-label-sm">
-            Cửa hàng chăm sóc thú cưng cao cấp, mang lại sự ấm áp và tin cậy cho
-            người bạn bốn chân của bạn.
-          </p>
-        </div>
-        <div class="flex flex-col gap-sm">
-          <span class="font-label-md text-label-md text-primary">Liên hệ</span>
-          <span class="text-on-surface-variant text-label-sm"
-            >Address: Bắc Từ Liêm, Hà Nội</span
-          >
-          <span class="text-on-surface-variant text-label-sm"
-            >Phone: 038.339.2903</span
-          >
-          <span class="text-on-surface-variant text-label-sm"
-            >Email: nampham050723@gmail.com</span
-          >
-        </div>
-        <div class="flex flex-col gap-sm">
-          <span class="font-label-md text-label-md text-primary"
-            >Chính sách</span
-          >
-          <a
-            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
-            href="#"
-            >Chính sách bảo mật</a
-          >
-          <a
-            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
-            href="#"
-            >Điều khoản dịch vụ</a
-          >
-          <a
-            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
-            href="#"
-            >Giao hàng &amp; Hoàn trả</a
-          >
-        </div>
-        <div class="flex flex-col gap-sm">
-          <span class="font-label-md text-label-md text-primary"
-            >Mạng xã hội</span
-          >
-          <a
-            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
-            href="https://www.facebook.com/pdn.0507"
-            target="_blank"
-          >
-            <span class="material-symbols-outlined text-sm">public</span>
-            Facebook
-          </a>
-          <a
-            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
-            href="https://www.instagram.com/dinhnam.ph"
-            target="_blank"
-          >
-            <span class="material-symbols-outlined text-sm">camera_alt</span>
-            Instagram
-          </a>
-          <p class="mt-4 text-on-surface-variant text-[10px]">
-            © 2026 Xám Pet Shop. All rights reserved.
-          </p>
-        </div>
-      </div>
-      <div class="flex flex-col gap-sm">
-        <span class="font-label-md text-label-md text-primary">Bản đồ</span>
-        <div class="w-full h-32 rounded-lg overflow-hidden border border-outline-variant/30">
-          <iframe src="https://maps.google.com/maps?q=273%20%C4%91%C6%B0%E1%BB%9Dng%20C%E1%BB%95%20Nhu%E1%BA%BF%2C%20B%E1%BA%AFc%20T%E1%BB%AB%20Li%C3%AAm%2C%20H%C3%A0%20N%E1%BB%99i&t=&z=14&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-      </div>
-    </footer>
-    <script src="../js/animations.js"></script>
+    <%- include('../partials/footer') %>
+    <script src="/js/animations.js"></script>
   </body>
 </html>

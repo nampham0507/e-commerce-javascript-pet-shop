@@ -2,26 +2,8 @@
 
 <html class="light" lang="vi">
   <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../js/animations.css" />
+    <%- include('../partials/head-meta') %>
+    <title>Danh mục sản phẩm - Xám Pet Shop</title>
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -175,185 +157,7 @@
   </head>
   <body class="bg-background text-on-background font-body-md">
     <!-- Top Navigation Bar -->
-    <nav
-      class="bg-surface/80 backdrop-blur-md shadow-sm fixed top-0 w-full z-50 transition-all duration-200"
-    >
-      <div
-        class="flex justify-between items-center px-lg py-md w-full max-w-container-max mx-auto"
-      >
-        <a
-          href="/"
-          class="inline-flex items-center gap-3 font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim"
-        >
-          <img
-            src="../images/logo.png"
-            alt="Xám Pet Shop logo"
-            class="w-10 h-10 object-contain"
-          />
-          <span>Xám Pet Shop</span>
-        </a>
-        <nav class="hidden md:flex items-center gap-xl">
-          <a
-            class="text-on-surface-variant hover:text-primary transition-transform duration-200 hover:scale-105 font-body-md text-body-md"
-            href="/"
-            >Trang chủ</a
-          >
-          <a
-            class="text-on-surface-variant hover:text-primary transition-transform duration-200 hover:scale-105 font-body-md text-body-md"
-            href="/product"
-            >Sản phẩm</a
-          >
-          <a
-            class="text-primary font-bold border-b-2 border-primary pb-1 font-body-md text-body-md"
-            href="/homepage/categories"
-            >Danh mục</a
-          >
-        </nav>
-        <div class="flex items-center gap-md">
-          <a
-            href="/cart"
-            class="relative group cursor-pointer p-sm rounded-full hover:bg-surface-container transition-colors"
-          >
-            <span class="material-symbols-outlined text-on-surface-variant"
-              >shopping_cart</span
-            >
-          </a>
-          <!-- GUEST: hiển thị khi chưa đăng nhập -->
-          <div id="guestNav" class="hidden sm:flex items-center gap-sm">
-            <a
-              href="/auth/login"
-              class="text-on-surface-variant hover:text-primary font-label-md px-md py-sm transition-colors"
-              >Đăng nhập</a
-            >
-            <a
-              href="/auth/register"
-              class="bg-primary-container text-on-primary-container px-lg py-sm rounded-full font-label-md hover:scale-105 transition-all active:scale-95 inline-block"
-              >Đăng ký</a
-            >
-          </div>
-          <!-- USER: hiển thị khi đã đăng nhập -->
-          <div id="userNav" class="hidden items-center gap-sm relative">
-            <a
-              id="adminLink"
-              href="/admin"
-              class="hidden items-center gap-xs px-md py-1 bg-primary text-on-primary rounded-full font-label-sm hover:opacity-90 transition-opacity"
-            >
-              <span class="material-symbols-outlined text-[14px]"
-                >admin_panel_settings</span
-              >
-              Admin
-            </a>
-            <div class="relative">
-              <button id="userAvatarBtn" class="flex items-center gap-sm group">
-                <div id="userAvatar">A</div>
-                <span
-                  id="userName"
-                  class="hidden sm:block font-label-md text-on-surface max-w-[120px] truncate"
-                ></span>
-                <span
-                  class="material-symbols-outlined text-on-surface-variant text-[18px] transition-transform group-hover:text-primary"
-                  id="chevronIcon"
-                  >expand_more</span
-                >
-              </button>
-              <div
-                id="userMenu"
-                class="absolute right-0 top-full mt-2 w-52 bg-surface-container-lowest rounded-2xl shadow-lg border border-outline-variant/30 overflow-hidden z-50"
-              >
-                <div class="px-lg py-md border-b border-outline-variant/20">
-                  <p
-                    class="font-label-md text-on-surface truncate"
-                    id="menuUserName"
-                  ></p>
-                  <p
-                    class="text-label-sm text-on-surface-variant truncate"
-                    id="menuUserEmail"
-                  ></p>
-                </div>
-                <div class="py-sm">
-                  <a
-                    href="/profile"
-                    class="flex items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md"
-                  >
-                    <span class="material-symbols-outlined text-[18px]"
-                      >account_circle</span
-                    >
-                    Hồ sơ của tôi
-                  </a>
-                  <a
-                    href="/order/detail"
-                    class="flex items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md"
-                  >
-                    <span class="material-symbols-outlined text-[18px]"
-                      >receipt_long</span
-                    >
-                    Đơn hàng của tôi
-                  </a>
-                  <a
-                    id="menuAdminLink"
-                    href="/admin"
-                    class="hidden items-center gap-sm px-lg py-sm text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-label-md"
-                  >
-                    <span class="material-symbols-outlined text-[18px]"
-                      >admin_panel_settings</span
-                    >
-                    Trang Admin
-                  </a>
-                  <button
-                    id="logoutBtn"
-                    class="w-full flex items-center gap-sm px-lg py-sm text-error hover:bg-error-container/20 transition-colors font-label-md"
-                  >
-                    <span class="material-symbols-outlined text-[18px]"
-                      >logout</span
-                    >
-                    Đăng xuất
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Mobile menu toggle -->
-          <button
-            id="mobileMenuBtn"
-            class="md:hidden inline-flex items-center justify-center p-2 text-on-surface-variant hover:text-primary transition-colors"
-            aria-label="Mở menu"
-            aria-expanded="false"
-          >
-            <span class="material-symbols-outlined" id="mobileMenuIcon">menu</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- Mobile nav panel -->
-      <div
-        id="mobileNav"
-        class="md:hidden grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-in-out bg-surface/95 backdrop-blur-md"
-      >
-        <nav class="overflow-hidden flex flex-col px-lg py-sm gap-1">
-          <a href="/" class="flex items-center gap-sm px-md py-sm rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-body-md text-body-md">
-            <span class="material-symbols-outlined text-[20px]">home</span>
-            Trang chủ
-          </a>
-          <a href="/product" class="flex items-center gap-sm px-md py-sm rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-body-md text-body-md">
-            <span class="material-symbols-outlined text-[20px]">storefront</span>
-            Sản phẩm
-          </a>
-          <a href="/homepage/categories" class="flex items-center gap-sm px-md py-sm rounded-xl text-primary font-bold bg-primary-container/15 font-body-md text-body-md">
-            <span class="material-symbols-outlined text-[20px]">category</span>
-            Danh mục
-          </a>
-          <a href="/cart" class="flex items-center gap-sm px-md py-sm rounded-xl text-on-surface-variant hover:text-primary hover:bg-surface-container transition-colors font-body-md text-body-md">
-            <span class="material-symbols-outlined text-[20px]">shopping_cart</span>
-            Giỏ hàng
-          </a>
-          <div id="mobileGuestNav" class="hidden flex-col gap-sm pt-sm mt-sm border-t border-outline-variant/20">
-            <a href="/auth/login" class="flex items-center justify-center px-md py-sm rounded-xl text-primary font-label-md border border-primary/30 hover:bg-primary-container/10 transition-colors">Đăng nhập</a>
-            <a href="/auth/register" class="flex items-center justify-center px-md py-sm rounded-xl bg-primary-container text-on-primary-container font-label-md hover:scale-[1.02] transition-transform">Đăng ký</a>
-          </div>
-        </nav>
-      </div>
-    </nav>
+    <%- include('../partials/navbar', { activePage: 'categories' }) %>
     <!-- Main Content Canvas -->
     <main
       class="pt-[100px] pb-xl w-full max-w-container-max mx-auto px-margin-mobile md:px-lg"
@@ -586,75 +390,9 @@
       </section>
     </main>
     <!-- Footer -->
-    <footer
-      class="bg-surface-container-highest dark:bg-surface-container w-full mt-xl"
-    >
-      <div
-        class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-4 gap-lg max-w-container-max mx-auto"
-      >
-        <div class="col-span-1 md:col-span-1">
-          <div
-            class="font-headline-sm text-headline-sm text-on-surface font-bold mb-md"
-          >
-            Xám Pet Shop
-          </div>
-          <p class="font-body-sm text-label-sm text-on-surface-variant mb-md">
-            Điểm đến tin cậy cho cộng đồng yêu mèo. Chúng tôi cung cấp những gì
-            tốt nhất cho thú cưng của bạn.
-          </p>
-        </div>
-        <div class="flex flex-col gap-sm">
-          <p class="font-label-md text-primary uppercase">Contact</p>
-          <p
-            class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer text-label-sm"
-          >
-            Address: Bắc Từ Liêm, Hà Nội
-          </p>
-          <p
-            class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer text-label-sm"
-          >
-            Phone: 038.339.2903
-          </p>
-          <p
-            class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer text-label-sm"
-          >
-            Email: nampham050723@gmail.com
-          </p>
-        </div>
-        <div class="flex flex-col gap-sm">
-          <p class="font-label-md text-primary uppercase">Quick Links</p>
-          <a
-            class="text-on-surface-variant hover:text-primary transition-colors text-label-sm"
-            href="#"
-            >Trang chủ</a
-          >
-          <a
-            class="text-on-surface-variant hover:text-primary transition-colors text-label-sm"
-            href="#"
-            >Sản phẩm</a
-          >
-          <a class="text-primary underline text-label-sm" href="#">Danh mục</a>
-        </div>
-        <div class="flex flex-col gap-sm">
-          <p class="font-label-md text-primary uppercase">Follow Us</p>
-          <a
-            class="text-on-surface-variant hover:text-primary transition-colors text-label-sm flex items-center gap-2"
-            href="#"
-          >
-            Facebook
-          </a>
-        </div>
-      </div>
-      <div
-        class="max-w-container-max mx-auto px-lg py-md border-t border-outline-variant text-center md:text-left"
-      >
-        <p class="text-label-sm text-on-surface-variant opacity-70">
-          © 2026 Xám Pet Shop. All rights reserved.
-        </p>
-      </div>
-    </footer>
+    <%- include('../partials/footer') %>
     <script type="module">
-      import { isAuthenticated, getUserInfo, logoutUser } from "../js/auth.js";
+      import { isAuthenticated, getUserInfo, logoutUser } from "/js/auth.js";
       const guestNav = document.getElementById("guestNav");
       const userNav = document.getElementById("userNav");
       const userAvatar = document.getElementById("userAvatar");
@@ -722,6 +460,6 @@
       });
       initNav();
     </script>
-    <script src="../js/animations.js"></script>
+    <script src="/js/animations.js"></script>
   </body>
 </html>

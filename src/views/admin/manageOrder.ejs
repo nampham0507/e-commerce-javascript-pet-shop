@@ -2,26 +2,8 @@
 
 <html class="light" lang="vi">
   <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="../js/animations.css" />
+    <%- include('../partials/head-meta') %>
+    <title>Quản lý đơn hàng - Xám Pet Shop</title>
     <style>
       .material-symbols-outlined {
         font-variation-settings:
@@ -161,107 +143,7 @@
     </script>
   </head>
   <body class="bg-surface-bright text-on-surface font-body-md antialiased">
-    <!-- SideNavBar (The Anchor) -->
-    <aside
-      class="flex flex-col h-screen fixed left-0 top-0 border-r border-outline-variant bg-surface-container-low dark:bg-surface-container-lowest docked left-0 h-full w-64 shadow-md z-50"
-    >
-      <div class="px-lg py-xl">
-        <h1 class="font-headline-sm text-headline-sm text-primary">
-          Admin Panel
-        </h1>
-        <p class="text-label-sm text-on-surface-variant opacity-70">
-          Xám Pet Shop Management
-        </p>
-        <div
-          class="mt-md pt-md border-t border-outline-variant/30 flex items-center gap-sm"
-        >
-          <div
-            id="adminAvatarSidebar"
-            class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-label-sm flex-shrink-0"
-          >
-            A
-          </div>
-          <span
-            id="adminDisplayName"
-            class="text-label-sm text-on-surface font-semibold truncate max-w-[130px]"
-            >Admin</span
-          >
-        </div>
-      </div>
-      <nav class="flex-1 space-y-2 mt-md">
-        <!-- Dashboard -->
-        <a
-          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-surface-container-highest translate-x-1 duration-150"
-          href="/admin"
-        >
-          <span class="material-symbols-outlined" data-icon="dashboard"
-            >dashboard</span
-          >
-          <span class="font-label-md text-label-md">Dashboard</span>
-        </a>
-        <!-- Orders (ACTIVE) -->
-        <a
-          class="bg-primary-container text-on-primary-container rounded-xl mx-2 px-4 py-3 flex items-center gap-3 shadow-sm"
-          href="/admin/manageOrder"
-        >
-          <span class="material-symbols-outlined" data-icon="shopping_bag"
-            >shopping_bag</span
-          >
-          <span class="font-label-md text-label-md">Orders</span>
-        </a>
-        <!-- Products -->
-        <a
-          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-surface-container-highest"
-          href="/admin/manageProduct"
-        >
-          <span class="material-symbols-outlined" data-icon="inventory_2"
-            >inventory_2</span
-          >
-          <span class="font-label-md text-label-md">Products</span>
-        </a>
-        <a
-          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-surface-container-highest"
-          href="/admin/manageCategory"
-        >
-          <span class="material-symbols-outlined">category</span>
-          <span class="font-label-md text-label-md">Danh mục</span>
-        </a>
-        <a
-          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-surface-container-highest"
-          href="/admin/manageBrand"
-        >
-          <span class="material-symbols-outlined">verified</span>
-          <span class="font-label-md text-label-md">Thương hiệu</span>
-        </a>
-        <!-- Users -->
-        <a
-          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-surface-container-highest"
-          href="/admin/manageCustomer"
-        >
-          <span class="material-symbols-outlined" data-icon="group">group</span>
-          <span class="font-label-md text-label-md">Users</span>
-        </a>
-        <!-- Reports -->
-        <a
-          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors hover:bg-surface-container-highest"
-          href="/admin/report"
-        >
-          <span class="material-symbols-outlined" data-icon="assessment"
-            >assessment</span
-          >
-          <span class="font-label-md text-label-md">Reports</span>
-        </a>
-      </nav>
-      <div class="p-lg border-t border-outline-variant">
-        <button
-          id="logoutBtn"
-          class="text-on-surface-variant hover:bg-surface-container-high rounded-xl w-full px-4 py-3 flex items-center gap-3 transition-colors cursor-pointer"
-        >
-          <span class="material-symbols-outlined">logout</span>
-          <span class="font-label-md text-label-md">Logout</span>
-        </button>
-      </div>
-    </aside>
+    <%- include('../partials/admin-sidebar', { activePage: 'orders' }) %>
     <!-- Main Content Area -->
     <main class="ml-64 min-h-screen bg-surface p-xl">
       <!-- Header & Stats Row -->
@@ -497,82 +379,7 @@
           </div>
         </div>
       </div>
-      <!-- Footer -->
-      <footer
-        class="w-full py-xl px-lg grid grid-cols-1 md:grid-cols-5 gap-lg bg-surface-container-highest dark:bg-surface-container mt-xl rounded-[24px]"
-      >
-        <div class="col-span-1 md:col-span-1">
-          <span class="font-headline-sm text-headline-sm text-on-surface"
-            >Xám Pet Shop</span
-          >
-          <p class="mt-md text-on-surface-variant text-label-sm">
-            Cửa hàng chăm sóc thú cưng cao cấp, mang lại sự ấm áp và tin cậy cho
-            người bạn bốn chân của bạn.
-          </p>
-        </div>
-        <div class="flex flex-col gap-sm">
-          <span class="font-label-md text-label-md text-primary">Liên hệ</span>
-          <span class="text-on-surface-variant text-label-sm"
-            >Address: Bắc Từ Liêm, Hà Nội</span
-          >
-          <span class="text-on-surface-variant text-label-sm"
-            >Phone: 038.339.2903</span
-          >
-          <span class="text-on-surface-variant text-label-sm"
-            >Email: nampham050723@gmail.com</span
-          >
-        </div>
-        <div class="flex flex-col gap-sm">
-          <span class="font-label-md text-label-md text-primary"
-            >Chính sách</span
-          >
-          <a
-            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
-            href="#"
-            >Chính sách bảo mật</a
-          >
-          <a
-            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
-            href="#"
-            >Điều khoản dịch vụ</a
-          >
-          <a
-            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity"
-            href="#"
-            >Giao hàng &amp; Hoàn trả</a
-          >
-        </div>
-        <div class="flex flex-col gap-sm">
-          <span class="font-label-md text-label-md text-primary"
-            >Mạng xã hội</span
-          >
-          <a
-            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
-            href="https://www.facebook.com/pdn.0507"
-            target="_blank"
-          >
-            <span class="material-symbols-outlined text-sm">public</span>
-            Facebook
-          </a>
-          <a
-            class="text-on-surface-variant hover:text-primary text-label-sm transition-opacity flex items-center gap-2"
-            href="https://www.instagram.com/dinhnam.ph"
-            target="_blank"
-          >
-            <span class="material-symbols-outlined text-sm">camera_alt</span>
-            Instagram
-          </a>
-          <p class="mt-4 text-on-surface-variant text-[10px]">
-            © 2026 Xám Pet Shop. All rights reserved.
-          </p>
-        </div>
-      <div class="flex flex-col gap-sm">
-        <span class="font-label-md text-label-md text-primary">Bản đồ</span>
-        <div class="w-full h-32 rounded-lg overflow-hidden border border-outline-variant/30">
-          <iframe src="https://maps.google.com/maps?q=273%20%C4%91%C6%B0%E1%BB%9Dng%20C%E1%BB%95%20Nhu%E1%BA%BF%2C%20B%E1%BA%AFc%20T%E1%BB%AB%20Li%C3%AAm%2C%20H%C3%A0%20N%E1%BB%99i&t=&z=14&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-      </div>
-    </footer>
+    <%- include('../partials/footer') %>
     </main>
       <!-- Order Detail Modal -->
       <div
@@ -694,8 +501,8 @@
         createAdminOrder,
         getAllUsers,
         getAdminProducts,
-      } from "../js/admin.js";
-      import { isAuthenticated, getUserInfo } from "../js/auth.js";
+      } from "/js/admin.js";
+      import { isAuthenticated, getUserInfo } from "/js/auth.js";
 
       // Check auth
       if (!isAuthenticated() || getUserInfo()?.role !== "admin") {
@@ -1645,7 +1452,7 @@
     </script>
     <script type="module">
       // === THÊM VÀO SCRIPT HIỆN CÓ CỦA MỖI TRANG ADMIN ===
-      import { logoutUser, getUserInfo, isAuthenticated } from "../js/auth.js";
+      import { logoutUser, getUserInfo, isAuthenticated } from "/js/auth.js";
 
       // Kiểm tra auth
       if (!isAuthenticated()) {
@@ -1680,6 +1487,6 @@
         });
       }
     </script>
-    <script src="../js/animations.js"></script>
+    <script src="/js/animations.js"></script>
   </body>
 </html>

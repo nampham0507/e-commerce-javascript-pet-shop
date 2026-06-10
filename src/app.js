@@ -6,6 +6,10 @@ const passport = require("./config/passport");
 
 const app = express();
 
+// View engine setup
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -25,7 +29,15 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Serve static files from views folder
+// Block direct access to .ejs template sources before they hit the static handler
+app.use((req, res, next) => {
+  if (req.path.endsWith(".ejs")) {
+    return res.status(404).end();
+  }
+  next();
+});
+
+// Serve static assets (images, css, js, uploads) from the views folder
 app.use(express.static(path.join(__dirname, "views")));
 
 // Test route
@@ -49,71 +61,71 @@ app.use("/api/chat", require("./routes/chatRoutes"));
 
 // Routes - HTML Pages
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/homepage/index.html"));
+  res.render("homepage/index", { activePage: "home" });
 });
 
 app.get("/admin", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/admin/index.html"));
+  res.render("admin/index", { activePage: "dashboard" });
 });
 
 app.get("/admin/manageCustomer", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/admin/manageCustomer.html"));
+  res.render("admin/manageCustomer", { activePage: "users" });
 });
 
 app.get("/admin/manageProduct", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/admin/manageProduct.html"));
+  res.render("admin/manageProduct", { activePage: "products" });
 });
 
 app.get("/admin/manageBrand", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/admin/manageBrand.html"));
+  res.render("admin/manageBrand", { activePage: "brands" });
 });
 
 app.get("/admin/manageCategory", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/admin/manageCategory.html"));
+  res.render("admin/manageCategory", { activePage: "categories" });
 });
 
 app.get("/admin/manageOrder", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/admin/manageOrder.html"));
+  res.render("admin/manageOrder", { activePage: "orders" });
 });
 
 app.get("/admin/report", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/admin/report.html"));
+  res.render("admin/report", { activePage: "reports" });
 });
 
 app.get("/auth/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/auth/login.html"));
+  res.render("auth/login");
 });
 
 app.get("/auth/register", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/auth/register.html"));
+  res.render("auth/register");
 });
 
 app.get("/product", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/product/searchProduct.html"));
+  res.render("product/searchProduct", { activePage: "products" });
 });
 
 app.get("/product/detail", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/product/productDetail.html"));
+  res.render("product/productDetail", { activePage: "products" });
 });
 
 app.get("/cart", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/cart/cart.html"));
+  res.render("cart/cart", { activePage: "cart" });
 });
 
 app.get("/order/checkout", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/order/checkout.html"));
+  res.render("order/checkout", { activePage: "" });
 });
 
 app.get("/order/detail", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/order/orderDetail.html"));
+  res.render("order/orderDetail", { activePage: "" });
 });
 
 app.get("/homepage/categories", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/homepage/categories.html"));
+  res.render("homepage/categories", { activePage: "categories" });
 });
 
 app.get("/profile", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/profile/profile.html"));
+  res.render("profile/profile", { activePage: "" });
 });
 
 // Error handling middleware

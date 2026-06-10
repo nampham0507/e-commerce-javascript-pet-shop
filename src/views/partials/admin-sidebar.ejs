@@ -1,0 +1,75 @@
+<%
+// activePage: 'dashboard' | 'orders' | 'products' | 'categories' | 'brands' | 'users' | 'reports'
+const activePage = locals.activePage || '';
+const linkClass = (page) => activePage === page
+  ? 'bg-primary-container text-on-primary-container rounded-xl mx-2 px-4 py-3 flex items-center gap-3 shadow-sm transition-all duration-150 translate-x-1'
+  : 'text-on-surface-variant hover:bg-surface-container-high rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors';
+%>
+<!-- SideNavBar -->
+<aside
+  class="flex flex-col h-screen fixed left-0 top-0 border-r border-outline-variant bg-surface-container-low w-64 z-50"
+>
+  <div class="px-lg py-xl">
+    <h1 class="font-headline-sm text-headline-sm text-primary">
+      Admin Panel
+    </h1>
+    <p class="text-label-sm text-on-surface-variant opacity-70">
+      Xám Pet Shop Management
+    </p>
+    <!-- Admin info -->
+    <div
+      class="mt-md pt-md border-t border-outline-variant/30 flex items-center gap-sm"
+    >
+      <div
+        id="adminAvatarSidebar"
+        class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-label-sm flex-shrink-0"
+      >
+        A
+      </div>
+      <span
+        id="adminDisplayName"
+        class="text-label-sm text-on-surface font-semibold truncate max-w-[130px]"
+        >Admin</span
+      >
+    </div>
+  </div>
+  <nav class="flex-grow space-y-2 py-md">
+    <a class="<%= linkClass('dashboard') %>" href="/admin">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span class="font-label-md text-label-md">Dashboard</span>
+    </a>
+    <a class="<%= linkClass('orders') %>" href="/admin/manageOrder">
+      <span class="material-symbols-outlined">shopping_bag</span>
+      <span class="font-label-md text-label-md">Orders</span>
+    </a>
+    <a class="<%= linkClass('products') %>" href="/admin/manageProduct">
+      <span class="material-symbols-outlined">inventory_2</span>
+      <span class="font-label-md text-label-md">Products</span>
+    </a>
+    <a class="<%= linkClass('categories') %>" href="/admin/manageCategory">
+      <span class="material-symbols-outlined">category</span>
+      <span class="font-label-md text-label-md">Danh mục</span>
+    </a>
+    <a class="<%= linkClass('brands') %>" href="/admin/manageBrand">
+      <span class="material-symbols-outlined">verified</span>
+      <span class="font-label-md text-label-md">Thương hiệu</span>
+    </a>
+    <a class="<%= linkClass('users') %>" href="/admin/manageCustomer">
+      <span class="material-symbols-outlined">group</span>
+      <span class="font-label-md text-label-md">Users</span>
+    </a>
+    <a class="<%= linkClass('reports') %>" href="/admin/report">
+      <span class="material-symbols-outlined">assessment</span>
+      <span class="font-label-md text-label-md">Reports</span>
+    </a>
+  </nav>
+  <div class="pb-xl border-t border-outline-variant pt-md">
+    <button
+      id="logoutBtn"
+      class="text-on-surface-variant hover:bg-error-container/30 hover:text-error rounded-xl mx-2 px-4 py-3 flex items-center gap-3 transition-colors cursor-pointer w-[calc(100%-16px)]"
+    >
+      <span class="material-symbols-outlined">logout</span>
+      <span class="font-label-md text-label-md">Logout</span>
+    </button>
+  </div>
+</aside>
