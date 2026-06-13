@@ -55,6 +55,7 @@ app.use("/api/orders", require("./routes/orderRoutes"));
 app.use("/api/cart", require("./routes/cartRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/reviews", require("./routes/reviewRoutes"));
+app.use("/api/replies", require("./routes/replyRoutes"));
 app.use("/api/payments", require("./routes/vnpayRoutes"));
 app.use("/api/chat", require("./routes/chatRoutes"));
 // app.use('/api/customers', require('./routes/customerRoutes'));
@@ -90,6 +91,10 @@ app.get("/admin/manageOrder", (req, res) => {
 
 app.get("/admin/report", (req, res) => {
   res.render("admin/report", { activePage: "reports" });
+});
+
+app.get("/admin/manageReviews", (req, res) => {
+  res.render("admin/manageReviews", { activePage: "reviews" });
 });
 
 app.get("/auth/login", (req, res) => {

@@ -12,24 +12,40 @@ const reviewSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    order: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Order",
+      required: true,
+    },
     rating: {
       type: Number,
       required: true,
       min: 1,
       max: 5,
     },
-    comment: {
+    title: {
       type: String,
+      required: true,
       trim: true,
-      maxlength: 1000,
+      maxlength: 120,
     },
-    adminReply: {
+    content: {
       type: String,
+      required: true,
       trim: true,
-      maxlength: 1000,
+      maxlength: 2000,
     },
-    adminReplyAt: {
-      type: Date,
+    images: {
+      type: [String],
+      default: [],
+      validate: {
+        validator: (arr) => arr.length <= 5,
+        message: "Tối đa 5 ảnh cho mỗi đánh giá",
+      },
+    },
+    isVerifiedPurchase: {
+      type: Boolean,
+      default: true,
     },
   },
   { timestamps: true }

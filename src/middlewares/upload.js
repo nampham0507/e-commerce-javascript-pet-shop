@@ -29,4 +29,18 @@ const uploadMiddleware = (req, res, next) => {
   });
 };
 
+/**
+ * Middleware xử lý upload ảnh đánh giá (tối đa 5 ảnh)
+ * Bọc multer để lỗi upload không block request
+ */
+const uploadReviewImages = (req, res, next) => {
+  upload.array("images", 5)(req, res, (err) => {
+    if (err) {
+      console.error("Multer error:", err);
+    }
+    next();
+  });
+};
+
 module.exports = uploadMiddleware;
+module.exports.uploadReviewImages = uploadReviewImages;

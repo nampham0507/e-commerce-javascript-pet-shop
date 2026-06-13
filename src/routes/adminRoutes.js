@@ -9,6 +9,7 @@ const customerAdminController = require("../controllers/customerAdminController"
 const dashboardController = require("../controllers/dashboardController");
 const reportController = require("../controllers/reportController");
 const categoryAdminController = require("../controllers/categoryAdminController");
+const reviewController = require("../controllers/reviewController");
 
 // Middlewares
 const authMiddleware = require("../middlewares/auth");
@@ -213,6 +214,14 @@ router.get(
   authMiddleware,
   adminMiddleware,
   customerAdminController.getCustomerStats
+);
+
+// ===== Quản lý đánh giá =====
+router.get(
+  "/reviews",
+  authMiddleware,
+  adminMiddleware,
+  reviewController.getAllReviewsAdmin
 );
 
 module.exports = router;

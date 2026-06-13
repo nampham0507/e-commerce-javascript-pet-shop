@@ -4,6 +4,11 @@
   <head>
     <%- include('../partials/head-meta') %>
     <title>Quản lý sản phẩm - Xám Pet Shop</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
     <script id="tailwind-config">
       tailwind.config = {
         darkMode: "class",
@@ -153,6 +158,27 @@
       }
       .ts-control > input {
         font-size: 14px;
+      }
+      .ts-dropdown {
+        background-color: #ffffff !important;
+        border: 1px solid #d6c3b0 !important;
+        border-radius: 1rem !important;
+        overflow: hidden;
+        box-shadow: 0 10px 30px -10px rgba(132, 84, 0, 0.15);
+      }
+      .ts-dropdown .ts-dropdown-content {
+        background-color: #ffffff !important;
+      }
+      .ts-dropdown .option,
+      .ts-dropdown [data-selectable] {
+        color: #211a13 !important;
+        background-color: #ffffff !important;
+        padding: 0.5rem 1.25rem;
+      }
+      .ts-dropdown .option.active,
+      .ts-dropdown [data-selectable].active {
+        background-color: #f9ecdf !important;
+        color: #845400 !important;
       }
     </style>
   </head>

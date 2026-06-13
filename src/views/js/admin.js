@@ -431,3 +431,17 @@ export const deleteUser = async (userId) => {
     return { success: false, message: error.message };
   }
 };
+
+// Review Management
+export const getAdminReviews = async (params = {}) => {
+  try {
+    const query = new URLSearchParams(params).toString();
+    const response = await fetch(
+      `${API_BASE_URL}/admin/reviews${query ? `?${query}` : ""}`,
+      { headers: getAuthHeaders() }
+    );
+    return await response.json();
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};

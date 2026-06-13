@@ -1,18 +1,62 @@
 const express = require("express");
 const router = express.Router();
+
 const authMiddleware = require("../middlewares/auth");
+const { uploadReviewImages } = require("../middlewares/upload");
+const { verifyPurchase, isReviewOwner } = require("../middlewares/reviewAuth");
+const {
+  validateCreateReview,
+  validateUpdateReview,
+  validateReply,
+} = require("../middlewares/reviewValidators");
+
 const reviewController = require("../controllers/reviewController");
-const adminMiddleware = require("../middlewares/admin");
+const replyController = require("../controllers/replyController");
 
-// Public: lấy đánh giá
-router.get("/:productId", reviewController.getReviews);
+// Public: lấy danh sách đánh giá + thống kê của 1 sản phẩm
+router.get("/product/:productId", reviewController.getProductReviews);
 
-// Cần đăng nhập: tạo / xóa
-router.post("/:productId", authMiddleware, reviewController.createReview);
-router.delete("/:productId", authMiddleware, reviewController.deleteReview);
+// Auth: kiểm tra quyền đánh giá (đã mua & nhận hàng, đã đánh giá chưa)
+router.get(
+  "/:productId/eligibility",
+  authMiddleware,
+  reviewController.checkEligibility
+);
 
-// Admin: Trả lời đánh giá & Xóa phản hồi
-router.post("/:productId/:reviewId/reply", authMiddleware, adminMiddleware, reviewController.replyReview);
-router.delete("/:productId/:reviewId/reply", authMiddleware, adminMiddleware, reviewController.deleteReply);
+// Auth + đã mua & nhận hàng: tạo đánh giá mới
+router.post(
+  "/",
+  authMiddleware,
+  uploadReviewImages,
+  validateCreateReview,
+  verifyPurchase,
+  reviewController.createReview
+);
+
+// Auth + chủ sở hữu: sửa đánh giá
+router.put(
+  "/:id",
+  authMiddleware,
+  isReviewOwner,
+  uploadReviewImages,
+  validateUpdateReview,
+  reviewController.updateReview
+);
+
+// Auth + chủ sở hữu: xóa đánh giá
+router.delete(
+  "/:id",
+  authMiddleware,
+  isReviewOwner,
+  reviewController.deleteReview
+);
+
+// Auth: trả lời đánh giá hoặc trả lời 1 phản hồi khác (nested)
+router.post(
+  "/:id/replies",
+  authMiddleware,
+  validateReply,
+  replyController.createReply
+);
 
 module.exports = router;

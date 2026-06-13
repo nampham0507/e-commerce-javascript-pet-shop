@@ -5,6 +5,25 @@ const Product = require("./src/models/Product");
 const Brand = require("./src/models/Brand");
 const User = require("./src/models/User");
 const Review = require("./src/models/Review");
+const Order = require("./src/models/Order");
+const Cart = require("./src/models/Cart");
+const CartItem = require("./src/models/CartItem");
+const Reply = require("./src/models/Reply");
+
+const reviewTexts = [
+  {
+    title: "Sản phẩm tuyệt vời!",
+    content: "Bé mèo nhà mình rất thích, sẽ tiếp tục ủng hộ shop.",
+  },
+  {
+    title: "Chất lượng tốt, giao hàng nhanh",
+    content: "Đóng gói cẩn thận, hàng đúng như mô tả. Rất hài lòng.",
+  },
+  {
+    title: "Đáng tiền",
+    content: "Giá hợp lý, mèo nhà mình hợp với sản phẩm này.",
+  },
+];
 
 const demoProducts = [
   {
@@ -18,6 +37,10 @@ const demoProducts = [
     weight: "2kg",
     lifeStage: "Adult",
     flavor: "Mix",
+    detailedDescription: "Royal Canin Feline Health Nutrition là dòng thức ăn hạt cao cấp được nghiên cứu chuyên sâu, cung cấp dinh dưỡng cân bằng giúp mèo trưởng thành duy trì sức khỏe toàn diện. Công thức kết hợp protein chất lượng cao, chất xơ prebiotic và các dưỡng chất thiết yếu hỗ trợ hệ tiêu hóa, hệ miễn dịch và làn da, bộ lông khỏe mạnh.",
+    benefits: ["Hỗ trợ tiêu hóa khỏe mạnh","Duy trì cân nặng lý tưởng","Lông mượt, da khỏe"],
+    ingredients: ["Thịt gà tươi","Gạo và ngũ cốc nguyên hạt","Dầu cá Omega-3","Vitamin & khoáng chất tổng hợp"],
+    origin: "Pháp",
   },
   {
     name: "Me-O Premium Cat Food",
@@ -30,6 +53,10 @@ const demoProducts = [
     weight: "1.2kg",
     lifeStage: "Adult",
     flavor: "Chicken & Fish",
+    detailedDescription: "Me-O Premium Cat Food là thức ăn hạt khô được chế biến từ thịt gà và cá biển tươi, bổ sung vitamin tổng hợp giúp mèo phát triển toàn diện. Hạt thức ăn có kích thước phù hợp, giúp làm sạch răng tự nhiên trong quá trình nhai.",
+    benefits: ["Tăng cường hệ miễn dịch","Hỗ trợ tiêu hóa tốt","Giúp răng miệng sạch khỏe"],
+    ingredients: ["Thịt gà","Cá biển","Ngũ cốc","Taurine","Vitamin tổng hợp"],
+    origin: "Thái Lan",
   },
   {
     name: "Pate Gourmet Gold Savoury Cake",
@@ -42,6 +69,10 @@ const demoProducts = [
     weight: "85g",
     lifeStage: "Adult",
     flavor: "Beef & Vegetables",
+    detailedDescription: "Pate Gourmet Gold Savoury Cake mang đến hương vị thơm ngon hấp dẫn với thịt bò mềm hòa cùng rau củ tươi, được chế biến dạng pate mịn dễ ăn. Sản phẩm bổ sung độ ẩm cần thiết, thích hợp dùng làm bữa chính hoặc bữa phụ cho mèo mọi lứa tuổi.",
+    benefits: ["Hương vị thơm ngon hấp dẫn","Bổ sung độ ẩm cho cơ thể","Giàu protein từ thịt bò"],
+    ingredients: ["Thịt bò","Rau củ tươi","Nước dùng tự nhiên","Vitamin E"],
+    origin: "Pháp",
   },
   {
     name: "Catsrang Tuna Pate",
@@ -54,6 +85,10 @@ const demoProducts = [
     weight: "80g",
     lifeStage: "Adult",
     flavor: "Tuna",
+    detailedDescription: "Catsrang Tuna Pate được làm từ cá ngừ tươi nguyên chất, giàu Omega-3 giúp lông mượt và da khỏe. Kết cấu pate mềm mịn, dễ tiêu hóa, phù hợp cho cả mèo con và mèo trưởng thành.",
+    benefits: ["Giàu Omega-3 cho lông mượt","Hương vị cá ngừ thơm ngon","Dễ tiêu hóa, phù hợp mọi lứa tuổi"],
+    ingredients: ["Cá ngừ tươi","Dầu cá hồi","Taurine","Vitamin tổng hợp"],
+    origin: "Hàn Quốc",
   },
   {
     name: "Snack Cá Hồi Sấy Khô",
@@ -66,6 +101,10 @@ const demoProducts = [
     weight: "100g",
     lifeStage: "All",
     flavor: "Salmon",
+    detailedDescription: "Snack Cá Hồi Sấy Khô được làm 100% từ cá hồi tươi, sấy khô tự nhiên giữ nguyên hương vị và dưỡng chất. Đây là món ăn vặt lành mạnh, giàu Omega-3, giúp lông mèo bóng mượt và hỗ trợ sức khỏe tim mạch.",
+    benefits: ["Giàu Omega-3 tốt cho da và lông","Ít calo, không lo tăng cân","Hương vị thơm ngon tự nhiên"],
+    ingredients: ["Cá hồi tươi 100%","Không chất bảo quản","Không phụ gia tạo màu"],
+    origin: "Việt Nam",
   },
   {
     name: "Bánh Thưởng Crispy Bites",
@@ -78,6 +117,10 @@ const demoProducts = [
     weight: "60g",
     lifeStage: "Adult",
     flavor: "Chicken",
+    detailedDescription: "Bánh Thưởng Crispy Bites có lớp vỏ giòn tan kết hợp nhân mềm bên trong, hương vị gà thơm lừng kích thích vị giác của mèo. Sản phẩm phù hợp dùng để huấn luyện hoặc làm phần thưởng hàng ngày.",
+    benefits: ["Giòn tan, kích thích thú vui ăn vặt","Hỗ trợ làm sạch răng miệng","Ít calo, phù hợp làm phần thưởng"],
+    ingredients: ["Thịt gà","Bột yến mạch","Vitamin tổng hợp"],
+    origin: "Việt Nam",
   },
   {
     name: "Sữa Cat Milk Standard",
@@ -90,6 +133,10 @@ const demoProducts = [
     weight: "400ml",
     lifeStage: "Kitten",
     flavor: "Original",
+    detailedDescription: "Sữa Cat Milk Standard được thiết kế đặc biệt cho mèo con, đã loại bỏ lactose giúp hệ tiêu hóa non nớt dễ hấp thụ. Bổ sung canxi, DHA và vitamin D3 hỗ trợ phát triển xương và trí não toàn diện.",
+    benefits: ["Bổ sung canxi cho xương chắc khỏe","Không chứa lactose, dễ tiêu hóa","Hỗ trợ phát triển trí não"],
+    ingredients: ["Sữa bột tách lactose","Canxi","DHA","Vitamin D3"],
+    origin: "Hà Lan",
   },
   {
     name: "Sữa Goat Milk Premium",
@@ -102,6 +149,10 @@ const demoProducts = [
     weight: "500ml",
     lifeStage: "All",
     flavor: "Pure",
+    detailedDescription: "Sữa Goat Milk Premium được chiết xuất từ sữa dê nguyên chất, dễ tiêu hóa hơn sữa bò và phù hợp với mèo có hệ tiêu hóa nhạy cảm. Bổ sung probiotic giúp cân bằng hệ vi sinh đường ruột.",
+    benefits: ["Dễ tiêu hóa hơn sữa bò","Giàu dưỡng chất tự nhiên","Phù hợp cho mèo nhạy cảm"],
+    ingredients: ["Sữa dê nguyên chất","Probiotic","Vitamin tổng hợp"],
+    origin: "New Zealand",
   },
   {
     name: "Cát Vệ Sinh Bentonite",
@@ -114,6 +165,10 @@ const demoProducts = [
     weight: "5kg",
     lifeStage: "All",
     flavor: "Lavender",
+    detailedDescription: "Cát Vệ Sinh Bentonite được làm từ khoáng bentonite tự nhiên, có khả năng vón cục nhanh và khử mùi hiệu quả lên đến 24 giờ. Hương lavender dịu nhẹ giúp không gian luôn thơm mát, an toàn cho cả mèo và người sử dụng.",
+    benefits: ["Khử mùi hiệu quả tới 24 giờ","Vón cục nhanh, dễ vệ sinh","An toàn cho mèo và người dùng"],
+    ingredients: ["Bentonite tự nhiên 100%","Hương lavender dịu nhẹ","Không chứa bụi"],
+    origin: "Thái Lan",
   },
   {
     name: "Cây Tựa Mèo 5 Tầng",
@@ -126,6 +181,10 @@ const demoProducts = [
     weight: "15kg",
     lifeStage: "All",
     flavor: "Gray",
+    detailedDescription: "Cây Tựa Mèo 5 Tầng có thiết kế hiện đại với nhiều tầng leo, khoang nghỉ và cột mài vuốt bằng sợi sisal tự nhiên. Sản phẩm giúp mèo vận động, giải tỏa năng lượng và có không gian riêng để nghỉ ngơi, thư giãn.",
+    benefits: ["Giúp mèo vận động và mài vuốt","Tạo không gian nghỉ ngơi riêng","Khung chắc chắn, an toàn"],
+    ingredients: ["Khung gỗ ép cao cấp","Thảm lót êm ái","Cột sisal tự nhiên"],
+    origin: "Việt Nam",
   },
   {
     name: "Đồ Chơi Chuột Bấm Tiếng",
@@ -138,6 +197,10 @@ const demoProducts = [
     weight: "50g",
     lifeStage: "All",
     flavor: "Multicolor",
+    detailedDescription: "Đồ Chơi Chuột Bấm Tiếng mô phỏng hình dáng chuột với âm thanh kêu thú vị khi bóp, kích thích bản năng săn mồi tự nhiên của mèo. Chất liệu an toàn, bền chắc, giúp mèo vui chơi và rèn luyện phản xạ.",
+    benefits: ["Kích thích bản năng săn mồi","Giúp mèo vận động, giảm stress","Chất liệu an toàn, bền chắc"],
+    ingredients: ["Vải nhung mềm","Bộ phát âm thanh an toàn","Bông nhồi không độc hại"],
+    origin: "Trung Quốc",
   },
   {
     name: "Vòng Cổ GPS Theo Dõi",
@@ -150,6 +213,10 @@ const demoProducts = [
     weight: "80g",
     lifeStage: "Adult",
     flavor: "Black",
+    detailedDescription: "Vòng Cổ GPS Theo Dõi giúp bạn xác định vị trí của mèo theo thời gian thực qua ứng dụng trên điện thoại. Thiết kế nhỏ gọn, nhẹ, chống nước, mang lại sự an tâm tuyệt đối khi mèo ra ngoài khám phá.",
+    benefits: ["Định vị vị trí mèo theo thời gian thực","Thiết kế nhẹ, chống nước","Pin sử dụng lâu dài"],
+    ingredients: ["Module GPS tích hợp","Dây đai chống nước","Pin sạc dung lượng cao"],
+    origin: "Trung Quốc",
   },
   {
     name: "Khay Ăn Inox Cao Cấp",
@@ -162,6 +229,10 @@ const demoProducts = [
     weight: "500g",
     lifeStage: "All",
     flavor: "Silver",
+    detailedDescription: "Bộ Khay Ăn Inox Cao Cấp gồm 2 khay với chất liệu inox 304 không gỉ, dễ vệ sinh và an toàn cho sức khỏe của mèo. Thiết kế đáy chống trượt giúp khay luôn cố định trong quá trình ăn uống.",
+    benefits: ["Chất liệu inox an toàn, không gỉ","Dễ vệ sinh, chống ố mùi","Đáy chống trượt ổn định"],
+    ingredients: ["Inox 304 cao cấp","Đế cao su chống trượt"],
+    origin: "Việt Nam",
   },
   {
     name: "Bàn Chải Lông Chuyên Dụng",
@@ -174,6 +245,10 @@ const demoProducts = [
     weight: "200g",
     lifeStage: "All",
     flavor: "Blue",
+    detailedDescription: "Bàn Chải Lông Chuyên Dụng có thiết kế răng lược mềm, loại bỏ lông rụng và bụi bẩn hiệu quả mà không gây đau hay tổn thương da. Tay cầm ergonomic giúp cầm nắm thoải mái trong suốt quá trình chải lông.",
+    benefits: ["Loại bỏ lông rụng hiệu quả","Massage da nhẹ nhàng","Tay cầm chống trượt thoải mái"],
+    ingredients: ["Răng lược thép không gỉ","Tay cầm cao su mềm"],
+    origin: "Việt Nam",
   },
   {
     name: "Khăn Tắm Mèo Siêu Thấm",
@@ -186,6 +261,10 @@ const demoProducts = [
     weight: "300g",
     lifeStage: "All",
     flavor: "Pink",
+    detailedDescription: "Khăn Tắm Mèo Siêu Thấm được làm từ sợi microfiber cao cấp, có khả năng thấm hút nước nhanh gấp nhiều lần khăn thông thường. Giúp làm khô lông mèo nhanh chóng sau khi tắm, hạn chế cảm lạnh.",
+    benefits: ["Thấm hút nước siêu nhanh","Mềm mại, không gây kích ứng da","Nhanh khô, dễ giặt sạch"],
+    ingredients: ["Sợi microfiber cao cấp","Viền khâu chắc chắn"],
+    origin: "Việt Nam",
   },
   {
     name: "Túi Vận Chuyển Mèo",
@@ -198,6 +277,10 @@ const demoProducts = [
     weight: "600g",
     lifeStage: "All",
     flavor: "Cream",
+    detailedDescription: "Túi Vận Chuyển Mèo có thiết kế chắc chắn, thông thoáng với lưới thoáng khí và đệm lót êm ái bên trong, giúp mèo cảm thấy an toàn và thoải mái trong suốt quá trình di chuyển hoặc đi khám bệnh.",
+    benefits: ["Thiết kế thông thoáng, an toàn","Đệm lót êm ái, thoải mái","Gọn nhẹ, dễ mang theo"],
+    ingredients: ["Vải oxford chống thấm","Lưới thoáng khí","Đệm lót có thể giặt"],
+    origin: "Việt Nam",
   },
   {
     name: "Thuốc Tẩy Giun An Toàn",
@@ -210,6 +293,10 @@ const demoProducts = [
     weight: "10ml",
     lifeStage: "All",
     flavor: "Orange",
+    detailedDescription: "Thuốc Tẩy Giun An Toàn giúp loại bỏ các loại giun sán phổ biến ở mèo, công thức dịu nhẹ không gây tác dụng phụ. Sản phẩm được khuyến nghị sử dụng định kỳ để bảo vệ sức khỏe đường ruột cho mèo.",
+    benefits: ["Loại bỏ giun sán hiệu quả","Công thức dịu nhẹ, an toàn","Dễ sử dụng, hấp thu nhanh"],
+    ingredients: ["Praziquantel","Pyrantel","Tá dược an toàn"],
+    origin: "Việt Nam",
   },
   {
     name: "Vitamin Tổng Hợp A-Z",
@@ -222,6 +309,10 @@ const demoProducts = [
     weight: "100g",
     lifeStage: "All",
     flavor: "Chicken",
+    detailedDescription: "Vitamin Tổng Hợp A-Z bổ sung đầy đủ các vitamin và khoáng chất thiết yếu, giúp tăng cường sức đề kháng, hỗ trợ lông mượt và xương khớp chắc khỏe cho mèo mọi lứa tuổi.",
+    benefits: ["Tăng cường sức đề kháng","Hỗ trợ lông mượt, da khỏe","Bổ sung dưỡng chất toàn diện"],
+    ingredients: ["Vitamin A, D, E, B-complex","Canxi & Phospho","Kẽm và Taurine"],
+    origin: "Việt Nam",
   },
   {
     name: "Dầu Gió Hỗ Trợ Tiêu Hóa",
@@ -234,6 +325,10 @@ const demoProducts = [
     weight: "250ml",
     lifeStage: "Adult",
     flavor: "Fish",
+    detailedDescription: "Dầu Gió Hỗ Trợ Tiêu Hóa được chiết xuất từ dầu cá giàu Omega-3, giúp cải thiện chức năng tiêu hóa, giảm tình trạng táo bón và hỗ trợ hấp thu dưỡng chất tốt hơn. Chỉ cần trộn vài giọt vào thức ăn hàng ngày.",
+    benefits: ["Hỗ trợ tiêu hóa khỏe mạnh","Giàu Omega-3 cho lông mượt","Dễ sử dụng, hấp thu nhanh"],
+    ingredients: ["Dầu cá Omega-3","Vitamin E","Chất chống oxy hóa tự nhiên"],
+    origin: "Việt Nam",
   },
   {
     name: "Bàn Nước Uống Tự Động",
@@ -246,6 +341,10 @@ const demoProducts = [
     weight: "800g",
     lifeStage: "All",
     flavor: "White",
+    detailedDescription: "Bàn Nước Uống Tự Động sử dụng bơm tuần hoàn êm ái, tạo dòng nước chảy liên tục giúp kích thích mèo uống nước nhiều hơn. Hệ thống lọc 3 lớp đảm bảo nguồn nước luôn sạch và tươi mới.",
+    benefits: ["Kích thích thú cưng uống nhiều nước hơn","Hệ thống lọc 3 lớp giữ nước sạch","Hoạt động êm ái, tiết kiệm điện"],
+    ingredients: ["Bơm tuần hoàn siêu êm","Lõi lọc than hoạt tính","Thân nhựa ABS an toàn"],
+    origin: "Trung Quốc",
   },
 ];
 
@@ -405,6 +504,11 @@ async function seedDatabase() {
     await Product.deleteMany({});
     await Brand.deleteMany({});
     await User.deleteMany({});
+    await Review.deleteMany({});
+    await Order.deleteMany({});
+    await Cart.deleteMany({});
+    await CartItem.deleteMany({});
+    await Reply.deleteMany({});
     console.log("✓ Cleared existing data");
 
     // Seed products
@@ -430,31 +534,63 @@ async function seedDatabase() {
     const createdUsers = await User.insertMany(usersWithHashedPasswords);
     console.log(`✓ Created ${createdUsers.length} demo users`);
 
-    // Seed reviews
-    await Review.deleteMany({});
-    const customers = createdUsers.filter(u => u.role === "customer");
-    const reviewsToCreate = [];
+    // Seed reviews (each review needs a backing "delivered" order)
+    const customers = createdUsers.filter((u) => u.role === "customer");
+    let reviewCount = 0;
+    let orderCounter = 1;
     for (const product of createdProducts) {
       // Create 1-3 random reviews per product
       const numReviews = Math.floor(Math.random() * 3) + 1;
+      const reviewerIds = new Set();
       for (let i = 0; i < numReviews; i++) {
-        reviewsToCreate.push({
-          product: product._id,
-          user: customers[i % customers.length]._id,
-          rating: Math.floor(Math.random() * 2) + 4, // 4 or 5 stars
-          comment: "Sản phẩm tuyệt vời! Bé mèo nhà mình rất thích.",
-        });
-      }
-    }
-    await Review.insertMany(reviewsToCreate);
-    console.log(`✓ Created ${reviewsToCreate.length} demo reviews`);
+        const customer = customers[(orderCounter + i) % customers.length];
+        if (reviewerIds.has(String(customer._id))) continue;
+        reviewerIds.add(String(customer._id));
 
-    // Update product ratings based on generated reviews
-    for (const product of createdProducts) {
-      const productReviews = reviewsToCreate.filter(r => r.product.equals(product._id));
-      const avg = productReviews.reduce((sum, r) => sum + r.rating, 0) / productReviews.length;
-      await Product.findByIdAndUpdate(product._id, { rating: Math.round(avg * 10) / 10 });
+        const order = await Order.create({
+          orderNumber: `SEED-${Date.now()}-${orderCounter}`,
+          user: customer._id,
+          products: [
+            { product: product._id, quantity: 1, price: product.price },
+          ],
+          totalPrice: product.price,
+          status: "delivered",
+          shippingAddress: {
+            fullName: customer.fullName,
+            address: "123 Đường Demo, Quận 1",
+            city: "TP. Hồ Chí Minh",
+            phone: customer.phone || "0900000000",
+          },
+          paymentMethod: "cod",
+          paymentStatus: "paid",
+        });
+        orderCounter++;
+
+        const text =
+          reviewTexts[Math.floor(Math.random() * reviewTexts.length)];
+        await Review.create({
+          product: product._id,
+          user: customer._id,
+          order: order._id,
+          rating: Math.floor(Math.random() * 2) + 4, // 4 or 5 stars
+          title: text.title,
+          content: text.content,
+          images: [],
+          isVerifiedPurchase: true,
+        });
+        reviewCount++;
+      }
+
+      // Update product average rating based on its reviews
+      const productReviews = await Review.find({ product: product._id });
+      const avg =
+        productReviews.reduce((sum, r) => sum + r.rating, 0) /
+        productReviews.length;
+      await Product.findByIdAndUpdate(product._id, {
+        rating: Math.round(avg * 10) / 10,
+      });
     }
+    console.log(`✓ Created ${reviewCount} demo reviews with backing orders`);
     console.log(`✓ Updated product average ratings`);
 
     console.log("\n✓ Database seeded successfully!");
