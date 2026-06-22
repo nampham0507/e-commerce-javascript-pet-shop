@@ -297,6 +297,7 @@
       </div>
       <!-- Data Table Section -->
       <div
+        id="orderTableSection"
         class="bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-sm overflow-hidden reveal delay-2"
       >
         <table class="w-full text-left border-collapse">
@@ -349,12 +350,15 @@
         </table>
         <!-- Pagination -->
         <div
-          class="px-lg py-md bg-surface-container-low border-t border-outline-variant flex items-center justify-between"
+          class="px-lg py-md bg-surface-container-low border-t border-outline-variant flex flex-col sm:flex-row sm:items-center sm:justify-between gap-sm"
         >
-          <p id="paginationInfo" class="text-label-sm text-on-surface-variant">
+          <p
+            id="paginationInfo"
+            class="text-label-sm text-on-surface-variant whitespace-nowrap"
+          >
             Đang tải dữ liệu...
           </p>
-          <div id="paginationControls" class="flex items-center gap-sm">
+          <div id="paginationControls" class="flex items-center sm:justify-end">
             <!-- Dynamic controls here -->
           </div>
         </div>
@@ -503,6 +507,11 @@
         getAdminProducts,
       } from "/js/admin.js";
       import { isAuthenticated, getUserInfo } from "/js/auth.js";
+      import {
+        renderPagination,
+        renderPaginationSummary,
+        scrollToTableTop,
+      } from "/js/pagination.js";
 
       // Check auth
       if (!isAuthenticated() || getUserInfo()?.role !== "admin") {
@@ -615,24 +624,20 @@
         if (result.success) {
           const orders = result.orders;
           window.currentOrders = orders;
-          const totalOrders =
-            result.pagination?.total ||
-            result.total ||
-            (orders.length < pageSize && page === 1
-              ? orders.length
-              : page * pageSize + 1);
-          const totalPages =
-            result.pagination?.pages ||
-            result.totalPages ||
-            Math.ceil(totalOrders / pageSize) ||
-            1;
+          const totalOrders = result.pagination?.total ?? orders.length;
+          const totalPages = result.pagination?.pages || 1;
 
           if (page === 1) renderRecentHistory(orders);
 
           if (!orders || orders.length === 0) {
             orderTableBody.innerHTML =
               '<tr><td colspan="6" class="px-lg py-md text-center text-on-surface-variant">Không có đơn hàng nào.</td></tr>';
-            if (paginationInfo) paginationInfo.textContent = "Không có dữ liệu";
+            renderPaginationSummary(paginationInfo, {
+              page: 1,
+              limit: pageSize,
+              total: 0,
+              itemLabel: "đơn hàng",
+            });
             if (paginationControls) paginationControls.innerHTML = "";
             return;
           }
@@ -708,33 +713,21 @@
             })
             .join("");
 
-          if (paginationInfo) {
-            const start = (page - 1) * pageSize + 1;
-            const end = Math.min(page * pageSize, totalOrders);
-            paginationInfo.textContent = `Hiển thị ${start} - ${end} của ${totalOrders} đơn hàng`;
-          }
+          renderPaginationSummary(paginationInfo, {
+            page,
+            limit: pageSize,
+            total: totalOrders,
+            itemLabel: "đơn hàng",
+          });
 
-          if (paginationControls) {
-            let controlsHTML = `
-                <button onclick="window.loadOrders(${page - 1})" class="p-xs text-outline hover:bg-surface-variant rounded-md disabled:opacity-30" ${page <= 1 ? "disabled" : ""}>
-                  <span class="material-symbols-outlined" data-icon="chevron_left">chevron_left</span>
-                </button>
-             `;
+          renderPagination(paginationControls, {
+            page,
+            pages: totalPages,
+            onChange: (targetPage) => window.loadOrders(targetPage),
+          });
 
-            for (let i = 1; i <= totalPages; i++) {
-              if (i === page) {
-                controlsHTML += `<button class="w-8 h-8 rounded-md bg-primary text-on-primary font-bold text-label-sm">${i}</button>`;
-              } else {
-                controlsHTML += `<button onclick="window.loadOrders(${i})" class="w-8 h-8 rounded-md hover:bg-surface-variant text-on-surface text-label-sm transition-colors">${i}</button>`;
-              }
-            }
-
-            controlsHTML += `
-                <button onclick="window.loadOrders(${page + 1})" class="p-xs text-outline hover:bg-surface-variant rounded-md disabled:opacity-30" ${page >= totalPages ? "disabled" : ""}>
-                  <span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
-                </button>
-             `;
-            paginationControls.innerHTML = controlsHTML;
+          if (page > 1) {
+            scrollToTableTop(document.getElementById("orderTableSection"));
           }
         } else {
           orderTableBody.innerHTML =

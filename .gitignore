@@ -12,3 +12,4 @@ GOOGLE_OAUTH_SETUP.md
 .prettierignore
 src/vnpay_nodejs
 .claude
+scripts/*

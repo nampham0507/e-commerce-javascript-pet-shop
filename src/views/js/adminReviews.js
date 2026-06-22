@@ -1,6 +1,11 @@
 // Admin review management - frontend logic
 import { getAdminReviews } from "/js/admin.js";
 import { getUserInfo } from "/js/auth.js";
+import {
+  renderPagination,
+  renderPaginationSummary,
+  scrollToTableTop,
+} from "/js/pagination.js";
 
 const API_BASE = "/api";
 const MAX_REPLY_DEPTH = 3;
@@ -66,6 +71,8 @@ const state = {
   reviews: [],
   pagination: { total: 0, page: 1, limit: 10, pages: 1 },
   rating: "",
+  keyword: "",
+  ratingStatistics: { all: 0, 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
   editingReplyId: null,
   openReplyFormKey: null, // "review:<id>" or "reply:<id>"
 };
@@ -286,33 +293,68 @@ const renderReviewList = () => {
   list.innerHTML = state.reviews.map(renderReviewCard).join("");
 };
 
-const renderPagination = () => {
+const renderReviewPagination = () => {
   const container = document.getElementById("paginationControls");
   if (!container) return;
 
-  const { page, pages, total } = state.pagination;
+  const { page, pages, total, limit } = state.pagination;
 
-  container.innerHTML = `
-    <span class="text-label-sm text-on-surface-variant mr-4">Trang ${page} / ${pages || 1} (${total} đánh giá)</span>
-    <button id="prevReviewPage" class="p-2 rounded-full hover:bg-surface-container-highest text-on-surface-variant disabled:opacity-30" ${page <= 1 ? "disabled" : ""}>
-      <span class="material-symbols-outlined">chevron_left</span>
-    </button>
-    <button id="nextReviewPage" class="p-2 rounded-full hover:bg-surface-container-highest text-on-surface-variant disabled:opacity-30" ${page >= pages ? "disabled" : ""}>
-      <span class="material-symbols-outlined">chevron_right</span>
-    </button>
-  `;
-
-  document.getElementById("prevReviewPage")?.addEventListener("click", () => {
-    if (state.pagination.page > 1) {
-      state.pagination.page -= 1;
-      loadReviews();
-    }
+  renderPaginationSummary(document.getElementById("reviewPaginationSummary"), {
+    page,
+    limit,
+    total,
+    itemLabel: "đánh giá",
   });
-  document.getElementById("nextReviewPage")?.addEventListener("click", () => {
-    if (state.pagination.page < state.pagination.pages) {
-      state.pagination.page += 1;
+
+  renderPagination(container, {
+    page,
+    pages,
+    onChange: (targetPage) => {
+      state.pagination.page = targetPage;
       loadReviews();
-    }
+      scrollToTableTop(document.getElementById("adminReviewList"));
+    },
+  });
+};
+
+// ───────────────────────────────────────────────────────────────────────────
+// Rating filter chips (Tất cả / 5 sao / 4 sao / ... with live counts)
+// ───────────────────────────────────────────────────────────────────────────
+
+const RATING_FILTER_LABELS = [
+  { value: "", label: "Tất cả" },
+  { value: "5", label: "5 sao" },
+  { value: "4", label: "4 sao" },
+  { value: "3", label: "3 sao" },
+  { value: "2", label: "2 sao" },
+  { value: "1", label: "1 sao" },
+];
+
+const renderAdminRatingFilterChips = () => {
+  const container = document.getElementById("reviewRatingFilter");
+  if (!container) return;
+
+  const countFor = (value) =>
+    value === "" ? state.ratingStatistics.all : state.ratingStatistics[value];
+
+  container.innerHTML = RATING_FILTER_LABELS.map(({ value, label }) => {
+    const isActive = state.rating === value;
+    return `<button type="button" data-admin-rating-filter="${value}" class="px-md py-1.5 rounded-full text-label-sm font-label-md border transition-colors ${
+      isActive
+        ? "bg-primary text-on-primary border-primary"
+        : "bg-surface-container-low border-transparent text-on-surface-variant hover:bg-surface-container-high"
+    }">${label} (${countFor(value)})</button>`;
+  }).join("");
+
+  container.querySelectorAll("[data-admin-rating-filter]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const value = btn.dataset.adminRatingFilter;
+      if (state.rating === value) return;
+      // Keep the current page if it's still valid for the new filter — the
+      // backend clamps it down to the nearest valid page when it isn't.
+      state.rating = value;
+      loadReviews();
+    });
   });
 };
 
@@ -328,13 +370,16 @@ const loadReviews = async () => {
 
   const params = { page: state.pagination.page, limit: state.pagination.limit };
   if (state.rating) params.rating = state.rating;
+  if (state.keyword) params.keyword = state.keyword;
 
   const data = await getAdminReviews(params);
   if (data.success) {
     state.reviews = data.reviews;
     state.pagination = data.pagination;
+    state.ratingStatistics = data.ratingStatistics;
+    renderAdminRatingFilterChips();
     renderReviewList();
-    renderPagination();
+    renderReviewPagination();
   } else if (list) {
     list.innerHTML = `<div class="text-center py-xl text-error">${escapeHtml(data.message || "Lỗi tải đánh giá")}</div>`;
   }
@@ -435,11 +480,15 @@ export const initAdminReviews = (options = {}) => {
   state.currentUser = getUserInfo();
   if (typeof options.notify === "function") notify = options.notify;
 
-  const ratingFilter = document.getElementById("ratingFilter");
-  ratingFilter?.addEventListener("change", () => {
-    state.rating = ratingFilter.value;
-    state.pagination.page = 1;
-    loadReviews();
+  const searchInput = document.getElementById("reviewSearchInput");
+  let searchDebounce = null;
+  searchInput?.addEventListener("input", () => {
+    clearTimeout(searchDebounce);
+    searchDebounce = setTimeout(() => {
+      state.keyword = searchInput.value.trim();
+      state.pagination.page = 1;
+      loadReviews();
+    }, 300);
   });
 
   const list = document.getElementById("adminReviewList");

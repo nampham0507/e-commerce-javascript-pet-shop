@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
 const Review = require("../models/Review");
+const Product = require("../models/Product");
 const reviewService = require("../services/reviewService");
 const replyService = require("../services/replyService");
+
+const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 const collectImagePaths = (files) =>
   (files || []).map((file) => "/uploads/" + file.filename);
@@ -19,10 +22,24 @@ exports.getProductReviews = async (req, res) => {
         .json({ success: false, message: "productId không hợp lệ" });
     }
 
-    const { reviews, stats } =
-      await reviewService.getProductReviewsWithStats(productId);
+    const { page, limit, rating } = req.query;
+    const { reviews, stats, ratingStatistics, pagination } =
+      await reviewService.getProductReviewsWithStats(productId, {
+        page,
+        limit,
+        rating,
+      });
 
-    res.json({ success: true, reviews, stats });
+    res.json({
+      success: true,
+      reviews,
+      stats,
+      ratingStatistics,
+      pagination,
+      totalReviews: pagination.total,
+      totalPages: pagination.pages,
+      currentPage: pagination.page,
+    });
   } catch (error) {
     res
       .status(500)
@@ -188,24 +205,59 @@ exports.deleteReview = async (req, res) => {
  */
 exports.getAllReviewsAdmin = async (req, res) => {
   try {
-    const { page = 1, limit = 10, productId, rating } = req.query;
+    const { page = 1, limit = 10, productId, rating, keyword } = req.query;
+    const limitNum = Math.max(parseInt(limit, 10) || 10, 1);
+    const pageNum = Math.max(parseInt(page, 10) || 1, 1);
 
-    const query = {};
+    // Base scope (productId + keyword) used both for the review list AND for
+    // the ratingStatistics counts, so the star-filter counts stay accurate
+    // for the current search regardless of which star is selected.
+    const baseQuery = {};
     if (productId && mongoose.Types.ObjectId.isValid(productId)) {
-      query.product = productId;
-    }
-    if (rating) {
-      query.rating = Number(rating);
+      baseQuery.product = productId;
     }
 
-    const skip = (page - 1) * limit;
+    const trimmedKeyword = (keyword || "").trim();
+    if (trimmedKeyword) {
+      const regex = new RegExp(escapeRegex(trimmedKeyword), "i");
+      const matchingProducts = await Product.find({ name: regex })
+        .select("_id")
+        .lean();
+      const matchingProductIds = matchingProducts.map((p) => p._id);
+
+      baseQuery.$or = [
+        { title: regex },
+        { content: regex },
+        ...(matchingProductIds.length
+          ? [{ product: { $in: matchingProductIds } }]
+          : []),
+      ];
+    }
+
+    const distributionAgg = await Review.aggregate([
+      { $match: baseQuery },
+      { $group: { _id: "$rating", count: { $sum: 1 } } },
+    ]);
+    const ratingStatistics = { all: 0, 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+    distributionAgg.forEach(({ _id, count }) => {
+      if (ratingStatistics[_id] !== undefined) ratingStatistics[_id] = count;
+      ratingStatistics.all += count;
+    });
+
+    const query = { ...baseQuery };
+    if (rating) query.rating = Number(rating);
+
+    const totalReviews = await Review.countDocuments(query);
+    const totalPages = Math.max(Math.ceil(totalReviews / limitNum), 1);
+    // Nếu trang yêu cầu vượt phạm vi sau khi lọc, tự động lùi về trang hợp lệ gần nhất.
+    const currentPage = Math.min(pageNum, totalPages);
 
     const reviews = await Review.find(query)
       .populate("user", "fullName email")
       .populate("product", "name image")
       .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(parseInt(limit))
+      .skip((currentPage - 1) * limitNum)
+      .limit(limitNum)
       .lean();
 
     const reviewIds = reviews.map((r) => r._id);
@@ -216,16 +268,18 @@ exports.getAllReviewsAdmin = async (req, res) => {
       replies: repliesByReview[review._id.toString()] || [],
     }));
 
-    const total = await Review.countDocuments(query);
-
     res.json({
       success: true,
       reviews: reviewsWithReplies,
+      ratingStatistics,
+      totalReviews,
+      totalPages,
+      currentPage,
       pagination: {
-        total,
-        page: parseInt(page),
-        limit: parseInt(limit),
-        pages: Math.ceil(total / limit),
+        total: totalReviews,
+        page: currentPage,
+        limit: limitNum,
+        pages: totalPages,
       },
     });
   } catch (error) {

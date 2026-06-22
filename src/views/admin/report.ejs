@@ -875,7 +875,11 @@
         }
 
         const maxRev = Math.max(...bars.map((b) => b.revenue)) || 1;
-        const CHART_H = 200;
+        // Container is a fixed 224px (h-56). Reserve headroom above the
+        // tallest bar so the hover tooltip (~36px, positioned via -top-9)
+        // never gets clipped by the chart's bounding box.
+        const TOOLTIP_RESERVE_PX = 48;
+        const CHART_H = 224 - TOOLTIP_RESERVE_PX;
 
         chartEl.innerHTML = bars
           .map((b) => {
@@ -907,53 +911,68 @@
         }
       }
 
-      function renderCategoryPie(revenueByCategory) {
-        if (!revenueByCategory || !revenueByCategory.length) return;
-        const total = revenueByCategory.reduce((s, c) => s + c.revenue, 0);
-        if (!total) return;
+      // Generate N evenly spaced, distinct colors without a fixed/hardcoded palette
+      function generateCategoryColors(count) {
+        return Array.from({ length: count }, (_, i) => {
+          const hue = Math.round((i * 360) / count);
+          return `hsl(${hue}, 65%, 50%)`;
+        });
+      }
 
-        const colors = [
-          "#f8b432",
-          "#e07f3c",
-          "#6d6f24",
-          "#2f6f6f",
-          "#a36f27",
-          "#845400",
-          "#625f4e",
-        ];
+      function renderCategoryPie(categoryBreakdown) {
         const chartEl = document.getElementById("categoryChart");
         const legendEl = document.getElementById("categoryLegend");
+        if (!chartEl || !legendEl) return;
 
-        const segments = revenueByCategory.map((c, i) => {
-          const pct = (c.revenue / total) * 100;
-          return `${colors[i % colors.length]} ${pct.toFixed(1)}%`;
+        // Only categories with at least 1 product are drawn on the chart itself,
+        // but the legend still lists 0-product categories so admins can see the full structure.
+        const withProducts = (categoryBreakdown || []).filter((c) => c.productCount > 0);
+
+        if (!categoryBreakdown || !categoryBreakdown.length || !withProducts.length) {
+          chartEl.style.background = "none";
+          chartEl.innerHTML = `
+            <div class="absolute inset-10 rounded-full bg-white flex flex-col items-center justify-center border border-outline-variant">
+              <span class="text-label-sm text-on-surface-variant text-center px-2">Chưa có dữ liệu</span>
+            </div>`;
+          legendEl.innerHTML = `<p class="text-label-sm text-on-surface-variant">Không có danh mục hoặc sản phẩm nào</p>`;
+          return;
+        }
+
+        const colors = generateCategoryColors(withProducts.length);
+
+        let cursor = 0;
+        const segments = withProducts.map((c, i) => {
+          const start = cursor;
+          cursor += c.percentage;
+          return `${colors[i]} ${start.toFixed(2)}% ${cursor.toFixed(2)}%`;
         });
 
-        if (chartEl) {
-          chartEl.style.background = `conic-gradient(${segments.join(", ")})`;
-          chartEl.style.borderRadius = "9999px";
-          chartEl.style.overflow = "hidden";
-          chartEl.innerHTML = `
-            <div class="absolute inset-10 rounded-full bg-white flex flex-col items-center justify-center">
-              <span class="text-headline-md font-bold text-primary">${Math.round((revenueByCategory[0].revenue / total) * 100)}%</span>
-              <span class="text-[9px] text-on-surface-variant uppercase tracking-wider text-center px-1">${revenueByCategory[0]._id || "Khác"}</span>
-            </div>`;
-        }
+        chartEl.style.background = `conic-gradient(${segments.join(", ")})`;
+        chartEl.style.borderRadius = "9999px";
+        chartEl.style.overflow = "hidden";
 
-        if (legendEl) {
-          legendEl.innerHTML = revenueByCategory
-            .map((c, i) => {
-              const pct = Math.round((c.revenue / total) * 100);
-              return `<div class="flex justify-between items-center text-label-sm">
+        const top = withProducts[0];
+        chartEl.innerHTML = `
+          <div class="absolute inset-10 rounded-full bg-white flex flex-col items-center justify-center">
+            <span class="text-headline-md font-bold text-primary">${Math.round(top.percentage)}%</span>
+            <span class="text-[9px] text-on-surface-variant uppercase tracking-wider text-center px-1">${top.categoryName}</span>
+          </div>`;
+
+        const maxLegendHeight = categoryBreakdown.length > 20 ? "max-h-64 overflow-y-auto" : "";
+        legendEl.className = `space-y-sm ${maxLegendHeight}`;
+        legendEl.innerHTML = categoryBreakdown
+          .map((c) => {
+            const colorIndex = withProducts.indexOf(c);
+            const color = colorIndex >= 0 ? colors[colorIndex] : "#d8d8d8";
+            return `<div class="flex justify-between items-center text-label-sm">
               <div class="flex items-center gap-2">
-                <div class="w-3 h-3 rounded-full flex-shrink-0" style="background:${colors[i % colors.length]}"></div>
-                <span class="truncate max-w-[120px]">${c._id || "Khác"}</span>
+                <div class="w-3 h-3 rounded-full flex-shrink-0" style="background:${color}"></div>
+                <span class="truncate max-w-[120px]">${c.categoryName}</span>
               </div>
-              <span class="font-bold ml-2">${pct}%</span>
+              <span class="font-bold ml-2">${c.percentage}%</span>
             </div>`;
-            })
-            .join("");
-        }
+          })
+          .join("");
       }
 
       function renderDailyTable(dailyRevenue) {
@@ -1191,7 +1210,7 @@
           const d = result.data;
           renderKPIs(d);
           renderDailyChart(d.dailyRevenue);
-          renderCategoryPie(d.revenueByCategory);
+          renderCategoryPie(d.categoryBreakdown);
           renderDailyTable(d.dailyRevenue);
           renderTopProducts(d.topProducts);
           renderLowStock(d.lowStock);

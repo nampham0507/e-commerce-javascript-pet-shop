@@ -182,6 +182,7 @@
       </div>
 
       <div
+        id="brandsTableSection"
         class="bg-white rounded-[24px] border border-outline-variant soft-shadow overflow-hidden reveal"
       >
         <div class="overflow-x-auto">
@@ -213,9 +214,17 @@
           </table>
         </div>
         <div
-          class="px-lg py-md bg-surface-container-low flex justify-end items-center gap-2"
-          id="paginationControls"
-        ></div>
+          class="px-lg py-md bg-surface-container-low flex flex-col sm:flex-row sm:items-center sm:justify-between gap-sm"
+        >
+          <span
+            id="brandPaginationSummary"
+            class="text-label-sm text-on-surface-variant whitespace-nowrap"
+          ></span>
+          <div
+            id="paginationControls"
+            class="flex items-center sm:justify-end"
+          ></div>
+        </div>
       </div>
 
     <%- include('../partials/footer') %>
@@ -287,6 +296,11 @@
         updateBrand,
         deleteBrand,
       } from "/js/admin.js";
+      import {
+        renderPagination as renderPaginationControl,
+        renderPaginationSummary,
+        scrollToTableTop,
+      } from "/js/pagination.js";
 
       if (!isAuthenticated() || getUserInfo()?.role !== "admin") {
         window.location.href = "/auth/login";
@@ -345,43 +359,26 @@
             </tr>
           `;
         }
-        renderPagination(totalPages);
-      };
 
-      const renderPagination = (totalPages) => {
-        const paginationContainer =
-          document.getElementById("paginationControls");
-        if (!paginationContainer) return;
+        renderPaginationSummary(
+          document.getElementById("brandPaginationSummary"),
+          {
+            page: currentBrandPage,
+            limit: brandsPerPage,
+            total: filteredBrands.length,
+            itemLabel: "thương hiệu",
+          }
+        );
 
-        paginationContainer.innerHTML = `
-          <span class="text-label-sm text-on-surface-variant mr-4">Trang ${currentBrandPage} / ${totalPages}</span>
-          <button id="prevBrandPage" class="p-2 rounded-full hover:bg-surface-container-highest text-on-surface-variant disabled:opacity-30" ${currentBrandPage <= 1 ? "disabled" : ""}>
-            <span class="material-symbols-outlined">chevron_left</span>
-          </button>
-          <button id="nextBrandPage" class="p-2 rounded-full hover:bg-surface-container-highest text-on-surface-variant disabled:opacity-30" ${currentBrandPage >= totalPages ? "disabled" : ""}>
-            <span class="material-symbols-outlined">chevron_right</span>
-          </button>
-        `;
-
-        const prevBtn = document.getElementById("prevBrandPage");
-        const nextBtn = document.getElementById("nextBrandPage");
-
-        if (prevBtn) {
-          prevBtn.addEventListener("click", () => {
-            if (currentBrandPage > 1) {
-              currentBrandPage--;
-              renderBrands();
-            }
-          });
-        }
-        if (nextBtn) {
-          nextBtn.addEventListener("click", () => {
-            if (currentBrandPage < totalPages) {
-              currentBrandPage++;
-              renderBrands();
-            }
-          });
-        }
+        renderPaginationControl(document.getElementById("paginationControls"), {
+          page: currentBrandPage,
+          pages: totalPages,
+          onChange: (targetPage) => {
+            currentBrandPage = targetPage;
+            renderBrands();
+            scrollToTableTop(document.getElementById("brandsTableSection"));
+          },
+        });
       };
 
       const searchBrandInput = document.getElementById("searchBrandInput");

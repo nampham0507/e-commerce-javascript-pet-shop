@@ -1,5 +1,10 @@
 // Product review & threaded reply system - frontend logic
 import { isAuthenticated, getUserInfo } from "/js/auth.js";
+import {
+  renderPagination,
+  renderPaginationSummary,
+  scrollToTableTop,
+} from "/js/pagination.js";
 
 const API_BASE = "/api";
 const MAX_REPLY_DEPTH = 3;
@@ -27,8 +32,15 @@ const currentUserId = (user) => user?.id || user?._id || null;
 // API calls
 // ───────────────────────────────────────────────────────────────────────────
 
-const getProductReviews = async (productId) => {
-  const res = await fetch(`${API_BASE}/reviews/product/${productId}`);
+const getProductReviews = async (productId, { page, limit, rating } = {}) => {
+  const params = new URLSearchParams();
+  if (page) params.set("page", page);
+  if (limit) params.set("limit", limit);
+  if (rating) params.set("rating", rating);
+  const query = params.toString();
+  const res = await fetch(
+    `${API_BASE}/reviews/product/${productId}${query ? `?${query}` : ""}`
+  );
   return res.json();
 };
 
@@ -95,11 +107,16 @@ const removeReply = async (replyId) => {
 // State
 // ───────────────────────────────────────────────────────────────────────────
 
+const REVIEWS_PAGE_SIZE = 10;
+
 const state = {
   productId: null,
   currentUser: null,
   reviews: [],
   stats: { average: 0, total: 0, distribution: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 } },
+  ratingStatistics: { all: 0, 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
+  ratingFilter: "", // "" = Tất cả, otherwise "5".."1"
+  pagination: { page: 1, limit: REVIEWS_PAGE_SIZE, total: 0, pages: 1 },
   eligibility: { eligible: false, alreadyReviewed: false, review: null },
   editingReviewId: null,
   editingReplyId: null,
@@ -501,10 +518,78 @@ const renderReviewList = () => {
   });
 };
 
+// ───────────────────────────────────────────────────────────────────────────
+// Rendering: rating filter chips + pagination
+// ───────────────────────────────────────────────────────────────────────────
+
+const RATING_FILTER_LABELS = [
+  { value: "", label: "Tất cả" },
+  { value: "5", label: "5 sao" },
+  { value: "4", label: "4 sao" },
+  { value: "3", label: "3 sao" },
+  { value: "2", label: "2 sao" },
+  { value: "1", label: "1 sao" },
+];
+
+const setRatingFilter = (value) => {
+  if (state.ratingFilter === value) return;
+  state.ratingFilter = value;
+  state.pagination.page = 1;
+  loadAndRenderReviews();
+};
+
+const renderRatingFilterChips = () => {
+  const container = document.getElementById("reviewRatingFilter");
+  if (!container) return;
+
+  const countFor = (value) =>
+    value === "" ? state.ratingStatistics.all : state.ratingStatistics[value];
+
+  container.innerHTML = RATING_FILTER_LABELS.map(({ value, label }) => {
+    const isActive = state.ratingFilter === value;
+    return `<button type="button" data-rating-filter="${value}" class="px-md py-1.5 rounded-full text-label-sm font-label-md border transition-colors ${
+      isActive
+        ? "bg-primary text-on-primary border-primary"
+        : "bg-surface border-outline-variant text-on-surface-variant hover:bg-surface-container-high"
+    }">${label} (${countFor(value)})</button>`;
+  }).join("");
+
+  container.querySelectorAll("[data-rating-filter]").forEach((btn) => {
+    btn.addEventListener("click", () =>
+      setRatingFilter(btn.dataset.ratingFilter)
+    );
+  });
+};
+
+const renderReviewPagination = () => {
+  const summaryEl = document.getElementById("reviewPaginationSummary");
+  const controlsEl = document.getElementById("reviewPaginationControls");
+  const { page, limit, total, pages } = state.pagination;
+
+  renderPaginationSummary(summaryEl, {
+    page,
+    limit,
+    total,
+    itemLabel: "đánh giá",
+  });
+
+  renderPagination(controlsEl, {
+    page,
+    pages,
+    onChange: (targetPage) => {
+      state.pagination.page = targetPage;
+      loadAndRenderReviews();
+      scrollToTableTop(document.getElementById("reviewRatingFilter"));
+    },
+  });
+};
+
 const renderAll = () => {
   renderStats();
+  renderRatingFilterChips();
   renderFormSection();
   renderReviewList();
+  renderReviewPagination();
 };
 
 // ───────────────────────────────────────────────────────────────────────────
@@ -512,11 +597,27 @@ const renderAll = () => {
 // ───────────────────────────────────────────────────────────────────────────
 
 const loadReviews = async () => {
-  const data = await getProductReviews(state.productId);
+  const data = await getProductReviews(state.productId, {
+    page: state.pagination.page,
+    limit: state.pagination.limit,
+    rating: state.ratingFilter,
+  });
   if (data.success) {
     state.reviews = data.reviews;
     state.stats = data.stats;
+    state.ratingStatistics = data.ratingStatistics;
+    state.pagination = data.pagination;
   }
+};
+
+// Refresh only the review list/filters/pagination (rating filter or page change) —
+// no need to re-check eligibility or reload the create-review form state.
+const loadAndRenderReviews = async () => {
+  await loadReviews();
+  renderStats();
+  renderRatingFilterChips();
+  renderReviewList();
+  renderReviewPagination();
 };
 
 const loadEligibility = async () => {

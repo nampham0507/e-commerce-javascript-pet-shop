@@ -158,26 +158,21 @@
       </header>
 
       <div
-        class="bg-white rounded-[24px] p-md mb-lg border border-outline-variant soft-shadow flex flex-wrap items-center gap-md reveal delay-1"
+        class="bg-white rounded-[24px] p-md mb-lg border border-outline-variant soft-shadow flex flex-col gap-md reveal delay-1"
       >
-        <div class="flex items-center gap-sm">
-          <label
-            for="ratingFilter"
-            class="font-label-md text-label-md text-on-surface-variant"
-            >Số sao</label
+        <div class="flex-1 min-w-[260px] relative">
+          <span
+            class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline"
+            >search</span
           >
-          <select
-            id="ratingFilter"
-            class="bg-surface-container-low border-none rounded-full px-lg py-2 focus:ring-2 focus:ring-primary-container font-body-md text-body-md"
-          >
-            <option value="">Tất cả</option>
-            <option value="5">5 sao</option>
-            <option value="4">4 sao</option>
-            <option value="3">3 sao</option>
-            <option value="2">2 sao</option>
-            <option value="1">1 sao</option>
-          </select>
+          <input
+            id="reviewSearchInput"
+            type="text"
+            class="w-full bg-surface-container-low border-none rounded-full py-3 pl-12 pr-4 focus:ring-2 focus:ring-primary-container font-body-md text-body-md"
+            placeholder="Tìm theo nội dung đánh giá hoặc tên sản phẩm..."
+          />
         </div>
+        <div id="reviewRatingFilter" class="flex flex-wrap gap-2"></div>
       </div>
 
       <div id="adminReviewList" class="space-y-lg reveal">
@@ -187,9 +182,14 @@
       </div>
 
       <div
-        class="px-lg py-md mt-lg bg-white rounded-[24px] border border-outline-variant soft-shadow flex justify-end items-center gap-2"
-        id="paginationControls"
-      ></div>
+        class="px-lg py-md mt-lg bg-white rounded-[24px] border border-outline-variant soft-shadow flex flex-col sm:flex-row sm:items-center sm:justify-between gap-sm"
+      >
+        <span
+          id="reviewPaginationSummary"
+          class="text-label-sm text-on-surface-variant whitespace-nowrap"
+        ></span>
+        <div id="paginationControls" class="flex items-center sm:justify-end"></div>
+      </div>
 
     <%- include('../partials/footer') %>
     </main>

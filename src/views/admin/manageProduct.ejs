@@ -233,6 +233,7 @@
       </div>
       <!-- Products Table -->
       <div
+        id="productsTableSection"
         class="bg-white rounded-[24px] border border-outline-variant soft-shadow overflow-hidden reveal"
       >
         <div class="overflow-x-auto">
@@ -286,30 +287,19 @@
         </div>
         <!-- Pagination -->
         <div
-          class="px-lg py-md bg-surface-container-low flex justify-between items-center"
+          id="productPaginationFooter"
+          class="px-lg py-md bg-surface-container-low flex flex-col sm:flex-row sm:items-center sm:justify-between gap-sm"
         >
-          <span class="text-label-sm text-on-surface-variant"
-            >Hiển thị <span id="productCountStart">0</span> -
-            <span id="productCountEnd">0</span> trên
-            <span id="totalProductsFooter">0</span> sản phẩm</span
+          <span
+            id="productPaginationSummary"
+            class="text-label-sm text-on-surface-variant whitespace-nowrap"
+            >Hiển thị 0 trong 0 sản phẩm</span
           >
-          <div class="flex gap-2">
-            <button
-              class="p-2 rounded-full hover:bg-surface-container-high text-on-surface-variant disabled:opacity-30"
-              id="prevPageBtn"
-              disabled=""
-            >
-              <span class="material-symbols-outlined">chevron_left</span>
-            </button>
-            <div id="paginationContainer" class="flex gap-2">
-              <!-- Page buttons will be rendered here -->
-            </div>
-            <button
-              class="p-2 rounded-full hover:bg-surface-container-high text-on-surface-variant"
-              id="nextPageBtn"
-            >
-              <span class="material-symbols-outlined">chevron_right</span>
-            </button>
+          <div
+            id="paginationContainer"
+            class="flex items-center sm:justify-end"
+          >
+            <!-- Pagination control rendered here -->
           </div>
         </div>
 
@@ -556,6 +546,11 @@
         deleteBrand,
       } from "/js/admin.js";
       import { logoutUser, getUserInfo, isAuthenticated } from "/js/auth.js";
+      import {
+        renderPagination,
+        renderPaginationSummary,
+        scrollToTableTop,
+      } from "/js/pagination.js";
 
       // Check auth
       if (!isAuthenticated() || getUserInfo()?.role !== "admin") {
@@ -592,8 +587,9 @@
       const paginationContainer = document.getElementById(
         "paginationContainer",
       );
-      const prevPageBtn = document.getElementById("prevPageBtn");
-      const nextPageBtn = document.getElementById("nextPageBtn");
+      const productPaginationSummary = document.getElementById(
+        "productPaginationSummary",
+      );
 
       let currentPage = 1;
       let currentFilters = {};
@@ -608,41 +604,26 @@
         totalPages = pagination.pages;
         totalProducts = pagination.total;
 
-        // Update display text
-        const startNum = (pagination.page - 1) * pagination.limit + 1;
-        const endNum = Math.min(
-          pagination.page * pagination.limit,
-          pagination.total,
-        );
+        renderPaginationSummary(productPaginationSummary, {
+          page: pagination.page,
+          limit: pagination.limit,
+          total: pagination.total,
+          itemLabel: "sản phẩm",
+        });
 
-        document.getElementById("productCountStart").textContent = startNum;
-        document.getElementById("productCountEnd").textContent = endNum;
-        document.getElementById("totalProductsFooter").textContent =
-          pagination.total;
-
-        // Render page buttons
-        paginationContainer.innerHTML = "";
-        for (let i = 1; i <= totalPages; i++) {
-          const btn = document.createElement("button");
-          btn.className =
-            i === currentPage
-              ? "w-10 h-10 rounded-full bg-primary-container text-on-primary-container font-label-md flex items-center justify-center"
-              : "w-10 h-10 rounded-full hover:bg-surface-container-high text-on-surface-variant font-label-md flex items-center justify-center";
-          btn.textContent = i;
-          btn.addEventListener("click", () => goToPage(i));
-          paginationContainer.appendChild(btn);
-        }
-
-        // Update prev/next button states
-        prevPageBtn.disabled = currentPage === 1;
-        nextPageBtn.disabled = currentPage === totalPages;
+        renderPagination(paginationContainer, {
+          page: pagination.page,
+          pages: pagination.pages,
+          onChange: (targetPage) => goToPage(targetPage),
+        });
       }
 
       // Go to specific page
       function goToPage(page) {
-        if (page < 1 || page > totalPages) return;
+        if (page < 1 || page > totalPages || page === currentPage) return;
         currentPage = page;
         loadProducts();
+        scrollToTableTop(document.getElementById("productsTableSection"));
       }
 
       // Format currency
@@ -1126,10 +1107,6 @@
       addProductBtn.addEventListener("click", openAddModal);
       closeModalBtn.addEventListener("click", closeModal);
       cancelBtn.addEventListener("click", closeModal);
-
-      // Pagination handlers
-      prevPageBtn?.addEventListener("click", () => goToPage(currentPage - 1));
-      nextPageBtn?.addEventListener("click", () => goToPage(currentPage + 1));
 
       // Close modal when clicking outside
       productModal.addEventListener("click", (e) => {

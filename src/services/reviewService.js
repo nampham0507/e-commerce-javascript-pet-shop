@@ -34,12 +34,48 @@ const getRatingDistribution = (reviews) => {
 };
 
 /**
- * Lấy danh sách đánh giá của 1 sản phẩm kèm thống kê và phản hồi (threaded)
+ * Lấy danh sách đánh giá của 1 sản phẩm kèm thống kê, phân trang và phản hồi (threaded).
+ *
+ * Lọc + phân trang được xử lý ở backend (không load toàn bộ review lên rồi mới lọc).
+ * `stats`/`ratingStatistics` luôn được tính trên TOÀN BỘ review của sản phẩm
+ * (bỏ qua `rating` filter) để các nút lọc theo sao luôn hiển thị đúng số lượng,
+ * không phụ thuộc vào bộ lọc hiện tại.
  */
-const getProductReviewsWithStats = async (productId) => {
-  const reviews = await Review.find({ product: productId })
+const getProductReviewsWithStats = async (
+  productId,
+  { page = 1, limit = 10, rating } = {}
+) => {
+  const limitNum = Math.max(parseInt(limit, 10) || 10, 1);
+  const pageNum = Math.max(parseInt(page, 10) || 1, 1);
+
+  const allRatings = await Review.find({ product: productId })
+    .select("rating")
+    .lean();
+
+  const distribution = getRatingDistribution(allRatings);
+  const total = allRatings.length;
+  const average =
+    total === 0
+      ? 0
+      : Math.round(
+          (allRatings.reduce((sum, r) => sum + r.rating, 0) / total) * 10
+        ) / 10;
+
+  const stats = { average, total, distribution };
+  const ratingStatistics = { all: total, ...distribution };
+
+  const filterQuery = { product: productId };
+  if (rating) filterQuery.rating = Number(rating);
+
+  const totalFiltered = await Review.countDocuments(filterQuery);
+  const totalPages = Math.max(Math.ceil(totalFiltered / limitNum), 1);
+  const currentPage = Math.min(pageNum, totalPages);
+
+  const reviews = await Review.find(filterQuery)
     .populate("user", REVIEWER_FIELDS)
     .sort({ createdAt: -1 })
+    .skip((currentPage - 1) * limitNum)
+    .limit(limitNum)
     .lean();
 
   const reviewIds = reviews.map((r) => r._id);
@@ -50,19 +86,17 @@ const getProductReviewsWithStats = async (productId) => {
     replies: repliesByReview[review._id.toString()] || [],
   }));
 
-  const stats = {
-    average:
-      reviews.length === 0
-        ? 0
-        : Math.round(
-            (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length) *
-              10
-          ) / 10,
-    total: reviews.length,
-    distribution: getRatingDistribution(reviews),
+  return {
+    reviews: reviewsWithReplies,
+    stats,
+    ratingStatistics,
+    pagination: {
+      total: totalFiltered,
+      page: currentPage,
+      limit: limitNum,
+      pages: totalPages,
+    },
   };
-
-  return { reviews: reviewsWithReplies, stats };
 };
 
 /**

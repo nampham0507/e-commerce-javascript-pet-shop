@@ -373,9 +373,29 @@
             </form>
           </div>
 
+          <!-- Bộ lọc theo số sao -->
+          <div
+            id="reviewRatingFilter"
+            class="flex flex-wrap gap-2"
+          ></div>
+
           <!-- Danh sách đánh giá -->
           <div id="reviewList" class="space-y-md">
             <div class="text-on-surface-variant text-center py-xl">Đang tải đánh giá...</div>
+          </div>
+
+          <!-- Phân trang đánh giá -->
+          <div
+            class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-sm pt-md border-t border-outline-variant"
+          >
+            <span
+              id="reviewPaginationSummary"
+              class="text-label-sm text-on-surface-variant whitespace-nowrap"
+            ></span>
+            <div
+              id="reviewPaginationControls"
+              class="flex items-center sm:justify-end"
+            ></div>
           </div>
         </div>
       </section>

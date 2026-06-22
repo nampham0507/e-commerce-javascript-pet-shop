@@ -2,6 +2,47 @@ const excelReportService = require("../services/excelReportService");
 const moment = require("moment");
 const Order = require("../models/Order");
 const Product = require("../models/Product");
+const Category = require("../models/Category");
+
+// Build category structure (product count + percentage) from current DB state
+const buildCategoryBreakdown = async () => {
+  const [categories, productCounts, totalProducts] = await Promise.all([
+    Category.find().select("name").lean(),
+    Product.aggregate([{ $group: { _id: "$category", productCount: { $sum: 1 } } }]),
+    Product.countDocuments(),
+  ]);
+
+  const countByCategory = new Map(productCounts.map((c) => [c._id, c.productCount]));
+  const knownCategoryKeys = new Set(categories.map((cat) => cat.name.toLowerCase()));
+
+  const toPercentage = (count) =>
+    totalProducts > 0 ? +((count / totalProducts) * 100).toFixed(1) : 0;
+
+  const breakdown = categories.map((cat) => {
+    const productCount = countByCategory.get(cat.name.toLowerCase()) || 0;
+    return {
+      categoryId: cat._id,
+      categoryName: cat.name,
+      productCount,
+      percentage: toPercentage(productCount),
+    };
+  });
+
+  const uncategorizedCount = productCounts
+    .filter((c) => !knownCategoryKeys.has(c._id))
+    .reduce((sum, c) => sum + c.productCount, 0);
+
+  if (uncategorizedCount > 0) {
+    breakdown.push({
+      categoryId: null,
+      categoryName: "Khác",
+      productCount: uncategorizedCount,
+      percentage: toPercentage(uncategorizedCount),
+    });
+  }
+
+  return breakdown.sort((a, b) => b.productCount - a.productCount);
+};
 
 exports.getReportStats = async (req, res) => {
   try {
@@ -31,7 +72,7 @@ exports.getReportStats = async (req, res) => {
       $match: { status: { $ne: "cancelled" }, createdAt: { $gte: prevDateFrom, $lte: prevDateTo } },
     };
 
-    const [summaryAgg, prevSummaryAgg, dailyRevenue, topProductsAgg, revenueByCategory, lowStock] =
+    const [summaryAgg, prevSummaryAgg, dailyRevenue, topProductsAgg, revenueByCategory, lowStock, categoryBreakdown] =
       await Promise.all([
         Order.aggregate([
           matchCurrent,
@@ -133,6 +174,7 @@ exports.getReportStats = async (req, res) => {
           .select("name category quantity")
           .sort({ quantity: 1 })
           .limit(20),
+        buildCategoryBreakdown(),
       ]);
 
     const summary = summaryAgg[0] || { totalRevenue: 0, orderCount: 0, totalItemsSold: 0 };
@@ -160,6 +202,7 @@ exports.getReportStats = async (req, res) => {
         topProducts,
         lowStock,
         revenueByCategory,
+        categoryBreakdown,
       },
     });
   } catch (error) {

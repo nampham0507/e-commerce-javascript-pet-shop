@@ -182,6 +182,7 @@
       </div>
 
       <div
+        id="categoriesTableSection"
         class="bg-white rounded-[24px] border border-outline-variant soft-shadow overflow-hidden reveal"
       >
         <div class="overflow-x-auto">
@@ -218,9 +219,17 @@
           </table>
         </div>
         <div
-          class="px-lg py-md bg-surface-container-low flex justify-end items-center gap-2"
-          id="paginationControls"
-        ></div>
+          class="px-lg py-md bg-surface-container-low flex flex-col sm:flex-row sm:items-center sm:justify-between gap-sm"
+        >
+          <span
+            id="categoryPaginationSummary"
+            class="text-label-sm text-on-surface-variant whitespace-nowrap"
+          ></span>
+          <div
+            id="paginationControls"
+            class="flex items-center sm:justify-end"
+          ></div>
+        </div>
       </div>
 
     <%- include('../partials/footer') %>
@@ -303,6 +312,11 @@
         updateCategory,
         deleteCategory,
       } from "/js/admin.js";
+      import {
+        renderPagination as renderPaginationControl,
+        renderPaginationSummary,
+        scrollToTableTop,
+      } from "/js/pagination.js";
 
       if (!isAuthenticated() || getUserInfo()?.role !== "admin") {
         window.location.href = "/auth/login";
@@ -361,28 +375,25 @@
             </tr>
           `;
         }
-        renderPagination(totalPages);
-      };
 
-      const renderPagination = (totalPages) => {
-        const paginationContainer = document.getElementById("paginationControls");
-        if (!paginationContainer) return;
+        renderPaginationSummary(
+          document.getElementById("categoryPaginationSummary"),
+          {
+            page: currentCategoryPage,
+            limit: categoriesPerPage,
+            total: filteredCategories.length,
+            itemLabel: "danh mục",
+          }
+        );
 
-        paginationContainer.innerHTML = `
-          <span class="text-label-sm text-on-surface-variant mr-4">Trang ${currentCategoryPage} / ${totalPages}</span>
-          <button id="prevCategoryPage" class="p-2 rounded-full hover:bg-surface-container-highest text-on-surface-variant disabled:opacity-30" ${currentCategoryPage <= 1 ? "disabled" : ""}>
-            <span class="material-symbols-outlined">chevron_left</span>
-          </button>
-          <button id="nextCategoryPage" class="p-2 rounded-full hover:bg-surface-container-highest text-on-surface-variant disabled:opacity-30" ${currentCategoryPage >= totalPages ? "disabled" : ""}>
-            <span class="material-symbols-outlined">chevron_right</span>
-          </button>
-        `;
-
-        document.getElementById("prevCategoryPage")?.addEventListener("click", () => {
-          if (currentCategoryPage > 1) { currentCategoryPage--; renderCategories(); }
-        });
-        document.getElementById("nextCategoryPage")?.addEventListener("click", () => {
-          if (currentCategoryPage < totalPages) { currentCategoryPage++; renderCategories(); }
+        renderPaginationControl(document.getElementById("paginationControls"), {
+          page: currentCategoryPage,
+          pages: totalPages,
+          onChange: (targetPage) => {
+            currentCategoryPage = targetPage;
+            renderCategories();
+            scrollToTableTop(document.getElementById("categoriesTableSection"));
+          },
         });
       };
 

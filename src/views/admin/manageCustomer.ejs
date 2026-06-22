@@ -233,6 +233,7 @@
         </div>
         <!-- Main Table Container -->
         <div
+          id="usersTableSection"
           class="bg-white rounded-[24px] border border-outline-variant shadow-sm overflow-hidden reveal"
         >
           <div class="overflow-x-auto">
@@ -270,30 +271,20 @@
           </div>
           <!-- Pagination Footer -->
           <div
-            class="p-lg flex justify-between items-center bg-surface-container-lowest border-t border-outline-variant"
+            id="userPaginationFooter"
+            class="p-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-sm bg-surface-container-lowest border-t border-outline-variant"
           >
-            <p class="font-label-sm text-on-surface-variant">
-              Hiển thị <span id="userCountStart">0</span> -
-              <span id="userCountEnd">0</span> trong
-              <span id="totalUsersFooter">0</span> người dùng
+            <p
+              id="userPaginationSummary"
+              class="font-label-sm text-on-surface-variant whitespace-nowrap"
+            >
+              Hiển thị 0 trong 0 người dùng
             </p>
-            <div class="flex gap-sm">
-              <button
-                id="prevUserPageBtn"
-                class="w-10 h-10 rounded-full flex items-center justify-center border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant disabled:opacity-30"
-                disabled
-              >
-                <span class="material-symbols-outlined">chevron_left</span>
-              </button>
-              <div id="userPaginationContainer" class="flex gap-sm">
-                <!-- Page buttons will be rendered here -->
-              </div>
-              <button
-                id="nextUserPageBtn"
-                class="w-10 h-10 rounded-full flex items-center justify-center border border-outline-variant hover:bg-surface-container-high transition-colors text-on-surface-variant"
-              >
-                <span class="material-symbols-outlined">chevron_right</span>
-              </button>
+            <div
+              id="userPaginationContainer"
+              class="flex items-center sm:justify-end"
+            >
+              <!-- Pagination control rendered here -->
             </div>
           </div>
         </div>
@@ -310,6 +301,11 @@
         updateUserDetails,
       } from "/js/admin.js";
       import { isAuthenticated, getUserInfo } from "/js/auth.js";
+      import {
+        renderPagination,
+        renderPaginationSummary,
+        scrollToTableTop,
+      } from "/js/pagination.js";
 
       // Check auth
       if (!isAuthenticated()) {
@@ -324,8 +320,9 @@
       const userPaginationContainer = document.getElementById(
         "userPaginationContainer"
       );
-      const prevUserPageBtn = document.getElementById("prevUserPageBtn");
-      const nextUserPageBtn = document.getElementById("nextUserPageBtn");
+      const userPaginationSummary = document.getElementById(
+        "userPaginationSummary"
+      );
 
       let currentUserPage = 1;
       let totalUserPages = 1;
@@ -392,41 +389,28 @@
         totalUserPages = pagination.pages;
         totalUserCount = pagination.total;
 
-        // Update display text
-        const startNum = (pagination.page - 1) * pagination.limit + 1;
-        const endNum = Math.min(
-          pagination.page * pagination.limit,
-          pagination.total
-        );
+        renderPaginationSummary(userPaginationSummary, {
+          page: pagination.page,
+          limit: pagination.limit,
+          total: pagination.total,
+          itemLabel: "người dùng",
+        });
 
-        document.getElementById("userCountStart").textContent = startNum;
-        document.getElementById("userCountEnd").textContent = endNum;
-        document.getElementById("totalUsersFooter").textContent =
-          pagination.total;
-
-        // Render page buttons
-        userPaginationContainer.innerHTML = "";
-        for (let i = 1; i <= totalUserPages; i++) {
-          const btn = document.createElement("button");
-          btn.className =
-            i === currentUserPage
-              ? "w-10 h-10 rounded-full bg-primary text-on-primary font-label-md flex items-center justify-center"
-              : "w-10 h-10 rounded-full border border-outline-variant hover:bg-surface-container-high text-on-surface-variant font-label-md flex items-center justify-center";
-          btn.textContent = i;
-          btn.addEventListener("click", () => goToUserPage(i));
-          userPaginationContainer.appendChild(btn);
-        }
-
-        // Update prev/next button states
-        prevUserPageBtn.disabled = currentUserPage === 1;
-        nextUserPageBtn.disabled = currentUserPage === totalUserPages;
+        renderPagination(userPaginationContainer, {
+          page: pagination.page,
+          pages: pagination.pages,
+          onChange: (targetPage) => goToUserPage(targetPage),
+        });
       }
 
       // Go to specific user page
       function goToUserPage(page) {
-        if (page < 1 || page > totalUserPages) return;
+        if (page < 1 || page > totalUserPages || page === currentUserPage) {
+          return;
+        }
         currentUserPage = page;
         loadUsers();
+        scrollToTableTop(document.getElementById("usersTableSection"));
       }
 
       // Update statistics (pagination info only)
@@ -564,14 +548,6 @@
           loadUsers();
         });
       }
-
-      // Pagination handlers
-      prevUserPageBtn?.addEventListener("click", () =>
-        goToUserPage(currentUserPage - 1)
-      );
-      nextUserPageBtn?.addEventListener("click", () =>
-        goToUserPage(currentUserPage + 1)
-      );
 
       // ... code cũ giữ nguyên ...
 
